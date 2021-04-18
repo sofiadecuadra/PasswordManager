@@ -18,5 +18,11 @@ namespace GestorPasswordsTest
         {
             Assert.AreEqual(TipoFortaleza.Naranja, ManipuladorPassword.FortalezaDePassword("holamundoesto"));
         }
+
+        [TestMethod]
+        public void PasswordConLargoMayorA14CaracteresSoloMayusculasYMinusculas()
+        {
+            Assert.AreEqual(TipoFortaleza.Amarillo, ManipuladorPassword.FortalezaDePassword("holamundoestoEsUnaPass"));
+        }
     }
 }
