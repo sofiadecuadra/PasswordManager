@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using GestorPasswordsDominio;
 using System;
 
 namespace GestorPasswordsTest
