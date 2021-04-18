@@ -40,7 +40,7 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void PasswordConLargoMayorA14CaracteresSoloMayusculasMinusculasNumerosYSimbolos()
         {
-            Assert.AreEqual(TipoFortaleza.VerdeOscuro, ManipuladorPassword.FortalezaDePassword("holaMundoEstoEs1234+-@"));
+            Assert.AreEqual(TipoFortaleza.VerdeOscuro, ManipuladorPassword.FortalezaDePassword("holaMundoEstoEs1234-+@"));
         }
     }
 }

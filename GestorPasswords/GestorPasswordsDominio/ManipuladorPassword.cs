@@ -15,6 +15,7 @@ namespace GestorPasswordsDominio
             if (ContieneEntre8Y14Caracteres(passwordToCheck)) return TipoFortaleza.Naranja;
             if (ContieneSoloMayusculasYMinusculas(passwordToCheck)) return TipoFortaleza.VerdeClaro;
             if (ContieneSoloMayusculasOMinusculas(passwordToCheck)) return TipoFortaleza.Amarillo;
+            if (Regex.IsMatch(passwordToCheck, @"(?=^.{14,}$)((?=.*\d)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$")) return TipoFortaleza.VerdeOscuro;
 
             return TipoFortaleza.Rojo;
         }
@@ -45,6 +46,7 @@ namespace GestorPasswordsDominio
         Rojo = 0,
         Naranja = 1,
         Amarillo = 2,
-        VerdeClaro = 3
+        VerdeClaro = 3,
+        VerdeOscuro = 4
     }
 }
