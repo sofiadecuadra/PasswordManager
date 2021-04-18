@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace GestorPasswordsDominio
 {
@@ -12,6 +13,7 @@ namespace GestorPasswordsDominio
         {
             if (MenosDe8Caracteres(passwordToCheck)) return TipoFortaleza.Rojo;
             if (Entre8Y14Caracteres(passwordToCheck)) return TipoFortaleza.Naranja;
+            if (Regex.IsMatch(passwordToCheck, @"^[A-Za-z\s]+$")) return TipoFortaleza.Amarillo;
 
             return TipoFortaleza.Rojo;
         }
@@ -30,6 +32,7 @@ namespace GestorPasswordsDominio
     public enum TipoFortaleza
     {
         Rojo = 0,
-        Naranja = 1
+        Naranja = 1,
+        Amarillo = 3
     }
 }
