@@ -13,9 +13,14 @@ namespace GestorPasswordsDominio
         {
             if (MenosDe8Caracteres(passwordToCheck)) return TipoFortaleza.Rojo;
             if (Entre8Y14Caracteres(passwordToCheck)) return TipoFortaleza.Naranja;
-            if (Regex.IsMatch(passwordToCheck, @"^[A-Za-z\s]+$")) return TipoFortaleza.Amarillo;
+            if (SoloMayusculasOMinusculas(passwordToCheck)) return TipoFortaleza.Amarillo;
 
             return TipoFortaleza.Rojo;
+        }
+
+        private static bool SoloMayusculasOMinusculas(string passwordToCheck)
+        {
+            return Regex.IsMatch(passwordToCheck, @"^[A-Za-z\s]+$");
         }
 
         private static bool MenosDe8Caracteres(string passwordToCheck)

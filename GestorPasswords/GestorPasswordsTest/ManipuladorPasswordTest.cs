@@ -20,15 +20,15 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        public void PasswordConLargoMayorA14CaracteresSoloMayusculasOMinusculas()
+        public void PasswordConLargoMayorA14CaracteresSoloMinusculas()
         {
-            Assert.AreEqual(TipoFortaleza.Amarillo, ManipuladorPassword.FortalezaDePassword("holamundoestoEsUnaPass"));
+            Assert.AreEqual(TipoFortaleza.Amarillo, ManipuladorPassword.FortalezaDePassword("holamundoestoesunapass"));
         }
 
         [TestMethod]
-        public void PasswordConLargoMayorA14CaracteresSoloMinusculas()
+        public void PasswordConLargoMayorA14CaracteresSoloMayusculas()
         {
-            Assert.AreEqual(TipoFortaleza.Amarillo, ManipuladorPassword.FortalezaDePassword("holamundoestoesUnapass"));
+            Assert.AreEqual(TipoFortaleza.Amarillo, ManipuladorPassword.FortalezaDePassword("holamundoestoesnapass"));
         }
     }
 }
