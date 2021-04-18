@@ -10,10 +10,20 @@ namespace GestorPasswordsDominio
     {
         public static TipoFortaleza FortalezaDePassword(String passwordToCheck)
         {
-            if (passwordToCheck.Length < 8) return TipoFortaleza.Rojo;
-            if (passwordToCheck.Length >= 8 && passwordToCheck.Length <= 14) return TipoFortaleza.Naranja;
+            if (MenosDe8Caracteres(passwordToCheck)) return TipoFortaleza.Rojo;
+            if (Entre8Y14Caracteres(passwordToCheck)) return TipoFortaleza.Naranja;
 
             return TipoFortaleza.Rojo;
+        }
+
+        private static bool MenosDe8Caracteres(string passwordToCheck)
+        {
+            return passwordToCheck.Length < 8;
+        }
+
+        private static bool Entre8Y14Caracteres(string passwordToCheck)
+        {
+            return passwordToCheck.Length >= 8 && passwordToCheck.Length <= 14;
         }
     }
 
