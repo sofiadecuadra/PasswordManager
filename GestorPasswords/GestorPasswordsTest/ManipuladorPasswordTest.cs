@@ -7,8 +7,9 @@ namespace GestorPasswordsTest
     public class ManipuladorPasswordTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void EsPasswordDebil()
         {
+            Assert.AreEqual(TipoFortaleza.Rojo, ManipuladorPassword.FortalezaDePassword("hola"));
         }
     }
 }
