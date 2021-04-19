@@ -7,8 +7,11 @@ namespace GestorPasswordsTest
     public class CategoriaTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void AgregarTarjetaCreditoValida()
         {
+            Categoria unaCategoria = new Categoria();
+            TarjetaCredito tarjetaCredito = new TarjetaCredito();
+            Assert.IsTrue(unaCategoria.agregarTarjetaCredito(tarjetaCredito));
         }
     }
 }
