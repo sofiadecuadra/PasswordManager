@@ -88,7 +88,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        public void CodigoTarjetaConLargoMenorA3Caracteres()
+        public void CodigoTarjetaCreditoConLargoMenorA3Caracteres()
         {
             tarjetaCredito.numero = "1234567891234567";
             tarjetaCredito.tipo = "Visa";
@@ -97,7 +97,7 @@ namespace GestorPasswordsTest
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
 
-        public void CodigoTarjetaConLargoMayorA4Caracteres()
+        public void CodigoTarjetaCreditoConLargoMayorA4Caracteres()
         {
             tarjetaCredito.numero = "1234567891234567";
             tarjetaCredito.tipo = "Visa";
