@@ -26,6 +26,7 @@ namespace GestorPasswordsDominio
         {
             return Regex.IsMatch(numeroTarjetaCredito, @"^[0-9]+$");
         }
+
         public bool NumeroTarjetaCreditoContiene16Digitos(string numeroTarjetaCredito)
         {
             if (numeroTarjetaCredito.Length == 16) return true;
