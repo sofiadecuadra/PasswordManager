@@ -10,10 +10,13 @@ namespace GestorPasswordsDominio
     {
         public bool AgregarTarjetaCredito(TarjetaCredito unaTarjetaCredito)
         {
-            if(unaTarjetaCredito.numero.Length == 16)
-            {
-                return true;
-            }
+            if(TarjetaCreditoContiene16Digitos(unaTarjetaCredito.numero)) return true;
+            return false;
+        }
+
+        public bool TarjetaCreditoContiene16Digitos(string numeroTarjetaCredito)
+        {
+            if (numeroTarjetaCredito.Length == 16) return true;
             return false;
         }
     }
