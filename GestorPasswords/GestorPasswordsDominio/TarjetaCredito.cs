@@ -10,5 +10,6 @@ namespace GestorPasswordsDominio
     {
         public string numero;
         public string tipo;
+        public string nombre;
     }
 }

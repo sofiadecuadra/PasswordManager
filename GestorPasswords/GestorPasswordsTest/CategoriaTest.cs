@@ -14,7 +14,8 @@ namespace GestorPasswordsTest
             TarjetaCredito tarjetaCredito = new TarjetaCredito()
             {
                 numero = "1234567891234567",
-                tipo = "Visa"
+                tipo = "Visa",
+                nombre = "Visa Gold"
             };
             Assert.IsTrue(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
@@ -26,7 +27,8 @@ namespace GestorPasswordsTest
             TarjetaCredito tarjetaCredito = new TarjetaCredito()
             {
                 numero = "12345678912",
-                tipo = "Visa"
+                tipo = "Visa",
+                nombre = "Visa Gold"
             };
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
@@ -38,7 +40,8 @@ namespace GestorPasswordsTest
             TarjetaCredito tarjetaCredito = new TarjetaCredito()
             {
                 numero = "12345678912hgjfl",
-                tipo = "Visa"
+                tipo = "Visa",
+                nombre = "Visa Gold"
             };
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
@@ -50,7 +53,8 @@ namespace GestorPasswordsTest
             TarjetaCredito tarjetaCredito = new TarjetaCredito()
             {
                 numero = "1234567891234567",
-                tipo = "Vi"
+                tipo = "Vi",
+                nombre = "Visa Gold"
             };
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
@@ -62,7 +66,8 @@ namespace GestorPasswordsTest
             TarjetaCredito tarjetaCredito = new TarjetaCredito()
             {
                 numero = "1234567891234567",
-                tipo = "VisaVisaVisaVisaVisaVisaVisa"
+                tipo = "VisaVisaVisaVisaVisaVisaVisa",
+                nombre = "Visa Gold"
             };
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
