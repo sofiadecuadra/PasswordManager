@@ -11,18 +11,22 @@ namespace GestorPasswordsDominio
     {
         public bool AgregarTarjetaCredito(TarjetaCredito unaTarjetaCredito)
         {
-            if (unaTarjetaCredito.tipo.Length < 3) return false;
             return (
-                TarjetaCreditoContiene16Digitos(unaTarjetaCredito.numero) &&
-                TarjetaCreditoContieneSoloDigitos(unaTarjetaCredito.numero));
+                NumeroTarjetaCreditoContieneSoloDigitos(unaTarjetaCredito.numero) &&
+                NumeroTarjetaCreditoContiene16Digitos(unaTarjetaCredito.numero) &&
+                TipoTarjetaCreditoTieneLargoMayorA3(unaTarjetaCredito.tipo));
         }
 
+        public bool TipoTarjetaCreditoTieneLargoMayorA3 (string tipo)
+        {
+            return tipo.Length >= 3;
+        }
 
-        public bool TarjetaCreditoContieneSoloDigitos(string numeroTarjetaCredito)
+        public bool NumeroTarjetaCreditoContieneSoloDigitos(string numeroTarjetaCredito)
         {
             return Regex.IsMatch(numeroTarjetaCredito, @"^[0-9]+$");
         }
-        public bool TarjetaCreditoContiene16Digitos(string numeroTarjetaCredito)
+        public bool NumeroTarjetaCreditoContiene16Digitos(string numeroTarjetaCredito)
         {
             if (numeroTarjetaCredito.Length == 16) return true;
             return false;
