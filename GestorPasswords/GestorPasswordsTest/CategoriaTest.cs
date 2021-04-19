@@ -20,6 +20,7 @@ namespace GestorPasswordsTest
                 tipo = "Visa",
                 nombre = "Visa Gold",
                 codigo = "234",
+                notas = ""
             };
         }   
         
