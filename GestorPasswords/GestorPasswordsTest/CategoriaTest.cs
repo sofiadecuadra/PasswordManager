@@ -29,5 +29,17 @@ namespace GestorPasswordsTest
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
 
+        [TestMethod]
+        public void NumeroTarjetaCreditoNoContieneSoloDigitos()
+        {
+            Categoria unaCategoria = new Categoria();
+            TarjetaCredito tarjetaCredito = new TarjetaCredito()
+            {
+                numero = "12345678912hgjfl"
+            };
+            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
+        }
+
+
     }
 }
