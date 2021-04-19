@@ -9,5 +9,6 @@ namespace GestorPasswordsDominio
     public class TarjetaCredito
     {
         public string numero;
+        public string tipo;
     }
 }
