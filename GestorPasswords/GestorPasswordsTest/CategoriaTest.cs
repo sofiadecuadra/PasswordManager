@@ -8,13 +8,13 @@ namespace GestorPasswordsTest
     public class CategoriaTest
     {
         private Categoria unaCategoria;
-        private TarjetaCredito tarjetaCredito;
+        private TarjetaCredito unaTarjetaCredito;
 
         [TestInitialize]
         public void Initialize()
         {
             unaCategoria = new Categoria();
-            tarjetaCredito = new TarjetaCredito()
+            unaTarjetaCredito = new TarjetaCredito()
             {
                 numero = "1234567891234567",
                 tipo = "Visa",
@@ -26,65 +26,76 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void AgregarTarjetaCreditoValida()
         {
-            Assert.IsTrue(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
+            Assert.IsTrue(unaCategoria.AgregarTarjetaCredito(unaTarjetaCredito));
         }
 
         [TestMethod]
         public void NumeroTarjetaCreditoContieneMenosDe16Digitos()
         {
-            tarjetaCredito.numero = "12345678912";
-            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
+            unaTarjetaCredito.numero = "12345678912";
+            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(unaTarjetaCredito));
         }
 
         [TestMethod]
         public void NumeroTarjetaCreditoNoContieneSoloDigitos()
         {
-            tarjetaCredito.numero = "1234567891fjk567";
-            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
+            unaTarjetaCredito.numero = "1234567891fjk567";
+            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(unaTarjetaCredito));
         }
 
         [TestMethod]
         public void TipoTarjetaCreditoConLargoMenorA3Caracteres()
         {
-            tarjetaCredito.tipo = "Vi";
-            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
+            unaTarjetaCredito.tipo = "Vi";
+            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(unaTarjetaCredito));
         }
 
         [TestMethod]
         public void TipoTarjetaCreditoConLargoMayorA25Caracteres()
         {
-            tarjetaCredito.tipo = "VisaVisaVisaVisaVisaVisaVisa";
-            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
+            unaTarjetaCredito.tipo = "VisaVisaVisaVisaVisaVisaVisa";
+            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(unaTarjetaCredito));
         }
         
         [TestMethod]
         public void NombreTarjetaCreditoConLargoMenorA3Caracteres()
         {
-            tarjetaCredito.nombre = "Vi";
-            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
+            unaTarjetaCredito.nombre = "Vi";
+            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(unaTarjetaCredito));
         }
 
         [TestMethod]
         public void NombreTarjetaCreditoConLargoMayorA25Caracteres()
         {
-            tarjetaCredito.nombre = "Visa Gold Visa Gold Visa Gold Visa Gold";
-            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
+            unaTarjetaCredito.nombre = "Visa Gold Visa Gold Visa Gold Visa Gold";
+            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(unaTarjetaCredito));
         }
 
         [TestMethod]
         public void CodigoTarjetaCreditoConLargoMenorA3Caracteres()
         {
-            tarjetaCredito.codigo = "12";
-            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
+            unaTarjetaCredito.codigo = "12";
+            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(unaTarjetaCredito));
         }
 
         [TestMethod]
         public void CodigoTarjetaCreditoConLargoMayorA4Caracteres()
         {
-            tarjetaCredito.codigo = "12121";
-            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
+            unaTarjetaCredito.codigo = "12121";
+            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(unaTarjetaCredito));
         }
 
 
+        [TestMethod]
+        public void NotasTarjetaCreditoConLargoMayorA250Caracteres()
+        {
+            string notas = "";
+            for(int i=0; i < 260; i++)
+            {
+                notas += "a";
+            }
+            unaTarjetaCredito.notas = notas;
+            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(unaTarjetaCredito));
+        }
     }
 }
