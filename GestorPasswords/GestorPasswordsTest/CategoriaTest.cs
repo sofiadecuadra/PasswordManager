@@ -66,6 +66,20 @@ namespace GestorPasswordsTest
             };
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
+        
+        [TestMethod]
+        public void NombreTarjetaCreditoConLargoMenorA3()
+        {
+            Categoria unaCategoria = new Categoria();
+            TarjetaCredito tarjetaCredito = new TarjetaCredito()
+            {
+                numero = "1234567891234567",
+                tipo = "Visa",
+                nombre = "Vi"
+            };
+            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
+        }
+
 
     }
 }
