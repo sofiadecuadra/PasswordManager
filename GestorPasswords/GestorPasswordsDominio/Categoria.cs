@@ -10,7 +10,11 @@ namespace GestorPasswordsDominio
     {
         public bool AgregarTarjetaCredito(TarjetaCredito unaTarjetaCredito)
         {
-            return true;
+            if(unaTarjetaCredito.numero.Length == 16)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

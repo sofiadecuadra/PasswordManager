@@ -11,7 +11,10 @@ namespace GestorPasswordsTest
         public void AgregarTarjetaCreditoValida()
         {
             Categoria unaCategoria = new Categoria();
-            TarjetaCredito tarjetaCredito = new TarjetaCredito();
+            TarjetaCredito tarjetaCredito = new TarjetaCredito()
+            {
+                numero = "1234567891234567",
+            };
             Assert.IsTrue(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
 

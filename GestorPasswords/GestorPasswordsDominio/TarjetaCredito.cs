@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace GestorPasswordsDominio
 {
-    class TarjetaCredito
+    public class TarjetaCredito
     {
+        public string numero;
     }
 }
