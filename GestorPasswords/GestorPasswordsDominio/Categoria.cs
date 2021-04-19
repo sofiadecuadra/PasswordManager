@@ -11,12 +11,17 @@ namespace GestorPasswordsDominio
     {
         public bool AgregarTarjetaCredito(TarjetaCredito unaTarjetaCredito)
         {
-            if (unaTarjetaCredito.codigo.Length < 3) return false;
             return (
                 NumeroTarjetaCreditoContieneSoloDigitos(unaTarjetaCredito.numero) &&
                 NumeroTarjetaCreditoContiene16Digitos(unaTarjetaCredito.numero) &&
                 TextoConLargoEntre3y25Caracteres(unaTarjetaCredito.tipo) &&
-                TextoConLargoEntre3y25Caracteres(unaTarjetaCredito.nombre));
+                TextoConLargoEntre3y25Caracteres(unaTarjetaCredito.nombre) &&
+                CodigoTarjetaCreditoConLargoMayorA3Caracteres(unaTarjetaCredito.codigo));
+        }
+
+        public bool CodigoTarjetaCreditoConLargoMayorA3Caracteres(string codigo)
+        {
+            return codigo.Length >= 3;
         }
 
         public bool TextoConLargoEntre3y25Caracteres(string texto)
