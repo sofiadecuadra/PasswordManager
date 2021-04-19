@@ -96,5 +96,14 @@ namespace GestorPasswordsTest
             tarjetaCredito.codigo = "12";
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
+
+        public void CodigoTarjetaConLargoMayorA4Caracteres()
+        {
+            tarjetaCredito.numero = "1234567891234567";
+            tarjetaCredito.tipo = "Visa";
+            tarjetaCredito.nombre = "Visa Gold";
+            tarjetaCredito.codigo = "12121";
+            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
+        }
     }
 }
