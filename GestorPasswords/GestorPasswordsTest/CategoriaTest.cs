@@ -79,5 +79,15 @@ namespace GestorPasswordsTest
             tarjetaCredito.nombre = "Visa Gold Visa Gold Visa Gold Visa Gold";
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
+
+        [TestMethod]
+        public void CodigoTarjetaConLargoMenorA3Caracteres()
+        {
+            tarjetaCredito.numero = "1234567891234567";
+            tarjetaCredito.tipo = "Visa";
+            tarjetaCredito.nombre = "Visa Gold";
+            tarjetaCredito.codigo = "12";
+            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
+        }
     }
 }
