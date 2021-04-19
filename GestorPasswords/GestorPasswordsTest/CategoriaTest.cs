@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using GestorPasswordsDominio;
 using System;
 
 namespace GestorPasswordsTest
@@ -11,7 +12,7 @@ namespace GestorPasswordsTest
         {
             Categoria unaCategoria = new Categoria();
             TarjetaCredito tarjetaCredito = new TarjetaCredito();
-            Assert.IsTrue(unaCategoria.agregarTarjetaCredito(tarjetaCredito));
+            Assert.IsTrue(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
     }
 }
