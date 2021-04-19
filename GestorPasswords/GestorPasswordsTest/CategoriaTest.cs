@@ -7,97 +7,77 @@ namespace GestorPasswordsTest
     [TestClass]
     public class CategoriaTest
     {
+        private Categoria unaCategoria;
+        private TarjetaCredito tarjetaCredito;
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            unaCategoria = new Categoria();
+            tarjetaCredito = new TarjetaCredito();
+        }   
+        
         [TestMethod]
         public void AgregarTarjetaCreditoValida()
         {
-            Categoria unaCategoria = new Categoria();
-            TarjetaCredito tarjetaCredito = new TarjetaCredito()
-            {
-                numero = "1234567891234567",
-                tipo = "Visa",
-                nombre = "Visa Gold"
-            };
+            tarjetaCredito.numero = "1234567891234567";
+            tarjetaCredito.tipo = "Visa";
+            tarjetaCredito.nombre = "Visa Gold";
             Assert.IsTrue(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
 
         [TestMethod]
         public void NumeroTarjetaCreditoContieneMenosDe16Digitos()
         {
-            Categoria unaCategoria = new Categoria();
-            TarjetaCredito tarjetaCredito = new TarjetaCredito()
-            {
-                numero = "12345678912",
-                tipo = "Visa",
-                nombre = "Visa Gold"
-            };
+            tarjetaCredito.numero = "12345678912";
+            tarjetaCredito.tipo = "Visa";
+            tarjetaCredito.nombre = "Visa Gold";
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
 
         [TestMethod]
         public void NumeroTarjetaCreditoNoContieneSoloDigitos()
         {
-            Categoria unaCategoria = new Categoria();
-            TarjetaCredito tarjetaCredito = new TarjetaCredito()
-            {
-                numero = "12345678912hgjfl",
-                tipo = "Visa",
-                nombre = "Visa Gold"
-            };
+            tarjetaCredito.numero = "1234567891fjk567";
+            tarjetaCredito.tipo = "Visa";
+            tarjetaCredito.nombre = "Visa Gold";
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
 
         [TestMethod]
-        public void TipoTarjetaCreditoConLargoMenorA3()
+        public void TipoTarjetaCreditoConLargoMenorA3Caracteres()
         {
-            Categoria unaCategoria = new Categoria();
-            TarjetaCredito tarjetaCredito = new TarjetaCredito()
-            {
-                numero = "1234567891234567",
-                tipo = "Vi",
-                nombre = "Visa Gold"
-            };
+            tarjetaCredito.numero = "1234567891234567";
+            tarjetaCredito.tipo = "Vi";
+            tarjetaCredito.nombre = "Visa Gold";
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
 
         [TestMethod]
-        public void TipoTarjetaCreditoConLargoMayorA25()
+        public void TipoTarjetaCreditoConLargoMayorA25Caracteres()
         {
-            Categoria unaCategoria = new Categoria();
-            TarjetaCredito tarjetaCredito = new TarjetaCredito()
-            {
-                numero = "1234567891234567",
-                tipo = "VisaVisaVisaVisaVisaVisaVisa",
-                nombre = "Visa Gold"
-            };
+            tarjetaCredito.numero = "1234567891234567";
+            tarjetaCredito.tipo = "VisaVisaVisaVisaVisaVisaVisa";
+            tarjetaCredito.nombre = "Visa Gold";
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
         
         [TestMethod]
-        public void NombreTarjetaCreditoConLargoMenorA3()
+        public void NombreTarjetaCreditoConLargoMenorA3Caracteres()
         {
-            Categoria unaCategoria = new Categoria();
-            TarjetaCredito tarjetaCredito = new TarjetaCredito()
-            {
-                numero = "1234567891234567",
-                tipo = "Visa",
-                nombre = "Vi"
-            };
+            tarjetaCredito.numero = "1234567891234567";
+            tarjetaCredito.tipo = "Visa";
+            tarjetaCredito.nombre = "Vi";
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
 
         [TestMethod]
-        public void NombreTarjetaCreditoConLargoMayorA25()
+        public void NombreTarjetaCreditoConLargoMayorA25Caracteres()
         {
-            Categoria unaCategoria = new Categoria();
-            TarjetaCredito tarjetaCredito = new TarjetaCredito()
-            {
-                numero = "1234567891234567",
-                tipo = "Visa",
-                nombre = "Visa Gold Visa Gold Visa Gold Visa Gold"
-            };
+            tarjetaCredito.numero = "1234567891234567";
+            tarjetaCredito.tipo = "Visa";
+            tarjetaCredito.nombre = "Visa Gold Visa Gold Visa Gold Visa Gold";
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
-
-
     }
 }
