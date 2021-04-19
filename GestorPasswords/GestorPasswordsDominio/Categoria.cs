@@ -11,8 +11,8 @@ namespace GestorPasswordsDominio
     {
         public bool AgregarTarjetaCredito(TarjetaCredito unaTarjetaCredito)
         {
+            if (unaTarjetaCredito.codigo.Length < 3) return false;
             return (
-
                 NumeroTarjetaCreditoContieneSoloDigitos(unaTarjetaCredito.numero) &&
                 NumeroTarjetaCreditoContiene16Digitos(unaTarjetaCredito.numero) &&
                 TextoConLargoEntre3y25Caracteres(unaTarjetaCredito.tipo) &&

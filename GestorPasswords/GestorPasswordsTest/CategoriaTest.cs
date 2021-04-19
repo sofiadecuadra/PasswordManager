@@ -23,6 +23,7 @@ namespace GestorPasswordsTest
             tarjetaCredito.numero = "1234567891234567";
             tarjetaCredito.tipo = "Visa";
             tarjetaCredito.nombre = "Visa Gold";
+            tarjetaCredito.codigo = "234";
             Assert.IsTrue(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
 
@@ -32,6 +33,7 @@ namespace GestorPasswordsTest
             tarjetaCredito.numero = "12345678912";
             tarjetaCredito.tipo = "Visa";
             tarjetaCredito.nombre = "Visa Gold";
+            tarjetaCredito.codigo = "234";
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
 
@@ -41,6 +43,7 @@ namespace GestorPasswordsTest
             tarjetaCredito.numero = "1234567891fjk567";
             tarjetaCredito.tipo = "Visa";
             tarjetaCredito.nombre = "Visa Gold";
+            tarjetaCredito.codigo = "234";
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
 
@@ -50,6 +53,7 @@ namespace GestorPasswordsTest
             tarjetaCredito.numero = "1234567891234567";
             tarjetaCredito.tipo = "Vi";
             tarjetaCredito.nombre = "Visa Gold";
+            tarjetaCredito.codigo = "234";
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
 
@@ -59,6 +63,7 @@ namespace GestorPasswordsTest
             tarjetaCredito.numero = "1234567891234567";
             tarjetaCredito.tipo = "VisaVisaVisaVisaVisaVisaVisa";
             tarjetaCredito.nombre = "Visa Gold";
+            tarjetaCredito.codigo = "234";
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
         
@@ -68,6 +73,7 @@ namespace GestorPasswordsTest
             tarjetaCredito.numero = "1234567891234567";
             tarjetaCredito.tipo = "Visa";
             tarjetaCredito.nombre = "Vi";
+            tarjetaCredito.codigo = "234";
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
 
@@ -77,6 +83,7 @@ namespace GestorPasswordsTest
             tarjetaCredito.numero = "1234567891234567";
             tarjetaCredito.tipo = "Visa";
             tarjetaCredito.nombre = "Visa Gold Visa Gold Visa Gold Visa Gold";
+            tarjetaCredito.codigo = "234";
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
 
