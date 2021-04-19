@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace GestorPasswordsDominio
@@ -10,7 +11,7 @@ namespace GestorPasswordsDominio
     {
         public bool AgregarTarjetaCredito(TarjetaCredito unaTarjetaCredito)
         {
-            if(TarjetaCreditoContiene16Digitos(unaTarjetaCredito.numero)) return true;
+            if (TarjetaCreditoContiene16Digitos(unaTarjetaCredito.numero) && Regex.IsMatch(unaTarjetaCredito.numero, @"^[0-9]+$")) return true;          
             return false;
         }
 
