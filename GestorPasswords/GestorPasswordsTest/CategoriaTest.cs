@@ -14,5 +14,17 @@ namespace GestorPasswordsTest
             TarjetaCredito tarjetaCredito = new TarjetaCredito();
             Assert.IsTrue(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
         }
+
+        [TestMethod]
+        public void NumeroTarjetaCreditoContieneMenosDe16Digitos()
+        {
+            Categoria unaCategoria = new Categoria();
+            TarjetaCredito tarjetaCredito = new TarjetaCredito()
+            {
+                numero = "12345678912"
+            };
+            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(tarjetaCredito));
+        }
+
     }
 }
