@@ -13,11 +13,23 @@ namespace GestorPasswordsDominio
         {
             if (ContieneMenosDe8Caracteres(passwordToCheck)) return TipoFortaleza.Rojo;
             if (ContieneEntre8Y14Caracteres(passwordToCheck)) return TipoFortaleza.Naranja;
-            if (ContieneSoloMayusculasYMinusculas(passwordToCheck)) return TipoFortaleza.VerdeClaro;
-            if (ContieneSoloMayusculasOMinusculas(passwordToCheck)) return TipoFortaleza.Amarillo;
             if (ContieneMayusculasMinusculasNumerosYEspeciales(passwordToCheck)) return TipoFortaleza.VerdeOscuro;
 
+            bool esVerdeClaro = ContieneSoloMayusculasYMinusculas(passwordToCheck) || ContieneMayusculasMinusculasYSimbolosONumeros(passwordToCheck);
+            if (esVerdeClaro) return TipoFortaleza.VerdeClaro;
+            if (ContieneSoloMayusculasOMinusculas(passwordToCheck) || ContieneSoloNumerosYSimbolos(passwordToCheck)) return TipoFortaleza.Amarillo;
+
             return TipoFortaleza.Rojo;
+        }
+
+        private static bool ContieneSoloNumerosYSimbolos(string passwordToCheck)
+        {
+            return Regex.IsMatch(passwordToCheck, @"(?=^.{14,}$)((?=.*\d)(?=.*\W+))(?![.\n]).*$");
+        }
+
+        private static bool ContieneMayusculasMinusculasYSimbolosONumeros(string passwordToCheck)
+        {
+            return Regex.IsMatch(passwordToCheck, @"(?=^.{14,}$)((?=.*((\d)|(\W))+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$");
         }
 
         private static bool ContieneMayusculasMinusculasNumerosYEspeciales(string passwordToCheck)

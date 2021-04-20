@@ -42,5 +42,23 @@ namespace GestorPasswordsTest
         {
             Assert.AreEqual(TipoFortaleza.VerdeOscuro, ManipuladorPassword.FortalezaDePassword("holaMundoEstoEs1234-+@"));
         }
+
+        [TestMethod]
+        public void PasswordConLargoMayorA14CaracteresSoloMayusculasMinusculasYSimbolos()
+        {
+            Assert.AreEqual(TipoFortaleza.VerdeClaro, ManipuladorPassword.FortalezaDePassword("holaMundoEstoEs-+@"));
+        }
+
+        [TestMethod]
+        public void PasswordConLargoMayorA14CaracteresSoloMayusculasMinusculasYNumeros()
+        {
+            Assert.AreEqual(TipoFortaleza.VerdeClaro, ManipuladorPassword.FortalezaDePassword("holaMundoEstoEs1234"));
+        }
+
+        [TestMethod]
+        public void PasswordConLargoMayorA14CaracteresSoloNumerosYSimbolos()
+        {
+            Assert.AreEqual(TipoFortaleza.Amarillo, ManipuladorPassword.FortalezaDePassword("123456789@!#$%^"));
+        }
     }
 }
