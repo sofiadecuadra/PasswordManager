@@ -84,5 +84,13 @@ namespace GestorPasswordsTest
         {
             Assert.AreEqual(TipoFortaleza.Amarillo, ManipuladorPassword.FortalezaDePassword("holaestosonminus12345"));
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExcepcionLargoIncorrecto),
+    "LA contrasena debe tener un largo entre 14 y 25 caracteres")]
+        public void PasswordConLargoMayorA25Caracteres()
+        {
+            ManipuladorPassword.FortalezaDePassword("012345678901234567890123456");
+        }
     }
 }
