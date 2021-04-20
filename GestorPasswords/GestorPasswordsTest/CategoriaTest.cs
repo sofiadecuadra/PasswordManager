@@ -98,5 +98,25 @@ namespace GestorPasswordsTest
             unaTarjetaCredito.notas = notas;
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(unaTarjetaCredito));
         }
+
+        [TestMethod]
+        public void AgregarNumeroTarjetaCreditoYaExistente()
+        {
+            TarjetaCredito unaTarjetaCredito2 = new TarjetaCredito()
+            {
+                numero = "1234567891234567",
+                tipo = "Visa",
+                nombre = "Visa Gold",
+                codigo = "234",
+                notas = ""
+            };
+            Usuario unUsuario = new Usuario();
+            unUsuario.listaCategorias.Add(unaCategoria);
+            unaCategoria.usuario = unUsuario;
+
+            unaCategoria.AgregarTarjetaCredito(unaTarjetaCredito2);
+            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(unaTarjetaCredito));
+        }
+
     }
 }
