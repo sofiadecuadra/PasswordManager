@@ -15,14 +15,14 @@ namespace GestorPasswordsDominio
             if (ContieneEntre8Y14Caracteres(passwordToCheck)) return TipoFortaleza.Naranja;
             if (ContieneMayusculasMinusculasNumerosYEspeciales(passwordToCheck)) return TipoFortaleza.VerdeOscuro;
 
-            bool esVerdeClaro = ContieneSoloMayusculasYMinusculas(passwordToCheck) || ContieneMayusculasMinusculasYSimbolosOEspeciales(passwordToCheck);
+            bool esVerdeClaro = ContieneSoloMayusculasYMinusculas(passwordToCheck) || ContieneMayusculasMinusculasYSimbolosONumeros(passwordToCheck);
             if (esVerdeClaro) return TipoFortaleza.VerdeClaro;
             if (ContieneSoloMayusculasOMinusculas(passwordToCheck)) return TipoFortaleza.Amarillo;
 
             return TipoFortaleza.Rojo;
         }
 
-        private static bool ContieneMayusculasMinusculasYSimbolosOEspeciales(string passwordToCheck)
+        private static bool ContieneMayusculasMinusculasYSimbolosONumeros(string passwordToCheck)
         {
             return Regex.IsMatch(passwordToCheck, @"(?=^.{14,}$)((?=.*((\d)|(\W))+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$");
         }
