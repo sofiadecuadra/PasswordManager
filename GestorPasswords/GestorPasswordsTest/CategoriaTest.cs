@@ -14,7 +14,10 @@ namespace GestorPasswordsTest
         [TestInitialize]
         public void Initialize()
         {
-            unaCategoria = new Categoria();
+            unaCategoria = new Categoria()
+            {
+                usuario = unUsuario
+            };
             unaTarjetaCredito = new TarjetaCredito()
             {
                 numero = "1234567891234567",
@@ -24,7 +27,6 @@ namespace GestorPasswordsTest
                 notas = ""
             };
             unUsuario.listaCategorias.Add(unaCategoria);
-            unaCategoria.usuario = unUsuario;
         }   
         
         [TestMethod]
@@ -113,9 +115,6 @@ namespace GestorPasswordsTest
                 codigo = "234",
                 notas = ""
             };
-            Usuario unUsuario = new Usuario();
-            unUsuario.listaCategorias.Add(unaCategoria);
-            unaCategoria.usuario = unUsuario;
 
             unaCategoria.AgregarTarjetaCredito(unaTarjetaCredito2);
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(unaTarjetaCredito));
