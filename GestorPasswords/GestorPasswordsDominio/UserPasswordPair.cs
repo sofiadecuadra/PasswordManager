@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GestorPasswordsDominio
 {
-    public class Class1
+    public class UserPasswordPair
     {
     }
 }

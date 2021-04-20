@@ -72,5 +72,12 @@ namespace GestorPasswordsDominio
             if (numeroTarjetaCredito.Length == 16) return true;
             return false;
         }
+
+        // -----------------------------------------------
+
+        public bool AddUserPasswordPair(UserPasswordPair aUserPasswordPair)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
