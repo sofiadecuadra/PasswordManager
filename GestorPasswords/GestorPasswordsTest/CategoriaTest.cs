@@ -9,11 +9,15 @@ namespace GestorPasswordsTest
     {
         private Categoria unaCategoria;
         private TarjetaCredito unaTarjetaCredito;
+        Usuario unUsuario = new Usuario();
 
         [TestInitialize]
         public void Initialize()
         {
-            unaCategoria = new Categoria();
+            unaCategoria = new Categoria()
+            {
+                usuario = unUsuario
+            };
             unaTarjetaCredito = new TarjetaCredito()
             {
                 numero = "1234567891234567",
@@ -22,6 +26,7 @@ namespace GestorPasswordsTest
                 codigo = "234",
                 notas = ""
             };
+            unUsuario.listaCategorias.Add(unaCategoria);
         }   
         
         [TestMethod]
@@ -98,5 +103,22 @@ namespace GestorPasswordsTest
             unaTarjetaCredito.notas = notas;
             Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(unaTarjetaCredito));
         }
+
+        [TestMethod]
+        public void AgregarNumeroTarjetaCreditoYaExistente()
+        {
+            TarjetaCredito unaTarjetaCredito2 = new TarjetaCredito()
+            {
+                numero = "1234567891234567",
+                tipo = "Visa",
+                nombre = "Visa Gold",
+                codigo = "234",
+                notas = ""
+            };
+
+            unaCategoria.AgregarTarjetaCredito(unaTarjetaCredito2);
+            Assert.IsFalse(unaCategoria.AgregarTarjetaCredito(unaTarjetaCredito));
+        }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,20 +10,31 @@ namespace GestorPasswordsDominio
 {
     public class Categoria
     {
-        public HashSet<TarjetaCredito> listaTarjetasCredito;
+        public Usuario usuario;
+        public Hashtable listaTarjetasCredito;
 
         public Categoria()
         {
-            this.listaTarjetasCredito = new HashSet<TarjetaCredito>();
+            this.listaTarjetasCredito = new Hashtable();
         }
         public bool AgregarTarjetaCredito(TarjetaCredito unaTarjetaCredito)
         {
             if (ValidarTarjeta(unaTarjetaCredito))
             {
-                listaTarjetasCredito.Add(unaTarjetaCredito);
+                listaTarjetasCredito.Add(unaTarjetaCredito.numero, unaTarjetaCredito);
                 return true;
             }
             return false;
+        }
+
+        public bool NumeroDeTarjetaExistenteEnLaCategoria(string numeroTarjetaCredito)
+        {
+            return listaTarjetasCredito.ContainsKey(numeroTarjetaCredito);
+        }
+
+        public bool NumeroTarjetaCreditoNoExisteEnUsuario(string numeroTarjetaCredito)
+        {
+            return !usuario.NumeroTarjetaCreditoExistente(numeroTarjetaCredito);
         }
 
         public bool ValidarTarjeta(TarjetaCredito unaTarjetaCredito)
@@ -33,7 +45,8 @@ namespace GestorPasswordsDominio
                 TextoConLargoEntre3y25Caracteres(unaTarjetaCredito.tipo) &&
                 TextoConLargoEntre3y25Caracteres(unaTarjetaCredito.nombre) &&
                 CodigoTarjetaCreditoCon3o4Caracteres(unaTarjetaCredito.codigo) &&
-                NotasConLargoMenorA250Caracteres(unaTarjetaCredito.notas));
+                NotasConLargoMenorA250Caracteres(unaTarjetaCredito.notas) &&
+                NumeroTarjetaCreditoNoExisteEnUsuario(unaTarjetaCredito.numero));
         }
         public bool NotasConLargoMenorA250Caracteres (string notas)
         {
