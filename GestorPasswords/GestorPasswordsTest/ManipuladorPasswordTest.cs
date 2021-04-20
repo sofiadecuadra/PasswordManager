@@ -88,5 +88,9 @@ namespace GestorPasswordsTest
         [TestMethod]
         [ExpectedException(typeof(IncorrectLengthException))]
         public void PasswordConLargoMayorA25Caracteres() => PasswordHandler.PasswordStrength("012345678901234567890123456");
+
+        [TestMethod]
+        [ExpectedException(typeof(IncorrectLengthException))]
+        public void PasswordConLargoMenorA5Caracteres() => PasswordHandler.PasswordStrength("0123");
     }
 }
