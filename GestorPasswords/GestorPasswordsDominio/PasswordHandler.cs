@@ -11,6 +11,10 @@ namespace GestorPasswordsDominio
     {
         public static PasswordStrengthType PasswordStrength(String passwordToCheck)
         {
+            if (passwordToCheck.Length < 5 || passwordToCheck.Length > 25)
+            {
+                throw new IncorrectLengthException($"Length should be between 5 and 25 characters but is: {passwordToCheck.Length}");
+            }
             if (ContainsLessThan8Characters(passwordToCheck)) return PasswordStrengthType.Red;
             if (ContainsBetween8And14Characters(passwordToCheck)) return PasswordStrengthType.Orange;
             if (ContainsJustUpperAndLowerCaseSymbolsAndNumbers(passwordToCheck)) return PasswordStrengthType.DarkGreen;
@@ -22,7 +26,7 @@ namespace GestorPasswordsDominio
                             || ContainsJustUpperOrLowerCaseAndSymbolsOrNumbers(passwordToCheck);
             if (isYellow) return PasswordStrengthType.Yellow;
 
-            throw new IncorrectLengthException($"Length should be between 8 and 25 characters but is: ${passwordToCheck.Length}");
+            return PasswordStrengthType.Red;
         }
 
         private static bool ContainsJustUpperOrLowerCaseAndSymbolsOrNumbers(string passwordToCheck)

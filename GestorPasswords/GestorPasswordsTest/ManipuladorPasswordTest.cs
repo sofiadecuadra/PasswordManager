@@ -10,7 +10,7 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void EsPasswordDebil()
         {
-            Assert.AreEqual(PasswordStrengthType.Red, PasswordHandler.PasswordStrength("hola"));
+            Assert.AreEqual(PasswordStrengthType.Red, PasswordHandler.PasswordStrength("hola1"));
         }
 
         [TestMethod]
