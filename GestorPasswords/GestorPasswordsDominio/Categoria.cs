@@ -21,11 +21,20 @@ namespace GestorPasswordsDominio
         {
             if (ValidarTarjeta(unaTarjetaCredito))
             {
-                if (usuario.NumeroTarjetaCreditoExistente(unaTarjetaCredito.numero)) return false;
                 listaTarjetasCredito.Add(unaTarjetaCredito.numero, unaTarjetaCredito);
                 return true;
             }
             return false;
+        }
+
+        public bool NumeroDeTarjetaExistenteEnLaCategoria(string numeroTarjetaCredito)
+        {
+            return listaTarjetasCredito.ContainsKey(numeroTarjetaCredito);
+        }
+
+        public bool NumeroTarjetaCreditoNoExisteEnUsuario(string numeroTarjetaCredito)
+        {
+            return !usuario.NumeroTarjetaCreditoExistente(numeroTarjetaCredito);
         }
 
         public bool ValidarTarjeta(TarjetaCredito unaTarjetaCredito)
@@ -36,7 +45,8 @@ namespace GestorPasswordsDominio
                 TextoConLargoEntre3y25Caracteres(unaTarjetaCredito.tipo) &&
                 TextoConLargoEntre3y25Caracteres(unaTarjetaCredito.nombre) &&
                 CodigoTarjetaCreditoCon3o4Caracteres(unaTarjetaCredito.codigo) &&
-                NotasConLargoMenorA250Caracteres(unaTarjetaCredito.notas));
+                NotasConLargoMenorA250Caracteres(unaTarjetaCredito.notas) &&
+                NumeroTarjetaCreditoNoExisteEnUsuario(unaTarjetaCredito.numero));
         }
         public bool NotasConLargoMenorA250Caracteres (string notas)
         {

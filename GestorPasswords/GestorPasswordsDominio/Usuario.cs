@@ -17,9 +17,9 @@ namespace GestorPasswordsDominio
 
         public bool NumeroTarjetaCreditoExistente(string numero)
         {
-            foreach (Categoria categoria in this.listaCategorias)
+            foreach (Categoria unaCategoria in this.listaCategorias)
             {
-                if (categoria.listaTarjetasCredito.ContainsKey(numero))
+                if (unaCategoria.NumeroDeTarjetaExistenteEnLaCategoria(numero))
                 {
                     return true;
                 }
