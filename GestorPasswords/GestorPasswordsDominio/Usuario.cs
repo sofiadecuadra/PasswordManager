@@ -15,11 +15,11 @@ namespace GestorPasswordsDominio
             listaCategorias = new List<Categoria>();
         }
 
-        public bool NumeroTarjetaCreditoExistente(string numero)
+        public bool NumeroTarjetaCreditoExistente(string numeroTarjetaCredito)
         {
             foreach (Categoria unaCategoria in this.listaCategorias)
             {
-                if (unaCategoria.NumeroDeTarjetaExistenteEnLaCategoria(numero))
+                if (unaCategoria.NumeroDeTarjetaExistenteEnLaCategoria(numeroTarjetaCredito))
                 {
                     return true;
                 }
