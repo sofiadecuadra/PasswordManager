@@ -5,7 +5,7 @@ using System;
 namespace GestorPasswordsTest
 {
     [TestClass]
-    public class ManipuladorPasswordTest
+    public class PasswordHandlerTest
     {
         [TestMethod]
         public void EsPasswordDebil()
