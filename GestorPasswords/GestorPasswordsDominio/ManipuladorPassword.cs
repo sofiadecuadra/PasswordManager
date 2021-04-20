@@ -17,9 +17,14 @@ namespace GestorPasswordsDominio
 
             bool esVerdeClaro = ContieneSoloMayusculasYMinusculas(passwordToCheck) || ContieneMayusculasMinusculasYSimbolosONumeros(passwordToCheck);
             if (esVerdeClaro) return TipoFortaleza.VerdeClaro;
-            if (ContieneSoloMayusculasOMinusculas(passwordToCheck) || Regex.IsMatch(passwordToCheck, @"(?=^.{14,}$)((?=.*\d)(?=.*\W+))(?![.\n]).*$")) return TipoFortaleza.Amarillo;
+            if (ContieneSoloMayusculasOMinusculas(passwordToCheck) || ContieneSoloNumerosYSimbolos(passwordToCheck)) return TipoFortaleza.Amarillo;
 
             return TipoFortaleza.Rojo;
+        }
+
+        private static bool ContieneSoloNumerosYSimbolos(string passwordToCheck)
+        {
+            return Regex.IsMatch(passwordToCheck, @"(?=^.{14,}$)((?=.*\d)(?=.*\W+))(?![.\n]).*$");
         }
 
         private static bool ContieneMayusculasMinusculasYSimbolosONumeros(string passwordToCheck)
