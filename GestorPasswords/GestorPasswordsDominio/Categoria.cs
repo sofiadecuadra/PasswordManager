@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,17 +10,19 @@ namespace GestorPasswordsDominio
 {
     public class Categoria
     {
-        public HashSet<TarjetaCredito> listaTarjetasCredito;
+        public Usuario usuario;
+        public Hashtable listaTarjetasCredito;
 
         public Categoria()
         {
-            this.listaTarjetasCredito = new HashSet<TarjetaCredito>();
+            this.listaTarjetasCredito = new Hashtable();
         }
         public bool AgregarTarjetaCredito(TarjetaCredito unaTarjetaCredito)
         {
             if (ValidarTarjeta(unaTarjetaCredito))
             {
-                listaTarjetasCredito.Add(unaTarjetaCredito);
+                if (usuario.NumeroTarjetaCreditoExistente(unaTarjetaCredito.numero)) return false;
+                listaTarjetasCredito.Add(unaTarjetaCredito.numero, unaTarjetaCredito);
                 return true;
             }
             return false;

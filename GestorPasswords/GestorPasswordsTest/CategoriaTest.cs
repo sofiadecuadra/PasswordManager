@@ -9,6 +9,7 @@ namespace GestorPasswordsTest
     {
         private Categoria unaCategoria;
         private TarjetaCredito unaTarjetaCredito;
+        Usuario unUsuario = new Usuario();
 
         [TestInitialize]
         public void Initialize()
@@ -22,6 +23,8 @@ namespace GestorPasswordsTest
                 codigo = "234",
                 notas = ""
             };
+            unUsuario.listaCategorias.Add(unaCategoria);
+            unaCategoria.usuario = unUsuario;
         }   
         
         [TestMethod]
