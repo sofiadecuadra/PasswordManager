@@ -14,6 +14,7 @@ namespace GestorPasswordsDominio
             if (ContieneMenosDe8Caracteres(passwordToCheck)) return TipoFortaleza.Rojo;
             if (ContieneEntre8Y14Caracteres(passwordToCheck)) return TipoFortaleza.Naranja;
             if (ContieneMayusculasMinusculasNumerosYEspeciales(passwordToCheck)) return TipoFortaleza.VerdeOscuro;
+
             bool esVerdeClaro = ContieneSoloMayusculasYMinusculas(passwordToCheck) || ContieneMayusculasMinusculasYSimbolosOEspeciales(passwordToCheck);
             if (esVerdeClaro) return TipoFortaleza.VerdeClaro;
             if (ContieneSoloMayusculasOMinusculas(passwordToCheck)) return TipoFortaleza.Amarillo;
