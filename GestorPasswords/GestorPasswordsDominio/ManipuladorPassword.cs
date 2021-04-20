@@ -17,7 +17,7 @@ namespace GestorPasswordsDominio
 
             bool esVerdeClaro = ContieneSoloMayusculasYMinusculas(passwordToCheck) || ContieneMayusculasMinusculasYSimbolosONumeros(passwordToCheck);
             if (esVerdeClaro) return TipoFortaleza.VerdeClaro;
-            if (ContieneSoloMayusculasOMinusculas(passwordToCheck)) return TipoFortaleza.Amarillo;
+            if (ContieneSoloMayusculasOMinusculas(passwordToCheck) || Regex.IsMatch(passwordToCheck, @"(?=^.{14,}$)((?=.*\d)(?=.*\W+))(?![.\n]).*$")) return TipoFortaleza.Amarillo;
 
             return TipoFortaleza.Rojo;
         }
