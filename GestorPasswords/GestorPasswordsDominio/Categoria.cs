@@ -9,7 +9,23 @@ namespace GestorPasswordsDominio
 {
     public class Categoria
     {
+        public HashSet<TarjetaCredito> listaTarjetasCredito;
+
+        public Categoria()
+        {
+            this.listaTarjetasCredito = new HashSet<TarjetaCredito>();
+        }
         public bool AgregarTarjetaCredito(TarjetaCredito unaTarjetaCredito)
+        {
+            if (ValidarTarjeta(unaTarjetaCredito))
+            {
+                listaTarjetasCredito.Add(unaTarjetaCredito);
+                return true;
+            }
+            return false;
+        }
+
+        public bool ValidarTarjeta(TarjetaCredito unaTarjetaCredito)
         {
             return (
                 NumeroTarjetaCreditoContieneSoloDigitos(unaTarjetaCredito.numero) &&
@@ -19,7 +35,6 @@ namespace GestorPasswordsDominio
                 CodigoTarjetaCreditoCon3o4Caracteres(unaTarjetaCredito.codigo) &&
                 NotasConLargoMenorA250Caracteres(unaTarjetaCredito.notas));
         }
-
         public bool NotasConLargoMenorA250Caracteres (string notas)
         {
             return notas.Length <= 250;
