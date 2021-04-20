@@ -9,7 +9,7 @@ namespace GestorPasswordsDominio
 {
     public class ManipuladorPassword
     {
-        public static TipoFortaleza FortalezaDePassword(String passwordToCheck)
+        public static TipoFortaleza PasswordStrength(String passwordToCheck)
         {
             if (ContieneMenosDe8Caracteres(passwordToCheck)) return TipoFortaleza.Rojo;
             if (ContieneEntre8Y14Caracteres(passwordToCheck)) return TipoFortaleza.Naranja;
@@ -22,7 +22,7 @@ namespace GestorPasswordsDominio
                             || ContieneSoloMayusculasOMinusculasYSimbolosONumeros(passwordToCheck);
             if (esAmarillo) return TipoFortaleza.Amarillo;
 
-            return TipoFortaleza.Rojo;
+            throw new IncorrectLengthException($"Length should be between 8 and 25 characters but is: ${passwordToCheck.Length}");
         }
 
         private static bool ContieneSoloMayusculasOMinusculasYSimbolosONumeros(string passwordToCheck)
