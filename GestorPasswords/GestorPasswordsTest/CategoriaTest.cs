@@ -146,7 +146,7 @@ namespace GestorPasswordsTest
                 Site = "mySite"
             };
 
-            bool firstUserAdded = aCategory.AddUserPasswordPair(aUserPasswordPair);
+            _ = aCategory.AddUserPasswordPair(aUserPasswordPair);
 
             UserPasswordPair anotherUserPasswordPair = new UserPasswordPair()
             {
