@@ -128,11 +128,35 @@ namespace GestorPasswordsTest
             {
                 Password = "thisIsAPassword",
                 Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite"
             };
-            aUserPasswordPair.Username = "myUserName"; 
-            aUserPasswordPair.Site = "mySite";
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
+        }
+
+        [TestMethod]
+        public void AddExistingdUserPasswordPair()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAPassword",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite"
+            };
+
+            bool firstUserAdded = aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair anotherUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword",
+                Notes = "Heello notes",
+                Username = "myUserName",
+                Site = "mySite"
+            };
+
+            Assert.IsFalse(aCategory.AddUserPasswordPair(anotherUserPasswordPair));
         }
     }
 }

@@ -9,15 +9,18 @@ namespace GestorPasswordsDominio
     public class UserPasswordPair
     {
         public string Password { get; set; }
+
+        private string Username_;
         public string Username
         {
-            get { return Username; }
-            set { this.Username = value.ToLower(); }
+            get { return Username_; }
+            set { Username_ = value.ToLower(); }
         }
+        private string Site_;
         public string Site
         {
-            get { return Site; }
-            set { Site = value.ToLower(); }
+            get { return Site_; }
+            set { Site_ = value.ToLower(); }
         }
         public string Notes { get; set; }
     }
