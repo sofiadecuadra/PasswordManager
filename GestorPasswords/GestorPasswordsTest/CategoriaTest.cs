@@ -126,7 +126,14 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void AddValidUserPasswordPair()
         {
-            UserPasswordPair aUserPasswordPair = new UserPasswordPair();
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                username = "myUserName",
+                password = "thisIsAPassword",
+                site = "mySite",
+                notes = "these are my notes",
+            };
+
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
         }
 

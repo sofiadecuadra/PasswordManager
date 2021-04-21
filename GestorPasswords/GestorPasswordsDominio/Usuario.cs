@@ -26,7 +26,21 @@ namespace GestorPasswordsDominio
             }
             return false;
         }
-    }
 
-   
+        public bool UserPasswordPairExists(string username, string site)
+        {
+            bool pairExists = false;
+
+            foreach (Categoria unaCategoria in this.listaCategorias)
+            {
+                
+                if (unaCategoria.UserPasswordPairAlredyExistsInCategory(username, site))
+                {
+                    pairExists = true;
+                    break;
+                }
+            }
+            return pairExists;
+        }
+    }
 }

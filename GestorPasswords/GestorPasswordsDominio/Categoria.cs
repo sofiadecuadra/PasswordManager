@@ -12,10 +12,13 @@ namespace GestorPasswordsDominio
     {
         public Usuario usuario;
         public Hashtable listaTarjetasCredito;
+        public Hashtable userPasswordPairsHash;
+
 
         public Categoria()
         {
             this.listaTarjetasCredito = new Hashtable();
+            this.userPasswordPairsHash = new Hashtable();
         }
         public bool AgregarTarjetaCredito(TarjetaCredito unaTarjetaCredito)
         {
@@ -77,7 +80,46 @@ namespace GestorPasswordsDominio
 
         public bool AddUserPasswordPair(UserPasswordPair aUserPasswordPair)
         {
-            throw new NotImplementedException();
+            bool pairAdded = false;
+            if (PasswordHasValidLength(aUserPasswordPair.password) && UsernameHasValidLength(aUserPasswordPair.username)
+                 && siteHasValidLength(aUserPasswordPair.site) && notesHaveValidLength(aUserPasswordPair.notes) && !UserPasswordPairAlredyExistsInUser(aUserPasswordPair.username, aUserPasswordPair.site))
+            {
+                // codigo de agregar a hash
+                pairAdded = true;
+            }
+
+            return pairAdded;
+        }
+
+        private static bool PasswordHasValidLength(String password)
+        {
+            return password.Length >= 5 && password.Length <= 25;
+        }
+
+        private static bool UsernameHasValidLength(String username)
+        {
+            return username.Length >= 5 && username.Length <= 25;
+        }
+
+        private static bool siteHasValidLength(String site)
+        {
+            return site.Length >= 3 && site.Length <= 25;
+        }
+
+        private static bool notesHaveValidLength(String notes)
+        {
+            return notes.Length <= 250;
+        }
+
+        private bool UserPasswordPairAlredyExistsInUser(string username, string site)
+        {
+            return usuario.UserPasswordPairExists(username, site);
+        }
+
+        public bool UserPasswordPairAlredyExistsInCategory(string username, string site)
+        {
+            return userPasswordPairsHash.ContainsKey(site + username);
         }
     }
 }
+// VALIDAR CASE SENSITIVE

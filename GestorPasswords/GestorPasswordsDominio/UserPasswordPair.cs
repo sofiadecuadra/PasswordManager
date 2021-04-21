@@ -8,5 +8,9 @@ namespace GestorPasswordsDominio
 {
     public class UserPasswordPair
     {
+        public String password { get; set; }
+        public String username { get; set; }
+        public String site { get; set; }
+        public String notes { get; set; }
     }
 }
