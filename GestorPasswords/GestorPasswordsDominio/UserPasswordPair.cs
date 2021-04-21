@@ -12,7 +12,7 @@ namespace GestorPasswordsDominio
         public string Username
         {
             get { return Username; }
-            set { Username = value.ToLower(); }
+            set { this.Username = value.ToLower(); }
         }
         public string Site
         {
