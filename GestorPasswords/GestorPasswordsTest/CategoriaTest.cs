@@ -9,14 +9,15 @@ namespace GestorPasswordsTest
     {
         private Categoria aCategory;
         private TarjetaCredito unaTarjetaCredito;
-        Usuario unUsuario = new Usuario();
+        Usuario aUser;
 
         [TestInitialize]
         public void Initialize()
         {
+            aUser = new Usuario();
             aCategory = new Categoria()
             {
-                usuario = unUsuario
+                User = aUser
             };
             unaTarjetaCredito = new TarjetaCredito()
             {
@@ -26,7 +27,7 @@ namespace GestorPasswordsTest
                 codigo = "234",
                 notas = ""
             };
-            unUsuario.listaCategorias.Add(aCategory);
+            aUser.listOfCategories.Add(aCategory);
         }   
         
         [TestMethod]
@@ -120,22 +121,18 @@ namespace GestorPasswordsTest
             Assert.IsFalse(aCategory.AgregarTarjetaCredito(unaTarjetaCredito));
         }
 
-        // -------------------------------------------------
-        // Test para agregar parUsuarioContrasena
-
         [TestMethod]
         public void AddValidUserPasswordPair()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
-                Username = "myUserName",
                 Password = "thisIsAPassword",
-                Site = "mySite",
                 Notes = "these are my notes",
             };
+            aUserPasswordPair.Site = "mySite";
+            aUserPasswordPair.Username = "myUserName";
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
         }
-
     }
 }

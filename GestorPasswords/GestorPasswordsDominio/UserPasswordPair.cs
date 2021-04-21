@@ -19,6 +19,6 @@ namespace GestorPasswordsDominio
             get { return Site; }
             set { Site = value.ToLower(); }
         }
-        public String Notes { get; set; }
+        public string Notes { get; set; }
     }
 }

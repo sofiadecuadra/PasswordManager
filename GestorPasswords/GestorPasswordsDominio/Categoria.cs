@@ -76,8 +76,6 @@ namespace GestorPasswordsDominio
             return false;
         }
 
-        // -----------------------------------------------
-
         public bool AddUserPasswordPair(UserPasswordPair aUserPasswordPair)
         {
             bool pairAdded = false;
@@ -127,4 +125,3 @@ namespace GestorPasswordsDominio
         }
     }
 }
-// VALIDAR CASE SENSITIVE
