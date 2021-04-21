@@ -136,6 +136,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ExceptionExistingUserPasswordPair))]
         public void AddExistingdUserPasswordPair()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
