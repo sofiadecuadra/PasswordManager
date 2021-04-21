@@ -10,7 +10,7 @@ namespace GestorPasswordsDominio
 {
     public class Categoria
     {
-        public Usuario usuario;
+        public Usuario User { get; set; }
         public Hashtable listaTarjetasCredito;
         public Hashtable userPasswordPairsHash;
 
@@ -37,7 +37,7 @@ namespace GestorPasswordsDominio
 
         public bool NumeroTarjetaCreditoNoExisteEnUsuario(string numeroTarjetaCredito)
         {
-            return !usuario.NumeroTarjetaCreditoExistente(numeroTarjetaCredito);
+            return !User.NumeroTarjetaCreditoExistente(numeroTarjetaCredito);
         }
 
         public bool ValidarTarjeta(TarjetaCredito unaTarjetaCredito)
@@ -81,14 +81,19 @@ namespace GestorPasswordsDominio
         public bool AddUserPasswordPair(UserPasswordPair aUserPasswordPair)
         {
             bool pairAdded = false;
-            if (PasswordHasValidLength(aUserPasswordPair.password) && UsernameHasValidLength(aUserPasswordPair.username)
-                 && siteHasValidLength(aUserPasswordPair.site) && notesHaveValidLength(aUserPasswordPair.notes) && !UserPasswordPairAlredyExistsInUser(aUserPasswordPair.username, aUserPasswordPair.site))
+            if (UserPasswordPairHasValidData(aUserPasswordPair))
             {
-                // codigo de agregar a hash
+                this.userPasswordPairsHash.Add(aUserPasswordPair.Site + aUserPasswordPair.Username, aUserPasswordPair);
                 pairAdded = true;
             }
 
             return pairAdded;
+        }
+
+        private bool UserPasswordPairHasValidData(UserPasswordPair aUserPasswordPair)
+        {
+            return PasswordHasValidLength(aUserPasswordPair.Password) && UsernameHasValidLength(aUserPasswordPair.Username)
+                             && siteHasValidLength(aUserPasswordPair.Site) && notesHaveValidLength(aUserPasswordPair.Notes) && !UserPasswordPairAlredyExistsInUser(aUserPasswordPair.Username, aUserPasswordPair.Site);
         }
 
         private static bool PasswordHasValidLength(String password)
@@ -113,12 +118,12 @@ namespace GestorPasswordsDominio
 
         private bool UserPasswordPairAlredyExistsInUser(string username, string site)
         {
-            return usuario.UserPasswordPairExists(username, site);
+            return this.User.UserPasswordPairExists(username, site);
         }
 
         public bool UserPasswordPairAlredyExistsInCategory(string username, string site)
         {
-            return userPasswordPairsHash.ContainsKey(site + username);
+            return this.userPasswordPairsHash.ContainsKey(site + username);
         }
     }
 }

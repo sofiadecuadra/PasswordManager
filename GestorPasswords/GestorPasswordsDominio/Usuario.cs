@@ -8,16 +8,16 @@ namespace GestorPasswordsDominio
 {
     public class Usuario
     {
-        public List<Categoria> listaCategorias;
+        public List<Categoria> listOfCategories;
 
         public Usuario()
         {
-            listaCategorias = new List<Categoria>();
+            listOfCategories = new List<Categoria>();
         }
 
         public bool NumeroTarjetaCreditoExistente(string numeroTarjetaCredito)
         {
-            foreach (Categoria unaCategoria in this.listaCategorias)
+            foreach (Categoria unaCategoria in this.listOfCategories)
             {
                 if (unaCategoria.NumeroDeTarjetaExistenteEnLaCategoria(numeroTarjetaCredito))
                 {
@@ -31,10 +31,10 @@ namespace GestorPasswordsDominio
         {
             bool pairExists = false;
 
-            foreach (Categoria unaCategoria in this.listaCategorias)
+            foreach (Categoria aCategory in this.listOfCategories)
             {
                 
-                if (unaCategoria.UserPasswordPairAlredyExistsInCategory(username, site))
+                if (aCategory.UserPasswordPairAlredyExistsInCategory(username, site))
                 {
                     pairExists = true;
                     break;

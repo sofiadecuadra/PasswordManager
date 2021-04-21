@@ -8,9 +8,17 @@ namespace GestorPasswordsDominio
 {
     public class UserPasswordPair
     {
-        public String password { get; set; }
-        public String username { get; set; }
-        public String site { get; set; }
-        public String notes { get; set; }
+        public string Password { get; set; }
+        public string Username
+        {
+            get { return Username; }
+            set { Username = value.ToLower(); }
+        }
+        public string Site
+        {
+            get { return Site; }
+            set { Site = value.ToLower(); }
+        }
+        public String Notes { get; set; }
     }
 }
