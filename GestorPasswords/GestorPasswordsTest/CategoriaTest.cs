@@ -174,5 +174,12 @@ namespace GestorPasswordsTest
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidUsernameLength))]
+        public void AdddUserPasswordPairWithUsernameLengthGreaterThan25()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
