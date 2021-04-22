@@ -8,10 +8,10 @@ namespace GestorPasswordsDominio
 {
     public class TarjetaCredito
     {
-        public string numero { get; set; }
-        public string tipo { get; set; }
-        public string nombre { get; set; }
-        public string codigo { get; set; }
-        public string notas { get; set; }
+        public string number { get; set; }
+        public string type { get; set; }
+        public string name { get; set; }
+        public string code { get; set; }
+        public string notes { get; set; }
     }
 }

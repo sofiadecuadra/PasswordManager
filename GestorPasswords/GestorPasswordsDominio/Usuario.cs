@@ -19,7 +19,7 @@ namespace GestorPasswordsDominio
         {
             foreach (Categoria unaCategoria in this.listOfCategories)
             {
-                if (unaCategoria.NumeroDeTarjetaExistenteEnLaCategoria(numeroTarjetaCredito))
+                if (unaCategoria.CreditCardNumberAlreadyExistsInCategory(numeroTarjetaCredito))
                 {
                     return true;
                 }

@@ -11,69 +11,65 @@ namespace GestorPasswordsDominio
     public class Categoria
     {
         public Usuario User { get; set; }
-        public Hashtable listaTarjetasCredito;
+        public Hashtable creditCardHashTable;
         public Hashtable userPasswordPairsHash;
 
 
         public Categoria()
         {
-            this.listaTarjetasCredito = new Hashtable();
+            this.creditCardHashTable = new Hashtable();
             this.userPasswordPairsHash = new Hashtable();
         }
-        public bool AgregarTarjetaCredito(TarjetaCredito unaTarjetaCredito)
+        public bool AddCreditCard(TarjetaCredito aCreditCard)
         {
-            if (ValidarTarjeta(unaTarjetaCredito))
+            if (CreditCardIsValid(aCreditCard))
             {
-                listaTarjetasCredito.Add(unaTarjetaCredito.numero, unaTarjetaCredito);
+                this.creditCardHashTable.Add(aCreditCard.number, aCreditCard);
                 return true;
             }
             return false;
         }
 
-        public bool NumeroDeTarjetaExistenteEnLaCategoria(string numeroTarjetaCredito)
+        public bool CreditCardNumberAlreadyExistsInCategory(string creditCardNumber)
         {
-            return listaTarjetasCredito.ContainsKey(numeroTarjetaCredito);
+            return creditCardHashTable.ContainsKey(creditCardNumber);
         }
 
-        public bool NumeroTarjetaCreditoNoExisteEnUsuario(string numeroTarjetaCredito)
+        public bool CreditCardNumberAlreadyExistsInUser(string creditCardNumber)
         {
-            return !User.NumeroTarjetaCreditoExistente(numeroTarjetaCredito);
+            return !User.NumeroTarjetaCreditoExistente(creditCardNumber);
         }
 
-        public bool ValidarTarjeta(TarjetaCredito unaTarjetaCredito)
+        public bool CreditCardIsValid(TarjetaCredito aCreditCard)
         {
             return (
-                NumeroTarjetaCreditoContieneSoloDigitos(unaTarjetaCredito.numero) &&
-                NumeroTarjetaCreditoContiene16Digitos(unaTarjetaCredito.numero) &&
-                TextoConLargoEntre3y25Caracteres(unaTarjetaCredito.tipo) &&
-                TextoConLargoEntre3y25Caracteres(unaTarjetaCredito.nombre) &&
-                CodigoTarjetaCreditoCon3o4Caracteres(unaTarjetaCredito.codigo) &&
-                NotasConLargoMenorA250Caracteres(unaTarjetaCredito.notas) &&
-                NumeroTarjetaCreditoNoExisteEnUsuario(unaTarjetaCredito.numero));
-        }
-        public bool NotasConLargoMenorA250Caracteres (string notas)
-        {
-            return notas.Length <= 250;
-        }
-        public bool CodigoTarjetaCreditoCon3o4Caracteres(string codigo)
-        {
-            return codigo.Length == 3 || codigo.Length == 4;
+                CreditCardContainsOnlyDigits(aCreditCard.number) &&
+                CreditCardHasValidLength(aCreditCard.number) &&
+                LengthBetween3And25(aCreditCard.type) &&
+                LengthBetween3And25(aCreditCard.name) &&
+                CodeHasValidLength(aCreditCard.code) &&
+                notesHaveValidLength(aCreditCard.notes) &&
+                CreditCardNumberAlreadyExistsInUser(aCreditCard.number));
         }
 
-        public bool TextoConLargoEntre3y25Caracteres(string texto)
+        public bool CodeHasValidLength(string creditCardCode)
         {
-            return texto.Length >= 3 && texto.Length <= 25;
+            return creditCardCode.Length == 3 || creditCardCode.Length == 4;
         }
 
-        public bool NumeroTarjetaCreditoContieneSoloDigitos(string numeroTarjetaCredito)
+        public bool LengthBetween3And25(string stringToCheck)
         {
-            return Regex.IsMatch(numeroTarjetaCredito, @"^[0-9]+$");
+            return stringToCheck.Length >= 3 && stringToCheck.Length <= 25;
         }
 
-        public bool NumeroTarjetaCreditoContiene16Digitos(string numeroTarjetaCredito)
+        public bool CreditCardContainsOnlyDigits(string creditCardNumber)
         {
-            if (numeroTarjetaCredito.Length == 16) return true;
-            return false;
+            return Regex.IsMatch(creditCardNumber, @"^[0-9]+$");
+        }
+
+        public bool CreditCardHasValidLength(string creditCardNumber)
+        {
+            return creditCardNumber.Length == 16;
         }
 
         public bool AddUserPasswordPair(UserPasswordPair aUserPasswordPair)
