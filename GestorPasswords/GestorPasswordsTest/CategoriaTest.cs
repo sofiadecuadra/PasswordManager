@@ -138,7 +138,25 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void AddUserPasswordPairToSameSiteButDifferentUsername()
         {
-            throw new NotImplementedException();
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAPassword",
+                Notes = "these are my notes",
+                Username = "myUserName1",
+                Site = "mySite1"
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair anotherUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAPassword",
+                Notes = "these are my notes",
+                Username = "myUserName2",
+                Site = "mySite1"
+            };
+
+            Assert.IsTrue(aCategory.AddUserPasswordPair(anotherUserPasswordPair));
         }
 
         [TestMethod]

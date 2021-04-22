@@ -98,7 +98,6 @@ namespace GestorPasswordsDominio
                 throw new ExceptionUserPasswordPairHasInvalidSiteLength("The site's length must be between 5 and 25, but it's current length is " + aUserPasswordPair.Site);
             }
 
-
             if (!notesHaveValidLength(aUserPasswordPair.Notes))
             {
                 throw new ExceptionUserPasswordPairHasInvalidNotesLength("The notes' length must be up to 250, but it's current length is " + aUserPasswordPair.Notes);
