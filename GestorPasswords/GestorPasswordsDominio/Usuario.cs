@@ -15,16 +15,18 @@ namespace GestorPasswordsDominio
             listOfCategories = new List<Categoria>();
         }
 
-        public bool NumeroTarjetaCreditoExistente(string numeroTarjetaCredito)
+        public bool CreditCardNumberExists(string creditCardNumber)
         {
-            foreach (Categoria unaCategoria in this.listOfCategories)
+            bool creditCardExists = false;
+            foreach (Categoria aCategory in this.listOfCategories)
             {
-                if (unaCategoria.NumeroDeTarjetaExistenteEnLaCategoria(numeroTarjetaCredito))
+                if (aCategory.CreditCardNumberAlreadyExistsInCategory(creditCardNumber))
                 {
-                    return true;
+                    creditCardExists = true;
+                    break;
                 }
             }
-            return false;
+            return creditCardExists;
         }
 
         public bool UserPasswordPairExists(string username, string site)
