@@ -179,7 +179,15 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidUsernameLength))]
         public void AdddUserPasswordPairWithUsernameLengthGreaterThan25()
         {
-            throw new NotImplementedException();
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAPassword",
+                Notes = "these are my notes",
+                Username = "myUsernameHasInvalidLength",
+                Site = "mySite"
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
         }
     }
 }
