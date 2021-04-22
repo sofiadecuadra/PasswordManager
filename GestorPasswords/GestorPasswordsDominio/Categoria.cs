@@ -79,22 +79,20 @@ namespace GestorPasswordsDominio
         public bool AddUserPasswordPair(UserPasswordPair aUserPasswordPair)
         {
             bool pairAdded = false;
-            if (UserPasswordPairHasValidData(aUserPasswordPair))
+
+            if (UserPasswordPairAlredyExistsInUser(aUserPasswordPair.Username, aUserPasswordPair.Site))
+            {
+                throw new ExceptionExistingUserPasswordPair();
+            }
+
+            if (PasswordHasValidLength(aUserPasswordPair.Password) && UsernameHasValidLength(aUserPasswordPair.Username)
+                             && siteHasValidLength(aUserPasswordPair.Site) && notesHaveValidLength(aUserPasswordPair.Notes))
             {
                 this.userPasswordPairsHash.Add(aUserPasswordPair.Site + aUserPasswordPair.Username, aUserPasswordPair);
                 pairAdded = true;
             }
-            else if (UserPasswordPairAlredyExistsInUser(aUserPasswordPair.Username, aUserPasswordPair.Site))
-            {
-                throw new ExceptionExistingUserPasswordPair();
-            }
-            return pairAdded;
-        }
 
-        private bool UserPasswordPairHasValidData(UserPasswordPair aUserPasswordPair)
-        {
-            return PasswordHasValidLength(aUserPasswordPair.Password) && UsernameHasValidLength(aUserPasswordPair.Username)
-                             && siteHasValidLength(aUserPasswordPair.Site) && notesHaveValidLength(aUserPasswordPair.Notes) && !UserPasswordPairAlredyExistsInUser(aUserPasswordPair.Username, aUserPasswordPair.Site);
+            return pairAdded;
         }
 
         private static bool PasswordHasValidLength(String password)
