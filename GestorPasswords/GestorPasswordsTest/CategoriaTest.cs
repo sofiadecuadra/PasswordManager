@@ -159,5 +159,12 @@ namespace GestorPasswordsTest
 
             Assert.IsFalse(aCategory.AddUserPasswordPair(anotherUserPasswordPair));
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidUsernameLength))]
+        public void AdddUserPasswordPairWithInvalidUsernameLength()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
