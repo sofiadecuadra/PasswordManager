@@ -84,7 +84,10 @@ namespace GestorPasswordsDominio
                 this.userPasswordPairsHash.Add(aUserPasswordPair.Site + aUserPasswordPair.Username, aUserPasswordPair);
                 pairAdded = true;
             }
-
+            else if (UserPasswordPairAlredyExistsInUser(aUserPasswordPair.Username, aUserPasswordPair.Site))
+            {
+                throw new ExceptionExistingUserPasswordPair();
+            }
             return pairAdded;
         }
 
