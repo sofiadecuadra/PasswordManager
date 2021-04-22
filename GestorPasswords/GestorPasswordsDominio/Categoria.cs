@@ -70,7 +70,7 @@ namespace GestorPasswordsDominio
 
         public bool CreditCardNumberAlreadyExistsInUser(string creditCardNumber)
         {
-            return User.NumeroTarjetaCreditoExistente(creditCardNumber);
+            return User.CreditCardNumberExists(creditCardNumber);
         }
 
         public bool codeHasValidLength(string creditCardCode)
