@@ -95,12 +95,12 @@ namespace GestorPasswordsDominio
                 throw new ExceptionUserPasswordPairHasInvalidPasswordLength("The password's length must be between 5 and 25, but it's current length is " + aUserPasswordPair.Password);
             }
 
-            if (aUserPasswordPair.Password.Length < 3)
+            if (!siteHasValidLength(aUserPasswordPair.Site))
             {
                 throw new ExceptionUserPasswordPairHasInvalidSiteLength("The site's length must be between 5 and 25, but it's current length is " + aUserPasswordPair.Site);
             }
 
-            if (siteHasValidLength(aUserPasswordPair.Site) && notesHaveValidLength(aUserPasswordPair.Notes))
+            if (notesHaveValidLength(aUserPasswordPair.Notes))
             {
                 this.userPasswordPairsHash.Add(aUserPasswordPair.Site + aUserPasswordPair.Username, aUserPasswordPair);
                 pairAdded = true;
