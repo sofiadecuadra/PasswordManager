@@ -239,7 +239,15 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidSiteLength))]
         public void AdddUserPasswordPairWithSiteLengthGreaterThan25()
         {
-            throw new NotImplementedException();
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "password",
+                Notes = "these are my notes",
+                Username = "myUsername",
+                Site = "This site has an invalid length, so it mustnt be used"
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
         }
     }
 }
