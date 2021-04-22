@@ -24,10 +24,43 @@ namespace GestorPasswordsDominio
         {
             if (CreditCardIsValid(aCreditCard))
             {
-                this.creditCardHashTable.Add(aCreditCard.number, aCreditCard);
+                this.creditCardHashTable.Add(aCreditCard.Number, aCreditCard);
                 return true;
             }
             return false;
+        }
+
+        public bool CreditCardIsValid(TarjetaCredito aCreditCard)
+        {
+            if (!CreditCardContainsOnlyDigits(aCreditCard.Number))
+            {
+                throw new ExceptionCreditCardDoesNotContainOnlyDigits("The credit card number must only contain digits");
+            }
+            if (!CreditCardNumberHasValidLength(aCreditCard.Number))
+            {
+                throw new ExceptionCreditCardHasInvalidNumberLength("The credit card number must contain 16 digits, but currently it has " + aCreditCard.Number.Length);
+            }
+            if (!LengthBetween3And25(aCreditCard.Type))
+            {
+                throw new ExceptionCreditCardHasInvalidTypeLength("The type's length must be between 3 and 25, but it's current length is " + aCreditCard.Type.Length);
+            }
+            if (!LengthBetween3And25(aCreditCard.Name))
+            {
+                throw new ExceptionCreditCardHasInvalidNameLength("The name's length must be between 3 and 25, but it's current length is " + aCreditCard.Name.Length);
+            }
+            if (!codeHasValidLength(aCreditCard.Code))
+            {
+                throw new ExceptionCreditCardHasInvalidCodeLength("The code's length must be between 3 and 4, but it's current length is " + aCreditCard.Code.Length);
+            }
+            if (!notesHaveValidLength(aCreditCard.Notes))
+            {
+                throw new ExceptionCreditCardHasInvalidNotesLength("The notes' length must be up to 250, but it's current length is " + aCreditCard.Notes.Length);
+            }
+            if (CreditCardNumberAlreadyExistsInUser(aCreditCard.Number))
+            {
+                throw new ExceptionCreditCardNumberAlreadyExistsInUser("The credit card number already exists in user");
+            }
+            return true;
         }
 
         public bool CreditCardNumberAlreadyExistsInCategory(string creditCardNumber)
@@ -37,22 +70,10 @@ namespace GestorPasswordsDominio
 
         public bool CreditCardNumberAlreadyExistsInUser(string creditCardNumber)
         {
-            return !User.NumeroTarjetaCreditoExistente(creditCardNumber);
+            return User.NumeroTarjetaCreditoExistente(creditCardNumber);
         }
 
-        public bool CreditCardIsValid(TarjetaCredito aCreditCard)
-        {
-            return (
-                CreditCardContainsOnlyDigits(aCreditCard.number) &&
-                CreditCardHasValidLength(aCreditCard.number) &&
-                LengthBetween3And25(aCreditCard.type) &&
-                LengthBetween3And25(aCreditCard.name) &&
-                CodeHasValidLength(aCreditCard.code) &&
-                notesHaveValidLength(aCreditCard.notes) &&
-                CreditCardNumberAlreadyExistsInUser(aCreditCard.number));
-        }
-
-        public bool CodeHasValidLength(string creditCardCode)
+        public bool codeHasValidLength(string creditCardCode)
         {
             return creditCardCode.Length == 3 || creditCardCode.Length == 4;
         }
@@ -67,7 +88,7 @@ namespace GestorPasswordsDominio
             return Regex.IsMatch(creditCardNumber, @"^[0-9]+$");
         }
 
-        public bool CreditCardHasValidLength(string creditCardNumber)
+        public bool CreditCardNumberHasValidLength(string creditCardNumber)
         {
             return creditCardNumber.Length == 16;
         }
