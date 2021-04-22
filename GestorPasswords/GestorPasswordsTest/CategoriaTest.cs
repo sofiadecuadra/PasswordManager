@@ -129,7 +129,7 @@ namespace GestorPasswordsTest
                 Password = "thisIsAPassword",
                 Notes = "these are my notes",
                 Username = "myUserName",
-                Site = "mySite"
+                Site = "mySite",
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
