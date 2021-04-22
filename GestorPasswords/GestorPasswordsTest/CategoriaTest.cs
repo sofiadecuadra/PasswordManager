@@ -194,7 +194,15 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidPasswordLength))]
         public void AdddUserPasswordPairWithPasswordLengthLessThan5()
         {
-            throw new NotImplementedException();
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "pass",
+                Notes = "these are my notes",
+                Username = "myUsername",
+                Site = "mySite"
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
         }
     }
 }
