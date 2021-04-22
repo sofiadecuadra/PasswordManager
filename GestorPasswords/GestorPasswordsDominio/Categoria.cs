@@ -10,12 +10,15 @@ namespace GestorPasswordsDominio
 {
     public class Categoria
     {
-        public Usuario usuario;
+        public Usuario User { get; set; }
         public Hashtable listaTarjetasCredito;
+        public Hashtable userPasswordPairsHash;
+
 
         public Categoria()
         {
             this.listaTarjetasCredito = new Hashtable();
+            this.userPasswordPairsHash = new Hashtable();
         }
         public bool AgregarTarjetaCredito(TarjetaCredito unaTarjetaCredito)
         {
@@ -34,7 +37,7 @@ namespace GestorPasswordsDominio
 
         public bool NumeroTarjetaCreditoNoExisteEnUsuario(string numeroTarjetaCredito)
         {
-            return !usuario.NumeroTarjetaCreditoExistente(numeroTarjetaCredito);
+            return !User.NumeroTarjetaCreditoExistente(numeroTarjetaCredito);
         }
 
         public bool ValidarTarjeta(TarjetaCredito unaTarjetaCredito)
@@ -71,6 +74,67 @@ namespace GestorPasswordsDominio
         {
             if (numeroTarjetaCredito.Length == 16) return true;
             return false;
+        }
+
+        public bool AddUserPasswordPair(UserPasswordPair aUserPasswordPair)
+        {
+            if (UserPasswordPairAlredyExistsInUser(aUserPasswordPair.Username, aUserPasswordPair.Site))
+            {
+                throw new ExceptionExistingUserPasswordPair();
+            }
+
+            if (!UsernameHasValidLength(aUserPasswordPair.Username))
+            {
+                throw new ExceptionUserPasswordPairHasInvalidUsernameLength("The username's length must be between 5 and 25, but it's current length is " + aUserPasswordPair.Username);
+            }
+
+            if (!PasswordHasValidLength(aUserPasswordPair.Password))
+            {
+                throw new ExceptionUserPasswordPairHasInvalidPasswordLength("The password's length must be between 5 and 25, but it's current length is " + aUserPasswordPair.Password);
+            }
+
+            if (!siteHasValidLength(aUserPasswordPair.Site))
+            {
+                throw new ExceptionUserPasswordPairHasInvalidSiteLength("The site's length must be between 5 and 25, but it's current length is " + aUserPasswordPair.Site);
+            }
+
+            if (!notesHaveValidLength(aUserPasswordPair.Notes))
+            {
+                throw new ExceptionUserPasswordPairHasInvalidNotesLength("The notes' length must be up to 250, but it's current length is " + aUserPasswordPair.Notes);
+            }
+
+            this.userPasswordPairsHash.Add(aUserPasswordPair.Site + aUserPasswordPair.Username, aUserPasswordPair);
+            return true;
+        }
+
+        private static bool PasswordHasValidLength(String password)
+        {
+            return password.Length >= 5 && password.Length <= 25;
+        }
+
+        private static bool UsernameHasValidLength(String username)
+        {
+            return username.Length >= 5 && username.Length <= 25;
+        }
+
+        private static bool siteHasValidLength(String site)
+        {
+            return site.Length >= 3 && site.Length <= 25;
+        }
+
+        private static bool notesHaveValidLength(String notes)
+        {
+            return notes.Length <= 250;
+        }
+
+        private bool UserPasswordPairAlredyExistsInUser(string username, string site)
+        {
+            return this.User.UserPasswordPairExists(username, site);
+        }
+
+        public bool UserPasswordPairAlredyExistsInCategory(string username, string site)
+        {
+            return this.userPasswordPairsHash.ContainsKey(site + username);
         }
     }
 }
