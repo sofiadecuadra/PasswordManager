@@ -136,6 +136,12 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        public void AddUserPasswordPairToSameSiteButDifferentUsername()
+        {
+            throw new NotImplementedException();
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ExceptionExistingUserPasswordPair))]
         public void AddExistingdUserPasswordPair()
         {
