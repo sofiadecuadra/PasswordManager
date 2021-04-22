@@ -157,14 +157,22 @@ namespace GestorPasswordsTest
                 Site = "mySite"
             };
 
-            Assert.IsFalse(aCategory.AddUserPasswordPair(anotherUserPasswordPair));
+            aCategory.AddUserPasswordPair(anotherUserPasswordPair);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidUsernameLength))]
-        public void AdddUserPasswordPairWithInvalidUsernameLength()
+        public void AdddUserPasswordPairWithUsernameLengthLessThan5()
         {
-            throw new NotImplementedException();
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAPassword",
+                Notes = "these are my notes",
+                Username = "bad",
+                Site = "mySite"
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
         }
     }
 }

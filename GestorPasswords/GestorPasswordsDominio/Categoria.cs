@@ -85,6 +85,11 @@ namespace GestorPasswordsDominio
                 throw new ExceptionExistingUserPasswordPair();
             }
 
+            if (!UsernameHasValidLength(aUserPasswordPair.Username))
+            {
+                throw new ExceptionUserPasswordPairHasInvalidUsernameLength("The username's length must be between 5 and 25, but it's current length is " + aUserPasswordPair.Username);
+            }
+
             if (PasswordHasValidLength(aUserPasswordPair.Password) && UsernameHasValidLength(aUserPasswordPair.Username)
                              && siteHasValidLength(aUserPasswordPair.Site) && notesHaveValidLength(aUserPasswordPair.Notes))
             {
