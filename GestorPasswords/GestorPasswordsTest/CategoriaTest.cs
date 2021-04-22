@@ -254,7 +254,22 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidNotesLength))]
         public void AdddUserPasswordPairWithNotesLengthGreaterThan250()
         {
-            throw new NotImplementedException();
+            string aNote = "";
+
+            for (int i = 0; i <= 251; i++)
+            {
+                aNote += "a";
+            }
+
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "password",
+                Notes = aNote,
+                Username = "myUsername",
+                Site = "mySite",
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
         }
     }
 }

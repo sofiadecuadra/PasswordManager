@@ -105,6 +105,10 @@ namespace GestorPasswordsDominio
                 this.userPasswordPairsHash.Add(aUserPasswordPair.Site + aUserPasswordPair.Username, aUserPasswordPair);
                 pairAdded = true;
             }
+            else
+            {
+                throw new ExceptionUserPasswordPairHasInvalidNotesLength("The notes' length must be up to 250, but it's current length is " + aUserPasswordPair.Notes);
+            }
 
             return pairAdded;
         }
