@@ -5,7 +5,7 @@ using System;
 namespace GestorPasswordsTest
 {
     [TestClass]
-    public class CategoriaTest
+    public class CategoryTest
     {
         private Category aCategory;
         private User aUser;
