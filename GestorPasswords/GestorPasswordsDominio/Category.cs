@@ -67,6 +67,10 @@ namespace GestorPasswordsDominio
             {
                 throw new ExceptionCreditCardHasInvalidCodeLength("The code's length must be between 3 and 4, but it's current length is " + aCreditCard.Code.Length);
             }
+            if (!Regex.IsMatch(aCreditCard.Code, @"^[0-9]+$"))
+            {
+                throw new ExceptionCreditCardCodeHasNonNumericCharacters("The code should contain numeric characters only but is " + aCreditCard.Code);
+            }
             if (!notesHaveValidLength(aCreditCard.Notes))
             {
                 throw new ExceptionCreditCardHasInvalidNotesLength("The notes' length must be up to 250, but it's current length is " + aCreditCard.Notes.Length);
