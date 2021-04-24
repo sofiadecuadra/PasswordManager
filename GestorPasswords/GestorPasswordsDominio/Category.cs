@@ -8,29 +8,44 @@ using System.Threading.Tasks;
 
 namespace GestorPasswordsDominio
 {
-    public class Categoria
+    public class Category
     {
-        public Usuario User { get; set; }
-        public Hashtable creditCardHashTable;
+        private String name;
+        public User User { get; set; }
+        private Hashtable creditCardHashTable;
         public Hashtable userPasswordPairsHash;
 
+        public String Name { 
+            get { return name; } 
+            set { this.name = value.ToLower(); }  
+        }
 
-        public Categoria()
+        public Category()
         {
             this.creditCardHashTable = new Hashtable();
             this.userPasswordPairsHash = new Hashtable();
         }
-        public bool AddCreditCard(TarjetaCredito aCreditCard)
+
+        public CreditCard[] GetCreditCards()
         {
+            CreditCard[] creditCards = new CreditCard[this.creditCardHashTable.Count];
+            creditCardHashTable.CopyTo(creditCards, 0);
+
+            return creditCards;
+        }
+
+        public bool AddCreditCard(CreditCard aCreditCard)
+        {
+            bool creditCardAdded = false;
             if (CreditCardIsValid(aCreditCard))
             {
                 this.creditCardHashTable.Add(aCreditCard.Number, aCreditCard);
-                return true;
+                creditCardAdded = true;
             }
-            return false;
+            return creditCardAdded;
         }
 
-        public bool CreditCardIsValid(TarjetaCredito aCreditCard)
+        private bool CreditCardIsValid(CreditCard aCreditCard)
         {
             if (!CreditCardContainsOnlyDigits(aCreditCard.Number))
             {
@@ -68,27 +83,27 @@ namespace GestorPasswordsDominio
             return creditCardHashTable.ContainsKey(creditCardNumber);
         }
 
-        public bool CreditCardNumberAlreadyExistsInUser(string creditCardNumber)
+        private bool CreditCardNumberAlreadyExistsInUser(string creditCardNumber)
         {
             return User.CreditCardNumberExists(creditCardNumber);
         }
 
-        public bool codeHasValidLength(string creditCardCode)
+        private bool codeHasValidLength(string creditCardCode)
         {
             return creditCardCode.Length == 3 || creditCardCode.Length == 4;
         }
 
-        public bool LengthBetween3And25(string stringToCheck)
+        private bool LengthBetween3And25(string stringToCheck)
         {
             return stringToCheck.Length >= 3 && stringToCheck.Length <= 25;
         }
 
-        public bool CreditCardContainsOnlyDigits(string creditCardNumber)
+        private bool CreditCardContainsOnlyDigits(string creditCardNumber)
         {
             return Regex.IsMatch(creditCardNumber, @"^[0-9]+$");
         }
 
-        public bool CreditCardNumberHasValidLength(string creditCardNumber)
+        private bool CreditCardNumberHasValidLength(string creditCardNumber)
         {
             return creditCardNumber.Length == 16;
         }
