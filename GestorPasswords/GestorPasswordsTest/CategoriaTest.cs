@@ -7,19 +7,25 @@ namespace GestorPasswordsTest
     [TestClass]
     public class CategoriaTest
     {
-        private Categoria aCategory;
-        private TarjetaCredito aCreditCard;
-        Usuario aUser;
+        private Category aCategory;
+        private User aUser;
 
         [TestInitialize]
         public void Initialize()
         {
-            aUser = new Usuario();
-            aCategory = new Categoria()
+            aUser = new User();
+            aCategory = new Category()
             {
-                User = aUser
+                User = aUser,
+                Name = "Categoria"
             };
-            aCreditCard = new TarjetaCredito()
+            aUser.AddCategory(aCategory);
+        }
+
+        [TestMethod]
+        public void AddValidCreditCard()
+        {
+            CreditCard aCreditCard = new CreditCard()
             {
                 Number = "1234567891234567",
                 Type = "Visa",
@@ -27,12 +33,6 @@ namespace GestorPasswordsTest
                 Code = "234",
                 Notes = ""
             };
-            aUser.listOfCategories.Add(aCategory);
-        }   
-        
-        [TestMethod]
-        public void AddValidCreditCard()
-        {
             Assert.IsTrue(aCategory.AddCreditCard(aCreditCard));
         }
 
@@ -40,6 +40,14 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionCreditCardHasInvalidNumberLength))]
         public void AddCreditCardWithNumberLengthLessThan16()
         {
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = ""
+            };
             aCreditCard.Number = "12345678912";
             aCategory.AddCreditCard(aCreditCard);
         }
@@ -48,6 +56,14 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionCreditCardDoesNotContainOnlyDigits))]
         public void AddCreditCardThatDoesNotContainOnlyDigits()
         {
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = ""
+            };
             aCreditCard.Number = "1234567891fjk567";
             aCategory.AddCreditCard(aCreditCard);
         }
@@ -56,6 +72,14 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionCreditCardHasInvalidTypeLength))]
         public void AddCreditCardWithTypeLengthLessThan3()
         {
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = ""
+            };
             aCreditCard.Type = "Vi";
             aCategory.AddCreditCard(aCreditCard);
         }
@@ -64,6 +88,14 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionCreditCardHasInvalidTypeLength))]
         public void AddCreditCardWithTypeLengthGreaterThan25()
         {
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = ""
+            };
             aCreditCard.Type = "VisaVisaVisaVisaVisaVisaVisa";
             aCategory.AddCreditCard(aCreditCard);
         }
@@ -72,6 +104,14 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionCreditCardHasInvalidNameLength))]
         public void AddCreditCardWithNameLengthLessThan3()
         {
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = ""
+            };
             aCreditCard.Name = "Vi";
             aCategory.AddCreditCard(aCreditCard);
         }
@@ -80,6 +120,14 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionCreditCardHasInvalidNameLength))]
         public void AddCreditCardWithNameLengthGreaterThan25()
         {
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = ""
+            };
             aCreditCard.Name = "Visa Gold Visa Gold Visa Gold Visa Gold";
             aCategory.AddCreditCard(aCreditCard);
         }
@@ -88,6 +136,14 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionCreditCardHasInvalidCodeLength))]
         public void AddCreditCardWithCodeLengthLessThan3()
         {
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = ""
+            };
             aCreditCard.Code = "12";
             aCategory.AddCreditCard(aCreditCard);
         }
@@ -96,6 +152,14 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionCreditCardHasInvalidCodeLength))]
         public void AddCreditCardWithCodeLengthGreaterThan4()
         {
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = ""
+            };
             aCreditCard.Code = "12121";
             aCategory.AddCreditCard(aCreditCard);
         }
@@ -105,6 +169,14 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionCreditCardHasInvalidNotesLength))]
         public void AddCreditCardWithNotesLengthGreaterThan250()
         {
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = ""
+            };
             string notas = "";
             for(int i=0; i <= 251; i++)
             {
@@ -118,7 +190,15 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionCreditCardNumberAlreadyExistsInUser))]
         public void AddExistingCreditCard()
         {
-            TarjetaCredito anotherCreditCard = new TarjetaCredito()
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = ""
+            };
+            CreditCard anotherCreditCard = new CreditCard()
             {
                 Number = "1234567891234567",
                 Type = "Visa",
