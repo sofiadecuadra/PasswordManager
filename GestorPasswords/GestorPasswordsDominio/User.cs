@@ -50,18 +50,19 @@ namespace GestorPasswordsDominio
         public bool UserPasswordPairExists(string username, string site)
         {
             bool pairExists = false;
-
-            foreach (Category aCategory in this.categoriesHashTable)
+            foreach (DictionaryEntry pair in this.categoriesHashTable)
             {
-                
-                if (aCategory.UserPasswordPairAlredyExistsInCategory(username, site))
+                if (UserPasswordPairExistsInCategory((Category)pair.Value, username, site))
                 {
                     pairExists = true;
                     break;
                 }
             }
-
             return pairExists;
+        }
+        private static bool UserPasswordPairExistsInCategory(Category aCategory, string username, string site)
+        {
+            return aCategory.UserPasswordPairAlredyExistsInCategory(username, site);
         }
     }
 }
