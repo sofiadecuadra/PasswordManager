@@ -10,20 +10,20 @@ namespace GestorPasswordsDominio
     {
         public string Password { get; set; }
 
-        private string Username_;
+        private string username;
         public string Username
         {
-            get { return Username_; }
+            get { return username; }
             set {
                 this.LastModifiedDate = DateTime.Now;
-                Username_ = value.ToLower(); 
+                username = value.ToLower(); 
             }
         }
-        private string Site_;
+        private string site;
         public string Site
         {
-            get { return Site_; }
-            set { Site_ = value.ToLower(); }
+            get { return site; }
+            set { site = value.ToLower(); }
         }
         public string Notes { get; set; }
 
