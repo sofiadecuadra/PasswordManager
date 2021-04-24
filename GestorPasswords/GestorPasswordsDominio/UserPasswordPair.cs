@@ -14,7 +14,10 @@ namespace GestorPasswordsDominio
         public string Username
         {
             get { return Username_; }
-            set { Username_ = value.ToLower(); }
+            set {
+                this.LastModifiedDate = DateTime.Now;
+                Username_ = value.ToLower(); 
+            }
         }
         private string Site_;
         public string Site
@@ -23,5 +26,7 @@ namespace GestorPasswordsDominio
             set { Site_ = value.ToLower(); }
         }
         public string Notes { get; set; }
+
+        public DateTime LastModifiedDate { get; private set; }
     }
 }

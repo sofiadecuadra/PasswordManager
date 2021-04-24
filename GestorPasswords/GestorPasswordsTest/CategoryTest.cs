@@ -5,7 +5,7 @@ using System;
 namespace GestorPasswordsTest
 {
     [TestClass]
-    public class CategoriaTest
+    public class CategoryTest
     {
         private Category aCategory;
         private User aUser;
@@ -218,7 +218,7 @@ namespace GestorPasswordsTest
                 Password = "thisIsAPassword",
                 Notes = "these are my notes",
                 Username = "myUserName",
-                Site = "mySite"
+                Site = "mySite",
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
