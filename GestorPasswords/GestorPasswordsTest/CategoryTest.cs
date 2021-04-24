@@ -38,6 +38,21 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        public void AddCreditCardWithNumberContainingWhitespaceInBetweenDigits()
+        {
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "123    456   789    12345   67",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = "",
+                ExpirationDate = new DateTime(2023, 12, 25)
+            };
+            Assert.IsTrue(aCategory.AddCreditCard(aCreditCard));
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ExceptionCreditCardHasInvalidNumberLength))]
         public void AddCreditCardWithNumberLengthLessThan16()
         {
