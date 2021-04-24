@@ -180,6 +180,22 @@ namespace GestorPasswordsTest
             aCategory.AddCreditCard(aCreditCard);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionCreditCardCodeHasNonNumericCharacters))]
+        public void AddCreditCardWithCodeThatHasNonNumericCharacters()
+        {
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "12A",
+                Notes = "",
+                ExpirationDate = new DateTime(2023, 12, 25)
+            };
+            aCategory.AddCreditCard(aCreditCard);
+        }
+
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionCreditCardHasInvalidNotesLength))]
