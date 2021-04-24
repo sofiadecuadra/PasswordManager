@@ -7,118 +7,207 @@ namespace GestorPasswordsTest
     [TestClass]
     public class CategoriaTest
     {
-        private Categoria aCategory;
-        private TarjetaCredito unaTarjetaCredito;
-        Usuario aUser;
+        private Category aCategory;
+        private User aUser;
 
         [TestInitialize]
         public void Initialize()
         {
-            aUser = new Usuario();
-            aCategory = new Categoria()
+            aUser = new User();
+            aCategory = new Category()
             {
-                User = aUser
+                User = aUser,
+                Name = "Categoria"
             };
-            unaTarjetaCredito = new TarjetaCredito()
+            aUser.AddCategory(aCategory);
+        }
+
+        [TestMethod]
+        public void AddValidCreditCard()
+        {
+            CreditCard aCreditCard = new CreditCard()
             {
-                numero = "1234567891234567",
-                tipo = "Visa",
-                nombre = "Visa Gold",
-                codigo = "234",
-                notas = ""
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = ""
             };
-            aUser.listOfCategories.Add(aCategory);
-        }   
+            Assert.IsTrue(aCategory.AddCreditCard(aCreditCard));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionCreditCardHasInvalidNumberLength))]
+        public void AddCreditCardWithNumberLengthLessThan16()
+        {
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = ""
+            };
+            aCreditCard.Number = "12345678912";
+            aCategory.AddCreditCard(aCreditCard);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionCreditCardDoesNotContainOnlyDigits))]
+        public void AddCreditCardThatDoesNotContainOnlyDigits()
+        {
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = ""
+            };
+            aCreditCard.Number = "1234567891fjk567";
+            aCategory.AddCreditCard(aCreditCard);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionCreditCardHasInvalidTypeLength))]
+        public void AddCreditCardWithTypeLengthLessThan3()
+        {
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = ""
+            };
+            aCreditCard.Type = "Vi";
+            aCategory.AddCreditCard(aCreditCard);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionCreditCardHasInvalidTypeLength))]
+        public void AddCreditCardWithTypeLengthGreaterThan25()
+        {
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = ""
+            };
+            aCreditCard.Type = "VisaVisaVisaVisaVisaVisaVisa";
+            aCategory.AddCreditCard(aCreditCard);
+        }
         
         [TestMethod]
-        public void AgregarTarjetaCreditoValida()
+        [ExpectedException(typeof(ExceptionCreditCardHasInvalidNameLength))]
+        public void AddCreditCardWithNameLengthLessThan3()
         {
-            Assert.IsTrue(aCategory.AgregarTarjetaCredito(unaTarjetaCredito));
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = ""
+            };
+            aCreditCard.Name = "Vi";
+            aCategory.AddCreditCard(aCreditCard);
         }
 
         [TestMethod]
-        public void NumeroTarjetaCreditoContieneMenosDe16Digitos()
+        [ExpectedException(typeof(ExceptionCreditCardHasInvalidNameLength))]
+        public void AddCreditCardWithNameLengthGreaterThan25()
         {
-            unaTarjetaCredito.numero = "12345678912";
-            Assert.IsFalse(aCategory.AgregarTarjetaCredito(unaTarjetaCredito));
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = ""
+            };
+            aCreditCard.Name = "Visa Gold Visa Gold Visa Gold Visa Gold";
+            aCategory.AddCreditCard(aCreditCard);
         }
 
         [TestMethod]
-        public void NumeroTarjetaCreditoNoContieneSoloDigitos()
+        [ExpectedException(typeof(ExceptionCreditCardHasInvalidCodeLength))]
+        public void AddCreditCardWithCodeLengthLessThan3()
         {
-            unaTarjetaCredito.numero = "1234567891fjk567";
-            Assert.IsFalse(aCategory.AgregarTarjetaCredito(unaTarjetaCredito));
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = ""
+            };
+            aCreditCard.Code = "12";
+            aCategory.AddCreditCard(aCreditCard);
         }
 
         [TestMethod]
-        public void TipoTarjetaCreditoConLargoMenorA3Caracteres()
+        [ExpectedException(typeof(ExceptionCreditCardHasInvalidCodeLength))]
+        public void AddCreditCardWithCodeLengthGreaterThan4()
         {
-            unaTarjetaCredito.tipo = "Vi";
-            Assert.IsFalse(aCategory.AgregarTarjetaCredito(unaTarjetaCredito));
-        }
-
-        [TestMethod]
-        public void TipoTarjetaCreditoConLargoMayorA25Caracteres()
-        {
-            unaTarjetaCredito.tipo = "VisaVisaVisaVisaVisaVisaVisa";
-            Assert.IsFalse(aCategory.AgregarTarjetaCredito(unaTarjetaCredito));
-        }
-        
-        [TestMethod]
-        public void NombreTarjetaCreditoConLargoMenorA3Caracteres()
-        {
-            unaTarjetaCredito.nombre = "Vi";
-            Assert.IsFalse(aCategory.AgregarTarjetaCredito(unaTarjetaCredito));
-        }
-
-        [TestMethod]
-        public void NombreTarjetaCreditoConLargoMayorA25Caracteres()
-        {
-            unaTarjetaCredito.nombre = "Visa Gold Visa Gold Visa Gold Visa Gold";
-            Assert.IsFalse(aCategory.AgregarTarjetaCredito(unaTarjetaCredito));
-        }
-
-        [TestMethod]
-        public void CodigoTarjetaCreditoConLargoMenorA3Caracteres()
-        {
-            unaTarjetaCredito.codigo = "12";
-            Assert.IsFalse(aCategory.AgregarTarjetaCredito(unaTarjetaCredito));
-        }
-
-        [TestMethod]
-        public void CodigoTarjetaCreditoConLargoMayorA4Caracteres()
-        {
-            unaTarjetaCredito.codigo = "12121";
-            Assert.IsFalse(aCategory.AgregarTarjetaCredito(unaTarjetaCredito));
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = ""
+            };
+            aCreditCard.Code = "12121";
+            aCategory.AddCreditCard(aCreditCard);
         }
 
 
         [TestMethod]
-        public void NotasTarjetaCreditoConLargoMayorA250Caracteres()
+        [ExpectedException(typeof(ExceptionCreditCardHasInvalidNotesLength))]
+        public void AddCreditCardWithNotesLengthGreaterThan250()
         {
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = ""
+            };
             string notas = "";
-            for(int i=0; i < 260; i++)
+            for(int i=0; i <= 251; i++)
             {
                 notas += "a";
             }
-            unaTarjetaCredito.notas = notas;
-            Assert.IsFalse(aCategory.AgregarTarjetaCredito(unaTarjetaCredito));
+            aCreditCard.Notes = notas;
+            aCategory.AddCreditCard(aCreditCard);
         }
 
         [TestMethod]
-        public void AgregarNumeroTarjetaCreditoYaExistente()
+        [ExpectedException(typeof(ExceptionCreditCardNumberAlreadyExistsInUser))]
+        public void AddExistingCreditCard()
         {
-            TarjetaCredito unaTarjetaCredito2 = new TarjetaCredito()
+            CreditCard aCreditCard = new CreditCard()
             {
-                numero = "1234567891234567",
-                tipo = "Visa",
-                nombre = "Visa Gold",
-                codigo = "234",
-                notas = ""
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = ""
             };
-
-            aCategory.AgregarTarjetaCredito(unaTarjetaCredito2);
-            Assert.IsFalse(aCategory.AgregarTarjetaCredito(unaTarjetaCredito));
+            CreditCard anotherCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = ""
+            };
+            aCategory.AddCreditCard(aCreditCard);
+            aCategory.AddCreditCard(anotherCreditCard);
         }
 
         [TestMethod]
