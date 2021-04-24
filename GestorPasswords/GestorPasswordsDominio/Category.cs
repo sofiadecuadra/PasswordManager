@@ -112,27 +112,27 @@ namespace GestorPasswordsDominio
         {
             if (UserPasswordPairAlredyExistsInUser(aUserPasswordPair.Username, aUserPasswordPair.Site))
             {
-                throw new ExceptionExistingUserPasswordPair();
+                throw new ExceptionExistingUserPasswordPair("The userPassword pair already exists in user");
             }
 
             if (!UsernameHasValidLength(aUserPasswordPair.Username))
             {
-                throw new ExceptionUserPasswordPairHasInvalidUsernameLength("The username's length must be between 5 and 25, but it's current length is " + aUserPasswordPair.Username);
+                throw new ExceptionUserPasswordPairHasInvalidUsernameLength("The username's length must be between 5 and 25, but it's current length is " + aUserPasswordPair.Username.Length);
             }
 
             if (!PasswordHasValidLength(aUserPasswordPair.Password))
             {
-                throw new ExceptionUserPasswordPairHasInvalidPasswordLength("The password's length must be between 5 and 25, but it's current length is " + aUserPasswordPair.Password);
+                throw new ExceptionUserPasswordPairHasInvalidPasswordLength("The password's length must be between 5 and 25, but it's current length is " + aUserPasswordPair.Password.Length);
             }
 
             if (!siteHasValidLength(aUserPasswordPair.Site))
             {
-                throw new ExceptionUserPasswordPairHasInvalidSiteLength("The site's length must be between 5 and 25, but it's current length is " + aUserPasswordPair.Site);
+                throw new ExceptionUserPasswordPairHasInvalidSiteLength("The site's length must be between 5 and 25, but it's current length is " + aUserPasswordPair.Site.Length);
             }
 
             if (!notesHaveValidLength(aUserPasswordPair.Notes))
             {
-                throw new ExceptionUserPasswordPairHasInvalidNotesLength("The notes' length must be up to 250, but it's current length is " + aUserPasswordPair.Notes);
+                throw new ExceptionUserPasswordPairHasInvalidNotesLength("The notes' length must be up to 250, but it's current length is " + aUserPasswordPair.Notes.Length);
             }
 
             this.userPasswordPairsHash.Add(aUserPasswordPair.Site + aUserPasswordPair.Username, aUserPasswordPair);
