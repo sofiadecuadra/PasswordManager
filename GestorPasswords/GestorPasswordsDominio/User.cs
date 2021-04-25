@@ -9,11 +9,26 @@ namespace GestorPasswordsDominio
 {
     public class User
     {
+        public string MasterPassword;
         private SortedList<string, Category> categoriesList;
 
         public User()
         {
             categoriesList = new SortedList<string, Category>();
+        }
+
+        public bool ChangeMasterPassword(string currentPassword, string newPassword)
+        {
+            if(!PasswordsMatch(currentPassword, this.MasterPassword))
+            {
+                throw new ExceptionIncorrectMasterPassword("The password entered by the user did not match the master password");
+            }
+            return true;
+        }
+
+        public bool PasswordsMatch(string currentPassword, string masterPassword)
+        {
+            return currentPassword == masterPassword;
         }
 
         public void AddCategory(Category aCategory)
