@@ -86,6 +86,24 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        public void PasswordWithLengthOver14AndJustNumbers()
+        {
+            Assert.AreEqual(PasswordStrengthType.Yellow, PasswordHandler.PasswordStrength("123456789012345"));
+        }
+
+        [TestMethod]
+        public void PasswordWithLengthOver14AndJustNumbersSymbolsAndUpperCase()
+        {
+            Assert.AreEqual(PasswordStrengthType.LightGreen, PasswordHandler.PasswordStrength("1234567890@!#$HOLA"));
+        }
+
+        [TestMethod]
+        public void PasswordWithLengthOver14AndJustNumbersSymbolsAndLowerCase()
+        {
+            Assert.AreEqual(PasswordStrengthType.LightGreen, PasswordHandler.PasswordStrength("1234567890@!#$hola"));
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void PasswordWithLengthOver25() => PasswordHandler.PasswordStrength("012345678901234567890123456");
 
