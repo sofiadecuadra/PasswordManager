@@ -15,9 +15,10 @@ namespace GestorPasswordsDominio
         private Hashtable creditCardHashTable;
         public Hashtable userPasswordPairsHash;
 
-        public String Name { 
-            get { return name; } 
-            set { name = value.ToLower(); }  
+        public String Name
+        {
+            get { return name; }
+            set { name = value.ToLower(); }
         }
 
         public Category()
@@ -74,6 +75,10 @@ namespace GestorPasswordsDominio
             if (!codeHasValidLength(aCreditCard.Code))
             {
                 throw new ExceptionCreditCardHasInvalidCodeLength("The code's length must be between 3 and 4, but it's current length is " + aCreditCard.Code.Length);
+            }
+            if (!Regex.IsMatch(aCreditCard.Code, @"^[0-9]+$"))
+            {
+                throw new ExceptionCreditCardCodeHasNonNumericCharacters("The code should contain numeric characters only but is " + aCreditCard.Code);
             }
             if (!notesHaveValidLength(aCreditCard.Notes))
             {
@@ -190,6 +195,17 @@ namespace GestorPasswordsDominio
         public bool UserPasswordPairAlredyExistsInCategory(string username, string site)
         {
             return this.userPasswordPairsHash.ContainsKey(site + username);
+        }
+
+        public bool RemoveCreditCard(string number)
+        {
+            if (!CreditCardNumberAlreadyExistsInCategory(number))
+            { 
+                throw new ExceptionCreditCardDoesNotExist($"The credit card {number} does not exist in this category");
+            }
+
+            this.creditCardHashTable.Remove(number);
+            return true;
         }
     }
 }
