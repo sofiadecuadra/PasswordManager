@@ -31,9 +31,31 @@ namespace GestorPasswordsDominio
             return currentPassword == masterPassword;
         }
 
-        public void AddCategory(Category aCategory)
+        public bool AddCategory(Category aCategory)
         {
-            this.categoriesList.Add(aCategory.Name , aCategory);
+            bool categoryAdded = false;
+            if (CategoryHasValidLength(aCategory))
+            {
+                AddCategoryToSortedList(aCategory);
+                categoryAdded = true;
+            }
+
+            return categoryAdded;
+        }
+
+        private void AddCategoryToSortedList(Category aCategory)
+        {
+            this.categoriesList.Add(aCategory.Name, aCategory); // If it already exists in the list throws an exception
+        }
+
+        private static bool CategoryHasValidLength(Category aCategory)
+        {
+            if (aCategory.Name.Length < 3 || aCategory.Name.Length > 15)
+            {
+                throw new ExceptionCategoryHasInvalidNameLength("The category length must be between 3 and 15, but it's current length is " + aCategory.Name.Length);
+            }
+
+            return true;
         }
 
         public Category[] GetCategories()

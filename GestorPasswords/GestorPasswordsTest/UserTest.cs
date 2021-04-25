@@ -19,5 +19,84 @@ namespace GestorPasswordsTest
             string newPassword = "myNewPassword";
             aUser.ChangeMasterPassword(currentPassword, newPassword);
         }
+
+        [TestMethod]
+        public void AddValidCategory()
+        {
+            User aUser = new User()
+            {
+                MasterPassword = "myPassword"
+            };
+
+            Category aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+
+            Assert.IsTrue(aUser.AddCategory(aCategory));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionCategoryHasInvalidNameLength))]
+        public void AddCategoryWithLengthLessThan3()
+        {
+            User aUser = new User()
+            {
+                MasterPassword = "myPassword"
+            };
+
+            Category aCategory = new Category()
+            {
+                User = aUser,
+                Name = "my"
+            };
+
+            aUser.AddCategory(aCategory);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionCategoryHasInvalidNameLength))]
+        public void AddCategoryWithLengthGreaterThan15()
+        {
+            User aUser = new User()
+            {
+                MasterPassword = "myPassword"
+            };
+
+            Category aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategoryNameIsInvalid"
+            };
+
+            aUser.AddCategory(aCategory);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void AddExistingCategory()
+        {
+            User aUser = new User()
+            {
+                MasterPassword = "myPassword"
+            };
+
+            Category aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+
+            aUser.AddCategory(aCategory);
+
+            Category anotherCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+
+            aUser.AddCategory(anotherCategory);
+        }
     }
 }
