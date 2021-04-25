@@ -137,5 +137,24 @@ namespace GestorPasswordsTest
             aUser.ModifyCategory(aCategory, "newName");
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionCategoryHasInvalidNameLength))]
+        public void ModifyCategoryWithNewLengthLessThan3()
+        {
+            User aUser = new User()
+            {
+                MasterPassword = "myPassword"
+            };
+
+            Category aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+
+            aUser.AddCategory(aCategory);
+
+            aUser.ModifyCategory(aCategory, "no");
+        }
     }
 }
