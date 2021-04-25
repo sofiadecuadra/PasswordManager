@@ -310,7 +310,7 @@ namespace GestorPasswordsTest
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidUsernameLength))]
-        public void AdddUserPasswordPairWithUsernameLengthLessThan5()
+        public void AddUserPasswordPairWithUsernameLengthLessThan5()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
@@ -325,7 +325,7 @@ namespace GestorPasswordsTest
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidUsernameLength))]
-        public void AdddUserPasswordPairWithUsernameLengthGreaterThan25()
+        public void AddUserPasswordPairWithUsernameLengthGreaterThan25()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
@@ -340,7 +340,7 @@ namespace GestorPasswordsTest
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidPasswordLength))]
-        public void AdddUserPasswordPairWithPasswordLengthLessThan5()
+        public void AddUserPasswordPairWithPasswordLengthLessThan5()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
@@ -355,7 +355,7 @@ namespace GestorPasswordsTest
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidPasswordLength))]
-        public void AdddUserPasswordPairWithPasswordLengthGreaterThan25()
+        public void AddUserPasswordPairWithPasswordLengthGreaterThan25()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
@@ -370,7 +370,7 @@ namespace GestorPasswordsTest
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidSiteLength))]
-        public void AdddUserPasswordPairWithSiteLengthLessThan3()
+        public void AddUserPasswordPairWithSiteLengthLessThan3()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
@@ -385,7 +385,7 @@ namespace GestorPasswordsTest
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidSiteLength))]
-        public void AdddUserPasswordPairWithSiteLengthGreaterThan25()
+        public void AddUserPasswordPairWithSiteLengthGreaterThan25()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
@@ -400,7 +400,7 @@ namespace GestorPasswordsTest
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidNotesLength))]
-        public void AdddUserPasswordPairWithNotesLengthGreaterThan250()
+        public void AddUserPasswordPairWithNotesLengthGreaterThan250()
         {
             string aNote = "";
 
@@ -418,6 +418,40 @@ namespace GestorPasswordsTest
             };
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
+        }
+
+        [TestMethod]
+        public void RemoveCreditCardNormally()
+        {
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = "",
+                ExpirationDate = new DateTime(2023, 12, 25)
+            };
+            aCategory.AddCreditCard(aCreditCard);
+            Assert.IsTrue(aCategory.RemoveCreditCard(aCreditCard.Number));
+
+            Assert.IsFalse(aUser.CreditCardNumberExists(aCreditCard.Number));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionCreditCardDoesNotExist))]
+        public void RemoveCreditCardThatDoesNotExist()
+        {
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = "",
+                ExpirationDate = new DateTime(2023, 12, 25)
+            };
+            aCategory.RemoveCreditCard(aCreditCard.Number);
         }
     }
 }
