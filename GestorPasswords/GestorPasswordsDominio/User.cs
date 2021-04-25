@@ -23,7 +23,25 @@ namespace GestorPasswordsDominio
             {
                 throw new ExceptionIncorrectMasterPassword("The password entered by the user did not match the master password");
             }
+            if (NewPasswordIsValid(newPassword))
+            {
+                this.MasterPassword = newPassword;
+            }
             return true;
+        }
+
+        public bool NewPasswordIsValid(string aPassword)
+        {
+            if (!passwordHasValidLength(aPassword))
+            {
+                throw new ExceptionIncorrectLength("The new password's length must be greater than 5, but it's current length is " + aPassword.Length);
+            }
+            return true;
+        }
+
+        public bool passwordHasValidLength(string password)
+        {
+            return password.Length >= 5;
         }
 
         public bool PasswordsMatch(string currentPassword, string masterPassword)
