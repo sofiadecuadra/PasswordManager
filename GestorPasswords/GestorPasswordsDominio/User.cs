@@ -44,7 +44,7 @@ namespace GestorPasswordsDominio
         public bool AddCategory(Category aCategory)
         {
             bool categoryAdded = false;
-            if (CategoryHasValidLength(aCategory))
+            if (CategoryHasValidLength(aCategory.Name))
             {
                 AddCategoryToSortedList(aCategory);
                 categoryAdded = true;
@@ -58,11 +58,11 @@ namespace GestorPasswordsDominio
             this.categoriesList.Add(aCategory.Name, aCategory); // If it already exists in the list throws an exception
         }
 
-        private static bool CategoryHasValidLength(Category aCategory)
+        private static bool CategoryHasValidLength(string categoryName)
         {
-            if (aCategory.Name.Length < 3 || aCategory.Name.Length > 15)
+            if (categoryName.Length < 3 || categoryName.Length > 15)
             {
-                throw new ExceptionCategoryHasInvalidNameLength("The category length must be between 3 and 15, but it's current length is " + aCategory.Name.Length);
+                throw new ExceptionCategoryHasInvalidNameLength("The category length must be between 3 and 15, but it's current length is " + categoryName.Length);
             }
 
             return true;
@@ -72,6 +72,44 @@ namespace GestorPasswordsDominio
         {
             IList<Category> categories = categoriesList.Values;
             return categories.ToArray();
+        }
+
+        public bool ModifyCategory(Category aCategory, string newName)
+        {
+            bool categoryModified = false;
+            if (CategoryCouldBeModified(aCategory, newName))
+            {
+                UpdateCategory(aCategory, newName);
+                categoryModified = true;
+            }
+            return categoryModified;
+        }
+
+        private void UpdateCategory(Category aCategory, string newName)
+        {
+            aCategory.Name = newName;
+        }
+
+        private bool CategoryCouldBeModified(Category aCategory, string newName)
+        {
+            bool categoryCouldBeModified = false;
+
+            if (!CategoryExists(aCategory))
+            {
+                throw new ExceptionCategoryNotExists();
+            }
+
+            if (CategoryHasValidLength(newName))
+            {
+                categoryCouldBeModified = true;
+            }
+
+            return categoryCouldBeModified;
+        }
+
+        private bool CategoryExists(Category aCategory)
+        {
+            return this.categoriesList.ContainsKey(aCategory.Name);
         }
 
         public bool CreditCardNumberExists(string creditCardNumber)

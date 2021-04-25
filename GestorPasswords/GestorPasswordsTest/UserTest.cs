@@ -132,5 +132,83 @@ namespace GestorPasswordsTest
 
             aUser.AddCategory(anotherCategory);
         }
+
+        [TestMethod]
+        public void ModifyCategoryNormally()
+        {
+            User aUser = new User()
+            {
+                MasterPassword = "myPassword"
+            };
+
+            Category aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+
+            aUser.AddCategory(aCategory);
+
+            Assert.IsTrue(aUser.ModifyCategory(aCategory, "newName"));
+            Assert.AreEqual("newname", aCategory.Name);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionCategoryNotExists))]
+        public void ModifyCategoryThatDoesNotExist()
+        {
+            User aUser = new User()
+            {
+                MasterPassword = "myPassword"
+            };
+
+            Category aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+
+            aUser.ModifyCategory(aCategory, "newName");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionCategoryHasInvalidNameLength))]
+        public void ModifyCategoryWithNewLengthLessThan3()
+        {
+            User aUser = new User()
+            {
+                MasterPassword = "myPassword"
+            };
+
+            Category aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+
+            aUser.AddCategory(aCategory);
+
+            aUser.ModifyCategory(aCategory, "no");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionCategoryHasInvalidNameLength))]
+        public void ModifyCategoryWithNewLengthGreaterThan15()
+        {
+            User aUser = new User()
+            {
+                MasterPassword = "myPassword"
+            };
+
+            Category aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+
+            aUser.AddCategory(aCategory);
+
+            aUser.ModifyCategory(aCategory, "thisIsAnInvalidLength");
+        }
     }
 }
