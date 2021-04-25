@@ -10,10 +10,25 @@ namespace GestorPasswordsDominio
     public class User
     {
         private Hashtable categoriesHashTable;
+        public string MasterPassword;
 
         public User()
         {
             categoriesHashTable = new Hashtable();
+        }
+
+        public bool ChangeMasterPassword(string currentPassword, string newPassword)
+        {
+            if(!PasswordsMatch(currentPassword, this.MasterPassword))
+            {
+                throw new ExceptionIncorrectMasterPassword("The password entered by the user did not match the master password");
+            }
+            return true;
+        }
+
+        public bool PasswordsMatch(string currentPassword, string masterPassword)
+        {
+            return currentPassword == masterPassword;
         }
 
         public void AddCategory(Category aCategory)
