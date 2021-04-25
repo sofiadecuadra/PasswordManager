@@ -34,14 +34,14 @@ namespace GestorPasswordsDominio
         {
             if (!passwordHasValidLength(aPassword))
             {
-                throw new ExceptionIncorrectLength("The new password's length must be greater than 5, but it's current length is " + aPassword.Length);
+                throw new ExceptionIncorrectLength("The new password's length must be between 5 and 25, but it's current length is " + aPassword.Length);
             }
             return true;
         }
 
-        public bool passwordHasValidLength(string password)
+        public bool passwordHasValidLength(string aPassword)
         {
-            return password.Length >= 5;
+            return aPassword.Length >= 5 && aPassword.Length <= 25;
         }
 
         public bool PasswordsMatch(string currentPassword, string masterPassword)

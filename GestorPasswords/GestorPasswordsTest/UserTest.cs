@@ -36,5 +36,14 @@ namespace GestorPasswordsTest
             aUser.ChangeMasterPassword(currentPassword, newPassword);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
+        public void NewMasterPasswordWithLengthOver25()
+        {
+            string currentPassword = "myPassword";
+            string newPassword = "newPasswordnewPasswordnewPassword";
+            aUser.ChangeMasterPassword(currentPassword, newPassword);
+        }
+
     }
 }
