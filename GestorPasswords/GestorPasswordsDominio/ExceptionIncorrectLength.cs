@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Runtime.Serialization;
 
 namespace GestorPasswordsDominio
 {
-    [Serializable]
     public class ExceptionIncorrectLength : Exception
     {
         public ExceptionIncorrectLength()
@@ -16,10 +14,6 @@ namespace GestorPasswordsDominio
         }
 
         public ExceptionIncorrectLength(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        protected ExceptionIncorrectLength(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }
