@@ -23,23 +23,15 @@ namespace GestorPasswordsDominio
             {
                 throw new ExceptionIncorrectMasterPassword("The password entered by the user did not match the master password");
             }
-            if (NewPasswordIsValid(newPassword))
+            if (!NewPasswordHasValidLength(newPassword))
             {
-                this.MasterPassword = newPassword;
+                throw new ExceptionIncorrectLength("The new password's length must be between 5 and 25, but it's current length is " + newPassword.Length);
             }
+            this.MasterPassword = newPassword;
             return true;
         }
 
-        public bool NewPasswordIsValid(string aPassword)
-        {
-            if (!passwordHasValidLength(aPassword))
-            {
-                throw new ExceptionIncorrectLength("The new password's length must be between 5 and 25, but it's current length is " + aPassword.Length);
-            }
-            return true;
-        }
-
-        public bool passwordHasValidLength(string aPassword)
+        public bool NewPasswordHasValidLength(string aPassword)
         {
             return aPassword.Length >= 5 && aPassword.Length <= 25;
         }
