@@ -17,7 +17,7 @@ namespace GestorPasswordsDominio
 
         public String Name { 
             get { return name; } 
-            set { this.name = value.ToLower(); }  
+            set { name = value.ToLower(); }  
         }
 
         public Category()
@@ -32,6 +32,14 @@ namespace GestorPasswordsDominio
             creditCardHashTable.CopyTo(creditCards, 0);
 
             return creditCards;
+        }
+
+        public UserPasswordPair[] GetUserPasswordsPair()
+        {
+            UserPasswordPair[] userPasswordPairs = new UserPasswordPair[this.userPasswordPairsHash.Count];
+            userPasswordPairsHash.CopyTo(userPasswordPairs, 0);
+
+            return userPasswordPairs;
         }
 
         public bool AddCreditCard(CreditCard aCreditCard)
@@ -114,6 +122,22 @@ namespace GestorPasswordsDominio
 
         public bool AddUserPasswordPair(UserPasswordPair aUserPasswordPair)
         {
+            bool userPasswordPairAdded = false;
+            if (UserPasswordPairIsValid(aUserPasswordPair))
+            {
+                AddUserPasswordPairToHashTable(aUserPasswordPair);
+                userPasswordPairAdded = true;
+            }
+            return userPasswordPairAdded;
+        }
+
+        private void AddUserPasswordPairToHashTable(UserPasswordPair aUserPasswordPair)
+        {
+            this.userPasswordPairsHash.Add(aUserPasswordPair.Site + aUserPasswordPair.Username, aUserPasswordPair);
+        }
+
+        private bool UserPasswordPairIsValid(UserPasswordPair aUserPasswordPair)
+        {
             if (UserPasswordPairAlredyExistsInUser(aUserPasswordPair.Username, aUserPasswordPair.Site))
             {
                 throw new ExceptionExistingUserPasswordPair("The userPassword pair already exists in user");
@@ -139,7 +163,6 @@ namespace GestorPasswordsDominio
                 throw new ExceptionUserPasswordPairHasInvalidNotesLength("The notes' length must be up to 250, but it's current length is " + aUserPasswordPair.Notes.Length);
             }
 
-            this.userPasswordPairsHash.Add(aUserPasswordPair.Site + aUserPasswordPair.Username, aUserPasswordPair);
             return true;
         }
 
