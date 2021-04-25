@@ -9,32 +9,30 @@ namespace GestorPasswordsDominio
 {
     public class User
     {
-        private Hashtable categoriesHashTable;
+        private SortedList<string, Category> categoriesList;
 
         public User()
         {
-            categoriesHashTable = new Hashtable();
+            categoriesList = new SortedList<string, Category>();
         }
 
         public void AddCategory(Category aCategory)
         {
-            this.categoriesHashTable.Add(aCategory.Name , aCategory);
+            this.categoriesList.Add(aCategory.Name , aCategory);
         }
 
         public Category[] GetCategories()
         {
-            Category[] categories = new Category[this.categoriesHashTable.Count];
-            categories.CopyTo(categories, 0);
-
-            return categories;
+            IList<Category> categories = categoriesList.Values;
+            return categories.ToArray();
         }
 
         public bool CreditCardNumberExists(string creditCardNumber)
         {
             bool creditCardExists = false;
-            foreach (DictionaryEntry pair in this.categoriesHashTable)
+            foreach (KeyValuePair<string, Category> pair in this.categoriesList)
             {
-                if (CreditCardExistsInCategory((Category)pair.Value, creditCardNumber)) 
+                if (CreditCardExistsInCategory(pair.Value, creditCardNumber)) 
                 {
                     creditCardExists = true;
                     break;
@@ -50,9 +48,9 @@ namespace GestorPasswordsDominio
         public bool UserPasswordPairExists(string username, string site)
         {
             bool pairExists = false;
-            foreach (DictionaryEntry pair in this.categoriesHashTable)
+            foreach (KeyValuePair<string, Category> pair in this.categoriesList)
             {
-                if (UserPasswordPairExistsInCategory((Category)pair.Value, username, site))
+                if (UserPasswordPairExistsInCategory(pair.Value, username, site))
                 {
                     pairExists = true;
                     break;
