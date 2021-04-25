@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GestorPasswordsDominio
 {
-    class ExceptionCategoryNotExists : Exception
+    public class ExceptionCategoryNotExists : Exception
     {
         public ExceptionCategoryNotExists() { }
         public ExceptionCategoryNotExists(string message) : base(message) { }

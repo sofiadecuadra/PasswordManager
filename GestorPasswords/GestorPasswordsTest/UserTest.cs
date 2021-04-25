@@ -118,5 +118,24 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aUser.ModifyCategory(aCategory, "newName"));
             Assert.AreEqual("newname", aCategory.Name);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionCategoryNotExists))]
+        public void ModifyCategoryThatDoesNotExist()
+        {
+            User aUser = new User()
+            {
+                MasterPassword = "myPassword"
+            };
+
+            Category aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+
+            aUser.ModifyCategory(aCategory, "newName");
+        }
+
     }
 }
