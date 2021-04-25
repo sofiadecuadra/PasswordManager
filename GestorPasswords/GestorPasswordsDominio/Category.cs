@@ -15,9 +15,10 @@ namespace GestorPasswordsDominio
         private Hashtable creditCardHashTable;
         public Hashtable userPasswordPairsHash;
 
-        public String Name { 
-            get { return name; } 
-            set { name = value.ToLower(); }  
+        public String Name
+        {
+            get { return name; }
+            set { name = value.ToLower(); }
         }
 
         public Category()
@@ -194,6 +195,17 @@ namespace GestorPasswordsDominio
         public bool UserPasswordPairAlredyExistsInCategory(string username, string site)
         {
             return this.userPasswordPairsHash.ContainsKey(site + username);
+        }
+
+        public bool RemoveCreditCard(string number)
+        {
+            if (!CreditCardNumberAlreadyExistsInCategory(number))
+            { 
+                throw new ExceptionCreditCardDoesNotExist($"The credit card {number} does not exist in this category");
+            }
+
+            this.creditCardHashTable.Remove(number);
+            return true;
         }
     }
 }

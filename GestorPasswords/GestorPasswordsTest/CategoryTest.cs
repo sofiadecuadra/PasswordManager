@@ -419,5 +419,39 @@ namespace GestorPasswordsTest
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
         }
+
+        [TestMethod]
+        public void RemoveCreditCardNormally()
+        {
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = "",
+                ExpirationDate = new DateTime(2023, 12, 25)
+            };
+            aCategory.AddCreditCard(aCreditCard);
+            Assert.IsTrue(aCategory.RemoveCreditCard(aCreditCard.Number));
+
+            Assert.IsFalse(aUser.CreditCardNumberExists(aCreditCard.Number));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionCreditCardDoesNotExist))]
+        public void RemoveCreditCardThatDoesNotExist()
+        {
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = "",
+                ExpirationDate = new DateTime(2023, 12, 25)
+            };
+            aCategory.RemoveCreditCard(aCreditCard.Number);
+        }
     }
 }
