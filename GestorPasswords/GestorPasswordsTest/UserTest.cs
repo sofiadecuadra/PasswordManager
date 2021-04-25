@@ -45,5 +45,13 @@ namespace GestorPasswordsTest
             aUser.ChangeMasterPassword(currentPassword, newPassword);
         }
 
+        [TestMethod]
+        public void ChangeMasterPasswordCorrectly()
+        {
+            string currentPassword = "myPassword";
+            string newPassword = "myNewPassword";
+            Assert.IsTrue(aUser.ChangeMasterPassword(currentPassword, newPassword));
+        }
+
     }
 }
