@@ -13,7 +13,7 @@ namespace GestorPasswordsDominio
         {
             if (passwordToCheck.Length < 5 || passwordToCheck.Length > 25)
             {
-                throw new IncorrectLengthException($"Length should be between 5 and 25 characters but is: {passwordToCheck.Length}");
+                throw new ExceptionIncorrectLength($"Length should be between 5 and 25 characters but is: {passwordToCheck.Length}");
             }
             if (ContainsLessThan8Characters(passwordToCheck)) return PasswordStrengthType.Red;
             if (ContainsBetween8And14Characters(passwordToCheck)) return PasswordStrengthType.Orange;
