@@ -453,5 +453,37 @@ namespace GestorPasswordsTest
             };
             aCategory.RemoveCreditCard(aCreditCard.Number);
         }
+
+        [TestMethod]
+        public void RemoveExistingUserPasswordPair()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAPassword",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
+            Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair.Username, aUserPasswordPair.Site));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionUserPasswordPairDoesNotExist))]
+        public void RemoveUserPasswordPairThatDoesNotExist()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAPassword",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+            };
+
+            aCategory.RemoveUserPasswordPair(aUserPasswordPair);
+        }
     }
 }

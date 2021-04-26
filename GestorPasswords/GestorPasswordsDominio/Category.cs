@@ -207,5 +207,16 @@ namespace GestorPasswordsDominio
             this.creditCardHashTable.Remove(number);
             return true;
         }
+
+        public bool RemoveUserPasswordPair(UserPasswordPair aUserPasswordPair)
+        {
+            if (!this.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair.Username, aUserPasswordPair.Site))
+            {
+                throw new ExceptionUserPasswordPairDoesNotExist($"The user-password pair ({aUserPasswordPair.Username}-{aUserPasswordPair.Site}) does not exist in {this.Name}");
+            }
+            
+            this.userPasswordPairsHash.Remove($"{aUserPasswordPair.Site}{ aUserPasswordPair.Username}");
+            return true;
+        }
     }
 }
