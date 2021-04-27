@@ -10,7 +10,13 @@ namespace GestorPasswordsDominio
     public class User
     {
         public string MasterPassword;
+        private string name;
         private SortedList<string, Category> categoriesList;
+
+        public string Name { 
+            get { return name; } 
+            set { name = value.ToLower(); } 
+        }
 
         public User()
         {
