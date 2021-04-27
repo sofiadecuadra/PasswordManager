@@ -54,6 +54,13 @@ namespace GestorPasswordsDominio
             return creditCardAdded;
         }
 
+        public bool ModifyCreditCard(CreditCard currentCreditCard, CreditCard newCreditCard, Category newCategory) 
+        {
+            RemoveCreditCard(currentCreditCard.Number);
+            AddCreditCard(newCreditCard);
+            return true;
+        }
+
         private bool CreditCardIsValid(CreditCard aCreditCard)
         {
             if (!CreditCardContainsOnlyDigits(aCreditCard.Number))
