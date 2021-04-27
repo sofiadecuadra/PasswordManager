@@ -303,6 +303,39 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyCreditCard(currentCreditCard, newCreditCard, anotherCategory));
         }
 
+        
+        [TestMethod]
+        public void ModifyCreditCardWithValidValuesWithoutChangingItsNumber()
+        {
+            CreditCard currentCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = "",
+                ExpirationDate = new DateTime(2023, 12, 25)
+            };
+
+            CreditCard newCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "123",
+                Notes = "aNote",
+                ExpirationDate = new DateTime(2025, 12, 25)
+            };
+            Category anotherCategory = new Category()
+            {
+                User = aUser,
+                Name = "anotherCategory"
+            };
+            aUser.AddCategory(anotherCategory);
+            aCategory.AddCreditCard(currentCreditCard);
+            Assert.IsTrue(aCategory.ModifyCreditCard(currentCreditCard, newCreditCard, anotherCategory));
+        }
+
         [TestMethod]
         public void AddValidUserPasswordPair()
         {
