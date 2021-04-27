@@ -337,6 +337,40 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ExceptionCreditCardHasInvalidCodeLength))]
+        public void ModifyCreditCardWithInvalidValue()
+        {
+            CreditCard currentCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = "",
+                ExpirationDate = new DateTime(2023, 12, 25)
+            };
+
+            CreditCard newCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "12",
+                Notes = "aNote",
+                ExpirationDate = new DateTime(2025, 12, 25)
+            };
+            Category anotherCategory = new Category()
+            {
+                User = aUser,
+                Name = "anotherCategory"
+            };
+            aUser.AddCategory(anotherCategory);
+            aCategory.AddCreditCard(currentCreditCard);
+            aCategory.ModifyCreditCard(currentCreditCard, newCreditCard, anotherCategory);
+        }
+
+
+        [TestMethod]
         public void AddValidUserPasswordPair()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
