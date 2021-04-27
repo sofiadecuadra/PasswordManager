@@ -57,7 +57,7 @@ namespace GestorPasswordsDominio
         public bool ModifyCreditCard(CreditCard currentCreditCard, CreditCard newCreditCard, Category newCategory) 
         {
             RemoveCreditCard(currentCreditCard.Number);
-            AddCreditCard(newCreditCard);
+            newCategory.AddCreditCard(newCreditCard);
             return true;
         }
 
