@@ -18,7 +18,6 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void AddValidUserToSystem()
         {
-            PasswordManager _PasswordManager= new PasswordManager();
             User myUser = new User() { 
                 MasterPassword = "myMasterPassword123$",
                 Name = "JuanP"
@@ -31,7 +30,6 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionIncorrectUserNameLength))]
         public void AddUserWhitNameTooShort()
         {
-            PasswordManager _PasswordManager = new PasswordManager();
             User myUser = new User()
             {
                 MasterPassword = "myMasterPassword123$",
@@ -43,7 +41,6 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionIncorrectUserNameLength))]
         public void AddUserWhitNameTooLong()
         {
-            PasswordManager _PasswordManager = new PasswordManager();
             User myUser = new User()
             {
                 MasterPassword = "myMasterPassword123$",
@@ -51,6 +48,57 @@ namespace GestorPasswordsTest
             };
         }
 
+        [TestMethod]
+        public void ValidateUserCorrectly()
+        {
+            User myUser = new User()
+            {
+                MasterPassword = "myMasterPassword123$",
+                Name = "JuanP"
+            };
+            _PasswordManager.AddUser(myUser);
 
+            Assert.IsTrue(_PasswordManager.ValidateUser("juanp", "myMasterPassword123$"));
+        }
+
+        [TestMethod]
+        public void ValidateUserNotInLowerCorrectly()
+        {
+            User myUser = new User()
+            {
+                MasterPassword = "myMasterPassword123$",
+                Name = "JuanP"
+            };
+            _PasswordManager.AddUser(myUser);
+
+            Assert.IsTrue(_PasswordManager.ValidateUser("JuanP", "myMasterPassword123$"));
+        }
+
+        [TestMethod]
+        public void ValidateUserWithIncorrectPassword()
+        {
+            User myUser = new User()
+            {
+                MasterPassword = "myMasterPassword123$",
+                Name = "JuanP"
+            };
+            _PasswordManager.AddUser(myUser);
+
+            Assert.IsFalse(_PasswordManager.ValidateUser("juanp", "NotThePassword"));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionUserDoesNotExist))]
+        public void ValidateNonExistingUser()
+        {
+            User myUser = new User()
+            {
+                MasterPassword = "myMasterPassword123$",
+                Name = "JuanP"
+            };
+            _PasswordManager.AddUser(myUser);
+
+            _PasswordManager.ValidateUser("NotTheUser", "myMasterPassword123$");
+        }
     }
 }

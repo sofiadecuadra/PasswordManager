@@ -24,5 +24,16 @@ namespace GestorPasswordsDominio
         {
             return users.Contains(name);
         }
+
+        public bool ValidateUser(string username, string masterPassword)
+        {
+            var usernameInLower = username.ToLower();
+            if (!HasUser(usernameInLower))
+            {
+                throw new ExceptionUserDoesNotExist($"The user {username} does not exist");
+            }
+
+            return ((User)users[usernameInLower]).MasterPassword.Equals(masterPassword);
+        }
     }
 }
