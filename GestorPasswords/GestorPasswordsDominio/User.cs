@@ -13,9 +13,25 @@ namespace GestorPasswordsDominio
         private string name;
         private SortedList<string, Category> categoriesList;
 
-        public string Name { 
-            get { return name; } 
-            set { name = value.ToLower(); } 
+        public string Name
+        {
+            get { return name; }
+            set { name = ValidUserName(value); }
+        }
+
+        private static string ValidUserName(string value)
+        {
+            if (!isBetween5And25Characters(value))
+            {
+                string errorMessage = $"The provided user name should be between 5 and 25 characters but is: {value.Length} charachterslong";
+                throw new ExceptionIncorrectUserNameLength(errorMessage);
+            }
+            return value.ToLower();
+        }
+
+        private static bool isBetween5And25Characters(string value)
+        {
+            return value.Length >= 5 && value.Length <= 25;
         }
 
         public User()
@@ -25,7 +41,7 @@ namespace GestorPasswordsDominio
 
         public bool ChangeMasterPassword(string currentPassword, string newPassword)
         {
-            if(!PasswordsMatch(currentPassword, this.MasterPassword))
+            if (!PasswordsMatch(currentPassword, this.MasterPassword))
             {
                 throw new ExceptionIncorrectMasterPassword("The password entered by the user did not match the master password");
             }
@@ -123,7 +139,7 @@ namespace GestorPasswordsDominio
             bool creditCardExists = false;
             foreach (KeyValuePair<string, Category> pair in this.categoriesList)
             {
-                if (CreditCardExistsInCategory(pair.Value, creditCardNumber)) 
+                if (CreditCardExistsInCategory(pair.Value, creditCardNumber))
                 {
                     creditCardExists = true;
                     break;
