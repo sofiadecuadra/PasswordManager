@@ -54,6 +54,35 @@ namespace GestorPasswordsDominio
             return creditCardAdded;
         }
 
+        public bool ModifyCreditCard(CreditCard currentCreditCard, CreditCard newCreditCard, Category newCategory) 
+        {
+            if(currentCreditCard.Number == newCreditCard.Number)
+            {
+                try
+                {
+                    newCategory.AddCreditCard(newCreditCard);
+                }
+                catch (ExceptionCreditCardNumberAlreadyExistsInUser)
+                {
+                    RemoveCreditCard(currentCreditCard.Number);
+                    newCategory.UpdateCreditCard(newCreditCard);
+                }
+            }
+            else
+            {
+                if (newCategory.AddCreditCard(newCreditCard))
+                {
+                    RemoveCreditCard(currentCreditCard.Number);
+                }
+            }
+            return true;
+        }
+
+        private void UpdateCreditCard(CreditCard newCreditCard)
+        {
+            this.creditCardHashTable.Add(newCreditCard.Number, newCreditCard);
+        }
+
         private bool CreditCardIsValid(CreditCard aCreditCard)
         {
             if (!CreditCardContainsOnlyDigits(aCreditCard.Number))
