@@ -100,5 +100,32 @@ namespace GestorPasswordsTest
 
             _PasswordManager.ValidateUser("NotTheUser", "myMasterPassword123$");
         }
+
+        [TestMethod]
+        public void SetCurrentUserCorrectly()
+        {
+            User myUser = new User()
+            {
+                MasterPassword = "myMasterPassword123$",
+                Name = "JuanP"
+            };
+            _PasswordManager.AddUser(myUser);
+
+            _PasswordManager.CurrentUser = myUser;
+            Assert.AreEqual(myUser.Name, _PasswordManager.CurrentUser.Name);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionUserDoesNotExist))]
+        public void SetCurrentUserThatDoesNotExist()
+        {
+            User myUser = new User()
+            {
+                MasterPassword = "myMasterPassword123$",
+                Name = "JuanP"
+            };
+
+            _PasswordManager.CurrentUser = myUser;
+        }
     }
 }

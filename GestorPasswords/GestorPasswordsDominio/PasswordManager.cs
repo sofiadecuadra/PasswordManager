@@ -14,6 +14,20 @@ namespace GestorPasswordsDominio
         {
             this.users = new Hashtable();
         }
+
+        private User currentUser;
+
+        public User CurrentUser
+        {
+            get { return currentUser; }
+            set { currentUser = ReturnUserIfItExists(value); }
+        }
+
+        private User ReturnUserIfItExists(User value)
+        {
+            return HasUser(value.Name) ? value : throw new ExceptionUserDoesNotExist();
+        }
+
         public bool AddUser(User myUser)
         {
             users.Add(myUser.Name, myUser);
