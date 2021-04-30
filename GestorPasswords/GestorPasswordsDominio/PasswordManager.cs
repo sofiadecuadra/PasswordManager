@@ -36,18 +36,36 @@ namespace GestorPasswordsDominio
 
         public bool HasUser(string name)
         {
-            return users.Contains(name);
+            return users.Contains(name.ToLower());
         }
 
         public bool ValidateUser(string username, string masterPassword)
         {
-            var usernameInLower = username.ToLower();
-            if (!HasUser(usernameInLower))
+            if (!HasUser(username))
             {
                 throw new ExceptionUserDoesNotExist($"The user {username} does not exist");
             }
 
-            return ((User)users[usernameInLower]).MasterPassword.Equals(masterPassword);
+            return FindUser(username)
+                .MasterPassword.Equals(masterPassword);
+        }
+
+        public void ValidateAndSetCurrentUser(string username, string masterPassword)
+        {
+            if (ValidateUser(username, masterPassword))
+            {
+                this.CurrentUser = FindUser(username);
+            }
+            else
+            {
+
+                throw new ExceptionIncorrectMasterPassword();
+            }
+        }
+
+        private User FindUser(string name)
+        {
+            return (User)users[name.ToLower()];
         }
     }
 }
