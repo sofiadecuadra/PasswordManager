@@ -472,6 +472,7 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
         }
 
+        [TestMethod]
         public void ModifyPasswordOfUserPasswordPairToAValidOneAndChangingCategory()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
@@ -490,7 +491,8 @@ namespace GestorPasswordsTest
                 User = aUser,
                 Name = "otherCategory"
             };
-            aUser.AddCategory(aCategory);
+
+            aUser.AddCategory(otherCategory);
 
             UserPasswordPair newUserPasswordPair = new UserPasswordPair()
             {
