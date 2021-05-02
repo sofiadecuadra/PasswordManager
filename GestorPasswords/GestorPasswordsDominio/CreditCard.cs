@@ -14,7 +14,7 @@ namespace GestorPasswordsDominio
         {
             get { return number; }
             set {
-                    number = value.Replace(" ", string.Empty);
+                 number = value.Replace(" ", string.Empty);
             }
         }
         public string Type { get; set; }
@@ -22,5 +22,6 @@ namespace GestorPasswordsDominio
         public string Code { get; set; }
         public string Notes { get; set; }
         public DateTime ExpirationDate { get; set; }
+        public Category Category { get; set; }
     }
 }

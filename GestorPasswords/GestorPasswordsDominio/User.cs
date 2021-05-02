@@ -9,7 +9,7 @@ namespace GestorPasswordsDominio
 {
     public class User
     {
-        public string MasterPassword;
+        public string MasterPassword { get; set; }
         private string name;
         private SortedList<string, Category> categoriesList;
 
