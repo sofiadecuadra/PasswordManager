@@ -527,6 +527,33 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidSiteLength))]
+        public void ModifySiteOfUserPasswordPairToAnInvalidOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "password",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "password",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "n",
+                Category = aCategory,
+            };
+
+            _ = aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
+        }
+
+        [TestMethod]
         public void RemoveCreditCardNormally()
         {
             CreditCard aCreditCard = new CreditCard()
