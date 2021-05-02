@@ -123,5 +123,52 @@ namespace GestorPasswordsTest
         {
             _PasswordManager.ValidateAndSetCurrentUser("ThisIsNotTheName", myUser.MasterPassword);
         }
+
+        [TestMethod]
+        public void ShareValidPassword()
+        {
+            var aUser = new User()
+            {
+                MasterPassword = "myMasterPassword123$",
+                Name = "JuanPa"
+            };
+            _PasswordManager.CurrentUser = myUser;
+            _PasswordManager.AddUser(aUser);
+            UserPasswordPair aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+
+            _PasswordManager.SharePassword(aUserPasswordPair, aUser.Name);
+            Assert.IsTrue(_PasswordManager.FindUser(aUser.Name).HasSharedPasswordOf(aUserPasswordPair.Username, aUserPasswordPair.Site));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionUserDoesNotExist))]
+        public void ShareValidPasswordToUserThatDoesNotExist()
+        {
+            _PasswordManager.CurrentUser = myUser;
+            UserPasswordPair aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+
+            _PasswordManager.SharePassword(aUserPasswordPair, "JuanPa");
+        }
+
+        private UserPasswordPair LoadTestCategoryToMyUserWithAUserPasswordPair()
+        {
+            var aCategory = new Category()
+            {
+                Name = "aCategory",
+                User = myUser
+            };
+            var aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAPassword",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+            myUser.AddCategory(aCategory);
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+            return aUserPasswordPair;
+        }
     }
 }

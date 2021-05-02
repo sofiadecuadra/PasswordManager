@@ -92,6 +92,11 @@ namespace GestorPasswordsDominio
             return true;
         }
 
+        internal UserPasswordPair FindUserPasswordPair(string siteUsername, string site)
+        {
+            return (UserPasswordPair)userPasswordPairsHash[site + siteUsername];
+        }
+
         public bool CreditCardNumberAlreadyExistsInCategory(string creditCardNumber)
         {
             return creditCardHashTable.ContainsKey(creditCardNumber);

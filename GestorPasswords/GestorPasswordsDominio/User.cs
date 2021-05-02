@@ -19,6 +19,8 @@ namespace GestorPasswordsDominio
             set { name = ValidUserName(value); }
         }
 
+        public Category SharedPasswords { get; private set; }
+
         private static string ValidUserName(string value)
         {
             if (!isBetween5And25Characters(value))
@@ -37,6 +39,11 @@ namespace GestorPasswordsDominio
         public User()
         {
             categoriesList = new SortedList<string, Category>();
+            SharedPasswords = new Category()
+            {
+                User = this,
+                Name = "Shared Passwords"
+            };
         }
 
         public bool ChangeMasterPassword(string currentPassword, string newPassword)
@@ -73,6 +80,11 @@ namespace GestorPasswordsDominio
             }
 
             return categoryAdded;
+        }
+
+        internal void AddSharedUserPasswordPair(UserPasswordPair passwordToShare)
+        {
+            SharedPasswords.AddUserPasswordPair(passwordToShare);
         }
 
         private void AddCategoryToSortedList(Category aCategory)
@@ -147,6 +159,12 @@ namespace GestorPasswordsDominio
             }
             return creditCardExists;
         }
+
+        public bool HasSharedPasswordOf(string username, string site)
+        {
+            return SharedPasswords.UserPasswordPairAlredyExistsInCategory(username, site);
+        }
+
         private static bool CreditCardExistsInCategory(Category aCategory, string creditCardNumber)
         {
             return aCategory.CreditCardNumberAlreadyExistsInCategory(creditCardNumber);
