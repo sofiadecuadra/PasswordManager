@@ -137,6 +137,10 @@ namespace GestorPasswordsDominio
             {
                 throw new ExceptionCreditCardHasInvalidTypeLength("The type's length must be between 3 and 25, but it's current length is " + newCreditCard.Type.Length);
             }
+            if (!LengthBetween3And25(newCreditCard.Name))
+            {
+                throw new ExceptionCreditCardHasInvalidNameLength("The name's length must be between 3 and 25, but it's current length is " + newCreditCard.Name.Length);
+            }
             return true;
         }
 
