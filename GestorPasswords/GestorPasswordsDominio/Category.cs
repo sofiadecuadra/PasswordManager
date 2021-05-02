@@ -141,6 +141,10 @@ namespace GestorPasswordsDominio
             {
                 throw new ExceptionCreditCardHasInvalidNameLength("The name's length must be between 3 and 25, but it's current length is " + newCreditCard.Name.Length);
             }
+            if (!codeHasValidLength(newCreditCard.Code))
+            {
+                throw new ExceptionCreditCardHasInvalidCodeLength("The code's length must be between 3 and 4, but it's current length is " + newCreditCard.Code.Length);
+            }
             return true;
         }
 
