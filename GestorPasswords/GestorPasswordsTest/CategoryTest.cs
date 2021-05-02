@@ -447,7 +447,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        public void ModifyPasswordOfUserPasswordPairToAValidOneAndWithoutChangingCategory()
+        public void ModifyPasswordOfUserPasswordPairToAValidOne()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
