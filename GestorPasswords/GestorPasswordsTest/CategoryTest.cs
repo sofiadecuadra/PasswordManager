@@ -470,7 +470,33 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
-            Assert.AreEqual("newPassword", newUserPasswordPair.Password);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidPasswordLength))]
+        public void ModifyPasswordOfUserPasswordPairToAnInvalidOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "password",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "no",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            _ = aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
         }
 
         [TestMethod]

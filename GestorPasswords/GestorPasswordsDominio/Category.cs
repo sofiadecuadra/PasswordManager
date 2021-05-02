@@ -145,24 +145,29 @@ namespace GestorPasswordsDominio
                 throw new ExceptionExistingUserPasswordPair("The userPassword pair already exists in user");
             }
 
-            if (!UsernameHasValidLength(aUserPasswordPair.Username))
+            return NewUserPasswordPairIsValid(aUserPasswordPair);
+        }
+
+        public bool NewUserPasswordPairIsValid(UserPasswordPair newUserPasswordPair)
+        {
+            if (!UsernameHasValidLength(newUserPasswordPair.Username))
             {
-                throw new ExceptionUserPasswordPairHasInvalidUsernameLength("The username's length must be between 5 and 25, but it's current length is " + aUserPasswordPair.Username.Length);
+                throw new ExceptionUserPasswordPairHasInvalidUsernameLength("The username's length must be between 5 and 25, but it's current length is " + newUserPasswordPair.Username.Length);
             }
 
-            if (!PasswordHasValidLength(aUserPasswordPair.Password))
+            if (!PasswordHasValidLength(newUserPasswordPair.Password))
             {
-                throw new ExceptionUserPasswordPairHasInvalidPasswordLength("The password's length must be between 5 and 25, but it's current length is " + aUserPasswordPair.Password.Length);
+                throw new ExceptionUserPasswordPairHasInvalidPasswordLength("The password's length must be between 5 and 25, but it's current length is " + newUserPasswordPair.Password.Length);
             }
 
-            if (!siteHasValidLength(aUserPasswordPair.Site))
+            if (!siteHasValidLength(newUserPasswordPair.Site))
             {
-                throw new ExceptionUserPasswordPairHasInvalidSiteLength("The site's length must be between 5 and 25, but it's current length is " + aUserPasswordPair.Site.Length);
+                throw new ExceptionUserPasswordPairHasInvalidSiteLength("The site's length must be between 5 and 25, but it's current length is " + newUserPasswordPair.Site.Length);
             }
 
-            if (!notesHaveValidLength(aUserPasswordPair.Notes))
+            if (!notesHaveValidLength(newUserPasswordPair.Notes))
             {
-                throw new ExceptionUserPasswordPairHasInvalidNotesLength("The notes' length must be up to 250, but it's current length is " + aUserPasswordPair.Notes.Length);
+                throw new ExceptionUserPasswordPairHasInvalidNotesLength("The notes' length must be up to 250, but it's current length is " + newUserPasswordPair.Notes.Length);
             }
 
             return true;
@@ -200,14 +205,18 @@ namespace GestorPasswordsDominio
 
         public bool ModifyUserPasswordPair(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
         {
-            if (HasSameCategory(oldUserPasswordPair.Category, newUserPasswordPair.Category) && !PasswordsAreEqual(oldUserPasswordPair.Password, newUserPasswordPair.Password))
+            bool modified = false;
+            if (NewUserPasswordPairIsValid(newUserPasswordPair))
             {
-                RemoveUserPasswordPair(oldUserPasswordPair);
-                AddUserPasswordPair(newUserPasswordPair);
-                return true;
+                if (HasSameCategory(oldUserPasswordPair.Category, newUserPasswordPair.Category) && !PasswordsAreEqual(oldUserPasswordPair.Password, newUserPasswordPair.Password))
+                {
+                    RemoveUserPasswordPair(oldUserPasswordPair);
+                    AddUserPasswordPair(newUserPasswordPair);
+                    modified = true;
+                }
             }
 
-            return false;
+            return modified;
         }
 
         public bool PasswordsAreEqual(String aPassword, String otherPassword)
@@ -217,20 +226,7 @@ namespace GestorPasswordsDominio
 
         public bool HasSameCategory(Category aCategory, Category otherCategory)
         {
-            return aCategory.Equals(otherCategory);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj == null)
-            {
-                return false;
-            }
-            else
-            {
-                Category categoryToCheck = (Category)obj;
-                return (name == categoryToCheck.Name);
-            }
+            return aCategory.Name == otherCategory.Name;
         }
 
         public bool RemoveCreditCard(string number)
