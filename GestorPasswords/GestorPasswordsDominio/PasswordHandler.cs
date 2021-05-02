@@ -85,7 +85,7 @@ namespace GestorPasswordsDominio
 
         public static String GenerateRandomPassword(int length)
         {
-            if (length < 5)
+            if (length < 5 || length > 25)
             {
                 throw new ExceptionIncorrectLength("The length must be between 5 and 25, and the current length is " + length);
             }

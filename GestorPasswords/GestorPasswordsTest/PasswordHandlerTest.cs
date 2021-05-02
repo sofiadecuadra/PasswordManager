@@ -119,5 +119,12 @@ namespace GestorPasswordsTest
             PasswordHandler.GenerateRandomPassword(length);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
+        public void GeneratePasswordWithLengthGreaterThan25()
+        {
+            int length = 26;
+            PasswordHandler.GenerateRandomPassword(length);
+        }
     }
 }
