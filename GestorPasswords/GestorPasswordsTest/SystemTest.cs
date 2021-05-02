@@ -123,5 +123,36 @@ namespace GestorPasswordsTest
         {
             _PasswordManager.ValidateAndSetCurrentUser("ThisIsNotTheName", myUser.MasterPassword);
         }
+
+        [TestMethod]
+        public void ShareValidPassword()
+        {
+            var aCategory = new Category()
+            {
+                Name = "aCategory",
+                User = myUser
+            };
+            var aUser = new User()
+            {
+                MasterPassword = "myMasterPassword123$",
+                Name = "JuanPa"
+            };
+            var aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAPassword",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+            _PasswordManager.AddUser(aUser);
+            _PasswordManager.CurrentUser = myUser;
+            myUser.AddCategory(aCategory);
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            _PasswordManager.SharePassword(aUserPasswordPair, aUser.Name);
+            Assert.IsTrue(_PasswordManager.FindUser(aUser.Name).HasSharedPasswordOf(aUserPasswordPair.Username, aUserPasswordPair.Site));
+        }
     }
 }

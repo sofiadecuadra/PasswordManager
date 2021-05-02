@@ -63,9 +63,15 @@ namespace GestorPasswordsDominio
             }
         }
 
-        private User FindUser(string name)
+        public User FindUser(string name)
         {
             return (User)users[name.ToLower()];
+        }
+
+        public void SharePassword(UserPasswordPair passwordToShare, string name)
+        {
+            var userToRecivePassword = FindUser(name);
+            userToRecivePassword.AddSharedUserPasswordPair(passwordToShare);
         }
     }
 }
