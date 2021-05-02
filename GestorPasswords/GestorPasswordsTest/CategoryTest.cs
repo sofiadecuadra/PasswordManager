@@ -554,6 +554,40 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidNotesLength))]
+        public void ModifyNotesOfUserPasswordPairToAnInvalidOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "password",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            string aNote = "";
+
+            for (int i = 0; i <= 251; i++)
+            {
+                aNote += "a";
+            }
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "password",
+                Notes = aNote,
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            _ = aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
+        }
+
+        [TestMethod]
         public void RemoveCreditCardNormally()
         {
             CreditCard aCreditCard = new CreditCard()
