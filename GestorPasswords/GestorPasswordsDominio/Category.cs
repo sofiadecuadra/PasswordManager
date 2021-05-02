@@ -133,6 +133,10 @@ namespace GestorPasswordsDominio
             {
                 throw new ExceptionCreditCardHasInvalidNumberLength("The credit card number must contain 16 digits, but currently it has " + newCreditCard.Number.Length);
             }
+            if (!LengthBetween3And25(newCreditCard.Type))
+            {
+                throw new ExceptionCreditCardHasInvalidTypeLength("The type's length must be between 3 and 25, but it's current length is " + newCreditCard.Type.Length);
+            }
             return true;
         }
 
