@@ -154,6 +154,10 @@ namespace GestorPasswordsDominio
             {
                 throw new ExceptionCreditCardCodeHasNonNumericCharacters("The code should contain numeric characters only but is " + newCreditCard.Code);
             }
+            if (!notesHaveValidLength(newCreditCard.Notes))
+            {
+                throw new ExceptionCreditCardHasInvalidNotesLength("The notes' length must be up to 250, but it's current length is " + newCreditCard.Notes.Length);
+            }
 
             return true;
         }
