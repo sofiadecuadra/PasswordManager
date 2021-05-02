@@ -76,7 +76,7 @@ namespace GestorPasswordsDominio
             {
                 throw new ExceptionCreditCardHasInvalidCodeLength("The code's length must be between 3 and 4, but it's current length is " + aCreditCard.Code.Length);
             }
-            if (!Regex.IsMatch(aCreditCard.Code, @"^[0-9]+$"))
+            if (!codeContainNumericCharactersOnly(aCreditCard.Code))
             {
                 throw new ExceptionCreditCardCodeHasNonNumericCharacters("The code should contain numeric characters only but is " + aCreditCard.Code);
             }
@@ -105,6 +105,11 @@ namespace GestorPasswordsDominio
         private bool codeHasValidLength(string creditCardCode)
         {
             return creditCardCode.Length == 3 || creditCardCode.Length == 4;
+        }
+
+        public bool codeContainNumericCharactersOnly(string creditCardCode)
+        {
+            return Regex.IsMatch(creditCardCode, @"^[0-9]+$");
         }
 
         private bool LengthBetween3And25(string stringToCheck)
@@ -145,6 +150,11 @@ namespace GestorPasswordsDominio
             {
                 throw new ExceptionCreditCardHasInvalidCodeLength("The code's length must be between 3 and 4, but it's current length is " + newCreditCard.Code.Length);
             }
+            if (!codeContainNumericCharactersOnly(newCreditCard.Code))
+            {
+                throw new ExceptionCreditCardCodeHasNonNumericCharacters("The code should contain numeric characters only but is " + newCreditCard.Code);
+            }
+
             return true;
         }
 
