@@ -28,5 +28,7 @@ namespace GestorPasswordsDominio
         public string Notes { get; set; }
 
         public DateTime LastModifiedDate { get; private set; }
+
+        public Category Category { get; set; }
     }
 }

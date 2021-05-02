@@ -32,7 +32,8 @@ namespace GestorPasswordsTest
                 Name = "Visa Gold",
                 Code = "234",
                 Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25)
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
             };
             Assert.IsTrue(aCategory.AddCreditCard(aCreditCard));
         }
@@ -47,7 +48,8 @@ namespace GestorPasswordsTest
                 Name = "Visa Gold",
                 Code = "234",
                 Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25)
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
             };
             Assert.IsTrue(aCategory.AddCreditCard(aCreditCard));
         }
@@ -63,7 +65,8 @@ namespace GestorPasswordsTest
                 Name = "Visa Gold",
                 Code = "234",
                 Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25)
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
             };
             aCategory.AddCreditCard(aCreditCard);
         }
@@ -79,7 +82,8 @@ namespace GestorPasswordsTest
                 Name = "Visa Gold",
                 Code = "234",
                 Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25)
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
             };
             aCategory.AddCreditCard(aCreditCard);
         }
@@ -95,7 +99,8 @@ namespace GestorPasswordsTest
                 Name = "Visa Gold",
                 Code = "234",
                 Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25)
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
             };
             aCategory.AddCreditCard(aCreditCard);
         }
@@ -111,7 +116,8 @@ namespace GestorPasswordsTest
                 Name = "Visa Gold",
                 Code = "234",
                 Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25)
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
             };
             aCategory.AddCreditCard(aCreditCard);
         }
@@ -127,7 +133,8 @@ namespace GestorPasswordsTest
                 Name = "Vi",
                 Code = "234",
                 Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25)
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
             };
             aCategory.AddCreditCard(aCreditCard);
         }
@@ -143,7 +150,8 @@ namespace GestorPasswordsTest
                 Name = "Visa Gold Visa Gold Visa Gold Visa Gold",
                 Code = "234",
                 Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25)
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
             };
             aCategory.AddCreditCard(aCreditCard);
         }
@@ -159,7 +167,8 @@ namespace GestorPasswordsTest
                 Name = "Visa Gold",
                 Code = "12",
                 Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25)
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
             };
             aCategory.AddCreditCard(aCreditCard);
         }
@@ -175,7 +184,8 @@ namespace GestorPasswordsTest
                 Name = "Visa Gold",
                 Code = "12121",
                 Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25)
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
             };
             aCategory.AddCreditCard(aCreditCard);
         }
@@ -191,7 +201,8 @@ namespace GestorPasswordsTest
                 Name = "Visa Gold",
                 Code = "12A",
                 Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25)
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
             };
             aCategory.AddCreditCard(aCreditCard);
         }
@@ -214,7 +225,8 @@ namespace GestorPasswordsTest
                 Name = "Visa Gold",
                 Code = "234",
                 Notes = aNote,
-                ExpirationDate = new DateTime(2023, 12, 25)
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
             };
             aCategory.AddCreditCard(aCreditCard);
         }
@@ -230,7 +242,8 @@ namespace GestorPasswordsTest
                 Name = "Visa Gold",
                 Code = "234",
                 Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25)
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
             };
             CreditCard anotherCreditCard = new CreditCard()
             {
@@ -239,7 +252,8 @@ namespace GestorPasswordsTest
                 Name = "Visa Gold",
                 Code = "234",
                 Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25)
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
             };
             aCategory.AddCreditCard(aCreditCard);
             aCategory.AddCreditCard(anotherCreditCard);
@@ -254,6 +268,7 @@ namespace GestorPasswordsTest
                 Notes = "these are my notes",
                 Username = "myUserName",
                 Site = "mySite",
+                Category = aCategory,
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
@@ -267,7 +282,8 @@ namespace GestorPasswordsTest
                 Password = "thisIsAPassword",
                 Notes = "these are my notes",
                 Username = "myUserName1",
-                Site = "mySite1"
+                Site = "mySite1",
+                Category = aCategory,
             };
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
@@ -277,7 +293,8 @@ namespace GestorPasswordsTest
                 Password = "thisIsAPassword",
                 Notes = "these are my notes",
                 Username = "myUserName2",
-                Site = "mySite1"
+                Site = "mySite1",
+                Category = aCategory,
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(anotherUserPasswordPair));
@@ -292,7 +309,8 @@ namespace GestorPasswordsTest
                 Password = "thisIsAPassword",
                 Notes = "these are my notes",
                 Username = "myUserName",
-                Site = "mySite"
+                Site = "mySite",
+                Category = aCategory,
             };
 
             _ = aCategory.AddUserPasswordPair(aUserPasswordPair);
@@ -302,7 +320,8 @@ namespace GestorPasswordsTest
                 Password = "myPassword",
                 Notes = "Heello notes",
                 Username = "myUserName",
-                Site = "mySite"
+                Site = "mySite",
+                Category = aCategory,
             };
 
             aCategory.AddUserPasswordPair(anotherUserPasswordPair);
@@ -317,7 +336,8 @@ namespace GestorPasswordsTest
                 Password = "thisIsAPassword",
                 Notes = "these are my notes",
                 Username = "bad",
-                Site = "mySite"
+                Site = "mySite",
+                Category = aCategory,
             };
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
@@ -332,7 +352,8 @@ namespace GestorPasswordsTest
                 Password = "thisIsAPassword",
                 Notes = "these are my notes",
                 Username = "myUsernameHasInvalidLength",
-                Site = "mySite"
+                Site = "mySite",
+                Category = aCategory,
             };
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
@@ -347,7 +368,8 @@ namespace GestorPasswordsTest
                 Password = "pass",
                 Notes = "these are my notes",
                 Username = "myUsername",
-                Site = "mySite"
+                Site = "mySite",
+                Category = aCategory,
             };
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
@@ -362,7 +384,8 @@ namespace GestorPasswordsTest
                 Password = "passwordHasInvalidLengthAndMustntBeUsed",
                 Notes = "these are my notes",
                 Username = "myUsername",
-                Site = "mySite"
+                Site = "mySite",
+                Category = aCategory,
             };
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
@@ -377,7 +400,8 @@ namespace GestorPasswordsTest
                 Password = "password",
                 Notes = "these are my notes",
                 Username = "myUsername",
-                Site = "no"
+                Site = "no",
+                Category = aCategory,
             };
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
@@ -392,7 +416,8 @@ namespace GestorPasswordsTest
                 Password = "password",
                 Notes = "these are my notes",
                 Username = "myUsername",
-                Site = "This site has an invalid length, so it mustnt be used"
+                Site = "This site has an invalid length, so it mustnt be used",
+                Category = aCategory,
             };
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
@@ -415,6 +440,7 @@ namespace GestorPasswordsTest
                 Notes = aNote,
                 Username = "myUsername",
                 Site = "mySite",
+                Category = aCategory,
             };
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
@@ -430,7 +456,8 @@ namespace GestorPasswordsTest
                 Name = "Visa Gold",
                 Code = "234",
                 Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25)
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
             };
             aCategory.AddCreditCard(aCreditCard);
             Assert.IsTrue(aCategory.RemoveCreditCard(aCreditCard.Number));
@@ -449,7 +476,8 @@ namespace GestorPasswordsTest
                 Name = "Visa Gold",
                 Code = "234",
                 Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25)
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
             };
             aCategory.RemoveCreditCard(aCreditCard.Number);
         }
@@ -463,6 +491,7 @@ namespace GestorPasswordsTest
                 Notes = "these are my notes",
                 Username = "myUserName",
                 Site = "mySite",
+                Category = aCategory,
             };
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
@@ -481,6 +510,7 @@ namespace GestorPasswordsTest
                 Notes = "these are my notes",
                 Username = "myUserName",
                 Site = "mySite",
+                Category = aCategory,
             };
 
             aCategory.RemoveUserPasswordPair(aUserPasswordPair);
