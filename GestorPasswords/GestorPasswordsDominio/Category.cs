@@ -145,24 +145,29 @@ namespace GestorPasswordsDominio
                 throw new ExceptionExistingUserPasswordPair("The userPassword pair already exists in user");
             }
 
-            if (!UsernameHasValidLength(aUserPasswordPair.Username))
+            return NewUserPasswordPairIsValid(aUserPasswordPair);
+        }
+
+        public bool NewUserPasswordPairIsValid(UserPasswordPair newUserPasswordPair)
+        {
+            if (!UsernameHasValidLength(newUserPasswordPair.Username))
             {
-                throw new ExceptionUserPasswordPairHasInvalidUsernameLength("The username's length must be between 5 and 25, but it's current length is " + aUserPasswordPair.Username.Length);
+                throw new ExceptionUserPasswordPairHasInvalidUsernameLength("The username's length must be between 5 and 25, but it's current length is " + newUserPasswordPair.Username.Length);
             }
 
-            if (!PasswordHasValidLength(aUserPasswordPair.Password))
+            if (!PasswordHasValidLength(newUserPasswordPair.Password))
             {
-                throw new ExceptionUserPasswordPairHasInvalidPasswordLength("The password's length must be between 5 and 25, but it's current length is " + aUserPasswordPair.Password.Length);
+                throw new ExceptionUserPasswordPairHasInvalidPasswordLength("The password's length must be between 5 and 25, but it's current length is " + newUserPasswordPair.Password.Length);
             }
 
-            if (!siteHasValidLength(aUserPasswordPair.Site))
+            if (!siteHasValidLength(newUserPasswordPair.Site))
             {
-                throw new ExceptionUserPasswordPairHasInvalidSiteLength("The site's length must be between 5 and 25, but it's current length is " + aUserPasswordPair.Site.Length);
+                throw new ExceptionUserPasswordPairHasInvalidSiteLength("The site's length must be between 5 and 25, but it's current length is " + newUserPasswordPair.Site.Length);
             }
 
-            if (!notesHaveValidLength(aUserPasswordPair.Notes))
+            if (!notesHaveValidLength(newUserPasswordPair.Notes))
             {
-                throw new ExceptionUserPasswordPairHasInvalidNotesLength("The notes' length must be up to 250, but it's current length is " + aUserPasswordPair.Notes.Length);
+                throw new ExceptionUserPasswordPairHasInvalidNotesLength("The notes' length must be up to 250, but it's current length is " + newUserPasswordPair.Notes.Length);
             }
 
             return true;
@@ -196,6 +201,57 @@ namespace GestorPasswordsDominio
         public bool UserPasswordPairAlredyExistsInCategory(string username, string site)
         {
             return this.userPasswordPairsHash.ContainsKey(site + username);
+        }
+
+        public bool ModifyUserPasswordPair(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
+        {
+            bool modified = false;
+            if (NewUserPasswordPairIsValid(newUserPasswordPair))
+            {
+                if (HasSameCategory(oldUserPasswordPair.Category, newUserPasswordPair.Category) && !PasswordsAreEqual(oldUserPasswordPair.Password, newUserPasswordPair.Password))
+                {
+                    RemoveUserPasswordPair(oldUserPasswordPair);
+                    AddUserPasswordPairToHashTable(newUserPasswordPair);
+                    modified = true;
+                }
+                if (HasSameCategory(oldUserPasswordPair.Category, newUserPasswordPair.Category) && PasswordsAreEqual(oldUserPasswordPair.Password, newUserPasswordPair.Password))
+                {
+                    oldUserPasswordPair.Username = newUserPasswordPair.Username;
+                    oldUserPasswordPair.Site = newUserPasswordPair.Site;
+                    oldUserPasswordPair.Notes = newUserPasswordPair.Notes;
+
+                    modified = true;
+                }
+                if (!HasSameCategory(oldUserPasswordPair.Category, newUserPasswordPair.Category) && PasswordsAreEqual(oldUserPasswordPair.Password, newUserPasswordPair.Password))
+                {
+                    RemoveUserPasswordPair(oldUserPasswordPair);
+                    oldUserPasswordPair.Username = newUserPasswordPair.Username;
+                    oldUserPasswordPair.Site = newUserPasswordPair.Site;
+                    oldUserPasswordPair.Notes = newUserPasswordPair.Notes;
+                    oldUserPasswordPair.Category = newUserPasswordPair.Category;
+                    oldUserPasswordPair.Category.AddUserPasswordPairToHashTable(oldUserPasswordPair);
+                    modified = true;
+                }
+
+                if (!HasSameCategory(oldUserPasswordPair.Category, newUserPasswordPair.Category) && !PasswordsAreEqual(oldUserPasswordPair.Password, newUserPasswordPair.Password))
+                {
+                    RemoveUserPasswordPair(oldUserPasswordPair);
+                    newUserPasswordPair.Category.AddUserPasswordPairToHashTable(newUserPasswordPair);
+                    modified = true;
+                }
+            }
+
+            return modified;
+        }
+
+        public bool PasswordsAreEqual(String aPassword, String otherPassword)
+        {
+            return aPassword == otherPassword;
+        }
+
+        public bool HasSameCategory(Category aCategory, Category otherCategory)
+        {
+            return aCategory.Name == otherCategory.Name;
         }
 
         public bool RemoveCreditCard(string number)
