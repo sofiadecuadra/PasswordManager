@@ -122,6 +122,18 @@ namespace GestorPasswordsDominio
             return creditCardNumber.Length == 16;
         }
 
+
+        public bool ModifyCreditCard(CreditCard oldCreditCard, CreditCard newCreditCard)
+        {
+            if (HasSameCategory(oldCreditCard.Category, newCreditCard.Category))
+            {
+                RemoveCreditCard(oldCreditCard.Number);
+                AddCreditCard(newCreditCard);
+                return true;
+            }
+            
+            return false;
+        }
         public bool AddUserPasswordPair(UserPasswordPair aUserPasswordPair)
         {
             bool userPasswordPairAdded = false;
