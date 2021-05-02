@@ -229,7 +229,7 @@ namespace GestorPasswordsDominio
                     oldUserPasswordPair.Site = newUserPasswordPair.Site;
                     oldUserPasswordPair.Notes = newUserPasswordPair.Notes;
                     oldUserPasswordPair.Category = newUserPasswordPair.Category;
-                    newUserPasswordPair.Category.AddUserPasswordPairToHashTable(oldUserPasswordPair);
+                    oldUserPasswordPair.Category.AddUserPasswordPairToHashTable(oldUserPasswordPair);
                     modified = true;
                 }
 
