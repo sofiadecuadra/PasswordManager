@@ -211,7 +211,7 @@ namespace GestorPasswordsDominio
                 if (HasSameCategory(oldUserPasswordPair.Category, newUserPasswordPair.Category) && !PasswordsAreEqual(oldUserPasswordPair.Password, newUserPasswordPair.Password))
                 {
                     RemoveUserPasswordPair(oldUserPasswordPair);
-                    AddUserPasswordPair(newUserPasswordPair);
+                    AddUserPasswordPairToHashTable(newUserPasswordPair);
                     modified = true;
                 }
                 if (HasSameCategory(oldUserPasswordPair.Category, newUserPasswordPair.Category) && PasswordsAreEqual(oldUserPasswordPair.Password, newUserPasswordPair.Password))
@@ -220,6 +220,23 @@ namespace GestorPasswordsDominio
                     oldUserPasswordPair.Site = newUserPasswordPair.Site;
                     oldUserPasswordPair.Notes = newUserPasswordPair.Notes;
 
+                    modified = true;
+                }
+                if (!HasSameCategory(oldUserPasswordPair.Category, newUserPasswordPair.Category) && PasswordsAreEqual(oldUserPasswordPair.Password, newUserPasswordPair.Password))
+                {
+                    RemoveUserPasswordPair(oldUserPasswordPair);
+                    oldUserPasswordPair.Username = newUserPasswordPair.Username;
+                    oldUserPasswordPair.Site = newUserPasswordPair.Site;
+                    oldUserPasswordPair.Notes = newUserPasswordPair.Notes;
+                    oldUserPasswordPair.Category = newUserPasswordPair.Category;
+                    newUserPasswordPair.Category.AddUserPasswordPairToHashTable(oldUserPasswordPair);
+                    modified = true;
+                }
+
+                if (!HasSameCategory(oldUserPasswordPair.Category, newUserPasswordPair.Category) && !PasswordsAreEqual(oldUserPasswordPair.Password, newUserPasswordPair.Password))
+                {
+                    RemoveUserPasswordPair(oldUserPasswordPair);
+                    newUserPasswordPair.Category.AddUserPasswordPairToHashTable(newUserPasswordPair);
                     modified = true;
                 }
             }
