@@ -507,6 +507,40 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        public void ModifyCategoryOfUserPasswordPairToAValidOneAndNotChangingPassword()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "password",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            Category otherCategory = new Category()
+            {
+                User = aUser,
+                Name = "otherCategory"
+            };
+
+            aUser.AddCategory(otherCategory);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "password",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = otherCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidPasswordLength))]
         public void ModifyPasswordOfUserPasswordPairToAnInvalidOne()
         {
