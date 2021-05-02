@@ -70,6 +70,11 @@ namespace GestorPasswordsDominio
 
         public void SharePassword(UserPasswordPair passwordToShare, string name)
         {
+            if (!HasUser(name))
+            {
+                throw new ExceptionUserDoesNotExist($"The user {name} does not exist");
+            }
+
             var userToRecivePassword = FindUser(name);
             userToRecivePassword.AddSharedUserPasswordPair(passwordToShare);
         }

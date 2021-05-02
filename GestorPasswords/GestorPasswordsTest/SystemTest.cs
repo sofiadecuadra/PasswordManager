@@ -127,15 +127,35 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void ShareValidPassword()
         {
-            var aCategory = new Category()
-            {
-                Name = "aCategory",
-                User = myUser
-            };
             var aUser = new User()
             {
                 MasterPassword = "myMasterPassword123$",
                 Name = "JuanPa"
+            };
+            _PasswordManager.CurrentUser = myUser;
+            _PasswordManager.AddUser(aUser);
+            UserPasswordPair aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+
+            _PasswordManager.SharePassword(aUserPasswordPair, aUser.Name);
+            Assert.IsTrue(_PasswordManager.FindUser(aUser.Name).HasSharedPasswordOf(aUserPasswordPair.Username, aUserPasswordPair.Site));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionUserDoesNotExist))]
+        public void ShareValidPasswordToUserThatDoesNotExist()
+        {
+            _PasswordManager.CurrentUser = myUser;
+            UserPasswordPair aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+
+            _PasswordManager.SharePassword(aUserPasswordPair, "JuanPa");
+        }
+
+        private UserPasswordPair LoadTestCategoryToMyUserWithAUserPasswordPair()
+        {
+            var aCategory = new Category()
+            {
+                Name = "aCategory",
+                User = myUser
             };
             var aUserPasswordPair = new UserPasswordPair()
             {
@@ -145,14 +165,10 @@ namespace GestorPasswordsTest
                 Site = "mySite",
                 Category = aCategory,
             };
-            _PasswordManager.AddUser(aUser);
-            _PasswordManager.CurrentUser = myUser;
             myUser.AddCategory(aCategory);
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
-
-            _PasswordManager.SharePassword(aUserPasswordPair, aUser.Name);
-            Assert.IsTrue(_PasswordManager.FindUser(aUser.Name).HasSharedPasswordOf(aUserPasswordPair.Username, aUserPasswordPair.Site));
+            return aUserPasswordPair;
         }
     }
 }
