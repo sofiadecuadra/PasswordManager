@@ -447,6 +447,33 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        public void ModifyPasswordOfUserPasswordPairToAValidOneAndWithoutChangingCategory()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "password",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "newPassword",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual("newPassword", newUserPasswordPair.Password);
+        }
+
+        [TestMethod]
         public void RemoveCreditCardNormally()
         {
             CreditCard aCreditCard = new CreditCard()

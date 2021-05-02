@@ -198,6 +198,41 @@ namespace GestorPasswordsDominio
             return this.userPasswordPairsHash.ContainsKey(site + username);
         }
 
+        public bool ModifyUserPasswordPair(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
+        {
+            if (HasSameCategory(oldUserPasswordPair.Category, newUserPasswordPair.Category) && !PasswordsAreEqual(oldUserPasswordPair.Password, newUserPasswordPair.Password))
+            {
+                RemoveUserPasswordPair(oldUserPasswordPair);
+                AddUserPasswordPair(newUserPasswordPair);
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool PasswordsAreEqual(String aPassword, String otherPassword)
+        {
+            return aPassword == otherPassword;
+        }
+
+        public bool HasSameCategory(Category aCategory, Category otherCategory)
+        {
+            return aCategory.Equals(otherCategory);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            else
+            {
+                Category categoryToCheck = (Category)obj;
+                return (name == categoryToCheck.Name);
+            }
+        }
+
         public bool RemoveCreditCard(string number)
         {
             if (!CreditCardNumberAlreadyExistsInCategory(number))
