@@ -82,6 +82,16 @@ namespace GestorPasswordsDominio
         {
             return passwordToCheck.Length >= 8 && passwordToCheck.Length <= 14;
         }
+
+        public static String GenerateRandomPassword(int length)
+        {
+            if (length < 5)
+            {
+                throw new ExceptionIncorrectLength("The length must be between 5 and 25, and the current length is " + length);
+            }
+
+            return "";
+        }
     }
 
     public enum PasswordStrengthType

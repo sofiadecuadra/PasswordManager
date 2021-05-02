@@ -110,5 +110,14 @@ namespace GestorPasswordsTest
         [TestMethod]
         [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void PasswordWithLengthUnder5() => PasswordHandler.PasswordStrength("0123");
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
+        public void GeneratePasswordWithLengthLessThan5()
+        {
+            int length = 3;
+            PasswordHandler.GenerateRandomPassword(length);
+        }
+
     }
 }
