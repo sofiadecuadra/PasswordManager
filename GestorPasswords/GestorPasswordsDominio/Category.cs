@@ -214,6 +214,14 @@ namespace GestorPasswordsDominio
                     AddUserPasswordPair(newUserPasswordPair);
                     modified = true;
                 }
+                if (HasSameCategory(oldUserPasswordPair.Category, newUserPasswordPair.Category) && PasswordsAreEqual(oldUserPasswordPair.Password, newUserPasswordPair.Password))
+                {
+                    oldUserPasswordPair.Username = newUserPasswordPair.Username;
+                    oldUserPasswordPair.Site = newUserPasswordPair.Site;
+                    oldUserPasswordPair.Notes = newUserPasswordPair.Notes;
+
+                    modified = true;
+                }
             }
 
             return modified;

@@ -500,6 +500,32 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        public void ModifyUsernameOfUserPasswordPairToAValidOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "password",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "password",
+                Notes = "myNotes",
+                Username = "newUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidUsernameLength))]
         public void ModifyUsernameOfUserPasswordPairToAnInvalidOne()
         {
@@ -525,6 +551,7 @@ namespace GestorPasswordsTest
 
             _ = aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
         }
+
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidSiteLength))]
