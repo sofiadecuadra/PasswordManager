@@ -123,15 +123,31 @@ namespace GestorPasswordsDominio
         }
 
 
+        private bool newCreditCardIsValid(CreditCard newCreditCard)
+        {
+            if (!CreditCardContainsOnlyDigits(newCreditCard.Number))
+            {
+                throw new ExceptionCreditCardDoesNotContainOnlyDigits("The credit card number must only contain digits");
+            }
+            if (!CreditCardNumberHasValidLength(newCreditCard.Number))
+            {
+                throw new ExceptionCreditCardHasInvalidNumberLength("The credit card number must contain 16 digits, but currently it has " + newCreditCard.Number.Length);
+            }
+            return true;
+        }
+
         public bool ModifyCreditCard(CreditCard oldCreditCard, CreditCard newCreditCard)
         {
-            if (HasSameCategory(oldCreditCard.Category, newCreditCard.Category))
+            if (newCreditCardIsValid(newCreditCard))
             {
-                RemoveCreditCard(oldCreditCard.Number);
-                AddCreditCard(newCreditCard);
-                return true;
+                if (HasSameCategory(oldCreditCard.Category, newCreditCard.Category))
+                {
+                    RemoveCreditCard(oldCreditCard.Number);
+                    AddCreditCard(newCreditCard);
+                    return true;
+                }
             }
-            
+           
             return false;
         }
         public bool AddUserPasswordPair(UserPasswordPair aUserPasswordPair)

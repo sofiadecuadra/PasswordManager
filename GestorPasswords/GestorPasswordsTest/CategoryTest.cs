@@ -260,7 +260,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        public void ModifyCreditCardOfUserToAValidOneWithoutChangingCategory ()
+        public void ModifyCodeOfCreditCardToAValidOneAndWithoutChangingCategory ()
         {
             CreditCard aCreditCard = new CreditCard()
             {
@@ -287,6 +287,37 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.ModifyCreditCard(aCreditCard, newCreditCard));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionCreditCardHasInvalidNumberLength))]
+        public void ModifyNumberOfCreditCardToAnInvalidOne()
+        {
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = "",
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
+            };
+
+            aCategory.AddCreditCard(aCreditCard);
+
+            CreditCard newCreditCard = new CreditCard()
+            {
+                Number = "12345678912345",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = "",
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
+            };
+
+            _ = aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
         }
 
 
