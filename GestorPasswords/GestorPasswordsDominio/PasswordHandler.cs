@@ -83,19 +83,40 @@ namespace GestorPasswordsDominio
             return passwordToCheck.Length >= 8 && passwordToCheck.Length <= 14;
         }
 
-        public static String GenerateRandomPassword(int length, bool hasUpper, bool hasLower, bool hasDigits, bool hasSpecials)
+        public static String GenerateRandomPassword(int length, bool hasUpper, bool hasLower, bool hasDigits, bool hasSymbols)
         {
             if (length < 5 || length > 25)
             {
                 throw new ExceptionIncorrectLength("The length must be between 5 and 25, and the current length is " + length);
             }
 
-            if (!hasUpper && !hasLower && !hasDigits && !hasSpecials)
+            if (!hasUpper && !hasLower && !hasDigits && !hasSymbols)
             {
                 throw new ExceptionIncorrectGenerationPasswordType("Must select at least one condition for generation");
             }
 
-            return "";
+            string lower = "abcdefghijklmnopqrstuvwxyz";
+            string password = "";
+            var rand = new Random();
+
+            int numberOfConditions = Convert.ToInt32(hasLower) + Convert.ToInt32(hasUpper) + Convert.ToInt32(hasDigits) + Convert.ToInt32(hasSymbols);
+            
+            int maxOfLowers = length - numberOfConditions + 1;
+            int numberOfLowers = hasLower ? rand.Next(1, maxOfLowers + 1) : 0;
+
+
+            for (int i = 0; i < numberOfLowers; i++)
+            {
+                password += lower[rand.Next() % lower.Length];
+            }
+
+            return RandomizeString(password);
+        }
+
+        private static String RandomizeString(String stringToRandomize)
+        {
+            var rand = new Random();
+            return new string(stringToRandomize.ToCharArray().OrderBy(s => (rand.Next(2) % 2) == 0).ToArray());
         }
     }
 

@@ -147,5 +147,18 @@ namespace GestorPasswordsTest
             bool hasSpecials = false;
             _ = PasswordHandler.GenerateRandomPassword(length, hasUpper, hasLower, hasDigits, hasSpecials);
         }
+
+        [TestMethod]
+        public void GeneratePasswordWithLengthGreaterThan14AndOnlyLowers()
+        {
+            int length = 15;
+            bool hasUpper = false;
+            bool hasLower = true;
+            bool hasDigits = false;
+            bool hasSpecials = false;
+
+            string randomPassword = PasswordHandler.GenerateRandomPassword(length, hasUpper, hasLower, hasDigits, hasSpecials);
+            Assert.AreEqual(PasswordStrengthType.Yellow, PasswordHandler.PasswordStrength(randomPassword));
+        }
     }
 }
