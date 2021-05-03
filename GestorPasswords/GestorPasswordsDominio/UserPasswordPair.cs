@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,8 @@ namespace GestorPasswordsDominio
     public class UserPasswordPair
     {
         public string Password { get; set; }
+
+        public Hashtable UsersWithAccess{ get; set; }
 
         private string username;
         public string Username
@@ -30,5 +33,20 @@ namespace GestorPasswordsDominio
         public DateTime LastModifiedDate { get; private set; }
 
         public Category Category { get; set; }
+
+        public UserPasswordPair()
+        {
+            UsersWithAccess = new Hashtable();
+        }
+
+        public bool HasAccess(string name)
+        {
+            return UsersWithAccess.ContainsKey(name.ToLower());
+        }
+
+        internal void IncludeInUsersWithAccess(User userToRecivePassword)
+        {
+            UsersWithAccess.Add(userToRecivePassword.Name, userToRecivePassword);
+        }
     }
 }

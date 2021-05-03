@@ -76,6 +76,7 @@ namespace GestorPasswordsDominio
             }
 
             var userToRecivePassword = FindUser(name);
+            passwordToShare.IncludeInUsersWithAccess(userToRecivePassword);
             userToRecivePassword.AddSharedUserPasswordPair(passwordToShare);
         }
     }

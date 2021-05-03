@@ -138,6 +138,7 @@ namespace GestorPasswordsTest
 
             _PasswordManager.SharePassword(aUserPasswordPair, aUser.Name);
             Assert.IsTrue(_PasswordManager.FindUser(aUser.Name).HasSharedPasswordOf(aUserPasswordPair.Username, aUserPasswordPair.Site));
+            Assert.IsTrue(aUserPasswordPair.HasAccess(aUser.Name));
         }
 
         [TestMethod]
