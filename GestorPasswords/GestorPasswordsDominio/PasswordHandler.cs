@@ -82,6 +82,155 @@ namespace GestorPasswordsDominio
         {
             return passwordToCheck.Length >= 8 && passwordToCheck.Length <= 14;
         }
+
+        private static Random rand;
+
+        public static String GenerateRandomPassword(PasswordGenerationConditions conditions)
+        {
+            String password = "";
+
+            if (ConditionsAreValid(conditions))
+            {
+                rand = new Random();
+                int randomizer = rand.Next(0, 4);
+
+                password = AddMustHaveCharacters(conditions);
+
+                int counter = 0;
+                while (counter < NumberOfCharactersToAdd(conditions))
+                {
+                    if (CouldAddLower(conditions, randomizer))
+                    {
+                        password += AddLower();
+                        counter++;
+                    }
+                    else if (CouldAddUpper(conditions, randomizer))
+                    {
+                        password += AddUpper();
+                        counter++;
+                    }
+                    else if (CouldAddDigit(conditions, randomizer))
+                    {
+                        password += AddDigit();
+                        counter++;
+                    }
+                    else if (CouldAddSymbol(conditions, randomizer))
+                    {
+                        password += AddSymbol();
+                        counter++;
+                    }
+
+                    randomizer = rand.Next(0, 4);
+                }
+
+                password = RandomizeString(password);
+            }
+
+            return password;
+        }
+
+        private static int NumberOfCharactersToAdd(PasswordGenerationConditions conditions)
+        {
+            return conditions.Length - conditions.NumberOfConditions;
+        }
+
+        private static bool CouldAddSymbol(PasswordGenerationConditions conditions, int randomizer)
+        {
+            return randomizer == 3 && conditions.HasSymbols;
+        }
+
+        private static bool CouldAddDigit(PasswordGenerationConditions conditions, int randomizer)
+        {
+            return randomizer == 2 && conditions.HasDigits;
+        }
+
+        private static bool CouldAddUpper(PasswordGenerationConditions conditions, int randomizer)
+        {
+            return randomizer == 1 && conditions.HasUpperCase;
+        }
+
+        private static bool CouldAddLower(PasswordGenerationConditions conditions, int randomizer)
+        {
+            return randomizer == 0 && conditions.HasLowerCase;
+        }
+
+        private static string AddLower()
+        {
+            string lower = "abcdefghijklmnopqrstuvwxyz";
+
+            return lower[rand.Next(0, lower.Length)] + "";
+        }
+
+        private static string AddUpper()
+        {
+            string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+            return upper[rand.Next(0, upper.Length)] + "";
+        }
+
+        private static string AddDigit()
+        {
+            string digits = "0123456789";
+
+            return digits[rand.Next(0, digits.Length)] + "";
+        }
+
+        private static string AddSymbol()
+        {
+            string symbols = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+
+            return symbols[rand.Next(0, symbols.Length)] + "";
+        }
+
+        private static string AddMustHaveCharacters(PasswordGenerationConditions conditions)
+        {
+            string password = "";
+            string lower = "abcdefghijklmnopqrstuvwxyz";
+            string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string digits = "0123456789";
+            string symbols = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+
+            if (conditions.HasLowerCase)
+            {
+                password += lower[rand.Next(0, lower.Length)];
+            }
+            if (conditions.HasUpperCase)
+            {
+                password += upper[rand.Next(0, upper.Length)];
+            }
+            if (conditions.HasDigits)
+            {
+                password += digits[rand.Next(0, digits.Length)];
+            }
+            if (conditions.HasSymbols)
+            {
+                password += symbols[rand.Next(0, symbols.Length)];
+            }
+
+
+            return password;
+        }
+
+        private static bool ConditionsAreValid(PasswordGenerationConditions conditions)
+        {
+            if (conditions.Length < 5 || conditions.Length > 25)
+            {
+                throw new ExceptionIncorrectLength("The length must be between 5 and 25, and the current length is " + conditions.Length);
+            }
+
+            if (!conditions.HasUpperCase && !conditions.HasLowerCase && !conditions.HasDigits && !conditions.HasSymbols)
+            {
+                throw new ExceptionIncorrectGenerationPasswordType("Must select at least one condition for generation");
+            }
+
+            return true;
+        }
+
+        private static String RandomizeString(String stringToRandomize)
+        {
+            var rand = new Random();
+            return new string(stringToRandomize.ToCharArray().OrderBy(s => (rand.Next(2) % 2) == 0).ToArray());
+        }
     }
 
     public enum PasswordStrengthType
