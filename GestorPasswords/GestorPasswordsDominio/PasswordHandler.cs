@@ -184,7 +184,8 @@ namespace GestorPasswordsDominio
         {
             int minOfDigits = conditions.Length;
 
-            if (conditions.NumberOfConditions == 3 && conditions.HasLowerCase && conditions.HasUpperCase)
+            if ((conditions.NumberOfConditions == 3 && conditions.HasLowerCase && conditions.HasUpperCase) || 
+                (conditions.NumberOfConditions == 2 && (conditions.HasLowerCase || conditions.HasUpperCase)))
             {
                 minOfDigits = conditions.Length - (NumberOfLowers + NumberOfUppers);
             }
