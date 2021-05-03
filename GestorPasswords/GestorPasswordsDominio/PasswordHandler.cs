@@ -85,6 +85,48 @@ namespace GestorPasswordsDominio
 
         public static String GenerateRandomPassword(PasswordGenerationConditions conditions)
         {
+            String password = "";
+
+            if (ConditionsAreValid(conditions))
+            {
+                string lower = "abcdefghijklmnopqrstuvwxyz";
+                string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+                var rand = new Random();
+
+                int numberOfConditions = CalculateNumberOfConditions(conditions);
+
+                int maxOfLowers = conditions.Length - numberOfConditions + 1;
+                int minOfLowers = numberOfConditions > 1 ? 1 : conditions.Length;
+                int numberOfLowers = conditions.HasLowerCase ? rand.Next(minOfLowers, maxOfLowers + 1) : 0;
+
+                int maxOfUppers = conditions.Length - numberOfConditions + 1 + Convert.ToInt32(conditions.HasLowerCase) - numberOfLowers;
+                int minOfUppers = numberOfConditions > 1 ? 1 : conditions.Length;
+                int numberOfUppers = conditions.HasUpperCase ? rand.Next(minOfUppers, maxOfUppers + 1) : 0;
+
+
+                for (int i = 0; i < numberOfLowers; i++)
+                {
+                    password += lower[rand.Next() % lower.Length];
+                }
+                for (int i = 0; i < numberOfUppers; i++)
+                {
+                    password += upper[rand.Next() % upper.Length];
+                }
+
+                password = RandomizeString(password);
+            }
+
+            return password;
+        }
+
+        private static int CalculateNumberOfConditions(PasswordGenerationConditions conditions)
+        {
+            return Convert.ToInt32(conditions.HasLowerCase) + Convert.ToInt32(conditions.HasUpperCase) + Convert.ToInt32(conditions.HasDigits) + Convert.ToInt32(conditions.HasSpecials);
+        }
+
+        private static bool ConditionsAreValid(PasswordGenerationConditions conditions)
+        {
             if (conditions.Length < 5 || conditions.Length > 25)
             {
                 throw new ExceptionIncorrectLength("The length must be between 5 and 25, and the current length is " + conditions.Length);
@@ -95,23 +137,7 @@ namespace GestorPasswordsDominio
                 throw new ExceptionIncorrectGenerationPasswordType("Must select at least one condition for generation");
             }
 
-            string lower = "abcdefghijklmnopqrstuvwxyz";
-            string password = "";
-            var rand = new Random();
-
-            int numberOfConditions = Convert.ToInt32(conditions.HasLowerCase) + Convert.ToInt32(conditions.HasUpperCase) + Convert.ToInt32(conditions.HasDigits) + Convert.ToInt32(conditions.HasSpecials);
-            
-            int maxOfLowers = conditions.Length - numberOfConditions + 1;
-            int minOfLowers = numberOfConditions > 1 ? 1 : conditions.Length;
-            int numberOfLowers = conditions.HasLowerCase ? rand.Next(minOfLowers, maxOfLowers + 1) : 0;
-
-
-            for (int i = 0; i < numberOfLowers; i++)
-            {
-                password += lower[rand.Next() % lower.Length];
-            }
-
-            return RandomizeString(password);
+            return true;
         }
 
         private static String RandomizeString(String stringToRandomize)
