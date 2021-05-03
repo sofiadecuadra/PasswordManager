@@ -210,5 +210,51 @@ namespace GestorPasswordsTest
 
             aUser.ModifyCategory(aCategory, "thisIsAnInvalidLength");
         }
+
+        [TestMethod]
+        public void RetriveExistingUserPasswordPair()
+        {
+            var aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+            var aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAPassword",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+            aUser.AddCategory(aCategory);
+
+            Assert.AreEqual(aUser.FindUserPasswordPair(aUserPasswordPair.Username, aUserPasswordPair.Site), aUserPasswordPair);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionUserPasswordPairDoesNotExist))]
+        public void RetriveNonExistingUserPasswordPair()
+        {
+            var aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+            var aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAPassword",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aUser.AddCategory(aCategory);
+
+            aUser.FindUserPasswordPair(aUserPasswordPair.Username, aUserPasswordPair.Site);
+        }
     }
 }

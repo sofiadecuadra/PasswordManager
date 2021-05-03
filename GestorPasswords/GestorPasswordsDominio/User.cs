@@ -192,5 +192,20 @@ namespace GestorPasswordsDominio
         {
             return aCategory.UserPasswordPairAlredyExistsInCategory(username, site);
         }
+
+        public UserPasswordPair FindUserPasswordPair(string username, string site)
+        {
+            UserPasswordPair userPasswordPair = null;
+            foreach (KeyValuePair<string, Category> pair in this.categoriesList)
+            {
+                if (UserPasswordPairExistsInCategory(pair.Value, username, site))
+                {
+                    userPasswordPair = pair.Value.FindUserPasswordPair(username, site);
+                    break;
+                }
+            }
+
+            return userPasswordPair != null ? userPasswordPair : throw new ExceptionUserPasswordPairDoesNotExist(); 
+        }
     }
 }
