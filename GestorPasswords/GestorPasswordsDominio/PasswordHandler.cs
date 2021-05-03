@@ -83,14 +83,14 @@ namespace GestorPasswordsDominio
             return passwordToCheck.Length >= 8 && passwordToCheck.Length <= 14;
         }
 
-        public static String GenerateRandomPassword(int length, bool hasUpper, bool hasLower, bool hasDigits, bool hasSymbols)
+        public static String GenerateRandomPassword(PasswordGenerationConditions conditions)
         {
-            if (length < 5 || length > 25)
+            if (conditions.Length < 5 || conditions.Length > 25)
             {
-                throw new ExceptionIncorrectLength("The length must be between 5 and 25, and the current length is " + length);
+                throw new ExceptionIncorrectLength("The length must be between 5 and 25, and the current length is " + conditions.Length);
             }
 
-            if (!hasUpper && !hasLower && !hasDigits && !hasSymbols)
+            if (!conditions.HasUpperCase && !conditions.HasLowerCase && !conditions.HasDigits && !conditions.HasSpecials)
             {
                 throw new ExceptionIncorrectGenerationPasswordType("Must select at least one condition for generation");
             }
@@ -99,10 +99,11 @@ namespace GestorPasswordsDominio
             string password = "";
             var rand = new Random();
 
-            int numberOfConditions = Convert.ToInt32(hasLower) + Convert.ToInt32(hasUpper) + Convert.ToInt32(hasDigits) + Convert.ToInt32(hasSymbols);
+            int numberOfConditions = Convert.ToInt32(conditions.HasLowerCase) + Convert.ToInt32(conditions.HasUpperCase) + Convert.ToInt32(conditions.HasDigits) + Convert.ToInt32(conditions.HasSpecials);
             
-            int maxOfLowers = length - numberOfConditions + 1;
-            int numberOfLowers = hasLower ? rand.Next(1, maxOfLowers + 1) : 0;
+            int maxOfLowers = conditions.Length - numberOfConditions + 1;
+            int minOfLowers = numberOfConditions > 1 ? 1 : conditions.Length;
+            int numberOfLowers = conditions.HasLowerCase ? rand.Next(minOfLowers, maxOfLowers + 1) : 0;
 
 
             for (int i = 0; i < numberOfLowers; i++)

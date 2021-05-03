@@ -115,24 +115,30 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void GeneratePasswordWithLengthLessThan5()
         {
-            int length = 3;
-            bool hasUpper = true;
-            bool hasLower = false;
-            bool hasDigits = false;
-            bool hasSpecials = true;
-            _ = PasswordHandler.GenerateRandomPassword(length, hasUpper, hasLower, hasDigits, hasSpecials);
+            PasswordGenerationConditions conditions = new PasswordGenerationConditions()
+            {
+                Length = 3,
+                HasUpperCase = true,
+                HasLowerCase = false,
+                HasDigits = false,
+                HasSpecials = true,
+            };
+            _ = PasswordHandler.GenerateRandomPassword(conditions);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void GeneratePasswordWithLengthGreaterThan25()
         {
-            int length = 26;
-            bool hasUpper = false;
-            bool hasLower = true;
-            bool hasDigits = true;
-            bool hasSpecials = false;
-             _ = PasswordHandler.GenerateRandomPassword(length, hasUpper, hasLower, hasDigits, hasSpecials);
+            PasswordGenerationConditions conditions = new PasswordGenerationConditions()
+            {
+                Length = 26,
+                HasUpperCase = false,
+                HasLowerCase = true,
+                HasDigits = true,
+                HasSpecials = false,
+            };
+            _ = PasswordHandler.GenerateRandomPassword(conditions);
 
         }
 
@@ -140,24 +146,32 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionIncorrectGenerationPasswordType))]
         public void GeneratePasswordWithValidLengthAndNotUpperCaseNotLowerCaseNoDigitsAndNoSpecials()
         {
-            int length = 15;
-            bool hasUpper = false;
-            bool hasLower = false;
-            bool hasDigits = false;
-            bool hasSpecials = false;
-            _ = PasswordHandler.GenerateRandomPassword(length, hasUpper, hasLower, hasDigits, hasSpecials);
+            PasswordGenerationConditions conditions = new PasswordGenerationConditions()
+            {
+                Length = 15,
+                HasUpperCase = false,
+                HasLowerCase = false,
+                HasDigits = false,
+                HasSpecials = false,
+            };
+            _ = PasswordHandler.GenerateRandomPassword(conditions);
         }
+
 
         [TestMethod]
         public void GeneratePasswordWithLengthGreaterThan14AndOnlyLowers()
         {
-            int length = 15;
-            bool hasUpper = false;
-            bool hasLower = true;
-            bool hasDigits = false;
-            bool hasSpecials = false;
+            PasswordGenerationConditions conditions = new PasswordGenerationConditions()
+            {
+                Length = 15,
+                HasUpperCase = false,
+                HasLowerCase = true,
+                HasDigits = false,
+                HasSpecials = false,
+            };
 
-            string randomPassword = PasswordHandler.GenerateRandomPassword(length, hasUpper, hasLower, hasDigits, hasSpecials);
+            string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
+            Assert.AreEqual(15, randomPassword.Length);
             Assert.AreEqual(PasswordStrengthType.Yellow, PasswordHandler.PasswordStrength(randomPassword));
         }
     }
