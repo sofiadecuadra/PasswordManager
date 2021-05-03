@@ -116,7 +116,11 @@ namespace GestorPasswordsTest
         public void GeneratePasswordWithLengthLessThan5()
         {
             int length = 3;
-            PasswordHandler.GenerateRandomPassword(length);
+            bool hasUpper = true;
+            bool hasLower = false;
+            bool hasDigits = false;
+            bool hasSpecials = true;
+            _ = PasswordHandler.GenerateRandomPassword(length, hasUpper, hasLower, hasDigits, hasSpecials);
         }
 
         [TestMethod]
@@ -124,7 +128,24 @@ namespace GestorPasswordsTest
         public void GeneratePasswordWithLengthGreaterThan25()
         {
             int length = 26;
-            PasswordHandler.GenerateRandomPassword(length);
+            bool hasUpper = false;
+            bool hasLower = true;
+            bool hasDigits = true;
+            bool hasSpecials = false;
+             _ = PasswordHandler.GenerateRandomPassword(length, hasUpper, hasLower, hasDigits, hasSpecials);
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionIncorrectGenerationPasswordType))]
+        public void GeneratePasswordWithValidLengthAndNotUpperCaseNotLowerCaseNoDigitsAndNoSpecials()
+        {
+            int length = 15;
+            bool hasUpper = false;
+            bool hasLower = false;
+            bool hasDigits = false;
+            bool hasSpecials = false;
+            _ = PasswordHandler.GenerateRandomPassword(length, hasUpper, hasLower, hasDigits, hasSpecials);
         }
     }
 }
