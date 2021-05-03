@@ -76,7 +76,7 @@ namespace GestorPasswordsDominio
             {
                 throw new ExceptionCreditCardHasInvalidCodeLength("The code's length must be between 3 and 4, but it's current length is " + aCreditCard.Code.Length);
             }
-            if (!Regex.IsMatch(aCreditCard.Code, @"^[0-9]+$"))
+            if (!codeContainNumericCharactersOnly(aCreditCard.Code))
             {
                 throw new ExceptionCreditCardCodeHasNonNumericCharacters("The code should contain numeric characters only but is " + aCreditCard.Code);
             }
@@ -112,6 +112,11 @@ namespace GestorPasswordsDominio
             return creditCardCode.Length == 3 || creditCardCode.Length == 4;
         }
 
+        public bool codeContainNumericCharactersOnly(string creditCardCode)
+        {
+            return Regex.IsMatch(creditCardCode, @"^[0-9]+$");
+        }
+
         private bool LengthBetween3And25(string stringToCheck)
         {
             return stringToCheck.Length >= 3 && stringToCheck.Length <= 25;
@@ -125,6 +130,75 @@ namespace GestorPasswordsDominio
         private bool CreditCardNumberHasValidLength(string creditCardNumber)
         {
             return creditCardNumber.Length == 16;
+        }
+
+
+        private bool newCreditCardIsValid(CreditCard oldCreditCard, CreditCard newCreditCard)
+        {
+            if (!CreditCardContainsOnlyDigits(newCreditCard.Number))
+            {
+                throw new ExceptionCreditCardDoesNotContainOnlyDigits("The credit card number must only contain digits");
+            }
+            if (!CreditCardNumberHasValidLength(newCreditCard.Number))
+            {
+                throw new ExceptionCreditCardHasInvalidNumberLength("The credit card number must contain 16 digits, but currently it has " + newCreditCard.Number.Length);
+            }
+            if (!LengthBetween3And25(newCreditCard.Type))
+            {
+                throw new ExceptionCreditCardHasInvalidTypeLength("The type's length must be between 3 and 25, but it's current length is " + newCreditCard.Type.Length);
+            }
+            if (!LengthBetween3And25(newCreditCard.Name))
+            {
+                throw new ExceptionCreditCardHasInvalidNameLength("The name's length must be between 3 and 25, but it's current length is " + newCreditCard.Name.Length);
+            }
+            if (!codeHasValidLength(newCreditCard.Code))
+            {
+                throw new ExceptionCreditCardHasInvalidCodeLength("The code's length must be between 3 and 4, but it's current length is " + newCreditCard.Code.Length);
+            }
+            if (!codeContainNumericCharactersOnly(newCreditCard.Code))
+            {
+                throw new ExceptionCreditCardCodeHasNonNumericCharacters("The code should contain numeric characters only but is " + newCreditCard.Code);
+            }
+            if (!notesHaveValidLength(newCreditCard.Notes))
+            {
+                throw new ExceptionCreditCardHasInvalidNotesLength("The notes' length must be up to 250, but it's current length is " + newCreditCard.Notes.Length);
+            }
+
+            if (!CreditCardNumbersAreEqual(oldCreditCard.Number, newCreditCard.Number) && CreditCardNumberAlreadyExistsInUser(newCreditCard.Number))
+            {
+                throw new ExceptionCreditCardNumberAlreadyExistsInUser("The credit card number already exists in user");
+            }
+
+            return true;
+        }
+
+        private bool CreditCardNumbersAreEqual (string oldCreditCardNumber, string newCreditCardNumber)
+        {
+            return oldCreditCardNumber == newCreditCardNumber;
+        }
+
+
+        public bool ModifyCreditCard(CreditCard oldCreditCard, CreditCard newCreditCard)
+        {
+            if (newCreditCardIsValid(oldCreditCard, newCreditCard))
+            {            
+                RemoveCreditCard(oldCreditCard.Number);
+                if (HasSameCategory(oldCreditCard.Category, newCreditCard.Category))
+                {
+                    AddCreditCardToHashTable(newCreditCard);
+                }
+                else
+                {
+                    newCreditCard.Category.AddCreditCardToHashTable(newCreditCard);
+                }
+            }
+           
+            return true;
+        }
+
+        private void AddCreditCardToHashTable(CreditCard newCreditCard)
+        {
+            this.creditCardHashTable.Add(newCreditCard.Number, newCreditCard);
         }
 
         public bool AddUserPasswordPair(UserPasswordPair aUserPasswordPair)
