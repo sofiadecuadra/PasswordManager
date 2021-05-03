@@ -166,12 +166,16 @@ namespace GestorPasswordsDominio
         {
             if (newCreditCardIsValid(newCreditCard))
             {
+                RemoveCreditCard(oldCreditCard.Number);
                 if (HasSameCategory(oldCreditCard.Category, newCreditCard.Category))
                 {
-                    RemoveCreditCard(oldCreditCard.Number);
                     AddCreditCard(newCreditCard);
-                    return true;
                 }
+                else
+                {
+                    newCreditCard.Category.AddCreditCard(newCreditCard);
+                }
+                return true;
             }
            
             return false;
