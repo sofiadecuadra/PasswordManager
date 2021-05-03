@@ -175,6 +175,23 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        public void GeneratePasswordWithLengthBetween8And14()
+        {
+            PasswordGenerationConditions conditions = new PasswordGenerationConditions()
+            {
+                Length = 11,
+                HasUpperCase = true,
+                HasLowerCase = true,
+                HasDigits = true,
+                HasSymbols = true,
+            };
+
+            string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
+            Assert.AreEqual(11, randomPassword.Length);
+            Assert.AreEqual(PasswordStrengthType.Orange, PasswordHandler.PasswordStrength(randomPassword));
+        }
+
+        [TestMethod]
         public void GeneratePasswordWithLengthBetween15And25AndOnlyLowers()
         {
             PasswordGenerationConditions conditions = new PasswordGenerationConditions()
