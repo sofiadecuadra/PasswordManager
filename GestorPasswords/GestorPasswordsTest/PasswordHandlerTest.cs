@@ -428,5 +428,22 @@ namespace GestorPasswordsTest
             Assert.AreEqual(20, randomPassword.Length);
             Assert.AreEqual(PasswordStrengthType.LightGreen, PasswordHandler.PasswordStrength(randomPassword));
         }
+
+        [TestMethod]
+        public void GeneratePasswordWithLengthBetween15And25AndLowersUppersDigitsAndSymbols()
+        {
+            PasswordGenerationConditions conditions = new PasswordGenerationConditions()
+            {
+                Length = 23,
+                HasUpperCase = true,
+                HasLowerCase = true,
+                HasDigits = true,
+                HasSymbols = true,
+            };
+
+            string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
+            Assert.AreEqual(23, randomPassword.Length);
+            Assert.AreEqual(PasswordStrengthType.DarkGreen, PasswordHandler.PasswordStrength(randomPassword));
+        }
     }
 }

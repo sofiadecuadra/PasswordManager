@@ -83,10 +83,7 @@ namespace GestorPasswordsDominio
             return passwordToCheck.Length >= 8 && passwordToCheck.Length <= 14;
         }
 
-        private static int NumberOfLowers { get; set; }
-        private static int NumberOfUppers { get; set; }
-        private static int NumberOfDigits { get; set; }
-        private static int NumberOfSymbols { get; set; }
+        private static Random rand;
 
         public static String GenerateRandomPassword(PasswordGenerationConditions conditions)
         {
@@ -94,44 +91,36 @@ namespace GestorPasswordsDominio
 
             if (ConditionsAreValid(conditions))
             {
-                string lower = "abcdefghijklmnopqrstuvwxyz";
-                string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                string digits = "0123456789";
-                string symbols = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+                rand = new Random();
+                int randomizer = rand.Next(0, 4);
 
-                var rand = new Random();
+                password = AddMustHaveCharacters(conditions);
 
-                int maxOfLowers = CalculateMaxOfLowers(conditions);
-                int minOfLowers = CalculateMinOfLowers(conditions);
-                NumberOfLowers = conditions.HasLowerCase ? rand.Next(minOfLowers, maxOfLowers + 1) : 0;
-
-                int maxOfUppers = CalculateMaxOfUppers(conditions);
-                int minOfUppers = CalculateMinOfUppers(conditions);
-                NumberOfUppers = conditions.HasUpperCase ? rand.Next(minOfUppers, maxOfUppers + 1) : 0;
-
-                int maxOfDigits = CalculateMaxOfDigits(conditions);
-                int minOfDigits = CalculateMinOfDigits(conditions);
-                NumberOfDigits = conditions.HasDigits ? rand.Next(minOfDigits, maxOfDigits + 1) : 0;
-
-                int maxOfSymbols = CalculateMaxOfSymbols(conditions);
-                int minOfSymbols = CalculateMinOfSymbols(conditions);
-                NumberOfSymbols = conditions.HasSymbols ? rand.Next(minOfSymbols, maxOfSymbols + 1) : 0;
-
-                for (int i = 0; i < NumberOfLowers; i++)
+                int counter = 0;
+                while (counter < NumberOfCharactersToAdd(conditions))
                 {
-                    password += lower[rand.Next() % lower.Length];
-                }
-                for (int i = 0; i < NumberOfUppers; i++)
-                {
-                    password += upper[rand.Next() % upper.Length];
-                }
-                for (int i = 0; i < NumberOfDigits; i++)
-                {
-                    password += digits[rand.Next() % digits.Length];
-                }
-                for (int i = 0; i < NumberOfSymbols; i++)
-                {
-                    password += symbols[rand.Next() % symbols.Length];
+                    if (CouldAddLower(conditions, randomizer))
+                    {
+                        password += AddLower();
+                        counter++;
+                    }
+                    else if (CouldAddUpper(conditions, randomizer))
+                    {
+                        password += AddUpper();
+                        counter++;
+                    }
+                    else if (CouldAddDigit(conditions, randomizer))
+                    {
+                        password += AddDigit();
+                        counter++;
+                    }
+                    else if (CouldAddSymbol(conditions, randomizer))
+                    {
+                        password += AddSymbol();
+                        counter++;
+                    }
+
+                    randomizer = rand.Next(0, 4);
                 }
 
                 password = RandomizeString(password);
@@ -140,72 +129,86 @@ namespace GestorPasswordsDominio
             return password;
         }
 
-        private static int CalculateMaxOfLowers(PasswordGenerationConditions conditions)
+        private static int NumberOfCharactersToAdd(PasswordGenerationConditions conditions)
         {
-            //return conditions.Length - conditions.NumberOfConditions + 1 + Convert.ToInt32(conditions.HasLowerCase) - NumberOfLowers;
-            return conditions.Length - conditions.NumberOfConditions + 1;
+            return conditions.Length - conditions.NumberOfConditions;
         }
 
-        private static int CalculateMinOfLowers(PasswordGenerationConditions conditions)
+        private static bool CouldAddSymbol(PasswordGenerationConditions conditions, int randomizer)
         {
-            return conditions.NumberOfConditions > 1 ? 1 : conditions.Length;
+            return randomizer == 3 && conditions.HasSymbols;
         }
 
-        private static int CalculateMaxOfUppers(PasswordGenerationConditions conditions)
+        private static bool CouldAddDigit(PasswordGenerationConditions conditions, int randomizer)
         {
-            //return conditions.Length - conditions.NumberOfConditions + 1;
-            //return conditions.Length - NumberOfLowers;
-            return conditions.Length - conditions.NumberOfConditions + 1 + Convert.ToInt32(conditions.HasLowerCase) - NumberOfLowers;
+            return randomizer == 2 && conditions.HasDigits;
         }
 
-        private static int CalculateMinOfUppers(PasswordGenerationConditions conditions)
+        private static bool CouldAddUpper(PasswordGenerationConditions conditions, int randomizer)
         {
-            int minOfUppers = conditions.Length;
+            return randomizer == 1 && conditions.HasUpperCase;
+        }
 
-            if (conditions.NumberOfConditions == 2 && conditions.HasLowerCase)
+        private static bool CouldAddLower(PasswordGenerationConditions conditions, int randomizer)
+        {
+            return randomizer == 0 && conditions.HasLowerCase;
+        }
+
+        private static string AddLower()
+        {
+            string lower = "abcdefghijklmnopqrstuvwxyz";
+
+            return lower[rand.Next(0, lower.Length)] + "";
+        }
+
+        private static string AddUpper()
+        {
+            string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+            return upper[rand.Next(0, upper.Length)] + "";
+        }
+
+        private static string AddDigit()
+        {
+            string digits = "0123456789";
+
+            return digits[rand.Next(0, digits.Length)] + "";
+        }
+
+        private static string AddSymbol()
+        {
+            string symbols = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+
+            return symbols[rand.Next(0, symbols.Length)] + "";
+        }
+
+        private static string AddMustHaveCharacters(PasswordGenerationConditions conditions)
+        {
+            string password = "";
+            string lower = "abcdefghijklmnopqrstuvwxyz";
+            string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string digits = "0123456789";
+            string symbols = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+
+            if (conditions.HasLowerCase)
             {
-                minOfUppers = conditions.Length - NumberOfLowers;
+                password += lower[rand.Next(0, lower.Length)];
             }
-            else if (conditions.NumberOfConditions > 1)
+            if (conditions.HasUpperCase)
             {
-                minOfUppers = 1;
+                password += upper[rand.Next(0, upper.Length)];
             }
-
-            return minOfUppers;
-        }
-
-        private static int CalculateMaxOfDigits(PasswordGenerationConditions conditions)
-        {
-            //return conditions.Length - conditions.NumberOfConditions + 1 + Convert.ToInt32(conditions.HasLowerCase) + Convert.ToInt32(conditions.HasUpperCase) - NumberOfLowers - NumberOfUppers;
-            return conditions.Length - NumberOfLowers - NumberOfUppers;
-        }
-
-        private static int CalculateMinOfDigits(PasswordGenerationConditions conditions)
-        {
-            int minOfDigits = conditions.Length;
-
-            if ((conditions.NumberOfConditions == 3 && conditions.HasLowerCase && conditions.HasUpperCase) || 
-                (conditions.NumberOfConditions == 2 && (conditions.HasLowerCase || conditions.HasUpperCase)))
+            if (conditions.HasDigits)
             {
-                minOfDigits = conditions.Length - (NumberOfLowers + NumberOfUppers);
+                password += digits[rand.Next(0, digits.Length)];
             }
-            else if (conditions.NumberOfConditions > 1)
+            if (conditions.HasSymbols)
             {
-                minOfDigits = 1;
+                password += symbols[rand.Next(0, symbols.Length)];
             }
 
-            return minOfDigits;
-        }
 
-        private static int CalculateMaxOfSymbols(PasswordGenerationConditions conditions)
-        {
-            //return conditions.Length - conditions.NumberOfConditions + 1 + Convert.ToInt32(conditions.HasLowerCase) + Convert.ToInt32(conditions.HasUpperCase) + Convert.ToInt32(conditions.HasDigits) - NumberOfLowers - NumberOfUppers - NumberOfDigits;
-            return conditions.Length - NumberOfLowers - NumberOfUppers - NumberOfDigits;
-        }
-
-        private static int CalculateMinOfSymbols(PasswordGenerationConditions conditions)
-        {
-            return conditions.Length - (NumberOfLowers + NumberOfUppers + NumberOfDigits);
+            return password;
         }
 
         private static bool ConditionsAreValid(PasswordGenerationConditions conditions)
