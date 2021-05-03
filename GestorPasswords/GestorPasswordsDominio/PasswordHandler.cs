@@ -91,6 +91,7 @@ namespace GestorPasswordsDominio
             {
                 string lower = "abcdefghijklmnopqrstuvwxyz";
                 string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                string digits = "0123456789";
 
                 var rand = new Random();
 
@@ -104,6 +105,9 @@ namespace GestorPasswordsDominio
                 int minOfUppers = numberOfConditions > 1 ? 1 : conditions.Length;
                 int numberOfUppers = conditions.HasUpperCase ? rand.Next(minOfUppers, maxOfUppers + 1) : 0;
 
+                int maxOfDigits = conditions.Length - numberOfConditions + 1 + Convert.ToInt32(conditions.HasLowerCase) + Convert.ToInt32(conditions.HasUpperCase) - numberOfLowers - numberOfUppers;
+                int minOfDigits = numberOfConditions > 1 ? 1 : conditions.Length;
+                int numberOfDigits = conditions.HasDigits ? rand.Next(minOfDigits, maxOfDigits + 1) : 0;
 
                 for (int i = 0; i < numberOfLowers; i++)
                 {
@@ -112,6 +116,10 @@ namespace GestorPasswordsDominio
                 for (int i = 0; i < numberOfUppers; i++)
                 {
                     password += upper[rand.Next() % upper.Length];
+                }
+                for (int i = 0; i < numberOfDigits; i++)
+                {
+                    password += digits[rand.Next() % digits.Length];
                 }
 
                 password = RandomizeString(password);
