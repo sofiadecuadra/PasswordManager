@@ -186,10 +186,9 @@ namespace GestorPasswordsDominio
                 {
                     newCreditCard.Category.AddCreditCardToHashTable(newCreditCard);
                 }
-                return true;
             }
            
-            return false;
+            return true;
         }
 
         private void AddCreditCardToHashTable(CreditCard newCreditCard)
