@@ -12,6 +12,6 @@ namespace GestorPasswordsDominio
         public bool HasUpperCase { get; set; }
         public bool HasLowerCase { get; set; }
         public bool HasDigits { get; set; }
-        public bool HasSpecials{ get; set; }
+        public bool HasSymbols{ get; set; }
     }
 }

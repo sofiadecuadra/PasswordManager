@@ -121,7 +121,7 @@ namespace GestorPasswordsTest
                 HasUpperCase = true,
                 HasLowerCase = false,
                 HasDigits = false,
-                HasSpecials = true,
+                HasSymbols = true,
             };
             _ = PasswordHandler.GenerateRandomPassword(conditions);
         }
@@ -136,7 +136,7 @@ namespace GestorPasswordsTest
                 HasUpperCase = false,
                 HasLowerCase = true,
                 HasDigits = true,
-                HasSpecials = false,
+                HasSymbols = false,
             };
             _ = PasswordHandler.GenerateRandomPassword(conditions);
 
@@ -144,7 +144,7 @@ namespace GestorPasswordsTest
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionIncorrectGenerationPasswordType))]
-        public void GeneratePasswordWithValidLengthAndNotUpperCaseNotLowerCaseNoDigitsAndNoSpecials()
+        public void GeneratePasswordWithValidLengthAndNoUpperCaseNoLowerCaseNoDigitsAndNoSymbols()
         {
             PasswordGenerationConditions conditions = new PasswordGenerationConditions()
             {
@@ -152,7 +152,7 @@ namespace GestorPasswordsTest
                 HasUpperCase = false,
                 HasLowerCase = false,
                 HasDigits = false,
-                HasSpecials = false,
+                HasSymbols = false,
             };
             _ = PasswordHandler.GenerateRandomPassword(conditions);
         }
@@ -166,7 +166,7 @@ namespace GestorPasswordsTest
                 HasUpperCase = false,
                 HasLowerCase = true,
                 HasDigits = false,
-                HasSpecials = false,
+                HasSymbols = false,
             };
 
             string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
@@ -183,7 +183,7 @@ namespace GestorPasswordsTest
                 HasUpperCase = true,
                 HasLowerCase = false,
                 HasDigits = false,
-                HasSpecials = false,
+                HasSymbols = false,
             };
 
             string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
@@ -200,7 +200,24 @@ namespace GestorPasswordsTest
                 HasUpperCase = false,
                 HasLowerCase = false,
                 HasDigits = true,
-                HasSpecials = false,
+                HasSymbols = false,
+            };
+
+            string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
+            Assert.AreEqual(18, randomPassword.Length);
+            Assert.AreEqual(PasswordStrengthType.Yellow, PasswordHandler.PasswordStrength(randomPassword));
+        }
+
+        [TestMethod]
+        public void GeneratePasswordWithLengthBetween15And25AndOnlySymbols()
+        {
+            PasswordGenerationConditions conditions = new PasswordGenerationConditions()
+            {
+                Length = 18,
+                HasUpperCase = false,
+                HasLowerCase = false,
+                HasDigits = false,
+                HasSymbols = true,
             };
 
             string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);

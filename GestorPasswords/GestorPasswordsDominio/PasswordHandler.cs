@@ -92,6 +92,7 @@ namespace GestorPasswordsDominio
                 string lower = "abcdefghijklmnopqrstuvwxyz";
                 string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                 string digits = "0123456789";
+                string symbols = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
                 var rand = new Random();
 
@@ -109,6 +110,10 @@ namespace GestorPasswordsDominio
                 int minOfDigits = numberOfConditions > 1 ? 1 : conditions.Length;
                 int numberOfDigits = conditions.HasDigits ? rand.Next(minOfDigits, maxOfDigits + 1) : 0;
 
+                int maxOfSymbols = conditions.Length - numberOfConditions + 1 + Convert.ToInt32(conditions.HasLowerCase) + Convert.ToInt32(conditions.HasUpperCase) + Convert.ToInt32(conditions.HasDigits) - numberOfLowers - numberOfUppers - numberOfDigits;
+                int minOfSymbols = conditions.Length - (numberOfLowers + numberOfUppers + numberOfDigits);
+                int numberOfSymbols = conditions.HasSymbols ? rand.Next(minOfSymbols, maxOfSymbols + 1) : 0;
+
                 for (int i = 0; i < numberOfLowers; i++)
                 {
                     password += lower[rand.Next() % lower.Length];
@@ -121,6 +126,10 @@ namespace GestorPasswordsDominio
                 {
                     password += digits[rand.Next() % digits.Length];
                 }
+                for (int i = 0; i < numberOfSymbols; i++)
+                {
+                    password += symbols[rand.Next() % symbols.Length];
+                }
 
                 password = RandomizeString(password);
             }
@@ -130,7 +139,7 @@ namespace GestorPasswordsDominio
 
         private static int CalculateNumberOfConditions(PasswordGenerationConditions conditions)
         {
-            return Convert.ToInt32(conditions.HasLowerCase) + Convert.ToInt32(conditions.HasUpperCase) + Convert.ToInt32(conditions.HasDigits) + Convert.ToInt32(conditions.HasSpecials);
+            return Convert.ToInt32(conditions.HasLowerCase) + Convert.ToInt32(conditions.HasUpperCase) + Convert.ToInt32(conditions.HasDigits) + Convert.ToInt32(conditions.HasSymbols);
         }
 
         private static bool ConditionsAreValid(PasswordGenerationConditions conditions)
@@ -140,7 +149,7 @@ namespace GestorPasswordsDominio
                 throw new ExceptionIncorrectLength("The length must be between 5 and 25, and the current length is " + conditions.Length);
             }
 
-            if (!conditions.HasUpperCase && !conditions.HasLowerCase && !conditions.HasDigits && !conditions.HasSpecials)
+            if (!conditions.HasUpperCase && !conditions.HasLowerCase && !conditions.HasDigits && !conditions.HasSymbols)
             {
                 throw new ExceptionIncorrectGenerationPasswordType("Must select at least one condition for generation");
             }
