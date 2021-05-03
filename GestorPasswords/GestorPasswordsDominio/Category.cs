@@ -128,7 +128,7 @@ namespace GestorPasswordsDominio
         }
 
 
-        private bool newCreditCardIsValid(CreditCard newCreditCard)
+        private bool newCreditCardIsValid(CreditCard oldCreditCard, CreditCard newCreditCard)
         {
             if (!CreditCardContainsOnlyDigits(newCreditCard.Number))
             {
@@ -159,27 +159,44 @@ namespace GestorPasswordsDominio
                 throw new ExceptionCreditCardHasInvalidNotesLength("The notes' length must be up to 250, but it's current length is " + newCreditCard.Notes.Length);
             }
 
+            if (!CreditCardNumbersAreEqual(oldCreditCard.Number, newCreditCard.Number) && CreditCardNumberAlreadyExistsInUser(newCreditCard.Number))
+            {
+                throw new ExceptionCreditCardNumberAlreadyExistsInUser("The credit card number already exists in user");
+            }
+
             return true;
         }
 
+        private bool CreditCardNumbersAreEqual (string oldCreditCardNumber, string newCreditCardNumber)
+        {
+            return oldCreditCardNumber == newCreditCardNumber;
+        }
+
+
         public bool ModifyCreditCard(CreditCard oldCreditCard, CreditCard newCreditCard)
         {
-            if (newCreditCardIsValid(newCreditCard))
-            {
+            if (newCreditCardIsValid(oldCreditCard, newCreditCard))
+            {            
                 RemoveCreditCard(oldCreditCard.Number);
                 if (HasSameCategory(oldCreditCard.Category, newCreditCard.Category))
                 {
-                    AddCreditCard(newCreditCard);
+                    AddCreditCardToHashTable(newCreditCard);
                 }
                 else
                 {
-                    newCreditCard.Category.AddCreditCard(newCreditCard);
+                    newCreditCard.Category.AddCreditCardToHashTable(newCreditCard);
                 }
                 return true;
             }
            
             return false;
         }
+
+        private void AddCreditCardToHashTable(CreditCard newCreditCard)
+        {
+            this.creditCardHashTable.Add(newCreditCard.Number, newCreditCard);
+        }
+
         public bool AddUserPasswordPair(UserPasswordPair aUserPasswordPair)
         {
             bool userPasswordPairAdded = false;

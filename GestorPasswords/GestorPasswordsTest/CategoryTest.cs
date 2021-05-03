@@ -520,6 +520,52 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyCreditCard(aCreditCard, newCreditCard));
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionCreditCardNumberAlreadyExistsInUser))]
+        public void ModifyNumberOfCreditCardToAnExistingOneInUser()
+        {
+
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = "",
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
+            };
+
+            aCategory.AddCreditCard(aCreditCard);
+
+            CreditCard anotherCreditCard = new CreditCard()
+            {
+                Number = "1124567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = "",
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
+            };
+
+            aCategory.AddCreditCard(anotherCreditCard);
+
+            CreditCard newCreditCard = new CreditCard()
+            {
+                Number = "1124567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = "",
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
+            };
+
+            _ = aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
+        }
+
+
 
         [TestMethod]
         public void AddValidUserPasswordPair()
