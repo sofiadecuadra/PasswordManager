@@ -151,6 +151,36 @@ namespace GestorPasswordsTest
             _PasswordManager.SharePassword(aUserPasswordPair, "JuanPa");
         }
 
+        [TestMethod]
+        public void UnsharePassword()
+        {
+            var aUser = new User()
+            {
+                MasterPassword = "myMasterPassword123$",
+                Name = "JuanPa"
+            };
+            _PasswordManager.CurrentUser = myUser;
+            _PasswordManager.AddUser(aUser);
+            UserPasswordPair aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+
+            _PasswordManager.SharePassword(aUserPasswordPair, aUser.Name);
+
+            _PasswordManager.UnsharePassword(aUserPasswordPair, aUser.Name);
+
+            Assert.IsFalse(_PasswordManager.FindUser(aUser.Name).HasSharedPasswordOf(aUserPasswordPair.Username, aUserPasswordPair.Site));
+            Assert.IsFalse(aUserPasswordPair.HasAccess(aUser.Name));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionUserDoesNotExist))]
+        public void UnsharePasswordToUserThatDoesNotExist()
+        {
+            _PasswordManager.CurrentUser = myUser;
+            UserPasswordPair aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+
+            _PasswordManager.SharePassword(aUserPasswordPair, "JuanPa");
+        }
+
         private UserPasswordPair LoadTestCategoryToMyUserWithAUserPasswordPair()
         {
             var aCategory = new Category()

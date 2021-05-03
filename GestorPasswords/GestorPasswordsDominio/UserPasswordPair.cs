@@ -48,5 +48,10 @@ namespace GestorPasswordsDominio
         {
             UsersWithAccess.Add(userToRecivePassword.Name, userToRecivePassword);
         }
+
+        internal void RemoveFromUsersWithAccess(User userToRevokeSharedPassword)
+        {
+            UsersWithAccess.Remove(userToRevokeSharedPassword.Name);
+        }
     }
 }

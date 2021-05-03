@@ -87,6 +87,11 @@ namespace GestorPasswordsDominio
             SharedPasswords.AddUserPasswordPair(passwordToShare);
         }
 
+        internal void UnshareUserPasswordPair(UserPasswordPair passwordToStopSharing)
+        {
+            SharedPasswords.RemoveUserPasswordPair(passwordToStopSharing);
+        }
+
         private void AddCategoryToSortedList(Category aCategory)
         {
             this.categoriesList.Add(aCategory.Name, aCategory); // If it already exists in the list throws an exception
