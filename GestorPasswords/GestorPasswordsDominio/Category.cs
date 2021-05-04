@@ -201,6 +201,20 @@ namespace GestorPasswordsDominio
             this.creditCardHashTable.Add(newCreditCard.Number, newCreditCard);
         }
 
+        public CreditCard ReturnCreditCardIfItExistsInCategory(string creditCardNumber)
+        {
+            if(this.creditCardHashTable.ContainsKey(creditCardNumber))
+            {
+                return (CreditCard) this.creditCardHashTable[creditCardNumber];
+            }
+            return null;
+        }
+
+        public bool HasCreditCard(string creditCardNumber)
+        {
+            return this.creditCardHashTable.Contains(creditCardNumber);
+        }
+
         public bool AddUserPasswordPair(UserPasswordPair aUserPasswordPair)
         {
             bool userPasswordPairAdded = false;

@@ -207,5 +207,41 @@ namespace GestorPasswordsDominio
 
             return userPasswordPair != null ? userPasswordPair : throw new ExceptionUserPasswordPairDoesNotExist(); 
         }
+
+        private CreditCard ReturnCreditCardIfItExistsInCategory(Category aCategory, string creditCardNumber)
+        {
+            return aCategory.ReturnCreditCardIfItExistsInCategory(creditCardNumber);
+        }
+
+        private CreditCard ReturnCreditCardIfItExists(string creditCardNumber)
+        {
+            CreditCard creditCard = null;
+            foreach (KeyValuePair<string, Category> pair in this.categoriesList)
+            {
+                string creditCardNumberWithoutBlankSpace = creditCardNumber.Replace(" ", string.Empty);
+                creditCard = ReturnCreditCardIfItExistsInCategory(pair.Value, creditCardNumberWithoutBlankSpace);
+                if (creditCard!= null)
+                {
+                    break;
+                }
+            }
+            return creditCard;
+        }
+
+        public List <CreditCard> CheckDataBreaches(IDataBreachesFormatter dataBreaches)
+        {
+            List<CreditCard> creditCardsLeakedOfUserList = new List<CreditCard>();
+            string [] creditCardsLeaked = dataBreaches.ConvertToArray();
+
+            foreach (string element in creditCardsLeaked)
+            {
+                CreditCard creditCardOfUserLeaked = ReturnCreditCardIfItExists(element);
+                if (creditCardOfUserLeaked != null)
+                {
+                    creditCardsLeakedOfUserList.Add(creditCardOfUserLeaked);
+                }
+            }
+            return creditCardsLeakedOfUserList;
+        }
     }
 }

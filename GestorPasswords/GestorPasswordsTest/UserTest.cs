@@ -1,6 +1,7 @@
 ﻿using GestorPasswordsDominio;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 
 namespace GestorPasswordsTest
 {
@@ -256,5 +257,55 @@ namespace GestorPasswordsTest
 
             aUser.FindUserPasswordPair(aUserPasswordPair.Username, aUserPasswordPair.Site);
         }
+
+        [TestMethod]
+        public void ACreditCardOfUserAppearedInDataBreaches()
+        {
+            var aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = "",
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
+            };
+
+            CreditCard anotherCreditCard = new CreditCard()
+            {
+                Number = "1234567891234222",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = "",
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
+            };
+
+            aUser.AddCategory(aCategory);
+            aCategory.AddCreditCard(aCreditCard);
+            aCategory.AddCreditCard(anotherCreditCard);
+
+            IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
+            {
+                txtDataBreaches = "1234 5678 9123 4567"
+            };
+
+            List <CreditCard> expectedList = new List<CreditCard>();
+            expectedList.Add(aCreditCard);
+
+            CollectionAssert.AreEqual (aUser.CheckDataBreaches(dataBreaches), expectedList);
+        }
+
+
+
+
     }
 }
