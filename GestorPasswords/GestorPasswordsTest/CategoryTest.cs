@@ -734,6 +734,22 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        public void AddValidOrangeUserPasswordPair()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
+            Assert.AreEqual(1, aCategory.User.GetOrangeUserPasswordPairs().Length);
+        }
+
+        [TestMethod]
         public void AddUserPasswordPairToSameSiteButDifferentUsername()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
