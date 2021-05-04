@@ -1749,6 +1749,34 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        public void ModifyDarkGreenUserPasswordPairToADarkGreenOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword12345#$%",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword!#32#$%",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(1, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.DarkGreenUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
         public void ModifyCategoryOfUserPasswordPairToAValidOneAndNotChangingPassword()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
