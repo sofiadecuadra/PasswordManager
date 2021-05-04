@@ -750,6 +750,22 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        public void AddValidYellowUserPasswordPair()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "MYPASSWORD12345",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
+            Assert.AreEqual(1, aCategory.User.GetYellowUserPasswordPairs().Length);
+        }
+
+        [TestMethod]
         public void AddUserPasswordPairToSameSiteButDifferentUsername()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()

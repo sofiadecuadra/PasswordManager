@@ -92,6 +92,12 @@ namespace GestorPasswordsDominio
             yellowUserPasswordPairs.CopyTo(yellowUserPasswordPairsArray);
             return yellowUserPasswordPairsArray;
         }
+
+        public void AddYellowUserPasswordPair(UserPasswordPair aYellowUserPasswordPair)
+        {
+            yellowUserPasswordPairs.Add(aYellowUserPasswordPair);
+        }
+
         public UserPasswordPair[] GetLightGreenUserPasswordPairs()
         {
             UserPasswordPair[] lightGreenUserPasswordPairsArray = new UserPasswordPair[lightGreenUserPasswordPairs.Count];
