@@ -442,5 +442,48 @@ namespace GestorPasswordsTest
             CollectionAssert.AreEqual(aUser.CheckDataBreaches(dataBreaches).Item2, expectedCreditCardList);
         }
 
+        [TestMethod]
+        public void PasswordsOfUserAppearedInDataBreaches()
+        {
+            var aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAPassword",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            UserPasswordPair anotherUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAnotherPassword",
+                Notes = "these are my notes",
+                Username = "anotherUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aUser.AddCategory(aCategory);
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+            aCategory.AddUserPasswordPair(anotherUserPasswordPair);
+
+            IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
+            {
+                txtDataBreaches = "thisIsAPassword\nthisIsAnotherPassword"
+            };
+
+            List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
+            expectedUserPasswordPairList.Add(aUserPasswordPair);
+            expectedUserPasswordPairList.Add(anotherUserPasswordPair);
+
+            CollectionAssert.AreEqual(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
+        }
+
     }
 }
