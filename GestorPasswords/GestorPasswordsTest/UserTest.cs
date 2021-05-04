@@ -301,7 +301,7 @@ namespace GestorPasswordsTest
             List <CreditCard> expectedCreditCardList = new List<CreditCard>();
             expectedCreditCardList.Add(aCreditCard);
 
-            CollectionAssert.AreEqual (aUser.CheckDataBreaches(dataBreaches).Item2, expectedCreditCardList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item2, expectedCreditCardList);
         }
 
 
@@ -349,7 +349,7 @@ namespace GestorPasswordsTest
             expectedCreditCardList.Add(aCreditCard);
             expectedCreditCardList.Add(anotherCreditCard);
 
-            CollectionAssert.AreEqual(aUser.CheckDataBreaches(dataBreaches).Item2, expectedCreditCardList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item2, expectedCreditCardList);
         }
 
         [TestMethod]
@@ -391,7 +391,7 @@ namespace GestorPasswordsTest
             List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
             expectedUserPasswordPairList.Add(aUserPasswordPair);
 
-            CollectionAssert.AreEqual(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
         }
 
         [TestMethod]
@@ -438,8 +438,8 @@ namespace GestorPasswordsTest
             List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
             expectedUserPasswordPairList.Add(aUserPasswordPair);
 
-            CollectionAssert.AreEqual(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
-            CollectionAssert.AreEqual(aUser.CheckDataBreaches(dataBreaches).Item2, expectedCreditCardList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item2, expectedCreditCardList);
         }
 
         [TestMethod]
@@ -482,7 +482,81 @@ namespace GestorPasswordsTest
             expectedUserPasswordPairList.Add(aUserPasswordPair);
             expectedUserPasswordPairList.Add(anotherUserPasswordPair);
 
-            CollectionAssert.AreEqual(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
+        }
+
+        [TestMethod]
+        public void MultiplePasswordsAndCreditCardsOfUserAppearedInDataBreaches()
+        {
+            var aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAPassword",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            UserPasswordPair anotherUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAnotherPassword",
+                Notes = "these are my notes",
+                Username = "anotherUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = "",
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
+            };
+
+            CreditCard anotherCreditCard = new CreditCard()
+            {
+                Number = "1234567891234222",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = "",
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
+            };
+
+            aUser.AddCategory(aCategory);
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+            aCategory.AddUserPasswordPair(anotherUserPasswordPair);
+
+            aCategory.AddCreditCard(aCreditCard);
+            aCategory.AddCreditCard(anotherCreditCard);
+
+            IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
+            {
+                txtDataBreaches = "thisIsAPassword\n1234 5678 9123 4222\nHello\nthisIsAnotherPassword\n1234 5678 9123 4567\n"
+            };
+
+            List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
+            expectedUserPasswordPairList.Add(aUserPasswordPair);
+            expectedUserPasswordPairList.Add(anotherUserPasswordPair);
+
+            List<CreditCard> expectedCreditCardList = new List<CreditCard>();
+            expectedCreditCardList.Add(aCreditCard);
+            expectedCreditCardList.Add(anotherCreditCard);
+
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item2, expectedCreditCardList);
         }
 
     }
