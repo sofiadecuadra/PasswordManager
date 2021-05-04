@@ -58,7 +58,6 @@ namespace GestorPasswordsDominio
             }
             else
             {
-
                 throw new ExceptionIncorrectMasterPassword();
             }
         }

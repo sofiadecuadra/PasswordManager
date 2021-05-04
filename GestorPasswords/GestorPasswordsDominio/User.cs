@@ -188,6 +188,7 @@ namespace GestorPasswordsDominio
             }
             return pairExists;
         }
+
         private static bool UserPasswordPairExistsInCategory(Category aCategory, string username, string site)
         {
             return aCategory.UserPasswordPairAlredyExistsInCategory(username, site);
