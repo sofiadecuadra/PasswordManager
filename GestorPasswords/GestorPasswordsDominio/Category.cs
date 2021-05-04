@@ -382,7 +382,6 @@ namespace GestorPasswordsDominio
                     pairsList.Add(userPasswordPair);
                 }
             }
-
             return pairsList;
         }
 

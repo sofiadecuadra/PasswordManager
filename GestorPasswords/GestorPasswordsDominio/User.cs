@@ -229,7 +229,6 @@ namespace GestorPasswordsDominio
                     break;
                 }
             }
-
             return creditCard;
         }
 
@@ -287,11 +286,11 @@ namespace GestorPasswordsDominio
 
             string [] leakedData = dataBreaches.ConvertToArray();
 
-            foreach (string item in leakedData)
+            foreach (string element in leakedData)
             {
-                if (ItsACreditCard(item))
+                if (ItsACreditCard(element))
                 {
-                    CreditCard creditCardOfUserLeaked = ReturnCreditCardIfItExists(item);
+                    CreditCard creditCardOfUserLeaked = ReturnCreditCardIfItExists(element);
 
                     if (creditCardOfUserLeaked != null)
                     {
@@ -300,12 +299,11 @@ namespace GestorPasswordsDominio
                 }
                 else
                 {
-                    foreach (UserPasswordPair pair in ReturnUserPasswordPairsWhosePasswordMatches(item))
+                    foreach (UserPasswordPair pair in ReturnUserPasswordPairsWhosePasswordMatches(element))
                     {
                         passwordsOfUserLeakedList.Add(pair);
                     }
-                }
-              
+                }              
             }
             return (passwordsOfUserLeakedList, creditCardsOfUserLeakedList);
         }
