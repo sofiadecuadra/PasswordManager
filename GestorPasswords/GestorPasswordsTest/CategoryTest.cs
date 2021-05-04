@@ -1535,7 +1535,7 @@ namespace GestorPasswordsTest
 
 
         [TestMethod]
-        public void ModifyDarkGreenUserPasswordPairToAnYellowOne()
+        public void ModifyDarkGreenUserPasswordPairToAYellowOne()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
@@ -1560,6 +1560,34 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetYellowUserPasswordPairs().Length);
+        }
+
+        [TestMethod]
+        public void ModifyDarkGreenUserPasswordPairToALightGreenOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword12345#$%",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword12345",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.User.GetLightGreenUserPasswordPairs().Length);
         }
 
         [TestMethod]
