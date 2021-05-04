@@ -135,6 +135,10 @@ namespace GestorPasswordsDominio
         {
             darkGreenUserPasswordPairs.Add(aDarkGreenUserPasswordPair);
         }
+        public void DeleteDarkGreenUserPasswordPair(UserPasswordPair aDarkGreenUserPasswordPair)
+        {
+            darkGreenUserPasswordPairs.Remove(aDarkGreenUserPasswordPair);
+        }
 
         public bool ChangeMasterPassword(string currentPassword, string newPassword)
         {
