@@ -211,7 +211,8 @@ namespace GestorPasswordsDominio
             if (UserPasswordPairIsValid(aUserPasswordPair))
             {
                 AddUserPasswordPairToHashTable(aUserPasswordPair);
-                AddUserPasswordPairToGroup(aUserPasswordPair);
+                PasswordStrengthType passwordStrength = PasswordHandler.PasswordStrength(aUserPasswordPair.Password);
+                AddUserPasswordPairToGroup(aUserPasswordPair, passwordStrength);
                 userPasswordPairAdded = true;
             }
             return userPasswordPairAdded;
@@ -222,10 +223,8 @@ namespace GestorPasswordsDominio
             this.userPasswordPairsHash.Add(aUserPasswordPair.Site + aUserPasswordPair.Username, aUserPasswordPair);
         }
 
-        private void AddUserPasswordPairToGroup(UserPasswordPair aUserPasswordPair)
+        private void AddUserPasswordPairToGroup(UserPasswordPair aUserPasswordPair, PasswordStrengthType passwordStrength)
         {
-            PasswordStrengthType passwordStrength = PasswordHandler.PasswordStrength(aUserPasswordPair.Password);
-
             if (passwordStrength == PasswordStrengthType.Red)
             {
                 RedUserPasswordPairsQuantity++;
@@ -323,22 +322,23 @@ namespace GestorPasswordsDominio
             bool modified = false;
             if (NewUserPasswordPairIsValid(newUserPasswordPair))
             {
+                UpdateUserPasswordGroup(oldUserPasswordPair, newUserPasswordPair);
                 ChangeUserPasswordPairData(oldUserPasswordPair, newUserPasswordPair);
-                ChangeUserPasswordGroup(oldUserPasswordPair, newUserPasswordPair);
                 modified = true;
             }
 
             return modified;
         }
 
-        private void ChangeUserPasswordGroup(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
+        private void UpdateUserPasswordGroup(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
         {
             PasswordStrengthType oldPasswordStrength = PasswordHandler.PasswordStrength(oldUserPasswordPair.Password);
             PasswordStrengthType newPasswordStrength = PasswordHandler.PasswordStrength(newUserPasswordPair.Password);
 
             if (!(oldPasswordStrength == newPasswordStrength))
             {
-                AddUserPasswordPairToGroup(newUserPasswordPair);
+                DeleteUserPasswordPairFromGroup(oldUserPasswordPair, oldPasswordStrength);
+                AddUserPasswordPairToGroup(newUserPasswordPair, newPasswordStrength);
             }
         }
 
@@ -377,8 +377,8 @@ namespace GestorPasswordsDominio
             bool passwordsAreEqual = PasswordsAreEqual(oldUserPasswordPair.Password, newUserPasswordPair.Password);
             if (hasSameCategory && !passwordsAreEqual)
             {
-                RemoveUserPasswordPair(oldUserPasswordPair);
-                AddUserPasswordPairToHashTable(newUserPasswordPair);
+                UpdateUsernameSiteAndNotes(oldUserPasswordPair, newUserPasswordPair);
+                UpdatePassword(oldUserPasswordPair, newUserPasswordPair);
             }
             if (hasSameCategory && passwordsAreEqual)
             {
@@ -386,17 +386,21 @@ namespace GestorPasswordsDominio
             }
             if (!hasSameCategory && passwordsAreEqual)
             {
-                RemoveUserPasswordPair(oldUserPasswordPair);
+                RemoveUserPasswordPairFromCollection(oldUserPasswordPair);
                 UpdateUsernameSiteAndNotes(oldUserPasswordPair, newUserPasswordPair);
                 UpdateCategory(oldUserPasswordPair, newUserPasswordPair);
                 oldUserPasswordPair.Category.AddUserPasswordPairToHashTable(oldUserPasswordPair);
             }
             if (!hasSameCategory && !passwordsAreEqual)
             {
-                RemoveUserPasswordPair(oldUserPasswordPair);
+                RemoveUserPasswordPairFromCollection(oldUserPasswordPair);
                 newUserPasswordPair.Category.AddUserPasswordPairToHashTable(newUserPasswordPair);
             }
+        }
 
+        private static void UpdatePassword(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
+        {
+            oldUserPasswordPair.Password = newUserPasswordPair.Password;
         }
 
         private static void UpdateCategory(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
@@ -438,10 +442,16 @@ namespace GestorPasswordsDominio
             {
                 throw new ExceptionUserPasswordPairDoesNotExist($"The user-password pair ({aUserPasswordPair.Username}-{aUserPasswordPair.Site}) does not exist in {this.Name}");
             }
-            
-            this.userPasswordPairsHash.Remove($"{aUserPasswordPair.Site}{ aUserPasswordPair.Username}");
+
+            RemoveUserPasswordPairFromCollection(aUserPasswordPair);
             DeleteUserPasswordPairFromGroup(aUserPasswordPair, PasswordHandler.PasswordStrength(aUserPasswordPair.Password));
             return true;
         }
+
+        private void RemoveUserPasswordPairFromCollection(UserPasswordPair aUserPasswordPair)
+        {
+            this.userPasswordPairsHash.Remove($"{aUserPasswordPair.Site}{ aUserPasswordPair.Username}");
+        }
+
     }
 }
