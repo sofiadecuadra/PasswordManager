@@ -241,6 +241,11 @@ namespace GestorPasswordsDominio
                 YellowUserPasswordPairsQuantity++;
                 User.AddYellowUserPasswordPair(aUserPasswordPair);
             }
+            if (passwordStrength == PasswordStrengthType.LightGreen)
+            {
+                YellowUserPasswordPairsQuantity++;
+                User.AddLightGreenUserPasswordPair(aUserPasswordPair);
+            }
         }
 
         private bool UserPasswordPairIsValid(UserPasswordPair aUserPasswordPair)

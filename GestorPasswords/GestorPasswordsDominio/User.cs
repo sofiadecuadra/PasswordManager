@@ -105,6 +105,11 @@ namespace GestorPasswordsDominio
             return lightGreenUserPasswordPairsArray;
         }
 
+        public void AddLightGreenUserPasswordPair(UserPasswordPair aLightGreenUserPasswordPair)
+        {
+            lightGreenUserPasswordPairs.Add(aLightGreenUserPasswordPair);
+        }
+
         public UserPasswordPair[] GetDarkGreenUserPasswordPairs()
         {
             UserPasswordPair[] darkGreenUserPasswordPairsArray = new UserPasswordPair[darkGreenUserPasswordPairs.Count];
