@@ -718,11 +718,11 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        public void AddValidUserPasswordPair()
+        public void AddValidRedUserPasswordPair()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
-                Password = "thisIsAPassword",
+                Password = "myPass",
                 Notes = "these are my notes",
                 Username = "myUserName",
                 Site = "mySite",
@@ -730,6 +730,7 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
+            Assert.AreEqual(1, aCategory.User.GetRedUserPasswordPairs().Length);
         }
 
         [TestMethod]
