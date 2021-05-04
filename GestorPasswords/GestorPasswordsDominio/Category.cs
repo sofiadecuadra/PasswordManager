@@ -201,7 +201,7 @@ namespace GestorPasswordsDominio
             this.creditCardHashTable.Add(newCreditCard.Number, newCreditCard);
         }
 
-        public CreditCard ReturnCreditCardIfItExistsInCategory(string creditCardNumber)
+        public CreditCard ReturnCreditCardInCategoryThatAppeardInDataBreaches(string creditCardNumber)
         {
             if(this.creditCardHashTable.ContainsKey(creditCardNumber))
             {
@@ -369,7 +369,7 @@ namespace GestorPasswordsDominio
             return true;
         }
 
-        public List <UserPasswordPair> ReturnUserPasswordPairsInCategoryWhosePasswordMatches(string aPassword)
+        public List <UserPasswordPair> ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches (string aPassword)
         {
             List<UserPasswordPair> pairsList = new List<UserPasswordPair>();
 

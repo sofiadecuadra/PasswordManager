@@ -209,12 +209,12 @@ namespace GestorPasswordsDominio
             return userPasswordPair != null ? userPasswordPair : throw new ExceptionUserPasswordPairDoesNotExist(); 
         }
 
-        private CreditCard ReturnCreditCardIfItExistsInCategory(Category aCategory, string creditCardNumber)
+        private CreditCard ReturnCreditCardInCategoryThatAppeardInDataBreaches(Category aCategory, string creditCardNumber)
         {
-            return aCategory.ReturnCreditCardIfItExistsInCategory(creditCardNumber);
+            return aCategory.ReturnCreditCardInCategoryThatAppeardInDataBreaches(creditCardNumber);
         }
 
-        private CreditCard ReturnCreditCardIfItExists(string creditCardNumber)
+        private CreditCard ReturnCreditCardThatAppeardInDataBreaches(string creditCardNumber)
         {
             CreditCard creditCard = null;
 
@@ -222,7 +222,7 @@ namespace GestorPasswordsDominio
             {
                 string creditCardNumberWithoutBlankSpace = creditCardNumber.Replace(" ", string.Empty);
 
-                creditCard = ReturnCreditCardIfItExistsInCategory(pair.Value, creditCardNumberWithoutBlankSpace);
+                creditCard = ReturnCreditCardInCategoryThatAppeardInDataBreaches(pair.Value, creditCardNumberWithoutBlankSpace);
 
                 if (creditCard!= null)
                 {
@@ -232,19 +232,18 @@ namespace GestorPasswordsDominio
             return creditCard;
         }
 
-        private List<UserPasswordPair> ReturnUserPasswordPairsInCategoryWhosePasswordMatches(Category aCategory, string creditCardNumber)
+        private List<UserPasswordPair> ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(Category aCategory, string aPassword)
         {
-            return aCategory.ReturnUserPasswordPairsInCategoryWhosePasswordMatches(creditCardNumber);
+            return aCategory.ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(aPassword);
         }
 
-
-        private List <UserPasswordPair> ReturnUserPasswordPairsWhosePasswordMatches(string aPassword)
+        private List <UserPasswordPair> ReturnListOfUserPasswordPairWhosePasswordAppearedInDataBreaches(string aPassword)
         {
             List<UserPasswordPair> userPasswordPairList = new List<UserPasswordPair>();
 
             foreach (KeyValuePair<string, Category> pair in this.categoriesList)
             {
-                List<UserPasswordPair> userPasswordPairListInCategory = ReturnUserPasswordPairsInCategoryWhosePasswordMatches(pair.Value, aPassword);
+                List<UserPasswordPair> userPasswordPairListInCategory = ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(pair.Value, aPassword);
 
                 foreach (UserPasswordPair element in userPasswordPairListInCategory)
                 {
@@ -254,7 +253,7 @@ namespace GestorPasswordsDominio
             return userPasswordPairList;
         }
 
-        private bool containsOnlyDigits(string element)
+        private bool ContainsOnlyDigits(string element)
         {
             return Regex.IsMatch(element, @"^[0-9]+$");
         }
@@ -280,9 +279,9 @@ namespace GestorPasswordsDominio
 
         public (List <UserPasswordPair>, List <CreditCard>) CheckDataBreaches(IDataBreachesFormatter dataBreaches)
         {
-            List<CreditCard> creditCardsOfUserLeakedList = new List<CreditCard>();
+            List<CreditCard> leakedCreditCardsOfUserList = new List<CreditCard>();
 
-            List<UserPasswordPair> passwordsOfUserLeakedList = new List<UserPasswordPair>();
+            List<UserPasswordPair> leakedPasswordsOfUserList = new List<UserPasswordPair>();
 
             string [] leakedData = dataBreaches.ConvertToArray();
 
@@ -290,22 +289,22 @@ namespace GestorPasswordsDominio
             {
                 if (ItsACreditCard(element))
                 {
-                    CreditCard creditCardOfUserLeaked = ReturnCreditCardIfItExists(element);
+                    CreditCard aLeakedCreditCardOfUser = ReturnCreditCardThatAppeardInDataBreaches(element);
 
-                    if (creditCardOfUserLeaked != null)
+                    if (aLeakedCreditCardOfUser != null)
                     {
-                        creditCardsOfUserLeakedList.Add(creditCardOfUserLeaked);
+                        leakedCreditCardsOfUserList.Add(aLeakedCreditCardOfUser);
                     }
                 }
                 else
                 {
-                    foreach (UserPasswordPair pair in ReturnUserPasswordPairsWhosePasswordMatches(element))
+                    foreach (UserPasswordPair pair in ReturnListOfUserPasswordPairWhosePasswordAppearedInDataBreaches(element))
                     {
-                        passwordsOfUserLeakedList.Add(pair);
+                        leakedPasswordsOfUserList.Add(pair);
                     }
                 }              
             }
-            return (passwordsOfUserLeakedList, creditCardsOfUserLeakedList);
+            return (leakedPasswordsOfUserList, leakedCreditCardsOfUserList);
         }
     }
 }
