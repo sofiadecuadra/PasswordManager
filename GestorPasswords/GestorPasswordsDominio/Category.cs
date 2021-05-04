@@ -338,7 +338,6 @@ namespace GestorPasswordsDominio
 
             if (!(oldPasswordStrength == newPasswordStrength))
             {
-                DeleteUserPasswordPairFromGroup(oldUserPasswordPair, oldPasswordStrength);
                 AddUserPasswordPairToGroup(newUserPasswordPair);
             }
         }
@@ -347,27 +346,27 @@ namespace GestorPasswordsDominio
         {
             if (passwordStrength == PasswordStrengthType.Red)
             {
-                RedUserPasswordPairsQuantity--; ;
+                RedUserPasswordPairsQuantity--; 
                 User.DeleteRedUserPasswordPair(aUserPasswordPair);
             }
             if (passwordStrength == PasswordStrengthType.Orange)
             {
-                OrangeUserPasswordPairsQuantity--; ;
+                OrangeUserPasswordPairsQuantity--; 
                 User.DeleteOrangeUserPasswordPair(aUserPasswordPair);
             }
             if (passwordStrength == PasswordStrengthType.Yellow)
             {
-                YellowUserPasswordPairsQuantity--; ;
+                YellowUserPasswordPairsQuantity--;
                 User.DeleteYellowUserPasswordPair(aUserPasswordPair);
             }
             if (passwordStrength == PasswordStrengthType.LightGreen)
             {
-                LightGreenUserPasswordPairsQuantity--; ;
+                LightGreenUserPasswordPairsQuantity--;
                 User.DeleteLightGreenUserPasswordPair(aUserPasswordPair);
             }
             if (passwordStrength == PasswordStrengthType.DarkGreen)
             {
-                DarkGreenUserPasswordPairsQuantity--; ;
+                DarkGreenUserPasswordPairsQuantity--;
                 User.DeleteDarkGreenUserPasswordPair(aUserPasswordPair);
             }
         }
@@ -397,6 +396,7 @@ namespace GestorPasswordsDominio
                 RemoveUserPasswordPair(oldUserPasswordPair);
                 newUserPasswordPair.Category.AddUserPasswordPairToHashTable(newUserPasswordPair);
             }
+
         }
 
         private static void UpdateCategory(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)

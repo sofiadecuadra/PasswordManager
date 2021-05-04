@@ -731,6 +731,7 @@ namespace GestorPasswordsTest
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
             Assert.AreEqual(1, aCategory.User.GetRedUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.RedUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -747,6 +748,7 @@ namespace GestorPasswordsTest
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
             Assert.AreEqual(1, aCategory.User.GetOrangeUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.OrangeUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -763,6 +765,7 @@ namespace GestorPasswordsTest
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
             Assert.AreEqual(1, aCategory.User.GetYellowUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.YellowUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -779,6 +782,7 @@ namespace GestorPasswordsTest
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
             Assert.AreEqual(1, aCategory.User.GetLightGreenUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.LightGreenUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -795,6 +799,7 @@ namespace GestorPasswordsTest
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
             Assert.AreEqual(1, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.DarkGreenUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -1055,6 +1060,8 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetRedUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetOrangeUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.RedUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.OrangeUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -1083,6 +1090,8 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetRedUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetYellowUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.RedUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.YellowUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -1111,6 +1120,8 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetRedUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetLightGreenUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.RedUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.LightGreenUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -1139,6 +1150,8 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetRedUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.RedUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.DarkGreenUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -1167,6 +1180,8 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetOrangeUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetRedUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.OrangeUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.RedUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -1195,6 +1210,8 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetOrangeUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetYellowUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.OrangeUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.YellowUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -1223,6 +1240,8 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetOrangeUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetLightGreenUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.OrangeUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.LightGreenUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -1251,6 +1270,8 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetOrangeUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.OrangeUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.DarkGreenUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -1279,6 +1300,8 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetYellowUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetRedUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.YellowUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.RedUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -1307,6 +1330,8 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetYellowUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetOrangeUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.YellowUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.OrangeUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -1335,6 +1360,8 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetYellowUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetLightGreenUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.YellowUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.LightGreenUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -1363,6 +1390,8 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetYellowUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.YellowUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.DarkGreenUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -1391,6 +1420,8 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetLightGreenUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetRedUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.LightGreenUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.RedUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -1419,6 +1450,8 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetLightGreenUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetOrangeUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.LightGreenUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.OrangeUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -1447,6 +1480,8 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetLightGreenUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetYellowUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.LightGreenUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.YellowUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -1475,6 +1510,8 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetLightGreenUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.LightGreenUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.DarkGreenUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -1503,6 +1540,8 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetRedUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.DarkGreenUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.RedUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -1531,6 +1570,8 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetOrangeUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.DarkGreenUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.OrangeUserPasswordPairsQuantity);
         }
 
 
@@ -1560,6 +1601,8 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetYellowUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.DarkGreenUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.YellowUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -1588,6 +1631,8 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetLightGreenUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.DarkGreenUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.LightGreenUserPasswordPairsQuantity);
         }
 
         [TestMethod]
