@@ -1886,5 +1886,27 @@ namespace GestorPasswordsTest
 
             aCategory.RemoveUserPasswordPair(aUserPasswordPair);
         }
+
+        [TestMethod]
+        public void RemoveRedUserPasswordPair()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "mypass",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
+            Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair.Username, aUserPasswordPair.Site));
+            Assert.AreEqual(0, aCategory.User.GetRedUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.RedUserPasswordPairsQuantity);
+        }
+
+
     }
 }

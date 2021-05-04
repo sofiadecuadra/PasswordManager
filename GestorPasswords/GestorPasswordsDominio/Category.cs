@@ -440,6 +440,7 @@ namespace GestorPasswordsDominio
             }
             
             this.userPasswordPairsHash.Remove($"{aUserPasswordPair.Site}{ aUserPasswordPair.Username}");
+            DeleteUserPasswordPairFromGroup(aUserPasswordPair, PasswordHandler.PasswordStrength(aUserPasswordPair.Password));
             return true;
         }
     }
