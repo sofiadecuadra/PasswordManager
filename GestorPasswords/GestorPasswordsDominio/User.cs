@@ -104,7 +104,7 @@ namespace GestorPasswordsDominio
 
         public void DeleteYellowUserPasswordPair(UserPasswordPair aYellowUserPasswordPair)
         {
-            yellowUserPasswordPairs.Remove(aYellowUserPasswordPair);
+           yellowUserPasswordPairs.Remove(aYellowUserPasswordPair);
         }
 
         public UserPasswordPair[] GetLightGreenUserPasswordPairs()
@@ -117,6 +117,11 @@ namespace GestorPasswordsDominio
         public void AddLightGreenUserPasswordPair(UserPasswordPair aLightGreenUserPasswordPair)
         {
             lightGreenUserPasswordPairs.Add(aLightGreenUserPasswordPair);
+        }
+
+        public void DeleteLightGreenUserPasswordPair(UserPasswordPair aYellowUserPasswordPair)
+        {
+            lightGreenUserPasswordPairs.Remove(aYellowUserPasswordPair);
         }
 
         public UserPasswordPair[] GetDarkGreenUserPasswordPairs()
