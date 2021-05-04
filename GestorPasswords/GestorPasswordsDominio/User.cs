@@ -300,9 +300,12 @@ namespace GestorPasswordsDominio
                 }
                 else
                 {
-                    passwordsOfUserLeakedList = ReturnUserPasswordPairsWhosePasswordMatches(item);
+                    foreach (UserPasswordPair pair in ReturnUserPasswordPairsWhosePasswordMatches(item))
+                    {
+                        passwordsOfUserLeakedList.Add(pair);
+                    }
                 }
-               
+              
             }
             return (passwordsOfUserLeakedList, creditCardsOfUserLeakedList);
         }
