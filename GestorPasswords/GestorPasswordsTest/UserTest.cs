@@ -57,11 +57,6 @@ namespace GestorPasswordsTest
 
         public void AddValidCategory()
         {
-            User aUser = new User()
-            {
-                MasterPassword = "myPassword"
-            };
-
             Category aCategory = new Category()
             {
                 User = aUser,
@@ -75,11 +70,6 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionCategoryHasInvalidNameLength))]
         public void AddCategoryWithLengthLessThan3()
         {
-            User aUser = new User()
-            {
-                MasterPassword = "myPassword"
-            };
-
             Category aCategory = new Category()
             {
                 User = aUser,
@@ -93,11 +83,6 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionCategoryHasInvalidNameLength))]
         public void AddCategoryWithLengthGreaterThan15()
         {
-            User aUser = new User()
-            {
-                MasterPassword = "myPassword"
-            };
-
             Category aCategory = new Category()
             {
                 User = aUser,
@@ -111,11 +96,6 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ArgumentException))]
         public void AddExistingCategory()
         {
-            User aUser = new User()
-            {
-                MasterPassword = "myPassword"
-            };
-
             Category aCategory = new Category()
             {
                 User = aUser,
@@ -136,11 +116,6 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void ModifyCategoryNormally()
         {
-            User aUser = new User()
-            {
-                MasterPassword = "myPassword"
-            };
-
             Category aCategory = new Category()
             {
                 User = aUser,
@@ -157,11 +132,6 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionCategoryNotExists))]
         public void ModifyCategoryThatDoesNotExist()
         {
-            User aUser = new User()
-            {
-                MasterPassword = "myPassword"
-            };
-
             Category aCategory = new Category()
             {
                 User = aUser,
@@ -175,11 +145,6 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionCategoryHasInvalidNameLength))]
         public void ModifyCategoryWithNewLengthLessThan3()
         {
-            User aUser = new User()
-            {
-                MasterPassword = "myPassword"
-            };
-
             Category aCategory = new Category()
             {
                 User = aUser,
@@ -195,11 +160,6 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionCategoryHasInvalidNameLength))]
         public void ModifyCategoryWithNewLengthGreaterThan15()
         {
-            User aUser = new User()
-            {
-                MasterPassword = "myPassword"
-            };
-
             Category aCategory = new Category()
             {
                 User = aUser,
