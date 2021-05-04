@@ -243,12 +243,12 @@ namespace GestorPasswordsDominio
             }
             if (passwordStrength == PasswordStrengthType.LightGreen)
             {
-                YellowUserPasswordPairsQuantity++;
+                LightGreenUserPasswordPairsQuantity++;
                 User.AddLightGreenUserPasswordPair(aUserPasswordPair);
             }
             if (passwordStrength == PasswordStrengthType.DarkGreen)
             {
-                YellowUserPasswordPairsQuantity++;
+                DarkGreenUserPasswordPairsQuantity++;
                 User.AddDarkGreenUserPasswordPair(aUserPasswordPair);
             }
         }
