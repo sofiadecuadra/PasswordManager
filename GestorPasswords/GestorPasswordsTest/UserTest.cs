@@ -298,14 +298,53 @@ namespace GestorPasswordsTest
                 txtDataBreaches = "1234 5678 9123 4567"
             };
 
-            List <CreditCard> expectedList = new List<CreditCard>();
-            expectedList.Add(aCreditCard);
+            List <CreditCard> expectedCreditCardList = new List<CreditCard>();
+            expectedCreditCardList.Add(aCreditCard);
 
-            CollectionAssert.AreEqual (aUser.CheckDataBreaches(dataBreaches), expectedList);
+            CollectionAssert.AreEqual (aUser.CheckDataBreaches(dataBreaches).Item2, expectedCreditCardList);
         }
 
+        [TestMethod]
+        public void APasswordOfUserAppearedInDataBreaches()
+        {
+            var aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
 
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAPassword",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
 
+            UserPasswordPair anotherUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAnotherPassword",
+                Notes = "these are my notes",
+                Username = "anotherUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aUser.AddCategory(aCategory);
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+            aCategory.AddUserPasswordPair(anotherUserPasswordPair);
+
+            IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
+            {
+                txtDataBreaches = "thisIsAPassword"
+            };
+
+            List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
+            expectedUserPasswordPairList.Add(aUserPasswordPair);
+
+            CollectionAssert.AreEqual(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
+        }
 
     }
 }

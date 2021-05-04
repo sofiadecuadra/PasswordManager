@@ -368,5 +368,23 @@ namespace GestorPasswordsDominio
             this.userPasswordPairsHash.Remove($"{aUserPasswordPair.Site}{ aUserPasswordPair.Username}");
             return true;
         }
+
+        public List <UserPasswordPair> ReturnUserPasswordPairsInCategoryWhosePasswordMatches(string aPassword)
+        {
+            List<UserPasswordPair> pairsList = new List<UserPasswordPair>();
+
+            foreach (DictionaryEntry pair in this.userPasswordPairsHash)
+            {
+                UserPasswordPair userPasswordPair = (UserPasswordPair)pair.Value;
+
+                if (PasswordsAreEqual(userPasswordPair.Password, aPassword))
+                {
+                    pairsList.Add(userPasswordPair);
+                }
+            }
+
+            return pairsList;
+        }
+
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace GestorPasswordsDominio
@@ -216,32 +217,94 @@ namespace GestorPasswordsDominio
         private CreditCard ReturnCreditCardIfItExists(string creditCardNumber)
         {
             CreditCard creditCard = null;
+
             foreach (KeyValuePair<string, Category> pair in this.categoriesList)
             {
                 string creditCardNumberWithoutBlankSpace = creditCardNumber.Replace(" ", string.Empty);
+
                 creditCard = ReturnCreditCardIfItExistsInCategory(pair.Value, creditCardNumberWithoutBlankSpace);
+
                 if (creditCard!= null)
                 {
                     break;
                 }
             }
+
             return creditCard;
         }
 
-        public List <CreditCard> CheckDataBreaches(IDataBreachesFormatter dataBreaches)
+        private List<UserPasswordPair> ReturnUserPasswordPairsInCategoryWhosePasswordMatches(Category aCategory, string creditCardNumber)
         {
-            List<CreditCard> creditCardsLeakedOfUserList = new List<CreditCard>();
-            string [] creditCardsLeaked = dataBreaches.ConvertToArray();
+            return aCategory.ReturnUserPasswordPairsInCategoryWhosePasswordMatches(creditCardNumber);
+        }
 
-            foreach (string element in creditCardsLeaked)
+
+        private List <UserPasswordPair> ReturnUserPasswordPairsWhosePasswordMatches(string aPassword)
+        {
+            List<UserPasswordPair> userPasswordPairList = new List<UserPasswordPair>();
+
+            foreach (KeyValuePair<string, Category> pair in this.categoriesList)
             {
-                CreditCard creditCardOfUserLeaked = ReturnCreditCardIfItExists(element);
-                if (creditCardOfUserLeaked != null)
+                List<UserPasswordPair> userPasswordPairListInCategory = ReturnUserPasswordPairsInCategoryWhosePasswordMatches(pair.Value, aPassword);
+
+                foreach (UserPasswordPair element in userPasswordPairListInCategory)
                 {
-                    creditCardsLeakedOfUserList.Add(creditCardOfUserLeaked);
+                    userPasswordPairList.Add(element);
                 }
             }
-            return creditCardsLeakedOfUserList;
+            return userPasswordPairList;
+        }
+
+        private bool containsOnlyDigits(string element)
+        {
+            return Regex.IsMatch(element, @"^[0-9]+$");
+        }
+
+        private bool LengthIsFour (string element)
+        {
+            return element.Length == 4;
+        }
+
+        private bool ItsACreditCard(string element)
+        {
+            string [] dataToCheck = element.Split (' ');
+
+            foreach (string item in dataToCheck)
+            {
+                if (!containsOnlyDigits (item) || !LengthIsFour (item))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public (List <UserPasswordPair>, List <CreditCard>) CheckDataBreaches(IDataBreachesFormatter dataBreaches)
+        {
+            List<CreditCard> creditCardsOfUserLeakedList = new List<CreditCard>();
+
+            List<UserPasswordPair> passwordsOfUserLeakedList = new List<UserPasswordPair>();
+
+            string [] leakedData = dataBreaches.ConvertToArray();
+
+            foreach (string item in leakedData)
+            {
+                if (ItsACreditCard(item))
+                {
+                    CreditCard creditCardOfUserLeaked = ReturnCreditCardIfItExists(item);
+
+                    if (creditCardOfUserLeaked != null)
+                    {
+                        creditCardsOfUserLeakedList.Add(creditCardOfUserLeaked);
+                    }
+                }
+                else
+                {
+                    passwordsOfUserLeakedList = ReturnUserPasswordPairsWhosePasswordMatches(item);
+                }
+               
+            }
+            return (passwordsOfUserLeakedList, creditCardsOfUserLeakedList);
         }
     }
 }
