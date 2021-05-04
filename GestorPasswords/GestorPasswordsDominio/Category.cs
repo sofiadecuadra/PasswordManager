@@ -323,8 +323,9 @@ namespace GestorPasswordsDominio
             bool modified = false;
             if (NewUserPasswordPairIsValid(newUserPasswordPair))
             {
-                modified = ChangeUserPasswordPairData(oldUserPasswordPair, newUserPasswordPair);
+                ChangeUserPasswordPairData(oldUserPasswordPair, newUserPasswordPair);
                 ChangeUserPasswordGroup(oldUserPasswordPair, newUserPasswordPair);
+                modified = true;
             }
 
             return modified;
@@ -351,21 +352,18 @@ namespace GestorPasswordsDominio
             }
         }
 
-        private bool ChangeUserPasswordPairData(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
+        private void ChangeUserPasswordPairData(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
         {
-            bool modified = false;
             bool hasSameCategory = HasSameCategory(oldUserPasswordPair.Category, newUserPasswordPair.Category);
             bool passwordsAreEqual = PasswordsAreEqual(oldUserPasswordPair.Password, newUserPasswordPair.Password);
             if (hasSameCategory && !passwordsAreEqual)
             {
                 RemoveUserPasswordPair(oldUserPasswordPair);
                 AddUserPasswordPairToHashTable(newUserPasswordPair);
-                modified = true;
             }
             if (hasSameCategory && passwordsAreEqual)
             {
                 UpdateUsernameSiteAndNotes(oldUserPasswordPair, newUserPasswordPair);
-                modified = true;
             }
             if (!hasSameCategory && passwordsAreEqual)
             {
@@ -373,16 +371,12 @@ namespace GestorPasswordsDominio
                 UpdateUsernameSiteAndNotes(oldUserPasswordPair, newUserPasswordPair);
                 UpdateCategory(oldUserPasswordPair, newUserPasswordPair);
                 oldUserPasswordPair.Category.AddUserPasswordPairToHashTable(oldUserPasswordPair);
-                modified = true;
             }
             if (!hasSameCategory && !passwordsAreEqual)
             {
                 RemoveUserPasswordPair(oldUserPasswordPair);
                 newUserPasswordPair.Category.AddUserPasswordPairToHashTable(newUserPasswordPair);
-                modified = true;
             }
-
-            return modified;
         }
 
         private static void UpdateCategory(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
