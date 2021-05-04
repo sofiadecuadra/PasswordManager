@@ -350,6 +350,11 @@ namespace GestorPasswordsDominio
                 RedUserPasswordPairsQuantity--; ;
                 User.DeleteRedUserPasswordPair(aUserPasswordPair);
             }
+            if (passwordStrength == PasswordStrengthType.Orange)
+            {
+                OrangeUserPasswordPairsQuantity--; ;
+                User.DeleteOrangeUserPasswordPair(aUserPasswordPair);
+            }
         }
 
         private void ChangeUserPasswordPairData(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)

@@ -85,6 +85,10 @@ namespace GestorPasswordsDominio
         {
             orangeUserPasswordPairs.Add(anOrangeUserPasswordPair);
         }
+        public void DeleteOrangeUserPasswordPair(UserPasswordPair anOrangeUserPasswordPair)
+        {
+            orangeUserPasswordPairs.Remove(anOrangeUserPasswordPair);
+        }
 
         public UserPasswordPair[] GetYellowUserPasswordPairs()
         {
