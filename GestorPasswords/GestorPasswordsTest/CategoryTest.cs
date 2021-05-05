@@ -2034,10 +2034,12 @@ namespace GestorPasswordsTest
                 ExpirationDate = new DateTime(2023, 12, 25),
                 Category = aCategory,
             };
+
             aCategory.AddCreditCard(aCreditCard);
             Assert.IsTrue(aCategory.RemoveCreditCard(aCreditCard.Number));
-
             Assert.IsFalse(aUser.CreditCardNumberExists(aCreditCard.Number));
+            Assert.AreEqual(0, aCategory.GetCreditCards().Length);
+
         }
 
         [TestMethod]
