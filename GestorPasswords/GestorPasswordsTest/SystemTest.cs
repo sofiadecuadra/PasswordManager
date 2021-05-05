@@ -36,7 +36,7 @@ namespace GestorPasswordsTest
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionIncorrectUserNameLength))]
-        public void AddUserWhitNameTooShort()
+        public void AddUserWithNameTooShort()
         {
             User aUser = new User()
             {
@@ -48,7 +48,7 @@ namespace GestorPasswordsTest
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionIncorrectUserNameLength))]
-        public void AddUserWhitNameTooLong()
+        public void AddUserWithNameTooLong()
         {
             User aUser = new User()
             {

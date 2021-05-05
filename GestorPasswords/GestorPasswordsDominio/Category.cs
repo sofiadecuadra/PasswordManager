@@ -176,18 +176,18 @@ namespace GestorPasswordsDominio
             this.creditCardHashTable.Add(newCreditCard.Number, newCreditCard);
         }
 
-        public CreditCard ReturnCreditCardInCategoryThatAppeardInDataBreaches(string creditCardNumber)
+        public CreditCard ReturnCreditCardInCategoryThatAppearedInDataBreaches(string creditCardNumber)
         {
-            if(this.creditCardHashTable.ContainsKey(creditCardNumber))
+            if(HasCreditCard(creditCardNumber))
             {
-                return (CreditCard) this.creditCardHashTable[creditCardNumber];
+                return creditCardHashTable[creditCardNumber];
             }
             return null;
         }
 
         public bool HasCreditCard(string creditCardNumber)
         {
-            return this.creditCardHashTable.Contains(creditCardNumber);
+            return creditCardHashTable.ContainsKey(creditCardNumber);
         }
 
         public bool AddUserPasswordPair(UserPasswordPair aUserPasswordPair)
@@ -437,10 +437,8 @@ namespace GestorPasswordsDominio
         {
             List<UserPasswordPair> pairsList = new List<UserPasswordPair>();
 
-            foreach (DictionaryEntry pair in this.userPasswordPairsHash)
+            foreach (UserPasswordPair userPasswordPair in userPasswordPairsHash.Values)
             {
-                UserPasswordPair userPasswordPair = (UserPasswordPair)pair.Value;
-
                 if (PasswordsAreEqual(userPasswordPair.Password, aPassword))
                 {
                     pairsList.Add(userPasswordPair);
