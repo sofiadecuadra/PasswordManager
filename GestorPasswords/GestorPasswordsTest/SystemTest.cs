@@ -106,7 +106,7 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void ValidateAndSetCurrentUserCorrectly()
         {
-            _PasswordManager.ValidateAndSetCurrentUser(myUser.Name, myUser.MasterPassword);
+            _PasswordManager.LogIn(myUser.Name, myUser.MasterPassword);
             Assert.AreEqual(myUser.Name, _PasswordManager.CurrentUser.Name);
         }
 
@@ -114,14 +114,14 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionIncorrectMasterPassword))]
         public void ValidateAndSetCurrentUserWithWrongPassword()
         {
-            _PasswordManager.ValidateAndSetCurrentUser(myUser.Name, "NotThePasswordSir");
+            _PasswordManager.LogIn(myUser.Name, "NotThePasswordSir");
         }
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionUserDoesNotExist))]
         public void ValidateAndSetCurrentUserWithWrongName()
         {
-            _PasswordManager.ValidateAndSetCurrentUser("ThisIsNotTheName", myUser.MasterPassword);
+            _PasswordManager.LogIn("ThisIsNotTheName", myUser.MasterPassword);
         }
 
         [TestMethod]
