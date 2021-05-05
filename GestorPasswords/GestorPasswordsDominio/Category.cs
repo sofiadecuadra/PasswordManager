@@ -230,10 +230,10 @@ namespace GestorPasswordsDominio
                 throw new ExceptionExistingUserPasswordPair("The userPassword pair already exists in user");
             }
 
-            return NewUserPasswordPairIsValid(aUserPasswordPair);
+            return UserPasswordPairDataIsValid(aUserPasswordPair);
         }
 
-        public bool NewUserPasswordPairIsValid(UserPasswordPair newUserPasswordPair)
+        public bool UserPasswordPairDataIsValid(UserPasswordPair newUserPasswordPair)
         {
             if (!UsernameHasValidLength(newUserPasswordPair.Username))
             {
@@ -291,7 +291,7 @@ namespace GestorPasswordsDominio
         public bool ModifyUserPasswordPair(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
         {
             bool modified = false;
-            if (NewUserPasswordPairIsValid(newUserPasswordPair))
+            if (UserPasswordPairDataIsValid(newUserPasswordPair))
             {
                 UpdateUserPasswordGroup(oldUserPasswordPair, newUserPasswordPair);
                 ChangeUserPasswordPairData(oldUserPasswordPair, newUserPasswordPair);
