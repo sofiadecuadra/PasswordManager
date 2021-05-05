@@ -262,6 +262,23 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ExceptionCreditCardHasExpired))]
+        public void AddExpiredCreditCard()
+        {
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = "",
+                ExpirationDate = new DateTime(2020, 12, 25),
+                Category = aCategory,
+            };
+            aCategory.AddCreditCard(aCreditCard);
+        }
+
+        [TestMethod]
         public void ModifyCodeOfCreditCardToAValidOneAndWithoutChangingCategory ()
         {
             CreditCard aCreditCard = new CreditCard()
