@@ -766,6 +766,7 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
+            Assert.AreEqual(1, aCategory.GetUserPasswordsPair().Length);
             Assert.AreEqual(1, aCategory.User.GetYellowUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.YellowUserPasswordPairsQuantity);
         }
