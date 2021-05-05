@@ -54,7 +54,7 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aUser.ChangeMasterPassword(currentPassword, newPassword));
         }
 
-
+        [TestMethod]
         public void AddValidCategory()
         {
             User aUser = new User()
@@ -69,6 +69,7 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aUser.AddCategory(aCategory));
+            Assert.AreEqual(1, aUser.GetCategories().Length);
         }
 
         [TestMethod]
