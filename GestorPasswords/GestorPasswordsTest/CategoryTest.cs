@@ -2068,6 +2068,7 @@ namespace GestorPasswordsTest
 
             Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
             Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair.Username, aUserPasswordPair.Site));
+            Assert.AreEqual(0, aCategory.GetUserPasswordsPair().Length);
         }
 
         [TestMethod]
