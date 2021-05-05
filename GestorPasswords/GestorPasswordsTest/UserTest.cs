@@ -55,7 +55,82 @@ namespace GestorPasswordsTest
             Assert.IsTrue(aUser.ChangeMasterPassword(currentPassword, newPassword));
         }
 
+        [TestMethod]
+        public void AddUserPasswordPairsInDifferentCategoriesAndGetPasswordsStrengthReport()
+        {
+            Category aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+            aUser.AddCategory(aCategory);
 
+            UserPasswordPair aRedUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPass",
+                Notes = "these are my notes",
+                Username = "myUserName1",
+                Site = "mySite1",
+                Category = aCategory,
+            };
+            aCategory.AddUserPasswordPair(aRedUserPasswordPair);
+
+            UserPasswordPair aYellowUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "MYPASSWORD12345",
+                Notes = "these are my notes",
+                Username = "myUserName2",
+                Site = "mySite2",
+                Category = aCategory,
+            };
+            aCategory.AddUserPasswordPair(aYellowUserPasswordPair);
+
+            UserPasswordPair aDarkGreenUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "MYpassword@#12345",
+                Notes = "these are my notes",
+                Username = "myUserName3",
+                Site = "mySite3",
+                Category = aCategory,
+            };
+            aCategory.AddUserPasswordPair(aDarkGreenUserPasswordPair);
+
+
+            Category otherCategory = new Category()
+            {
+                User = aUser,
+                Name = "otherCategory"
+            };
+            aUser.AddCategory(otherCategory);
+
+            UserPasswordPair anOrangeUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword",
+                Notes = "these are my notes",
+                Username = "myUserName4",
+                Site = "mySite4",
+                Category = aCategory,
+            };
+            aCategory.AddUserPasswordPair(anOrangeUserPasswordPair);
+
+            UserPasswordPair aLightGreenUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "MYpassword1234512",
+                Notes = "these are my notes",
+                Username = "myUserName5",
+                Site = "mySite5",
+                Category = aCategory,
+            };
+            aCategory.AddUserPasswordPair(aLightGreenUserPasswordPair);
+
+            Assert.AreEqual(1, aUser.GetPasswordsStrengthReport()[0].Item2);
+            Assert.AreEqual(1, aUser.GetPasswordsStrengthReport()[1].Item2);
+            Assert.AreEqual(1, aUser.GetPasswordsStrengthReport()[2].Item2);
+            Assert.AreEqual(1, aUser.GetPasswordsStrengthReport()[3].Item2);
+            Assert.AreEqual(1, aUser.GetPasswordsStrengthReport()[4].Item2);
+        }
+
+        [TestMethod]
         public void AddValidCategory()
         {
             User aUser = new User()

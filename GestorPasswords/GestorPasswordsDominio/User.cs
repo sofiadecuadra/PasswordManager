@@ -58,6 +58,44 @@ namespace GestorPasswordsDominio
             };
         }
 
+        public List<Tuple<string,int, UserPasswordPair[]>> GetPasswordsStrengthReport()
+        {
+            List<Tuple<string, int, UserPasswordPair[]>> listWithStrengthReport = new List<Tuple<string, int, UserPasswordPair[]>>();
+
+            AddRedPasswordsStrengthReport(listWithStrengthReport);
+            AddOrangePasswordsStrengthReport(listWithStrengthReport);
+            AddYellowPasswordsStrengthReport(listWithStrengthReport);
+            AddLightGreenPasswordsStrengthReport(listWithStrengthReport);
+            AddDarkGreenPasswordsStrengthReport(listWithStrengthReport);
+
+            return listWithStrengthReport;
+        }
+
+        private void AddRedPasswordsStrengthReport(List<Tuple<string, int, UserPasswordPair[]>> listWithStrengthReport)
+        {
+            listWithStrengthReport.Add(new Tuple<string, int, UserPasswordPair[]>("Red", redUserPasswordPairs.Count, GetRedUserPasswordPairs()));
+        }
+
+        private void AddOrangePasswordsStrengthReport(List<Tuple<string, int, UserPasswordPair[]>> listWithStrengthReport)
+        {
+            listWithStrengthReport.Add(new Tuple<string, int, UserPasswordPair[]>("Orange", orangeUserPasswordPairs.Count, GetOrangeUserPasswordPairs()));
+        }
+
+        private void AddYellowPasswordsStrengthReport(List<Tuple<string, int, UserPasswordPair[]>> listWithStrengthReport)
+        {
+            listWithStrengthReport.Add(new Tuple<string, int, UserPasswordPair[]>("Yellow", yellowUserPasswordPairs.Count, GetYellowUserPasswordPairs()));
+        }
+
+        private void AddLightGreenPasswordsStrengthReport(List<Tuple<string, int, UserPasswordPair[]>> listWithStrengthReport)
+        {
+            listWithStrengthReport.Add(new Tuple<string, int, UserPasswordPair[]>("Light Green", lightGreenUserPasswordPairs.Count, GetLightGreenUserPasswordPairs()));
+        }
+
+        private void AddDarkGreenPasswordsStrengthReport(List<Tuple<string, int, UserPasswordPair[]>> listWithStrengthReport)
+        {
+            listWithStrengthReport.Add(new Tuple<string, int, UserPasswordPair[]>("Dark Green", darkGreenUserPasswordPairs.Count, GetDarkGreenUserPasswordPairs()));
+        }
+
         public UserPasswordPair[] GetRedUserPasswordPairs()
         {
             UserPasswordPair[] redUserPasswordPairsArray = new UserPasswordPair[redUserPasswordPairs.Count];
