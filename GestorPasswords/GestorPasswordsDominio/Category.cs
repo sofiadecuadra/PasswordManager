@@ -183,7 +183,7 @@ namespace GestorPasswordsDominio
             {
                 AddUserPasswordPairToHashTable(aUserPasswordPair);
                 PasswordStrengthType passwordStrength = PasswordHandler.PasswordStrength(aUserPasswordPair.Password);
-                AddUserPasswordPairToGroup(aUserPasswordPair, passwordStrength);
+                AddUserPasswordPairToStrengthGroup(aUserPasswordPair, passwordStrength);
                 userPasswordPairAdded = true;
             }
             return userPasswordPairAdded;
@@ -194,7 +194,7 @@ namespace GestorPasswordsDominio
             this.userPasswordPairsHash.Add(aUserPasswordPair.Site + aUserPasswordPair.Username, aUserPasswordPair);
         }
 
-        private void AddUserPasswordPairToGroup(UserPasswordPair aUserPasswordPair, PasswordStrengthType passwordStrength)
+        private void AddUserPasswordPairToStrengthGroup(UserPasswordPair aUserPasswordPair, PasswordStrengthType passwordStrength)
         {
             if (passwordStrength == PasswordStrengthType.Red)
             {
@@ -309,7 +309,7 @@ namespace GestorPasswordsDominio
             if (!(oldPasswordStrength == newPasswordStrength))
             {
                 DeleteUserPasswordPairFromGroup(oldUserPasswordPair, oldPasswordStrength);
-                AddUserPasswordPairToGroup(newUserPasswordPair, newPasswordStrength);
+                AddUserPasswordPairToStrengthGroup(newUserPasswordPair, newPasswordStrength);
             }
         }
 
