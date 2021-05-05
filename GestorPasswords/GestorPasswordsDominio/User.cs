@@ -298,7 +298,9 @@ namespace GestorPasswordsDominio
                 }
                 else
                 {
-                    foreach (UserPasswordPair pair in ReturnListOfUserPasswordPairWhosePasswordAppearedInDataBreaches(element))
+                    List<UserPasswordPair> leakedPasswordsOfUser = ReturnListOfUserPasswordPairWhosePasswordAppearedInDataBreaches(element);
+
+                    foreach (UserPasswordPair pair in leakedPasswordsOfUser)
                     {
                         leakedPasswordsOfUserList.Add(pair);
                     }
