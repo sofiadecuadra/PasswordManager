@@ -145,6 +145,7 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aUser.AddCategory(aCategory));
+            Assert.AreEqual(1, aUser.GetCategories().Length);
         }
 
         [TestMethod]

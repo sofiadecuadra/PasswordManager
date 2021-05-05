@@ -36,7 +36,7 @@ namespace GestorPasswordsTest
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionIncorrectUserNameLength))]
-        public void AddUserWhitNameTooShort()
+        public void AddUserWithNameTooShort()
         {
             User aUser = new User()
             {
@@ -48,7 +48,7 @@ namespace GestorPasswordsTest
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionIncorrectUserNameLength))]
-        public void AddUserWhitNameTooLong()
+        public void AddUserWithNameTooLong()
         {
             User aUser = new User()
             {
@@ -178,7 +178,7 @@ namespace GestorPasswordsTest
             _PasswordManager.CurrentUser = myUser;
             UserPasswordPair aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
 
-            _PasswordManager.SharePassword(aUserPasswordPair, "JuanPa");
+            _PasswordManager.UnsharePassword(aUserPasswordPair, "JuanPa");
         }
 
         private UserPasswordPair LoadTestCategoryToMyUserWithAUserPasswordPair()

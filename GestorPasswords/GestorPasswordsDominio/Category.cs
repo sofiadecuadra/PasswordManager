@@ -11,8 +11,8 @@ namespace GestorPasswordsDominio
     {
         private String name;
         public User User { get; set; }
-        private Hashtable creditCardHashTable;
-        public Hashtable userPasswordPairsHash;
+        private Dictionary<string, CreditCard> creditCardHashTable;
+        public Dictionary<string, UserPasswordPair> userPasswordPairsHash;
         public int RedUserPasswordPairsQuantity { get; set; }
         public int OrangeUserPasswordPairsQuantity { get; set; }
         public int YellowUserPasswordPairsQuantity { get; set; }
@@ -27,24 +27,18 @@ namespace GestorPasswordsDominio
 
         public Category()
         {
-            this.creditCardHashTable = new Hashtable();
-            this.userPasswordPairsHash = new Hashtable();
+            this.creditCardHashTable = new Dictionary<string, CreditCard>();
+            this.userPasswordPairsHash = new Dictionary<string, UserPasswordPair>();
         }
 
         public CreditCard[] GetCreditCards()
         {
-            CreditCard[] creditCards = new CreditCard[this.creditCardHashTable.Count];
-            creditCardHashTable.CopyTo(creditCards, 0);
-
-            return creditCards;
+            return creditCardHashTable.Values.ToArray();
         }
 
-        public UserPasswordPair[] GetUserPasswordsPair()
+        public UserPasswordPair[] GetUserPasswordsPairs()
         {
-            UserPasswordPair[] userPasswordPairs = new UserPasswordPair[this.userPasswordPairsHash.Count];
-            userPasswordPairsHash.CopyTo(userPasswordPairs, 0);
-
-            return userPasswordPairs;
+            return userPasswordPairsHash.Values.ToArray();
         }
 
         public bool AddCreditCard(CreditCard aCreditCard)
@@ -59,6 +53,16 @@ namespace GestorPasswordsDominio
         }
 
         private bool CreditCardIsValid(CreditCard aCreditCard)
+        {
+            if (CreditCardNumberAlreadyExistsInUser(aCreditCard.Number))
+            {
+                throw new ExceptionCreditCardNumberAlreadyExistsInUser("The credit card number already exists in user");
+            }
+
+            return CreditCardDataIsValid(aCreditCard);
+        }
+
+        public bool CreditCardDataIsValid(CreditCard aCreditCard)
         {
             if (!CreditCardContainsOnlyDigits(aCreditCard.Number))
             {
@@ -87,10 +91,6 @@ namespace GestorPasswordsDominio
             if (!notesHaveValidLength(aCreditCard.Notes))
             {
                 throw new ExceptionCreditCardHasInvalidNotesLength("The notes' length must be up to 250, but it's current length is " + aCreditCard.Notes.Length);
-            }
-            if (CreditCardNumberAlreadyExistsInUser(aCreditCard.Number))
-            {
-                throw new ExceptionCreditCardNumberAlreadyExistsInUser("The credit card number already exists in user");
             }
 
             return true;
@@ -137,43 +137,14 @@ namespace GestorPasswordsDominio
         }
 
 
-        private bool newCreditCardIsValid(CreditCard oldCreditCard, CreditCard newCreditCard)
+        private bool ModifiedCreditCardIsValid(CreditCard oldCreditCard, CreditCard newCreditCard)
         {
-            if (!CreditCardContainsOnlyDigits(newCreditCard.Number))
-            {
-                throw new ExceptionCreditCardDoesNotContainOnlyDigits("The credit card number must only contain digits");
-            }
-            if (!CreditCardNumberHasValidLength(newCreditCard.Number))
-            {
-                throw new ExceptionCreditCardHasInvalidNumberLength("The credit card number must contain 16 digits, but currently it has " + newCreditCard.Number.Length);
-            }
-            if (!LengthBetween3And25(newCreditCard.Type))
-            {
-                throw new ExceptionCreditCardHasInvalidTypeLength("The type's length must be between 3 and 25, but it's current length is " + newCreditCard.Type.Length);
-            }
-            if (!LengthBetween3And25(newCreditCard.Name))
-            {
-                throw new ExceptionCreditCardHasInvalidNameLength("The name's length must be between 3 and 25, but it's current length is " + newCreditCard.Name.Length);
-            }
-            if (!codeHasValidLength(newCreditCard.Code))
-            {
-                throw new ExceptionCreditCardHasInvalidCodeLength("The code's length must be between 3 and 4, but it's current length is " + newCreditCard.Code.Length);
-            }
-            if (!codeContainNumericCharactersOnly(newCreditCard.Code))
-            {
-                throw new ExceptionCreditCardCodeHasNonNumericCharacters("The code should contain numeric characters only but is " + newCreditCard.Code);
-            }
-            if (!notesHaveValidLength(newCreditCard.Notes))
-            {
-                throw new ExceptionCreditCardHasInvalidNotesLength("The notes' length must be up to 250, but it's current length is " + newCreditCard.Notes.Length);
-            }
-
             if (!CreditCardNumbersAreEqual(oldCreditCard.Number, newCreditCard.Number) && CreditCardNumberAlreadyExistsInUser(newCreditCard.Number))
             {
                 throw new ExceptionCreditCardNumberAlreadyExistsInUser("The credit card number already exists in user");
             }
 
-            return true;
+            return CreditCardDataIsValid(newCreditCard);
         }
 
         private bool CreditCardNumbersAreEqual (string oldCreditCardNumber, string newCreditCardNumber)
@@ -184,7 +155,7 @@ namespace GestorPasswordsDominio
 
         public bool ModifyCreditCard(CreditCard oldCreditCard, CreditCard newCreditCard)
         {
-            if (newCreditCardIsValid(oldCreditCard, newCreditCard))
+            if (ModifiedCreditCardIsValid(oldCreditCard, newCreditCard))
             {            
                 RemoveCreditCard(oldCreditCard.Number);
                 if (HasSameCategory(oldCreditCard.Category, newCreditCard.Category))
@@ -205,18 +176,18 @@ namespace GestorPasswordsDominio
             this.creditCardHashTable.Add(newCreditCard.Number, newCreditCard);
         }
 
-        public CreditCard ReturnCreditCardInCategoryThatAppeardInDataBreaches(string creditCardNumber)
+        public CreditCard ReturnCreditCardInCategoryThatAppearedInDataBreaches(string creditCardNumber)
         {
-            if(this.creditCardHashTable.ContainsKey(creditCardNumber))
+            if(HasCreditCard(creditCardNumber))
             {
-                return (CreditCard) this.creditCardHashTable[creditCardNumber];
+                return creditCardHashTable[creditCardNumber];
             }
             return null;
         }
 
         public bool HasCreditCard(string creditCardNumber)
         {
-            return this.creditCardHashTable.Contains(creditCardNumber);
+            return creditCardHashTable.ContainsKey(creditCardNumber);
         }
 
         public bool AddUserPasswordPair(UserPasswordPair aUserPasswordPair)
@@ -226,7 +197,7 @@ namespace GestorPasswordsDominio
             {
                 AddUserPasswordPairToHashTable(aUserPasswordPair);
                 PasswordStrengthType passwordStrength = PasswordHandler.PasswordStrength(aUserPasswordPair.Password);
-                AddUserPasswordPairToGroup(aUserPasswordPair, passwordStrength);
+                AddUserPasswordPairToStrengthGroup(aUserPasswordPair, passwordStrength);
                 userPasswordPairAdded = true;
             }
             return userPasswordPairAdded;
@@ -237,7 +208,7 @@ namespace GestorPasswordsDominio
             this.userPasswordPairsHash.Add(aUserPasswordPair.Site + aUserPasswordPair.Username, aUserPasswordPair);
         }
 
-        private void AddUserPasswordPairToGroup(UserPasswordPair aUserPasswordPair, PasswordStrengthType passwordStrength)
+        private void AddUserPasswordPairToStrengthGroup(UserPasswordPair aUserPasswordPair, PasswordStrengthType passwordStrength)
         {
             if (passwordStrength == PasswordStrengthType.Red)
             {
@@ -273,10 +244,10 @@ namespace GestorPasswordsDominio
                 throw new ExceptionExistingUserPasswordPair("The userPassword pair already exists in user");
             }
 
-            return NewUserPasswordPairIsValid(aUserPasswordPair);
+            return UserPasswordPairDataIsValid(aUserPasswordPair);
         }
 
-        public bool NewUserPasswordPairIsValid(UserPasswordPair newUserPasswordPair)
+        public bool UserPasswordPairDataIsValid(UserPasswordPair newUserPasswordPair)
         {
             if (!UsernameHasValidLength(newUserPasswordPair.Username))
             {
@@ -334,7 +305,7 @@ namespace GestorPasswordsDominio
         public bool ModifyUserPasswordPair(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
         {
             bool modified = false;
-            if (NewUserPasswordPairIsValid(newUserPasswordPair))
+            if (UserPasswordPairDataIsValid(newUserPasswordPair))
             {
                 UpdateUserPasswordGroup(oldUserPasswordPair, newUserPasswordPair);
                 ChangeUserPasswordPairData(oldUserPasswordPair, newUserPasswordPair);
@@ -352,7 +323,7 @@ namespace GestorPasswordsDominio
             if (!(oldPasswordStrength == newPasswordStrength))
             {
                 DeleteUserPasswordPairFromGroup(oldUserPasswordPair, oldPasswordStrength);
-                AddUserPasswordPairToGroup(newUserPasswordPair, newPasswordStrength);
+                AddUserPasswordPairToStrengthGroup(newUserPasswordPair, newPasswordStrength);
             }
         }
 
@@ -466,10 +437,8 @@ namespace GestorPasswordsDominio
         {
             List<UserPasswordPair> pairsList = new List<UserPasswordPair>();
 
-            foreach (DictionaryEntry pair in this.userPasswordPairsHash)
+            foreach (UserPasswordPair userPasswordPair in userPasswordPairsHash.Values)
             {
-                UserPasswordPair userPasswordPair = (UserPasswordPair)pair.Value;
-
                 if (PasswordsAreEqual(userPasswordPair.Password, aPassword))
                 {
                     pairsList.Add(userPasswordPair);

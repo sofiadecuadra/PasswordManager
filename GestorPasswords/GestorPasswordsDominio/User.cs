@@ -343,7 +343,7 @@ namespace GestorPasswordsDominio
 
         private CreditCard ReturnCreditCardInCategoryThatAppeardInDataBreaches(Category aCategory, string creditCardNumber)
         {
-            return aCategory.ReturnCreditCardInCategoryThatAppeardInDataBreaches(creditCardNumber);
+            return aCategory.ReturnCreditCardInCategoryThatAppearedInDataBreaches(creditCardNumber);
         }
 
         private CreditCard ReturnCreditCardThatAppeardInDataBreaches(string creditCardNumber)

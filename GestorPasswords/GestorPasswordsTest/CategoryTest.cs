@@ -36,6 +36,7 @@ namespace GestorPasswordsTest
                 Category = aCategory,
             };
             Assert.IsTrue(aCategory.AddCreditCard(aCreditCard));
+            Assert.AreEqual(1, aCategory.GetCreditCards().Length);
         }
 
         [TestMethod]
@@ -52,11 +53,12 @@ namespace GestorPasswordsTest
                 Category = aCategory,
             };
             Assert.IsTrue(aCategory.AddCreditCard(aCreditCard));
+            Assert.AreEqual(1, aCategory.GetCreditCards().Length);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionCreditCardHasInvalidNumberLength))]
-        public void AddCreditCardWithNumberLengthLessThan16()
+        public void AddCreditCardWithNumberLengthDifferentThan16()
         {
             CreditCard aCreditCard = new CreditCard()
             {
@@ -287,6 +289,7 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.ModifyCreditCard(aCreditCard, newCreditCard));
+            Assert.AreEqual(1, aCategory.GetCreditCards().Length);
         }
 
         [TestMethod]
@@ -518,6 +521,8 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.ModifyCreditCard(aCreditCard, newCreditCard));
+            Assert.AreEqual(0, aCategory.GetCreditCards().Length);
+            Assert.AreEqual(1, otherCategory.GetCreditCards().Length);
         }
 
         [TestMethod]
@@ -730,6 +735,7 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
+            Assert.AreEqual(1, aCategory.GetUserPasswordsPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetRedUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.RedUserPasswordPairsQuantity);
         }
@@ -747,6 +753,7 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
+            Assert.AreEqual(1, aCategory.GetUserPasswordsPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetOrangeUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.OrangeUserPasswordPairsQuantity);
         }
@@ -764,6 +771,7 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
+            Assert.AreEqual(1, aCategory.GetUserPasswordsPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetYellowUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.YellowUserPasswordPairsQuantity);
         }
@@ -781,6 +789,7 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
+            Assert.AreEqual(1, aCategory.GetUserPasswordsPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetLightGreenUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.LightGreenUserPasswordPairsQuantity);
         }
@@ -798,6 +807,7 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
+            Assert.AreEqual(1, aCategory.GetUserPasswordsPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.DarkGreenUserPasswordPairsQuantity);
         }
@@ -826,6 +836,7 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(anotherUserPasswordPair));
+            Assert.AreEqual(2, aCategory.GetUserPasswordsPairs().Length);
         }
 
         [TestMethod]
@@ -998,6 +1009,7 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(1, aCategory.GetUserPasswordsPairs().Length);
         }
 
         [TestMethod]
@@ -1032,6 +1044,9 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.GetUserPasswordsPairs().Length);
+            Assert.AreEqual(1, otherCategory.GetUserPasswordsPairs().Length);
+
         }
 
         [TestMethod]
@@ -1808,6 +1823,9 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.GetUserPasswordsPairs().Length);
+            Assert.AreEqual(1, otherCategory.GetUserPasswordsPairs().Length);
+
         }
 
         [TestMethod]
@@ -2016,10 +2034,12 @@ namespace GestorPasswordsTest
                 ExpirationDate = new DateTime(2023, 12, 25),
                 Category = aCategory,
             };
+
             aCategory.AddCreditCard(aCreditCard);
             Assert.IsTrue(aCategory.RemoveCreditCard(aCreditCard.Number));
-
             Assert.IsFalse(aUser.CreditCardNumberExists(aCreditCard.Number));
+            Assert.AreEqual(0, aCategory.GetCreditCards().Length);
+
         }
 
         [TestMethod]
@@ -2055,6 +2075,7 @@ namespace GestorPasswordsTest
 
             Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
             Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair.Username, aUserPasswordPair.Site));
+            Assert.AreEqual(0, aCategory.GetUserPasswordsPairs().Length);
         }
 
         [TestMethod]
