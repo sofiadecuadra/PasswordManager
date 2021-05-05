@@ -50,7 +50,7 @@ namespace GestorPasswordsDominio
                 .MasterPassword.Equals(masterPassword);
         }
 
-        public void ValidateAndSetCurrentUser(string username, string masterPassword)
+        public void LogIn(string username, string masterPassword)
         {
             if (ValidateUser(username, masterPassword))
             {

@@ -1,7 +1,7 @@
 ﻿
 namespace PasswordsManagerUserInterface
 {
-    partial class LogIn
+    partial class SignUp
     {
         /// <summary> 
         /// Variable del diseñador necesaria.
@@ -57,7 +57,7 @@ namespace PasswordsManagerUserInterface
             this.lblUsername.Location = new System.Drawing.Point(227, 133);
             this.lblUsername.Name = "lblUsername";
             this.lblUsername.Size = new System.Drawing.Size(58, 13);
-            this.lblUsername.TabIndex = 4;
+            this.lblUsername.TabIndex = 2;
             this.lblUsername.Text = "Username:";
             // 
             // lblPassword
@@ -66,40 +66,39 @@ namespace PasswordsManagerUserInterface
             this.lblPassword.Location = new System.Drawing.Point(229, 236);
             this.lblPassword.Name = "lblPassword";
             this.lblPassword.Size = new System.Drawing.Size(56, 13);
-            this.lblPassword.TabIndex = 5;
+            this.lblPassword.TabIndex = 3;
             this.lblPassword.Text = "Password:";
             // 
             // btnSignUp
             // 
-            this.btnSignUp.Location = new System.Drawing.Point(673, 398);
+            this.btnSignUp.Location = new System.Drawing.Point(336, 294);
             this.btnSignUp.Name = "btnSignUp";
             this.btnSignUp.Size = new System.Drawing.Size(75, 23);
-            this.btnSignUp.TabIndex = 3;
-            this.btnSignUp.Text = "Sign up";
+            this.btnSignUp.TabIndex = 4;
+            this.btnSignUp.Text = "Sign Up";
             this.btnSignUp.UseVisualStyleBackColor = true;
             this.btnSignUp.Click += new System.EventHandler(this.btnSignUp_Click);
             // 
             // btnLogIn
             // 
-            this.btnLogIn.Location = new System.Drawing.Point(336, 294);
+            this.btnLogIn.Location = new System.Drawing.Point(673, 398);
             this.btnLogIn.Name = "btnLogIn";
             this.btnLogIn.Size = new System.Drawing.Size(75, 23);
-            this.btnLogIn.TabIndex = 2;
-            this.btnLogIn.Text = "Log in";
+            this.btnLogIn.TabIndex = 5;
+            this.btnLogIn.Text = "Log In";
             this.btnLogIn.UseVisualStyleBackColor = true;
-            this.btnLogIn.Click += new System.EventHandler(this.btnLogIn_Click);
             // 
-            // Start
+            // SignUp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnLogIn);
+            this.Controls.Add(this.btnSignUp);
             this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.lblUsername);
-            this.Controls.Add(this.btnSignUp);
-            this.Controls.Add(this.btnLogIn);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUsername);
-            this.Name = "Start";
+            this.Name = "SignUp";
             this.Size = new System.Drawing.Size(804, 451);
             this.ResumeLayout(false);
             this.PerformLayout();

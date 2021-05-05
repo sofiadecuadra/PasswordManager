@@ -10,7 +10,13 @@ namespace GestorPasswordsDominio
 {
     public class User
     {
-        public string MasterPassword { get; set; }
+        public string masterPassword;
+        public string MasterPassword {
+            get { return masterPassword; }
+            set {
+                masterPassword = ValidMasterPassword(value);
+            }
+        }
         private string name;
         private SortedList<string, Category> categoriesList;
         private List<UserPasswordPair> redUserPasswordPairs;
@@ -27,6 +33,16 @@ namespace GestorPasswordsDominio
         }
 
         public Category SharedPasswords { get; private set; }
+
+        private static string ValidMasterPassword(string password)
+        {
+            if (!isBetween5And25Characters(password))
+            {
+                string errorMessage = $"The password should be between 5 and 25 characters but is: {password.Length} charachterslong";
+                throw new ExceptionIncorrectMasterPasswordLength(errorMessage);
+            }
+            return password.ToLower();
+        }
 
         private static string ValidUserName(string value)
         {

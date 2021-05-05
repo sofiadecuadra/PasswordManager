@@ -24,7 +24,7 @@ namespace PasswordsManagerUserInterface
         private void LoadLogInUserControl()
         {
             pnlMain.Controls.Clear();
-            UserControl logIn = new LogIn(PasswordManager);
+            UserControl logIn = new LogIn(PasswordManager, pnlMain);
             pnlMain.Controls.Add(logIn);
         }
     }
