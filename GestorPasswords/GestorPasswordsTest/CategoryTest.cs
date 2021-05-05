@@ -718,11 +718,11 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        public void AddValidUserPasswordPair()
+        public void AddValidRedUserPasswordPair()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
-                Password = "thisIsAPassword",
+                Password = "myPass",
                 Notes = "these are my notes",
                 Username = "myUserName",
                 Site = "mySite",
@@ -730,6 +730,76 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
+            Assert.AreEqual(1, aCategory.User.GetRedUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.RedUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void AddValidOrangeUserPasswordPair()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
+            Assert.AreEqual(1, aCategory.User.GetOrangeUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.OrangeUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void AddValidYellowUserPasswordPair()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "MYPASSWORD12345",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
+            Assert.AreEqual(1, aCategory.User.GetYellowUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.YellowUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void AddValidLightGreenUserPasswordPair()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "MYpassword1234512",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
+            Assert.AreEqual(1, aCategory.User.GetLightGreenUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.LightGreenUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void AddValidDarkGreenUserPasswordPair()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "MYpassword@#12345",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
+            Assert.AreEqual(1, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.DarkGreenUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -962,6 +1032,748 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+        }
+
+        [TestMethod]
+        public void ModifyRedUserPasswordPairToARedOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPass",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "newPass",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(1, aCategory.User.GetRedUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.RedUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void ModifyRedUserPasswordPairToAnOrangeOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPass",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "newPassword",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetRedUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.User.GetOrangeUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.RedUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.OrangeUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void ModifyRedUserPasswordPairToAYellowOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPass",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "newpassword1234",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetRedUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.User.GetYellowUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.RedUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.YellowUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void ModifyRedUserPasswordPairToALightGreenOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPass",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "newPassword12345",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetRedUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.User.GetLightGreenUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.RedUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.LightGreenUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void ModifyRedUserPasswordPairToADarkGreenOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPass",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "newPassword@!12345",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetRedUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.RedUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.DarkGreenUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void ModifyOrangeUserPasswordPairToARedOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPass",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetOrangeUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.User.GetRedUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.OrangeUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.RedUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void ModifyOrangeUserPasswordPairToAnOrangeOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "newPassword",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(1, aCategory.User.GetOrangeUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.OrangeUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void ModifyOrangeUserPasswordPairToAYellowOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "mypassword123456",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetOrangeUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.User.GetYellowUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.OrangeUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.YellowUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void ModifyOrangeUserPasswordPairToALightGreenOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword!@#$!@&^",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetOrangeUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.User.GetLightGreenUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.OrangeUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.LightGreenUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void ModifyOrangeUserPasswordPairToADarkGreenOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword!@#$34@&^",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetOrangeUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.OrangeUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.DarkGreenUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void ModifyYellowUserPasswordPairToARedOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "password1234567",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPass",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetYellowUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.User.GetRedUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.YellowUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.RedUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void ModifyYellowUserPasswordPairToAnOrangeOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "password1234567",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword12",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetYellowUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.User.GetOrangeUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.YellowUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.OrangeUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void ModifyYellowUserPasswordPairToAYellowOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "password1234567",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "password7654321",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(1, aCategory.User.GetYellowUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.YellowUserPasswordPairsQuantity);
+        }
+
+
+        [TestMethod]
+        public void ModifyYellowUserPasswordPairToALightGreenOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "password1234567",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword12345",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetYellowUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.User.GetLightGreenUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.YellowUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.LightGreenUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void ModifyYellowUserPasswordPairToADarkGreenOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "password1234567",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword12345!@$",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetYellowUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.YellowUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.DarkGreenUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void ModifyLightGreenUserPasswordPairToARedOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword12345",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPass",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetLightGreenUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.User.GetRedUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.LightGreenUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.RedUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void ModifyLightGreenUserPasswordPairToAnOrangeOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword12345",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetLightGreenUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.User.GetOrangeUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.LightGreenUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.OrangeUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void ModifyLightGreenUserPasswordPairToAYellowOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword12345",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "mypassword12345",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetLightGreenUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.User.GetYellowUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.LightGreenUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.YellowUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void ModifyLightGreenUserPasswordPairToALightGreenOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword12345",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword54321",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(1, aCategory.User.GetLightGreenUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.LightGreenUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void ModifyLightGreenUserPasswordPairToADarkGreenOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword12345",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword12345#$%",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetLightGreenUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.LightGreenUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.DarkGreenUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void ModifyDarkGreenUserPasswordPairToARedOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword12345#$%",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPass",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.User.GetRedUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.DarkGreenUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.RedUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void ModifyDarkGreenUserPasswordPairToAnOrangeOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword12345#$%",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.User.GetOrangeUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.DarkGreenUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.OrangeUserPasswordPairsQuantity);
+        }
+
+
+        [TestMethod]
+        public void ModifyDarkGreenUserPasswordPairToAYellowOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword12345#$%",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "mypassword12345",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.User.GetYellowUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.DarkGreenUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.YellowUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void ModifyDarkGreenUserPasswordPairToALightGreenOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword12345#$%",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword12345",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.User.GetLightGreenUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.DarkGreenUserPasswordPairsQuantity);
+            Assert.AreEqual(1, aCategory.LightGreenUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void ModifyDarkGreenUserPasswordPairToADarkGreenOne()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword12345#$%",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword!#32#$%",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(1, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
+            Assert.AreEqual(1, aCategory.DarkGreenUserPasswordPairsQuantity);
         }
 
         [TestMethod]
@@ -1259,6 +2071,106 @@ namespace GestorPasswordsTest
             };
 
             aCategory.RemoveUserPasswordPair(aUserPasswordPair);
+        }
+
+        [TestMethod]
+        public void RemoveRedUserPasswordPair()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "mypass",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
+            Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair.Username, aUserPasswordPair.Site));
+            Assert.AreEqual(0, aCategory.User.GetRedUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.RedUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void RemoveOrangeUserPasswordPair()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "mypassword",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
+            Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair.Username, aUserPasswordPair.Site));
+            Assert.AreEqual(0, aCategory.User.GetOrangeUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.OrangeUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void RemoveYellowUserPasswordPair()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "mypassword12345",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
+            Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair.Username, aUserPasswordPair.Site));
+            Assert.AreEqual(0, aCategory.User.GetYellowUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.YellowUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void RemoveLightGreenUserPasswordPair()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword12345",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
+            Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair.Username, aUserPasswordPair.Site));
+            Assert.AreEqual(0, aCategory.User.GetLightGreenUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.LightGreenUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void RemoveDarkGreenUserPasswordPair()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword12345@$%",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
+            Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair.Username, aUserPasswordPair.Site));
+            Assert.AreEqual(0, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
+            Assert.AreEqual(0, aCategory.DarkGreenUserPasswordPairsQuantity);
         }
     }
 }

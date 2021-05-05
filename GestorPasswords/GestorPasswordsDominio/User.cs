@@ -13,6 +13,12 @@ namespace GestorPasswordsDominio
         public string MasterPassword { get; set; }
         private string name;
         private SortedList<string, Category> categoriesList;
+        private List<UserPasswordPair> redUserPasswordPairs;
+        private List<UserPasswordPair> orangeUserPasswordPairs;
+        private List<UserPasswordPair> yellowUserPasswordPairs;
+        private List<UserPasswordPair> lightGreenUserPasswordPairs;
+        private List<UserPasswordPair> darkGreenUserPasswordPairs;
+
 
         public string Name
         {
@@ -40,11 +46,99 @@ namespace GestorPasswordsDominio
         public User()
         {
             categoriesList = new SortedList<string, Category>();
+            redUserPasswordPairs = new List<UserPasswordPair>();
+            orangeUserPasswordPairs = new List<UserPasswordPair>();
+            yellowUserPasswordPairs = new List<UserPasswordPair>();
+            lightGreenUserPasswordPairs = new List<UserPasswordPair>();
+            darkGreenUserPasswordPairs = new List<UserPasswordPair>();
             SharedPasswords = new Category()
             {
                 User = this,
                 Name = "Shared Passwords"
             };
+        }
+
+        public UserPasswordPair[] GetRedUserPasswordPairs()
+        {
+            UserPasswordPair[] redUserPasswordPairsArray = new UserPasswordPair[redUserPasswordPairs.Count];
+            redUserPasswordPairs.CopyTo(redUserPasswordPairsArray);
+            return redUserPasswordPairsArray; 
+        }
+
+        public void AddRedUserPasswordPair(UserPasswordPair aRedUserPasswordPair)
+        {
+            redUserPasswordPairs.Add(aRedUserPasswordPair);
+        }
+
+        public void DeleteRedUserPasswordPair(UserPasswordPair aRedUserPasswordPair)
+        {
+            redUserPasswordPairs.Remove(aRedUserPasswordPair);
+        }
+
+        public UserPasswordPair[] GetOrangeUserPasswordPairs()
+        {
+            UserPasswordPair[] orangeUserPasswordPairsArray = new UserPasswordPair[orangeUserPasswordPairs.Count];
+            orangeUserPasswordPairs.CopyTo(orangeUserPasswordPairsArray);
+            return orangeUserPasswordPairsArray;
+        }
+
+        public void AddOrangeUserPasswordPair(UserPasswordPair anOrangeUserPasswordPair)
+        {
+            orangeUserPasswordPairs.Add(anOrangeUserPasswordPair);
+        }
+        public void DeleteOrangeUserPasswordPair(UserPasswordPair anOrangeUserPasswordPair)
+        {
+            orangeUserPasswordPairs.Remove(anOrangeUserPasswordPair);
+        }
+
+        public UserPasswordPair[] GetYellowUserPasswordPairs()
+        {
+            UserPasswordPair[] yellowUserPasswordPairsArray = new UserPasswordPair[yellowUserPasswordPairs.Count];
+            yellowUserPasswordPairs.CopyTo(yellowUserPasswordPairsArray);
+            return yellowUserPasswordPairsArray;
+        }
+
+        public void AddYellowUserPasswordPair(UserPasswordPair aYellowUserPasswordPair)
+        {
+            yellowUserPasswordPairs.Add(aYellowUserPasswordPair);
+        }
+
+        public void DeleteYellowUserPasswordPair(UserPasswordPair aYellowUserPasswordPair)
+        {
+           yellowUserPasswordPairs.Remove(aYellowUserPasswordPair);
+        }
+
+        public UserPasswordPair[] GetLightGreenUserPasswordPairs()
+        {
+            UserPasswordPair[] lightGreenUserPasswordPairsArray = new UserPasswordPair[lightGreenUserPasswordPairs.Count];
+            lightGreenUserPasswordPairs.CopyTo(lightGreenUserPasswordPairsArray);
+            return lightGreenUserPasswordPairsArray;
+        }
+
+        public void AddLightGreenUserPasswordPair(UserPasswordPair aLightGreenUserPasswordPair)
+        {
+            lightGreenUserPasswordPairs.Add(aLightGreenUserPasswordPair);
+        }
+
+        public void DeleteLightGreenUserPasswordPair(UserPasswordPair aYellowUserPasswordPair)
+        {
+            lightGreenUserPasswordPairs.Remove(aYellowUserPasswordPair);
+        }
+
+        public UserPasswordPair[] GetDarkGreenUserPasswordPairs()
+        {
+            UserPasswordPair[] darkGreenUserPasswordPairsArray = new UserPasswordPair[darkGreenUserPasswordPairs.Count];
+            darkGreenUserPasswordPairs.CopyTo(darkGreenUserPasswordPairsArray);
+            return darkGreenUserPasswordPairsArray;
+        }
+
+        public void AddDarkGreenUserPasswordPair(UserPasswordPair aDarkGreenUserPasswordPair)
+        {
+            darkGreenUserPasswordPairs.Add(aDarkGreenUserPasswordPair);
+        }
+        public void DeleteDarkGreenUserPasswordPair(UserPasswordPair aDarkGreenUserPasswordPair)
+        {
+            darkGreenUserPasswordPairs.Remove(aDarkGreenUserPasswordPair);
         }
 
         public bool ChangeMasterPassword(string currentPassword, string newPassword)
