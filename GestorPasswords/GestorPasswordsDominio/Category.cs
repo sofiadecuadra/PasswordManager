@@ -11,8 +11,8 @@ namespace GestorPasswordsDominio
     {
         private String name;
         public User User { get; set; }
-        private Hashtable creditCardHashTable;
-        public Hashtable userPasswordPairsHash;
+        private Dictionary<string, CreditCard> creditCardHashTable;
+        public Dictionary<string, UserPasswordPair> userPasswordPairsHash;
         public int RedUserPasswordPairsQuantity { get; set; }
         public int OrangeUserPasswordPairsQuantity { get; set; }
         public int YellowUserPasswordPairsQuantity { get; set; }
@@ -27,24 +27,18 @@ namespace GestorPasswordsDominio
 
         public Category()
         {
-            this.creditCardHashTable = new Hashtable();
-            this.userPasswordPairsHash = new Hashtable();
+            this.creditCardHashTable = new Dictionary<string, CreditCard>();
+            this.userPasswordPairsHash = new Dictionary<string, UserPasswordPair>();
         }
 
         public CreditCard[] GetCreditCards()
         {
-            CreditCard[] creditCards = new CreditCard[this.creditCardHashTable.Count];
-            creditCardHashTable.CopyTo(creditCards, 0);
-
-            return creditCards;
+            return creditCardHashTable.Values.ToArray();
         }
 
         public UserPasswordPair[] GetUserPasswordsPair()
         {
-            UserPasswordPair[] userPasswordPairs = new UserPasswordPair[this.userPasswordPairsHash.Count];
-            userPasswordPairsHash.CopyTo(userPasswordPairs, 0);
-
-            return userPasswordPairs;
+            return userPasswordPairsHash.Values.ToArray();
         }
 
         public bool AddCreditCard(CreditCard aCreditCard)
