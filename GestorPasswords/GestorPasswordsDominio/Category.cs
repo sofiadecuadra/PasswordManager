@@ -176,6 +176,20 @@ namespace GestorPasswordsDominio
             this.creditCardHashTable.Add(newCreditCard.Number, newCreditCard);
         }
 
+        public CreditCard ReturnCreditCardInCategoryThatAppeardInDataBreaches(string creditCardNumber)
+        {
+            if(this.creditCardHashTable.ContainsKey(creditCardNumber))
+            {
+                return (CreditCard) this.creditCardHashTable[creditCardNumber];
+            }
+            return null;
+        }
+
+        public bool HasCreditCard(string creditCardNumber)
+        {
+            return this.creditCardHashTable.Contains(creditCardNumber);
+        }
+
         public bool AddUserPasswordPair(UserPasswordPair aUserPasswordPair)
         {
             bool userPasswordPairAdded = false;
@@ -419,6 +433,22 @@ namespace GestorPasswordsDominio
             return true;
         }
 
+        public List <UserPasswordPair> ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches (string aPassword)
+        {
+            List<UserPasswordPair> pairsList = new List<UserPasswordPair>();
+
+            foreach (DictionaryEntry pair in this.userPasswordPairsHash)
+            {
+                UserPasswordPair userPasswordPair = (UserPasswordPair)pair.Value;
+
+                if (PasswordsAreEqual(userPasswordPair.Password, aPassword))
+                {
+                    pairsList.Add(userPasswordPair);
+                }
+            }
+            return pairsList;
+        }
+      
         private void RemoveUserPasswordPairFromCollection(UserPasswordPair aUserPasswordPair)
         {
             this.userPasswordPairsHash.Remove($"{aUserPasswordPair.Site}{ aUserPasswordPair.Username}");
