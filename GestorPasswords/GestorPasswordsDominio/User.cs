@@ -39,7 +39,7 @@ namespace GestorPasswordsDominio
             if (!isBetween5And25Characters(password))
             {
                 string errorMessage = $"The password should be between 5 and 25 characters but is: {password.Length} charachterslong";
-                throw new ExceptionIncorrectMasterPasswordLength(errorMessage);
+                throw new ExceptionIncorrectLength(errorMessage);
             }
             return password.ToLower();
         }

@@ -36,7 +36,7 @@ namespace PasswordsManagerUserInterface
             {
                 MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch (ExceptionIncorrectMasterPasswordLength exception)
+            catch (ExceptionIncorrectLength exception)
             {
                 MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
