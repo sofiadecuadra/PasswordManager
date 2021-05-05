@@ -1039,6 +1039,9 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.GetUserPasswordsPair().Length);
+            Assert.AreEqual(1, otherCategory.GetUserPasswordsPair().Length);
+
         }
 
         [TestMethod]
