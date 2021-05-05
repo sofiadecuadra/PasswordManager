@@ -289,6 +289,7 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.ModifyCreditCard(aCreditCard, newCreditCard));
+            Assert.AreEqual(1, aCategory.GetCreditCards().Length);
         }
 
         [TestMethod]
