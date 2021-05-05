@@ -36,7 +36,7 @@ namespace GestorPasswordsDominio
             return creditCardHashTable.Values.ToArray();
         }
 
-        public UserPasswordPair[] GetUserPasswordsPair()
+        public UserPasswordPair[] GetUserPasswordsPairs()
         {
             return userPasswordPairsHash.Values.ToArray();
         }

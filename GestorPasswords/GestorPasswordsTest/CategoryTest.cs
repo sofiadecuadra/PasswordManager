@@ -735,7 +735,7 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
-            Assert.AreEqual(1, aCategory.GetUserPasswordsPair().Length);
+            Assert.AreEqual(1, aCategory.GetUserPasswordsPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetRedUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.RedUserPasswordPairsQuantity);
         }
@@ -753,7 +753,7 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
-            Assert.AreEqual(1, aCategory.GetUserPasswordsPair().Length);
+            Assert.AreEqual(1, aCategory.GetUserPasswordsPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetOrangeUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.OrangeUserPasswordPairsQuantity);
         }
@@ -771,7 +771,7 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
-            Assert.AreEqual(1, aCategory.GetUserPasswordsPair().Length);
+            Assert.AreEqual(1, aCategory.GetUserPasswordsPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetYellowUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.YellowUserPasswordPairsQuantity);
         }
@@ -789,7 +789,7 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
-            Assert.AreEqual(1, aCategory.GetUserPasswordsPair().Length);
+            Assert.AreEqual(1, aCategory.GetUserPasswordsPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetLightGreenUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.LightGreenUserPasswordPairsQuantity);
         }
@@ -807,7 +807,7 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
-            Assert.AreEqual(1, aCategory.GetUserPasswordsPair().Length);
+            Assert.AreEqual(1, aCategory.GetUserPasswordsPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.DarkGreenUserPasswordPairsQuantity);
         }
@@ -836,7 +836,7 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(anotherUserPasswordPair));
-            Assert.AreEqual(2, aCategory.GetUserPasswordsPair().Length);
+            Assert.AreEqual(2, aCategory.GetUserPasswordsPairs().Length);
         }
 
         [TestMethod]
@@ -1009,7 +1009,7 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
-            Assert.AreEqual(1, aCategory.GetUserPasswordsPair().Length);
+            Assert.AreEqual(1, aCategory.GetUserPasswordsPairs().Length);
         }
 
         [TestMethod]
@@ -1044,8 +1044,8 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
-            Assert.AreEqual(0, aCategory.GetUserPasswordsPair().Length);
-            Assert.AreEqual(1, otherCategory.GetUserPasswordsPair().Length);
+            Assert.AreEqual(0, aCategory.GetUserPasswordsPairs().Length);
+            Assert.AreEqual(1, otherCategory.GetUserPasswordsPairs().Length);
 
         }
 
@@ -1823,8 +1823,8 @@ namespace GestorPasswordsTest
             };
 
             Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
-            Assert.AreEqual(0, aCategory.GetUserPasswordsPair().Length);
-            Assert.AreEqual(1, otherCategory.GetUserPasswordsPair().Length);
+            Assert.AreEqual(0, aCategory.GetUserPasswordsPairs().Length);
+            Assert.AreEqual(1, otherCategory.GetUserPasswordsPairs().Length);
 
         }
 
@@ -2073,7 +2073,7 @@ namespace GestorPasswordsTest
 
             Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
             Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair.Username, aUserPasswordPair.Site));
-            Assert.AreEqual(0, aCategory.GetUserPasswordsPair().Length);
+            Assert.AreEqual(0, aCategory.GetUserPasswordsPairs().Length);
         }
 
         [TestMethod]
