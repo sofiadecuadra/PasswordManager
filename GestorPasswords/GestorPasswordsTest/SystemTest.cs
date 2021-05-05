@@ -178,7 +178,7 @@ namespace GestorPasswordsTest
             _PasswordManager.CurrentUser = myUser;
             UserPasswordPair aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
 
-            _PasswordManager.SharePassword(aUserPasswordPair, "JuanPa");
+            _PasswordManager.UnsharePassword(aUserPasswordPair, "JuanPa");
         }
 
         private UserPasswordPair LoadTestCategoryToMyUserWithAUserPasswordPair()
