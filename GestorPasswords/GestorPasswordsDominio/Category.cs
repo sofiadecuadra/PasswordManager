@@ -137,7 +137,7 @@ namespace GestorPasswordsDominio
         }
 
 
-        private bool newCreditCardIsValid(CreditCard oldCreditCard, CreditCard newCreditCard)
+        private bool ModifiedCreditCardIsValid(CreditCard oldCreditCard, CreditCard newCreditCard)
         {
             if (!CreditCardNumbersAreEqual(oldCreditCard.Number, newCreditCard.Number) && CreditCardNumberAlreadyExistsInUser(newCreditCard.Number))
             {
@@ -155,7 +155,7 @@ namespace GestorPasswordsDominio
 
         public bool ModifyCreditCard(CreditCard oldCreditCard, CreditCard newCreditCard)
         {
-            if (newCreditCardIsValid(oldCreditCard, newCreditCard))
+            if (ModifiedCreditCardIsValid(oldCreditCard, newCreditCard))
             {            
                 RemoveCreditCard(oldCreditCard.Number);
                 if (HasSameCategory(oldCreditCard.Category, newCreditCard.Category))
