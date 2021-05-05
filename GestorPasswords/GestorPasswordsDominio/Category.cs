@@ -101,17 +101,8 @@ namespace GestorPasswordsDominio
         }
 
         public bool CreditCardHasExpired(DateTime expirationDate)
-        {
-            bool creditCardHasExpired = true;
-            if (expirationDate.Year > DateTime.Now.Year)
-            {
-                creditCardHasExpired = false;
-            }
-            else if (expirationDate.Year == DateTime.Now.Year && expirationDate.Month >= DateTime.Now.Month)
-            {
-                creditCardHasExpired = false;
-            }
-            return creditCardHasExpired;
+        {    
+            return expirationDate < DateTime.Now;
         }
 
         internal UserPasswordPair FindUserPasswordPair(string siteUsername, string site)
