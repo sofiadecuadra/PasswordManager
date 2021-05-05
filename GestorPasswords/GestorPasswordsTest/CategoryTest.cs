@@ -58,7 +58,7 @@ namespace GestorPasswordsTest
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionCreditCardHasInvalidNumberLength))]
-        public void AddCreditCardWithNumberLengthLessThan16()
+        public void AddCreditCardWithNumberLengthDifferentThan16()
         {
             CreditCard aCreditCard = new CreditCard()
             {
