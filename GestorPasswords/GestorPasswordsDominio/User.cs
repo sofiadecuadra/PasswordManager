@@ -269,7 +269,7 @@ namespace GestorPasswordsDominio
 
             foreach (string item in dataToCheck)
             {
-                if (!containsOnlyDigits (item) || !LengthIsFour (item))
+                if (!ContainsOnlyDigits (item) || !LengthIsFour (item))
                 {
                     return false;
                 }

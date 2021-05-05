@@ -559,5 +559,74 @@ namespace GestorPasswordsTest
             CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item2, expectedCreditCardList);
         }
 
+        [TestMethod]
+        public void NoPasswordsOrCreditCardsOfUserAppearedInDataBreaches()
+        {
+            var aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAPassword",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            UserPasswordPair anotherUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAnotherPassword",
+                Notes = "these are my notes",
+                Username = "anotherUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = "",
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
+            };
+
+            CreditCard anotherCreditCard = new CreditCard()
+            {
+                Number = "1234567891234222",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = "",
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
+            };
+
+            aUser.AddCategory(aCategory);
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+            aCategory.AddUserPasswordPair(anotherUserPasswordPair);
+
+            aCategory.AddCreditCard(aCreditCard);
+            aCategory.AddCreditCard(anotherCreditCard);
+
+            IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
+            {
+                txtDataBreaches = "Sof\n1234 5678 2333 4222\nHello\nthisPassword\n1235 5665 9123 4567\n"
+            };
+
+            List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
+
+            List<CreditCard> expectedCreditCardList = new List<CreditCard>();
+
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item2, expectedCreditCardList);
+        }
     }
 }
