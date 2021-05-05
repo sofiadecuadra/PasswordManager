@@ -628,5 +628,50 @@ namespace GestorPasswordsTest
             CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
             CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item2, expectedCreditCardList);
         }
+
+        [TestMethod]
+        public void PasswordUsedInMultipleSitesOfUserAppearedInDataBreaches()
+        {
+            var aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAPassword",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            UserPasswordPair anotherUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAPassword",
+                Notes = "these are my notes",
+                Username = "anotherUserName",
+                Site = "myOtherSite",
+                Category = aCategory,
+            };
+
+            aUser.AddCategory(aCategory);
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+            aCategory.AddUserPasswordPair(anotherUserPasswordPair);
+
+            IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
+            {
+                txtDataBreaches = "thisIsAPassword"
+            };
+
+            List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
+            expectedUserPasswordPairList.Add(aUserPasswordPair);
+            expectedUserPasswordPairList.Add(anotherUserPasswordPair);
+
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
+        }
+
+
     }
 }
