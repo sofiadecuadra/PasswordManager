@@ -175,6 +175,13 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ExceptionUserDoesNotExist))]
+        public void ValidateAndSetCurrentUserWithUsernameWronglyContainingBlankSpacesBetweenCharacters()
+        {
+            _PasswordManager.LogIn("Ju a nP", myUser.MasterPassword);
+        }
+
+        [TestMethod]
         public void ShareValidPassword()
         {
             var aUser = new User()
