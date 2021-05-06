@@ -59,6 +59,18 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ExceptionUsernameContainsSpaces))]
+        public void AddUserWithUsernameContainingBlankSpacesBetweenCharacters()
+        {
+            User aUser = new User()
+            {
+                MasterPassword = "myMasterPassword123$",
+                Name = "Juan 12345 6789"
+            };
+            _PasswordManager.AddUser(aUser);
+        }
+
+        [TestMethod]
         public void ValidateUserCorrectly()
         {
             Assert.IsTrue(_PasswordManager.ValidateUser("juanp", "myMasterPassword123$"));
