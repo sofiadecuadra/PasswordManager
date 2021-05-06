@@ -67,8 +67,8 @@ namespace PasswordsManagerUserInterface
         private void LoadApplication()
         {
             pnlMainWindow.Controls.Clear();
-            //UserControl logIn = new LogIn(PasswordManager, pnlMainWindow); // main window of application
-            //pnlMainWindow.Controls.Add(logIn);
+            UserControl menu = new Menu(PasswordManager, pnlMainWindow);
+            pnlMainWindow.Controls.Add(menu);
         }
 
         private void btnLogIn_Click(object sender, EventArgs e)
