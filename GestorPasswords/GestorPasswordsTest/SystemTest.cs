@@ -168,6 +168,13 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        public void ValidateAndSetCurrentUserWithUsernameContainingBlankSpacesAtTheEnd()
+        {
+            _PasswordManager.LogIn("JuanP     ", myUser.MasterPassword);
+            Assert.AreEqual(myUser.Name, _PasswordManager.CurrentUser.Name);
+        }
+
+        [TestMethod]
         public void ShareValidPassword()
         {
             var aUser = new User()
