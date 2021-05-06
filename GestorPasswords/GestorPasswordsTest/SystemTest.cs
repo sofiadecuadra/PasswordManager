@@ -59,55 +59,6 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionUsernameContainsSpaces))]
-        public void AddUserWithUsernameContainingBlankSpacesBetweenCharacters()
-        {
-            User aUser = new User()
-            {
-                MasterPassword = "myMasterPassword123$",
-                Name = "Juan 12345 6789"
-            };
-            _PasswordManager.AddUser(aUser);
-        }
-
-
-        [TestMethod]
-        public void AddUserWithUsernameContainingBlankSpacesAtTheStart()
-        {
-            User aUser = new User()
-            {
-                MasterPassword = "myMasterPassword123$",
-                Name = "      Juan123456789"
-            };
-            Assert.IsTrue(_PasswordManager.AddUser(aUser));
-            Assert.IsTrue(_PasswordManager.HasUser("Juan123456789"));
-        }
-
-        [TestMethod]
-        public void AddUserWithUsernameContainingLotsOfBlankSpacesAtTheStart()
-        {
-            User aUser = new User()
-            {
-                MasterPassword = "myMasterPassword123$",
-                Name = "                                                                   Juan123456789"
-            };
-            Assert.IsTrue(_PasswordManager.AddUser(aUser));
-            Assert.IsTrue(_PasswordManager.HasUser("Juan123456789"));
-        }
-
-        [TestMethod]
-        public void AddUserWithUsernameContainingBlankSpacesAtTheEnd()
-        {
-            User aUser = new User()
-            {
-                MasterPassword = "myMasterPassword123$",
-                Name = "Juan123456789      "
-            };
-            Assert.IsTrue(_PasswordManager.AddUser(aUser));
-            Assert.IsTrue(_PasswordManager.HasUser("Juan123456789"));
-        }
-
-        [TestMethod]
         public void ValidateUserCorrectly()
         {
             Assert.IsTrue(_PasswordManager.ValidateUser("juanp", "myMasterPassword123$"));
@@ -171,27 +122,6 @@ namespace GestorPasswordsTest
         public void ValidateAndSetCurrentUserWithWrongName()
         {
             _PasswordManager.LogIn("ThisIsNotTheName", myUser.MasterPassword);
-        }
-
-        [TestMethod]
-        public void ValidateAndSetCurrentUserWithUsernameContainingBlankSpacesAtTheStart()
-        {
-            _PasswordManager.LogIn("    JuanP", myUser.MasterPassword);
-            Assert.AreEqual(myUser.Name, _PasswordManager.CurrentUser.Name);
-        }
-
-        [TestMethod]
-        public void ValidateAndSetCurrentUserWithUsernameContainingBlankSpacesAtTheEnd()
-        {
-            _PasswordManager.LogIn("JuanP     ", myUser.MasterPassword);
-            Assert.AreEqual(myUser.Name, _PasswordManager.CurrentUser.Name);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ExceptionUserDoesNotExist))]
-        public void ValidateAndSetCurrentUserWithUsernameWronglyContainingBlankSpacesBetweenCharacters()
-        {
-            _PasswordManager.LogIn("Ju a nP", myUser.MasterPassword);
         }
 
         [TestMethod]
