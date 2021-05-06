@@ -92,8 +92,17 @@ namespace GestorPasswordsDominio
             {
                 throw new ExceptionCreditCardHasInvalidNotesLength("The notes' length must be up to 250, but it's current length is " + aCreditCard.Notes.Length);
             }
+            if (CreditCardHasExpired(aCreditCard.ExpirationDate))
+            {
+                throw new ExceptionCreditCardHasExpired("The credit card must be valid, but it has expired in " + aCreditCard.ExpirationDate.Month + "/" + aCreditCard.ExpirationDate.Year);
+            }
 
             return true;
+        }
+
+        public bool CreditCardHasExpired(DateTime expirationDate)
+        {    
+            return expirationDate < DateTime.Now;
         }
 
         internal UserPasswordPair FindUserPasswordPair(string siteUsername, string site)

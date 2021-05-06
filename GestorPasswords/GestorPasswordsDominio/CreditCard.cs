@@ -21,7 +21,16 @@ namespace GestorPasswordsDominio
         public string Name { get; set; }
         public string Code { get; set; }
         public string Notes { get; set; }
-        public DateTime ExpirationDate { get; set; }
+        private DateTime expirationDate;
+        public DateTime ExpirationDate
+        {
+            get { return expirationDate; }
+            set
+            {
+                int lastDayOfMonth = DateTime.DaysInMonth(value.Year, value.Month);
+                expirationDate = new DateTime (value.Year, value.Month, lastDayOfMonth);
+            }
+        }
         public Category Category { get; set; }
     }
 }
