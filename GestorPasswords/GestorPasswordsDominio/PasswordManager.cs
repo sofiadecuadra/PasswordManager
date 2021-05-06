@@ -52,9 +52,9 @@ namespace GestorPasswordsDominio
 
         public void LogIn(string username, string masterPassword)
         {
-            if (ValidateUser(username.Trim(), masterPassword))
+            if (ValidateUser(username, masterPassword))
             {
-                this.CurrentUser = FindUser(username.Trim());
+                this.CurrentUser = FindUser(username);
             }
             else
             {
