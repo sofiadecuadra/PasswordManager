@@ -51,12 +51,22 @@ namespace GestorPasswordsDominio
                 string errorMessage = $"The provided user name should be between 5 and 25 characters but is: {value.Length} charachterslong";
                 throw new ExceptionIncorrectUserNameLength(errorMessage);
             }
+            if (HasBlankSpace(value))
+            {
+                string errorMessage = $"The username must not contain any blank spaces";
+                throw new ExceptionUsernameContainsSpaces(errorMessage);
+            }
             return value.ToLower();
         }
 
         private static bool isBetween5And25Characters(string value)
         {
             return value.Length >= 5 && value.Length <= 25;
+        }
+
+        private static bool HasBlankSpace(string value)
+        {
+            return value.Contains(" ");
         }
 
         public User()
