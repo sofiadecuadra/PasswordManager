@@ -34,6 +34,10 @@ namespace PasswordsManagerUserInterface
             {
                 MessageBox.Show("The user does not exist", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            catch (ExceptionIncorrectMasterPassword)
+            {
+                MessageBox.Show("Wrong password", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void UserLogIn()
@@ -47,8 +51,8 @@ namespace PasswordsManagerUserInterface
         private void LoadApplication()
         {
             pnlMainWindow.Controls.Clear();
-            //UserControl logIn = new LogIn(PasswordManager, pnlMainWindow); // main window of application
-            //pnlMainWindow.Controls.Add(logIn);
+            UserControl menu = new Menu(PasswordManager, pnlMainWindow);
+            pnlMainWindow.Controls.Add(menu);
         }
 
         private void btnSignUp_Click(object sender, EventArgs e)
