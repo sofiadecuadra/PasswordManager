@@ -83,6 +83,18 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        public void AddUserWithUsernameContainingBlankSpacesAtTheEnd()
+        {
+            User aUser = new User()
+            {
+                MasterPassword = "myMasterPassword123$",
+                Name = "Juan123456789      "
+            };
+            Assert.IsTrue(_PasswordManager.AddUser(aUser));
+            Assert.IsTrue(_PasswordManager.HasUser("Juan123456789"));
+        }
+
+        [TestMethod]
         public void ValidateUserCorrectly()
         {
             Assert.IsTrue(_PasswordManager.ValidateUser("juanp", "myMasterPassword123$"));
