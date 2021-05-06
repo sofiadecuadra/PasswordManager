@@ -41,7 +41,7 @@ namespace GestorPasswordsDominio
                 string errorMessage = $"The password should be between 5 and 25 characters but is: {password.Length} charachterslong";
                 throw new ExceptionIncorrectLength(errorMessage);
             }
-            return password.ToLower();
+            return password;
         }
 
         private static string ValidUserName(string value)
