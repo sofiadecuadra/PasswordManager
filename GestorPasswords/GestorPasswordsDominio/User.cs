@@ -29,7 +29,7 @@ namespace GestorPasswordsDominio
         public string Name
         {
             get { return name; }
-            set { name = ValidUserName(value); }
+            set { name = ValidUserName(value.Trim()); }
         }
 
         public Category SharedPasswords { get; private set; }
