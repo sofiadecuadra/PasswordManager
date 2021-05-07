@@ -53,5 +53,11 @@ namespace GestorPasswordsDominio
         {
             UsersWithAccess.Remove(userToRevokeSharedPassword.Name);
         }
+
+        override
+        public string ToString()
+        {
+            return Category.Name + " " + Site + " " + Username;
+        }
     }
 }
