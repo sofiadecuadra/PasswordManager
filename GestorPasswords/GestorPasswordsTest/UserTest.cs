@@ -289,6 +289,32 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ExceptionCategoryAlreadyExists))]
+        public void ModifyCategoryToAnExistingName()
+        {
+            User aUser = new User()
+            {
+                MasterPassword = "myPassword"
+            };
+
+            Category aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+            aUser.AddCategory(aCategory);
+
+            Category otherCategory = new Category()
+            {
+                User = aUser,
+                Name = "otherCategory"
+            };
+            aUser.AddCategory(otherCategory);
+
+            aUser.ModifyCategory(otherCategory, "myCategory");
+        }
+
+        [TestMethod]
         public void RetriveExistingUserPasswordPair()
         {
             var aCategory = new Category()

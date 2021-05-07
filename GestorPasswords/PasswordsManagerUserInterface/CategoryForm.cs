@@ -20,6 +20,12 @@ namespace PasswordsManagerUserInterface
             InitializeComponent();
         }
 
+        public CategoryForm(PasswordManager aPasswordManager, Category categoryToModified)
+        {
+            InitializeComponent();
+            txtName.Text = categoryToModified.Name;
+        }
+
         public string GetName()
         {
             return txtName.Text;

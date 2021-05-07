@@ -282,9 +282,14 @@ namespace GestorPasswordsDominio
         {
             bool categoryCouldBeModified = false;
 
-            if (!CategoryExists(aCategory))
+            if (!CategoryExists(aCategory.Name))
             {
                 throw new ExceptionCategoryNotExists();
+            }
+
+            if (CategoryExists(newName.ToLower()))
+            {
+                throw new ExceptionCategoryAlreadyExists("The category already exists" );
             }
 
             if (CategoryHasValidLength(newName))
@@ -295,9 +300,9 @@ namespace GestorPasswordsDominio
             return categoryCouldBeModified;
         }
 
-        private bool CategoryExists(Category aCategory)
+        private bool CategoryExists(string aCategoryName)
         {
-            return this.categoriesList.ContainsKey(aCategory.Name);
+            return this.categoriesList.ContainsKey(aCategoryName);
         }
 
         public bool CreditCardNumberExists(string creditCardNumber)
