@@ -275,7 +275,14 @@ namespace GestorPasswordsDominio
 
         private void UpdateCategory(Category aCategory, string newName)
         {
+            RemoveCategoryFromCategoriesCollection(aCategory);
             aCategory.Name = newName;
+            AddCategoryToSortedList(aCategory);
+        }
+
+        private void RemoveCategoryFromCategoriesCollection(Category aCategory)
+        {
+            this.categoriesList.Remove(aCategory.Name);
         }
 
         private bool CategoryCouldBeModified(Category aCategory, string newName)
