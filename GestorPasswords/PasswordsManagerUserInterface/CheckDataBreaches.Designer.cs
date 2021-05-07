@@ -41,7 +41,7 @@ namespace PasswordsManagerUserInterface
             this.txtDataBreaches.Location = new System.Drawing.Point(418, 223);
             this.txtDataBreaches.Multiline = true;
             this.txtDataBreaches.Name = "txtDataBreaches";
-            this.txtDataBreaches.Size = new System.Drawing.Size(784, 458);
+            this.txtDataBreaches.Size = new System.Drawing.Size(784, 414);
             this.txtDataBreaches.TabIndex = 0;
             // 
             // btnCheck
