@@ -35,6 +35,7 @@ namespace PasswordsManagerUserInterface
             this.lblExposedCreditCards = new System.Windows.Forms.Label();
             this.btnGoBack = new System.Windows.Forms.Button();
             this.listExposedPasswords = new System.Windows.Forms.ListBox();
+            this.btnModify = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblResult
@@ -91,10 +92,20 @@ namespace PasswordsManagerUserInterface
             this.listExposedPasswords.Size = new System.Drawing.Size(1130, 154);
             this.listExposedPasswords.TabIndex = 1;
             // 
+            // btnModify
+            // 
+            this.btnModify.Location = new System.Drawing.Point(1138, 414);
+            this.btnModify.Name = "btnModify";
+            this.btnModify.Size = new System.Drawing.Size(186, 54);
+            this.btnModify.TabIndex = 6;
+            this.btnModify.Text = "Modify";
+            this.btnModify.UseVisualStyleBackColor = true;
+            // 
             // DataBreachesResult
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnModify);
             this.Controls.Add(this.btnGoBack);
             this.Controls.Add(this.lblExposedCreditCards);
             this.Controls.Add(this.lblExposedPasswords);
@@ -116,5 +127,6 @@ namespace PasswordsManagerUserInterface
         private System.Windows.Forms.Label lblExposedCreditCards;
         private System.Windows.Forms.Button btnGoBack;
         private System.Windows.Forms.ListBox listExposedPasswords;
+        private System.Windows.Forms.Button btnModify;
     }
 }
