@@ -29,7 +29,6 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-
         [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void NewMasterPasswordWithLengthUnder5()
         {
