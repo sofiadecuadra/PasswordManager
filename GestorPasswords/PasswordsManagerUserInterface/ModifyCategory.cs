@@ -49,6 +49,10 @@ namespace PasswordsManagerUserInterface
             {
                 MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            catch (ExceptionCategoryAlreadyExists exception)
+            {
+                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void ModifyCategory_()

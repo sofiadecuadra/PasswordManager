@@ -315,6 +315,24 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        public void ModifyCategoryNameToItsOwnName()
+        {
+            User aUser = new User()
+            {
+                MasterPassword = "myPassword"
+            };
+
+            Category aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+            aUser.AddCategory(aCategory);
+
+            Assert.IsFalse(aUser.ModifyCategory(aCategory, "myCategory"));
+        }
+
+        [TestMethod]
         public void RetriveExistingUserPasswordPair()
         {
             var aCategory = new Category()

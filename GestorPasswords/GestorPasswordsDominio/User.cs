@@ -265,7 +265,7 @@ namespace GestorPasswordsDominio
         public bool ModifyCategory(Category aCategory, string newName)
         {
             bool categoryModified = false;
-            if (CategoryCouldBeModified(aCategory, newName))
+            if (CategoryCouldBeModified(aCategory, newName.ToLower()))
             {
                 UpdateCategory(aCategory, newName);
                 categoryModified = true;
@@ -280,24 +280,19 @@ namespace GestorPasswordsDominio
 
         private bool CategoryCouldBeModified(Category aCategory, string newName)
         {
-            bool categoryCouldBeModified = false;
+            if (aCategory.Name == newName) return false;
 
             if (!CategoryExists(aCategory.Name))
             {
                 throw new ExceptionCategoryNotExists();
             }
 
-            if (CategoryExists(newName.ToLower()))
+            if (CategoryExists(newName))
             {
                 throw new ExceptionCategoryAlreadyExists("The category already exists" );
             }
 
-            if (CategoryHasValidLength(newName))
-            {
-                categoryCouldBeModified = true;
-            }
-
-            return categoryCouldBeModified;
+            return CategoryHasValidLength(newName);
         }
 
         private bool CategoryExists(string aCategoryName)
