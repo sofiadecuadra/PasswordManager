@@ -14,24 +14,69 @@ namespace PasswordsManagerUserInterface
     public partial class AddCategory : UserControl
     {
         public PasswordManager PasswordManager { get; private set; }
-        public Panel pnlMainWindow { get; private set; }
+        public Panel PnlMainWindow { get; private set; }
+        public CategoryForm Form { get; private set; }
         public AddCategory(PasswordManager aPasswordManager, Panel panel)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
-            pnlMainWindow = panel;
+            PnlMainWindow = panel;
             LoadCategoryForm();
         }
 
         private void LoadCategoryForm()
         {
             pnlAddCategory.Controls.Clear();
-            UserControl form = new CategoryForm(PasswordManager);
-            pnlAddCategory.Controls.Add(form);
+            Form = new CategoryForm(PasswordManager);
+            pnlAddCategory.Controls.Add(Form);
         }
 
         private void btnAccept_Click(object sender, EventArgs e)
         {
+           try
+            {
+                AddCategory_();
+            }
+            catch (ExceptionCategoryHasInvalidNameLength exception)
+            {
+                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (ArgumentException)
+            {
+                MessageBox.Show("The category already exists", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private void AddCategory_()
+        {
+            Category newCategory = CreateCategory();
+            PasswordManager.CurrentUser.AddCategory(newCategory);
+            GoBack();
+        }
+
+        private Category CreateCategory()
+        {
+            string name = Form.GetName();
+            Category newCategory = new Category()
+            {
+                Name = name,
+                User = PasswordManager.CurrentUser
+            };
+
+            return newCategory;
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            GoBack();
+        }
+
+        private void GoBack()
+        {
+            PnlMainWindow.Controls.Clear();
+            UserControl categories = new Categories(PasswordManager, PnlMainWindow);
+            PnlMainWindow.Controls.Add(categories);
         }
     }
 }

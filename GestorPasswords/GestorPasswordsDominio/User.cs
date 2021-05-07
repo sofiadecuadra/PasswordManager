@@ -219,6 +219,16 @@ namespace GestorPasswordsDominio
             return currentPassword == masterPassword;
         }
 
+        internal void AddSharedUserPasswordPair(UserPasswordPair passwordToShare)
+        {
+            SharedPasswords.AddUserPasswordPair(passwordToShare);
+        }
+
+        internal void UnshareUserPasswordPair(UserPasswordPair passwordToStopSharing)
+        {
+            SharedPasswords.RemoveUserPasswordPair(passwordToStopSharing);
+        }
+
         public bool AddCategory(Category aCategory)
         {
             bool categoryAdded = false;
@@ -231,19 +241,9 @@ namespace GestorPasswordsDominio
             return categoryAdded;
         }
 
-        internal void AddSharedUserPasswordPair(UserPasswordPair passwordToShare)
-        {
-            SharedPasswords.AddUserPasswordPair(passwordToShare);
-        }
-
-        internal void UnshareUserPasswordPair(UserPasswordPair passwordToStopSharing)
-        {
-            SharedPasswords.RemoveUserPasswordPair(passwordToStopSharing);
-        }
-
         private void AddCategoryToSortedList(Category aCategory)
         {
-            this.categoriesList.Add(aCategory.Name, aCategory); // If it already exists in the list throws an exception
+            this.categoriesList.Add(aCategory.Name, aCategory);
         }
 
         private static bool CategoryHasValidLength(string categoryName)

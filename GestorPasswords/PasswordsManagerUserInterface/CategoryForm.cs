@@ -19,5 +19,10 @@ namespace PasswordsManagerUserInterface
         {
             InitializeComponent();
         }
+
+        public string GetName()
+        {
+            return txtName.Text;
+        }
     }
 }
