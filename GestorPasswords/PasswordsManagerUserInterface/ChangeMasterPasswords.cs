@@ -11,6 +11,7 @@ namespace PasswordsManagerUserInterface
         private Label lblNewPassword;
         private TextBox txtNewPassword;
         private Button btnUpdateMasterPassword;
+        private Button btnBack;
         private Panel pnlMainWindow;
 
         public ChangeMasterPasswords(PasswordManager passwordManager, Panel pnlMainWindow)
@@ -27,6 +28,7 @@ namespace PasswordsManagerUserInterface
             this.lblNewPassword = new System.Windows.Forms.Label();
             this.txtNewPassword = new System.Windows.Forms.TextBox();
             this.btnUpdateMasterPassword = new System.Windows.Forms.Button();
+            this.btnBack = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtOldPassword
@@ -80,8 +82,22 @@ namespace PasswordsManagerUserInterface
             this.btnUpdateMasterPassword.UseVisualStyleBackColor = true;
             this.btnUpdateMasterPassword.Click += new System.EventHandler(this.btnUpdateMasterPassword_Click);
             // 
+            // btnBack
+            // 
+            this.btnBack.AutoSize = true;
+            this.btnBack.Location = new System.Drawing.Point(647, 23);
+            this.btnBack.Margin = new System.Windows.Forms.Padding(4);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(100, 28);
+            this.btnBack.TabIndex = 5;
+            this.btnBack.Text = "Back";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            // 
             // ChangeMasterPasswords
             // 
+            this.AutoSize = true;
+            this.Controls.Add(this.btnBack);
             this.Controls.Add(this.btnUpdateMasterPassword);
             this.Controls.Add(this.lblNewPassword);
             this.Controls.Add(this.txtNewPassword);
@@ -119,6 +135,11 @@ namespace PasswordsManagerUserInterface
             pnlMainWindow.Controls.Clear();
             UserControl menu = new Menu(passwordManager, pnlMainWindow);
             pnlMainWindow.Controls.Add(menu);
+        }
+
+        private void btnBack_Click(object sender, System.EventArgs e)
+        {
+            GoBackToMainMenu();
         }
     }
 }
