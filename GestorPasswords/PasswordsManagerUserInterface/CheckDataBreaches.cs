@@ -39,7 +39,7 @@ namespace PasswordsManagerUserInterface
             pnlMainWindow.Controls.Add(dataBreachesResult);
         }
 
-        private void btnGoBack_Click(object sender, EventArgs e)
+        private void btnBack_Click(object sender, EventArgs e)
         {
             pnlMainWindow.Controls.Clear();
             UserControl menu = new Menu(PasswordManager, pnlMainWindow);

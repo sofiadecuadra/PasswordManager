@@ -33,22 +33,22 @@ namespace PasswordsManagerUserInterface
             this.btnCheck = new System.Windows.Forms.Button();
             this.lblExposedText = new System.Windows.Forms.Label();
             this.lblDataBreaches = new System.Windows.Forms.Label();
-            this.btnGoBack = new System.Windows.Forms.Button();
+            this.btnBack = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtDataBreaches
             // 
-            this.txtDataBreaches.Location = new System.Drawing.Point(224, 212);
+            this.txtDataBreaches.Location = new System.Drawing.Point(418, 223);
             this.txtDataBreaches.Multiline = true;
             this.txtDataBreaches.Name = "txtDataBreaches";
-            this.txtDataBreaches.Size = new System.Drawing.Size(1116, 413);
+            this.txtDataBreaches.Size = new System.Drawing.Size(784, 458);
             this.txtDataBreaches.TabIndex = 0;
             // 
             // btnCheck
             // 
-            this.btnCheck.Location = new System.Drawing.Point(1121, 674);
+            this.btnCheck.Location = new System.Drawing.Point(1015, 687);
             this.btnCheck.Name = "btnCheck";
-            this.btnCheck.Size = new System.Drawing.Size(219, 83);
+            this.btnCheck.Size = new System.Drawing.Size(187, 41);
             this.btnCheck.TabIndex = 1;
             this.btnCheck.Text = "Check";
             this.btnCheck.UseVisualStyleBackColor = true;
@@ -57,7 +57,7 @@ namespace PasswordsManagerUserInterface
             // lblExposedText
             // 
             this.lblExposedText.AutoSize = true;
-            this.lblExposedText.Location = new System.Drawing.Point(219, 160);
+            this.lblExposedText.Location = new System.Drawing.Point(413, 186);
             this.lblExposedText.Name = "lblExposedText";
             this.lblExposedText.Size = new System.Drawing.Size(144, 25);
             this.lblExposedText.TabIndex = 2;
@@ -66,27 +66,28 @@ namespace PasswordsManagerUserInterface
             // lblDataBreaches
             // 
             this.lblDataBreaches.AutoSize = true;
-            this.lblDataBreaches.Location = new System.Drawing.Point(682, 78);
+            this.lblDataBreaches.Location = new System.Drawing.Point(740, 88);
             this.lblDataBreaches.Name = "lblDataBreaches";
             this.lblDataBreaches.Size = new System.Drawing.Size(154, 25);
             this.lblDataBreaches.TabIndex = 3;
             this.lblDataBreaches.Text = "Data Breaches";
             // 
-            // btnGoBack
+            // btnBack
             // 
-            this.btnGoBack.Location = new System.Drawing.Point(46, 48);
-            this.btnGoBack.Name = "btnGoBack";
-            this.btnGoBack.Size = new System.Drawing.Size(149, 55);
-            this.btnGoBack.TabIndex = 4;
-            this.btnGoBack.Text = "←";
-            this.btnGoBack.UseVisualStyleBackColor = true;
-            this.btnGoBack.Click += new System.EventHandler(this.btnGoBack_Click);
+            this.btnBack.Location = new System.Drawing.Point(1354, 43);
+            this.btnBack.Margin = new System.Windows.Forms.Padding(6);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(150, 44);
+            this.btnBack.TabIndex = 8;
+            this.btnBack.Text = "Back";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // CheckDataBreaches
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.btnGoBack);
+            this.Controls.Add(this.btnBack);
             this.Controls.Add(this.lblDataBreaches);
             this.Controls.Add(this.lblExposedText);
             this.Controls.Add(this.btnCheck);
@@ -104,6 +105,6 @@ namespace PasswordsManagerUserInterface
         private System.Windows.Forms.Button btnCheck;
         private System.Windows.Forms.Label lblExposedText;
         private System.Windows.Forms.Label lblDataBreaches;
-        private System.Windows.Forms.Button btnGoBack;
+        private System.Windows.Forms.Button btnBack;
     }
 }

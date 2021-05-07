@@ -42,7 +42,14 @@ namespace PasswordsManagerUserInterface
             }
         }
 
-        private void btnGoBack_Click(object sender, EventArgs e)
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            pnlMainWindow.Controls.Clear();
+            UserControl checkDataBreaches = new CheckDataBreaches(PasswordManager, pnlMainWindow);
+            pnlMainWindow.Controls.Add(checkDataBreaches);
+        }
+
+        private void btnMenu_Click(object sender, EventArgs e)
         {
             pnlMainWindow.Controls.Clear();
             UserControl menu = new Menu(PasswordManager, pnlMainWindow);
