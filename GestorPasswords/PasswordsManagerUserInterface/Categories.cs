@@ -25,14 +25,34 @@ namespace PasswordsManagerUserInterface
 
         private void LoadDataGridViewData()
         {
-            Category category = new Category() { Name = " Hola", User = PasswordManager.CurrentUser };
-            PasswordManager.CurrentUser.AddCategory(category);
             dgvCategories.AutoGenerateColumns = false;
             dgvCategories.ColumnCount = 1;
             dgvCategories.Columns[0].Name = "Categories";
             dgvCategories.Columns[0].HeaderText = "Categories";
             dgvCategories.Columns[0].DataPropertyName = "Name";
+            dgvCategories.Columns[0].Width = 215;
             dgvCategories.DataSource = PasswordManager.CurrentUser.GetCategories();
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            pnlMainWindow.Controls.Clear();
+            UserControl menu = new Menu(PasswordManager, pnlMainWindow);
+            pnlMainWindow.Controls.Add(menu);
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            pnlMainWindow.Controls.Clear();
+            UserControl addCategory = new AddCategory(PasswordManager, pnlMainWindow);
+            pnlMainWindow.Controls.Add(addCategory);
+        }
+
+        private void btnModify_Click(object sender, EventArgs e)
+        {
+            //pnlMainWindow.Controls.Clear();
+            //UserControl modifyCategory = new ModifyCategory(PasswordManager, pnlMainWindow);
+            //pnlMainWindow.Controls.Add(modifyCategory);
         }
     }
 }
