@@ -1,0 +1,70 @@
+﻿
+namespace PasswordsManagerUserInterface
+{
+    partial class AddCategory
+    {
+        /// <summary> 
+        /// Variable del diseñador necesaria.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Limpiar los recursos que se estén usando.
+        /// </summary>
+        /// <param name="disposing">true si los recursos administrados se deben desechar; false en caso contrario.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Código generado por el Diseñador de componentes
+
+        /// <summary> 
+        /// Método necesario para admitir el Diseñador. No se puede modificar
+        /// el contenido de este método con el editor de código.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.pnlAddCategory = new System.Windows.Forms.Panel();
+            this.btnAccept = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // pnlAddCategory
+            // 
+            this.pnlAddCategory.Location = new System.Drawing.Point(281, 163);
+            this.pnlAddCategory.Name = "pnlAddCategory";
+            this.pnlAddCategory.Size = new System.Drawing.Size(200, 100);
+            this.pnlAddCategory.TabIndex = 0;
+            // 
+            // btnAccept
+            // 
+            this.btnAccept.Location = new System.Drawing.Point(346, 292);
+            this.btnAccept.Name = "btnAccept";
+            this.btnAccept.Size = new System.Drawing.Size(75, 23);
+            this.btnAccept.TabIndex = 1;
+            this.btnAccept.Text = "Accept";
+            this.btnAccept.UseVisualStyleBackColor = true;
+            this.btnAccept.Click += new System.EventHandler(this.btnAccept_Click);
+            // 
+            // AddCategory
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnAccept);
+            this.Controls.Add(this.pnlAddCategory);
+            this.Name = "AddCategory";
+            this.Size = new System.Drawing.Size(804, 451);
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Panel pnlAddCategory;
+        private System.Windows.Forms.Button btnAccept;
+    }
+}
