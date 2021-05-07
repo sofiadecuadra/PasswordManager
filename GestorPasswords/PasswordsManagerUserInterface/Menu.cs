@@ -23,11 +23,6 @@ namespace PasswordsManagerUserInterface
             pnlMainWindow = panel;
         }
 
-        private void btnCategories_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnPasswords_Click(object sender, EventArgs e)
         {
             //pnlMainWindow.Controls.Clear();
@@ -58,9 +53,16 @@ namespace PasswordsManagerUserInterface
 
         private void btnCheckDataBreaches_Click(object sender, EventArgs e)
         {
-            //pnlMainWindow.Controls.Clear();
-            //UserControl checkDataBreaches = new CheckDataBreaches(PasswordManager, pnlMainWindow);
-            //pnlMainWindow.Controls.Add(checkDataBreaches);
+            pnlMainWindow.Controls.Clear();
+            UserControl checkDataBreaches = new CheckDataBreaches(PasswordManager, pnlMainWindow);
+            pnlMainWindow.Controls.Add(checkDataBreaches);
+        }
+
+        private void btnCategories_Click(object sender, EventArgs e)
+        {
+            pnlMainWindow.Controls.Clear();
+            UserControl categories = new Categories(PasswordManager, pnlMainWindow);
+            pnlMainWindow.Controls.Add(categories);
         }
     }
 }

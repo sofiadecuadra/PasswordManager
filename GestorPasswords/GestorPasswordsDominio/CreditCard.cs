@@ -9,6 +9,7 @@ namespace GestorPasswordsDominio
 {
     public class CreditCard
     {
+
         private string number;
         public string Number
         {
@@ -32,5 +33,11 @@ namespace GestorPasswordsDominio
             }
         }
         public Category Category { get; set; }
+
+        override
+            public string ToString()
+        {
+            return "[" + Category.Name + "] [" + Type + "] [" + Number + "]";
+        }
     }
 }

@@ -15,29 +15,38 @@ namespace PasswordsManagerUserInterface
     {
         public PasswordManager PasswordManager { get; private set; }
         public Panel pnlMainWindow { get; private set; }
-        public (List<UserPasswordPair>, List<CreditCard>) ExposedPasswordsAndCreditCards { get; set; }
-        public DataBreachesResult(PasswordManager aPasswordManager, Panel panel)
-
+        public IDataBreachesFormatter DataBreaches { get; private set; }
+        public DataBreachesResult(PasswordManager aPasswordManager, Panel panel, IDataBreachesFormatter dataBreaches)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
             pnlMainWindow = panel;
+            DataBreaches = dataBreaches;
             LoadDataExposed();
         }
     
         private void LoadDataExposed()
         {
-            List<UserPasswordPair> listExposedPasswords = ExposedPasswordsAndCreditCards.Item1;
-            foreach (UserPasswordPair userPasswordPair in listExposedPasswords)
+            (List<UserPasswordPair>, List<CreditCard>) ExposedPasswordsAndCreditCards = PasswordManager.CurrentUser.CheckDataBreaches(DataBreaches);
+            List<UserPasswordPair> exposedPasswords = new List <UserPasswordPair> (ExposedPasswordsAndCreditCards.Item1);
+            List<CreditCard> exposedCreditCards = new List<CreditCard>(ExposedPasswordsAndCreditCards.Item2);
+
+            foreach (UserPasswordPair userPasswordPair in exposedPasswords)
             {
-                listExposedPasswords.Add(userPasswordPair);
+                listExposedPasswords.Items.Add(userPasswordPair);
             }
 
-            List<CreditCard> listExposedCreditCards = ExposedPasswordsAndCreditCards.Item2;
-            foreach (CreditCard creditCard in listExposedCreditCards)
+            foreach (CreditCard creditCard in exposedCreditCards)
             {
-                listExposedCreditCards.Add(creditCard);
+                listExposedCreditCards.Items.Add(creditCard);
             }
+        }
+
+        private void btnGoBack_Click(object sender, EventArgs e)
+        {
+            pnlMainWindow.Controls.Clear();
+            UserControl menu = new Menu(PasswordManager, pnlMainWindow);
+            pnlMainWindow.Controls.Add(menu);
         }
     }
 }

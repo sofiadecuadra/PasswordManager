@@ -67,6 +67,7 @@ namespace PasswordsManagerUserInterface
             this.btnCategories.TabIndex = 2;
             this.btnCategories.Text = "Categories";
             this.btnCategories.UseVisualStyleBackColor = true;
+            this.btnCategories.Click += new System.EventHandler(this.btnCategories_Click);
             // 
             // btnCheckDataBreaches
             // 

@@ -57,7 +57,7 @@ namespace GestorPasswordsDominio
         override
         public string ToString()
         {
-            return Category.Name + " " + Site + " " + Username;
+            return "[" + Category.Name + "] [" + Site + "] [" + Username + "]";
         }
     }
 }

@@ -24,26 +24,18 @@ namespace PasswordsManagerUserInterface
 
         private void btnCheck_Click(object sender, EventArgs e)
         {
-            TextBoxDataBreachesResult();
-        }
-
-        private void TextBoxDataBreachesResult()
-        {
             string dataBreaches = txtDataBreaches.Text;
             IDataBreachesFormatter textBoxDataBreaches = new TextBoxDataBreaches()
             {
                 txtDataBreaches = dataBreaches
             };
-            (List<UserPasswordPair>, List<CreditCard>) exposedPasswordsAndCreditCards = PasswordManager.CurrentUser.CheckDataBreaches(textBoxDataBreaches);
-            LoadApplication(exposedPasswordsAndCreditCards);
+            LoadApplication(textBoxDataBreaches);
         }
-        private void LoadApplication((List<UserPasswordPair>, List<CreditCard>) exposedPasswordsAndCreditCards)
+
+        private void LoadApplication(IDataBreachesFormatter dataBreaches)
         {
             pnlMainWindow.Controls.Clear();
-            UserControl dataBreachesResult = new DataBreachesResult(PasswordManager, pnlMainWindow)
-            {
-                ExposedPasswordsAndCreditCards = exposedPasswordsAndCreditCards
-            };
+            UserControl dataBreachesResult = new DataBreachesResult(PasswordManager, pnlMainWindow, dataBreaches);
             pnlMainWindow.Controls.Add(dataBreachesResult);
         }
 

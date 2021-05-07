@@ -45,6 +45,18 @@ namespace PasswordsManagerUserInterface
         {
             User newUser = CreateUser();
             PasswordManager.AddUser(newUser);
+            try
+            {
+                UserLogIn();
+            }
+            catch (ExceptionUserDoesNotExist)
+            {
+                MessageBox.Show("The user does not exist", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (ExceptionIncorrectMasterPassword)
+            {
+                MessageBox.Show("Wrong password", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
             LoadApplication();
         }
@@ -63,6 +75,13 @@ namespace PasswordsManagerUserInterface
             return newUser;
         }
 
+        private void UserLogIn()
+        {
+            string username = txtUsername.Text;
+            string masterPassword = txtPassword.Text;
+            PasswordManager.LogIn(username, masterPassword);
+            LoadApplication();
+        }
 
         private void LoadApplication()
         {

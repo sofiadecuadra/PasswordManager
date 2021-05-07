@@ -82,6 +82,7 @@ namespace PasswordsManagerUserInterface
             this.btnGoBack.TabIndex = 5;
             this.btnGoBack.Text = "←";
             this.btnGoBack.UseVisualStyleBackColor = true;
+            this.btnGoBack.Click += new System.EventHandler(this.btnGoBack_Click);
             // 
             // listExposedPasswords
             // 
