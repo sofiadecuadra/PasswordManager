@@ -1,7 +1,7 @@
 ﻿
 namespace PasswordsManagerUserInterface
 {
-    partial class AddCategory
+    partial class ModifyCategory
     {
         /// <summary> 
         /// Variable del diseñador necesaria.
@@ -29,24 +29,17 @@ namespace PasswordsManagerUserInterface
         /// </summary>
         private void InitializeComponent()
         {
-            this.pnlAddCategory = new System.Windows.Forms.Panel();
             this.btnAccept = new System.Windows.Forms.Button();
             this.btnBack = new System.Windows.Forms.Button();
+            this.pnlAddCategory = new System.Windows.Forms.Panel();
             this.SuspendLayout();
-            // 
-            // pnlAddCategory
-            // 
-            this.pnlAddCategory.Location = new System.Drawing.Point(303, 164);
-            this.pnlAddCategory.Name = "pnlAddCategory";
-            this.pnlAddCategory.Size = new System.Drawing.Size(200, 100);
-            this.pnlAddCategory.TabIndex = 0;
             // 
             // btnAccept
             // 
             this.btnAccept.Location = new System.Drawing.Point(369, 293);
             this.btnAccept.Name = "btnAccept";
             this.btnAccept.Size = new System.Drawing.Size(75, 23);
-            this.btnAccept.TabIndex = 1;
+            this.btnAccept.TabIndex = 0;
             this.btnAccept.Text = "Accept";
             this.btnAccept.UseVisualStyleBackColor = true;
             this.btnAccept.Click += new System.EventHandler(this.btnAccept_Click);
@@ -56,19 +49,26 @@ namespace PasswordsManagerUserInterface
             this.btnBack.Location = new System.Drawing.Point(677, 22);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(75, 23);
-            this.btnBack.TabIndex = 2;
+            this.btnBack.TabIndex = 1;
             this.btnBack.Text = "Back";
             this.btnBack.UseVisualStyleBackColor = true;
             this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
-            // AddCategory
+            // pnlAddCategory
+            // 
+            this.pnlAddCategory.Location = new System.Drawing.Point(303, 164);
+            this.pnlAddCategory.Name = "pnlAddCategory";
+            this.pnlAddCategory.Size = new System.Drawing.Size(200, 100);
+            this.pnlAddCategory.TabIndex = 2;
+            // 
+            // ModifyCategory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.pnlAddCategory);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.btnAccept);
-            this.Controls.Add(this.pnlAddCategory);
-            this.Name = "AddCategory";
+            this.Name = "ModifyCategory";
             this.Size = new System.Drawing.Size(804, 451);
             this.ResumeLayout(false);
 
@@ -76,8 +76,8 @@ namespace PasswordsManagerUserInterface
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlAddCategory;
         private System.Windows.Forms.Button btnAccept;
         private System.Windows.Forms.Button btnBack;
+        private System.Windows.Forms.Panel pnlAddCategory;
     }
 }

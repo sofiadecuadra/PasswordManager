@@ -50,9 +50,10 @@ namespace PasswordsManagerUserInterface
 
         private void btnModify_Click(object sender, EventArgs e)
         {
-            //pnlMainWindow.Controls.Clear();
-            //UserControl modifyCategory = new ModifyCategory(PasswordManager, pnlMainWindow);
-            //pnlMainWindow.Controls.Add(modifyCategory);
+            Category selected = dgvCategories.SelectedRows[0].DataBoundItem as Category;
+            pnlMainWindow.Controls.Clear();
+            UserControl modifyCategory = new ModifyCategory(PasswordManager, pnlMainWindow, selected);
+            pnlMainWindow.Controls.Add(modifyCategory);
         }
     }
 }

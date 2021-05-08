@@ -211,22 +211,24 @@ namespace GestorPasswordsDominio
             {
                 throw new ExceptionIncorrectMasterPassword("The password entered by the user did not match the master password");
             }
-            if (!NewPasswordHasValidLength(newPassword))
-            {
-                throw new ExceptionIncorrectLength("The new password's length must be between 5 and 25, but it's current length is " + newPassword.Length);
-            }
             this.MasterPassword = newPassword;
-            return true;
-        }
 
-        public bool NewPasswordHasValidLength(string aPassword)
-        {
-            return aPassword.Length >= 5 && aPassword.Length <= 25;
+            return true;
         }
 
         public bool PasswordsMatch(string currentPassword, string masterPassword)
         {
             return currentPassword == masterPassword;
+        }
+
+        internal void AddSharedUserPasswordPair(UserPasswordPair passwordToShare)
+        {
+            SharedPasswords.AddUserPasswordPair(passwordToShare);
+        }
+
+        internal void UnshareUserPasswordPair(UserPasswordPair passwordToStopSharing)
+        {
+            SharedPasswords.RemoveUserPasswordPair(passwordToStopSharing);
         }
 
         public bool AddCategory(Category aCategory)
@@ -241,19 +243,9 @@ namespace GestorPasswordsDominio
             return categoryAdded;
         }
 
-        internal void AddSharedUserPasswordPair(UserPasswordPair passwordToShare)
-        {
-            SharedPasswords.AddUserPasswordPair(passwordToShare);
-        }
-
-        internal void UnshareUserPasswordPair(UserPasswordPair passwordToStopSharing)
-        {
-            SharedPasswords.RemoveUserPasswordPair(passwordToStopSharing);
-        }
-
         private void AddCategoryToSortedList(Category aCategory)
         {
-            this.categoriesList.Add(aCategory.Name, aCategory); // If it already exists in the list throws an exception
+            this.categoriesList.Add(aCategory.Name, aCategory);
         }
 
         private static bool CategoryHasValidLength(string categoryName)
@@ -275,7 +267,7 @@ namespace GestorPasswordsDominio
         public bool ModifyCategory(Category aCategory, string newName)
         {
             bool categoryModified = false;
-            if (CategoryCouldBeModified(aCategory, newName))
+            if (CategoryCouldBeModified(aCategory, newName.ToLower()))
             {
                 UpdateCategory(aCategory, newName);
                 categoryModified = true;
@@ -285,29 +277,36 @@ namespace GestorPasswordsDominio
 
         private void UpdateCategory(Category aCategory, string newName)
         {
+            RemoveCategoryFromCategoriesCollection(aCategory);
             aCategory.Name = newName;
+            AddCategoryToSortedList(aCategory);
+        }
+
+        private void RemoveCategoryFromCategoriesCollection(Category aCategory)
+        {
+            this.categoriesList.Remove(aCategory.Name);
         }
 
         private bool CategoryCouldBeModified(Category aCategory, string newName)
         {
-            bool categoryCouldBeModified = false;
+            if (aCategory.Name == newName) return false;
 
-            if (!CategoryExists(aCategory))
+            if (!CategoryExists(aCategory.Name))
             {
                 throw new ExceptionCategoryNotExists();
             }
 
-            if (CategoryHasValidLength(newName))
+            if (CategoryExists(newName))
             {
-                categoryCouldBeModified = true;
+                throw new ExceptionCategoryAlreadyExists("The category already exists" );
             }
 
-            return categoryCouldBeModified;
+            return CategoryHasValidLength(newName);
         }
 
-        private bool CategoryExists(Category aCategory)
+        private bool CategoryExists(string aCategoryName)
         {
-            return this.categoriesList.ContainsKey(aCategory.Name);
+            return this.categoriesList.ContainsKey(aCategoryName);
         }
 
         public bool CreditCardNumberExists(string creditCardNumber)
