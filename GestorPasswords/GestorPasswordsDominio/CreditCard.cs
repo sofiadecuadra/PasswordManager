@@ -32,12 +32,26 @@ namespace GestorPasswordsDominio
                 expirationDate = new DateTime (value.Year, value.Month, lastDayOfMonth);
             }
         }
+
+        private string DisplayCreditCard()
+        {
+            string creditCardNumber = "";
+            for(int i=1; i<=16; i++)
+            {
+                creditCardNumber += this.Number[i-1];
+                if(i%4 == 0 && i!=16)
+                {
+                    creditCardNumber += " ";
+                }
+            }
+            return creditCardNumber;
+        }
         public Category Category { get; set; }
 
         override
             public string ToString()
         {
-            return "[" + Category.Name + "] [" + Type + "] [" + Number + "]";
+            return "[" + Name + "] [" + Type + "] [" + DisplayCreditCard() + "]";
         }
     }
 }
