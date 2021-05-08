@@ -16,13 +16,13 @@ namespace PasswordsManagerUserInterface
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public UserPasswordPairForm Form { get; private set; }
-        public UserPasswordPair PasswordModified { get; private set; }
+        public UserPasswordPair PasswordToModified { get; private set; }
         public ModifyUserPasswordPair(PasswordManager aPasswordManager, Panel panel, UserPasswordPair password)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
             PnlMainWindow = panel;
-            PasswordModified = password;
+            PasswordToModified = password;
             LoadUserPasswordPairForm(password);
         }
 
@@ -64,7 +64,7 @@ namespace PasswordsManagerUserInterface
         public void ModifyPassword()
         {
             UserPasswordPair newPassword = CreatePassword();
-            newPassword.Category.AddUserPasswordPair(newPassword);
+            newPassword.Category.ModifyUserPasswordPair(PasswordToModified, newPassword);
             GoBack();
         }
 
