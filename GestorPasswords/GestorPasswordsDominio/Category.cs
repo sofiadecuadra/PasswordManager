@@ -31,6 +31,12 @@ namespace GestorPasswordsDominio
             this.userPasswordPairsHash = new Dictionary<string, UserPasswordPair>();
         }
 
+        override
+            public string ToString()
+        {
+            return Name;
+        }
+
         public CreditCard[] GetCreditCards()
         {
             return creditCardHashTable.Values.ToArray();
@@ -270,7 +276,7 @@ namespace GestorPasswordsDominio
 
             if (!siteHasValidLength(newUserPasswordPair.Site))
             {
-                throw new ExceptionUserPasswordPairHasInvalidSiteLength("The site's length must be between 5 and 25, but it's current length is " + newUserPasswordPair.Site.Length);
+                throw new ExceptionUserPasswordPairHasInvalidSiteLength("The site's length must be between 3 and 25, but it's current length is " + newUserPasswordPair.Site.Length);
             }
 
             if (!notesHaveValidLength(newUserPasswordPair.Notes))

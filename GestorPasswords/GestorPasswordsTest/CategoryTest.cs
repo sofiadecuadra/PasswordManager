@@ -2272,5 +2272,12 @@ namespace GestorPasswordsTest
             Assert.AreEqual(0, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
             Assert.AreEqual(0, aCategory.DarkGreenUserPasswordPairsQuantity);
         }
+
+
+        [TestMethod]
+        public void CategoryToString()
+        {
+            Assert.AreEqual(aCategory.ToString(), "category");
+        }
     }
 }
