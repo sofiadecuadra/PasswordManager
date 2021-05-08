@@ -68,5 +68,48 @@ namespace PasswordsManagerUserInterface
             UserControl addCreditCard = new AddCreditCard(PasswordManager, pnlMainWindow);
             pnlMainWindow.Controls.Add(addCreditCard);
         }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                RemoveCreditCard();
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                MessageBox.Show("Please, choose a credit card to remove", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (ExceptionCreditCardDoesNotExist)
+            {
+                MessageBox.Show("The credit card does not exist", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void RemoveCreditCard()
+        {
+            CreditCard selected = dgvCreditCards.SelectedRows[0].DataBoundItem as CreditCard;
+            selected.Category.RemoveCreditCard(selected.Number);
+            dgvCreditCards.DataSource = PasswordManager.CurrentUser.GetCreditCards();
+        }
+
+        private void btnModify_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                LoadModifyCreditCardForm();
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                MessageBox.Show("Please, choose a credit card to modify", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadModifyCreditCardForm()
+        {
+            CreditCard selected = dgvCreditCards.SelectedRows[0].DataBoundItem as CreditCard;
+            pnlMainWindow.Controls.Clear();
+            UserControl modifyCreditCard = new ModifyCreditCard(PasswordManager, pnlMainWindow, selected);
+            pnlMainWindow.Controls.Add(modifyCreditCard);
+        }
     }
 }

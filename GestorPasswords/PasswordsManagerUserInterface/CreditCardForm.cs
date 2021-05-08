@@ -23,6 +23,26 @@ namespace PasswordsManagerUserInterface
             SetMinExpirationDate();
         }
 
+        public CreditCardForm(PasswordManager aPasswordManager, CreditCard aCreditCard)
+        {
+            InitializeComponent();
+            PasswordManager = aPasswordManager;
+            LoadCategories();
+            SetMinExpirationDate();
+            LoadDefaultValues(aCreditCard);
+        }
+
+        private void LoadDefaultValues(CreditCard aCreditCard)
+        {
+            cbCategory.SelectedItem = aCreditCard.Category;
+            txtName.Text = aCreditCard.Name;
+            txtType.Text = aCreditCard.Type;
+            txtNumber.Text = aCreditCard.Number;
+            txtCode.Text = aCreditCard.Code;
+            dtpExpirationDate.Value = aCreditCard.ExpirationDate;
+            txtNotes.Text = aCreditCard.Notes;
+        }
+
         private void SetMinExpirationDate()
         {
             dtpExpirationDate.MinDate = DateTime.Now;

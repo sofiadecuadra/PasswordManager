@@ -50,6 +50,18 @@ namespace PasswordsManagerUserInterface
 
         private void btnModify_Click(object sender, EventArgs e)
         {
+            try
+            {
+                LoadModifyCategoryForm();
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                MessageBox.Show("Please, choose a category to modify", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadModifyCategoryForm()
+        {
             Category selected = dgvCategories.SelectedRows[0].DataBoundItem as Category;
             pnlMainWindow.Controls.Clear();
             UserControl modifyCategory = new ModifyCategory(PasswordManager, pnlMainWindow, selected);

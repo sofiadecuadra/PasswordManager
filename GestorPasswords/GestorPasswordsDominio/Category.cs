@@ -150,17 +150,6 @@ namespace GestorPasswordsDominio
             return creditCardNumber.Length == 16;
         }
 
-
-        private bool ModifiedCreditCardIsValid(CreditCard oldCreditCard, CreditCard newCreditCard)
-        {
-            if (!CreditCardNumbersAreEqual(oldCreditCard.Number, newCreditCard.Number) && CreditCardNumberAlreadyExistsInUser(newCreditCard.Number))
-            {
-                throw new ExceptionCreditCardNumberAlreadyExistsInUser("The credit card number already exists in user");
-            }
-
-            return CreditCardDataIsValid(newCreditCard);
-        }
-
         private bool CreditCardNumbersAreEqual (string oldCreditCardNumber, string newCreditCardNumber)
         {
             return oldCreditCardNumber == newCreditCardNumber;
@@ -183,6 +172,16 @@ namespace GestorPasswordsDominio
             }
            
             return true;
+        }
+
+        private bool ModifiedCreditCardIsValid(CreditCard oldCreditCard, CreditCard newCreditCard)
+        {
+            if (!CreditCardNumbersAreEqual(oldCreditCard.Number, newCreditCard.Number) && CreditCardNumberAlreadyExistsInUser(newCreditCard.Number))
+            {
+                throw new ExceptionCreditCardNumberAlreadyExistsInUser("The credit card number already exists in user");
+            }
+
+            return CreditCardDataIsValid(newCreditCard);
         }
 
         private void AddCreditCardToHashTable(CreditCard newCreditCard)

@@ -332,6 +332,31 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        public void AddCreditCardToCategoryAndGetCreditCardslist()
+        {
+            Category aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+            aUser.AddCategory(aCategory);
+
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Category = aCategory,
+                Name = "VISA",
+                Type = "Visa Gold",
+                Number = "1234567891234567",
+                Code = "123",
+                ExpirationDate = DateTime.Now,
+                Notes = "Notes"
+            };
+            aCategory.AddCreditCard(aCreditCard);
+
+            Assert.AreEqual(1, aUser.GetCreditCards().Length);
+        }
+
+        [TestMethod]
         public void RetriveExistingUserPasswordPair()
         {
             var aCategory = new Category()
