@@ -64,9 +64,16 @@ namespace PasswordsManagerUserInterface
 
         public void AddPassword()
         {
-            UserPasswordPair newPassword = CreatePassword();
-            newPassword.Category.AddUserPasswordPair(newPassword);
-            GoBack();
+            if (Form.GetCategory() != null)
+            {
+                UserPasswordPair newPassword = CreatePassword();
+                newPassword.Category.AddUserPasswordPair(newPassword);
+                GoBack();
+            }
+            else
+            {
+                MessageBox.Show("The category cannot be null", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private UserPasswordPair CreatePassword()

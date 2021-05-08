@@ -82,10 +82,17 @@ namespace PasswordsManagerUserInterface
 
         private void btnModify_Click(object sender, EventArgs e)
         {
-            //UserPasswordPair selected = dgvPasswords.SelectedRows[0].DataBoundItem as UserPasswordPair;
-            //pnlMainWindow.Controls.Clear();
-            //UserControl modifyUserPasswordPairControl = new ModifyUserPasswordPair(PasswordManager, pnlMainWindow, selected);
-            //pnlMainWindow.Controls.Add(modifyUserPasswordPairControl);
+            try
+            {
+                UserPasswordPair selected = dgvPasswords.SelectedRows[0].DataBoundItem as UserPasswordPair;
+                pnlMainWindow.Controls.Clear();
+                UserControl modifyUserPasswordPairControl = new ModifyUserPasswordPair(PasswordManager, pnlMainWindow, selected);
+                pnlMainWindow.Controls.Add(modifyUserPasswordPairControl);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                MessageBox.Show("Select the password to modify", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

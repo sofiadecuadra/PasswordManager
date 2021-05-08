@@ -24,6 +24,8 @@ namespace PasswordsManagerUserInterface
         public UserPasswordPairForm (PasswordManager aPasswordManager, UserPasswordPair passwordToModify)
         {
             InitializeComponent();
+            PasswordManager = aPasswordManager;
+            LoadCategories();
             comboCategory.SelectedItem = passwordToModify.Category;
             txtSite.Text = passwordToModify.Site;
             txtUser.Text = passwordToModify.Username;
@@ -33,9 +35,15 @@ namespace PasswordsManagerUserInterface
 
         private void LoadCategories()
         {
-            foreach (Category category in PasswordManager.CurrentUser.GetCategories())
+            Category[] categories = PasswordManager.CurrentUser.GetCategories();
+
+            foreach (Category category in categories)
             {
                 comboCategory.Items.Add(category);
+            }
+            if (categories.Length > 0)
+            {
+                comboCategory.SelectedIndex = 0;
             }
         }
 

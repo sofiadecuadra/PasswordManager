@@ -53,6 +53,7 @@ namespace PasswordsManagerUserInterface
             // txtNotes
             // 
             this.txtNotes.Location = new System.Drawing.Point(169, 586);
+            this.txtNotes.MaxLength = 250;
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
             this.txtNotes.Size = new System.Drawing.Size(306, 123);
@@ -120,9 +121,25 @@ namespace PasswordsManagerUserInterface
             // numericUpDownLength
             // 
             this.numericUpDownLength.Location = new System.Drawing.Point(355, 290);
+            this.numericUpDownLength.Maximum = new decimal(new int[] {
+            25,
+            0,
+            0,
+            0});
+            this.numericUpDownLength.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             this.numericUpDownLength.Name = "numericUpDownLength";
+            this.numericUpDownLength.ReadOnly = true;
             this.numericUpDownLength.Size = new System.Drawing.Size(120, 31);
             this.numericUpDownLength.TabIndex = 31;
+            this.numericUpDownLength.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             // 
             // lblLength
             // 
@@ -136,6 +153,7 @@ namespace PasswordsManagerUserInterface
             // txtPassword
             // 
             this.txtPassword.Location = new System.Drawing.Point(169, 241);
+            this.txtPassword.MaxLength = 25;
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(306, 31);
             this.txtPassword.TabIndex = 29;
@@ -152,6 +170,7 @@ namespace PasswordsManagerUserInterface
             // txtUser
             // 
             this.txtUser.Location = new System.Drawing.Point(169, 190);
+            this.txtUser.MaxLength = 25;
             this.txtUser.Name = "txtUser";
             this.txtUser.Size = new System.Drawing.Size(306, 31);
             this.txtUser.TabIndex = 27;
@@ -159,15 +178,16 @@ namespace PasswordsManagerUserInterface
             // lblUser
             // 
             this.lblUser.AutoSize = true;
-            this.lblUser.Location = new System.Drawing.Point(76, 190);
+            this.lblUser.Location = new System.Drawing.Point(37, 190);
             this.lblUser.Name = "lblUser";
-            this.lblUser.Size = new System.Drawing.Size(57, 25);
+            this.lblUser.Size = new System.Drawing.Size(110, 25);
             this.lblUser.TabIndex = 26;
-            this.lblUser.Text = "User";
+            this.lblUser.Text = "Username";
             // 
             // txtSite
             // 
             this.txtSite.Location = new System.Drawing.Point(169, 142);
+            this.txtSite.MaxLength = 25;
             this.txtSite.Name = "txtSite";
             this.txtSite.Size = new System.Drawing.Size(306, 31);
             this.txtSite.TabIndex = 25;
@@ -183,6 +203,7 @@ namespace PasswordsManagerUserInterface
             // 
             // comboCategory
             // 
+            this.comboCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboCategory.FormattingEnabled = true;
             this.comboCategory.Location = new System.Drawing.Point(169, 94);
             this.comboCategory.Name = "comboCategory";
