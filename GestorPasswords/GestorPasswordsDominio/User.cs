@@ -444,9 +444,9 @@ namespace GestorPasswordsDominio
 
             foreach (string element in leakedData)
             {
-                if (ItsACreditCard(element))
+                if (ItsACreditCard(element.Trim()))
                 {
-                    CreditCard aLeakedCreditCardOfUser = ReturnCreditCardThatAppeardInDataBreaches(element);
+                    CreditCard aLeakedCreditCardOfUser = ReturnCreditCardThatAppeardInDataBreaches(element.Trim());
 
                     if (aLeakedCreditCardOfUser != null)
                     {
@@ -455,7 +455,7 @@ namespace GestorPasswordsDominio
                 }
                 else
                 {
-                    List<UserPasswordPair> leakedPasswordsOfUser = ReturnListOfUserPasswordPairWhosePasswordAppearedInDataBreaches(element);
+                    List<UserPasswordPair> leakedPasswordsOfUser = ReturnListOfUserPasswordPairWhosePasswordAppearedInDataBreaches(element.Trim());
 
                     foreach (UserPasswordPair pair in leakedPasswordsOfUser)
                     {

@@ -53,9 +53,9 @@ namespace PasswordsManagerUserInterface
 
         private void btnCheckDataBreaches_Click(object sender, EventArgs e)
         {
-            //pnlMainWindow.Controls.Clear();
-            //UserControl checkDataBreaches = new CheckDataBreaches(PasswordManager, pnlMainWindow);
-            //pnlMainWindow.Controls.Add(checkDataBreaches);
+            pnlMainWindow.Controls.Clear();
+            UserControl checkDataBreaches = new CheckDataBreaches(PasswordManager, pnlMainWindow);
+            pnlMainWindow.Controls.Add(checkDataBreaches);
         }
 
         private void btnCategories_Click(object sender, EventArgs e)

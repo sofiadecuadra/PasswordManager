@@ -13,6 +13,5 @@ namespace GestorPasswordsDominio
         {
             return txtDataBreaches.Split('\n');
         }
-
     }
 }
