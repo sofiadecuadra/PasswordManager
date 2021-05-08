@@ -25,9 +25,9 @@ namespace PasswordsManagerUserInterface
 
         private void btnPasswords_Click(object sender, EventArgs e)
         {
-            //pnlMainWindow.Controls.Clear();
-            //UserControl passwords = new Passwords(PasswordManager, pnlMainWindow);
-            //pnlMainWindow.Controls.Add(passwords);
+            pnlMainWindow.Controls.Clear();
+            UserControl passwords = new Passwords(PasswordManager, pnlMainWindow);
+            pnlMainWindow.Controls.Add(passwords);
         }
 
         private void btnCreditCards_Click(object sender, EventArgs e)
