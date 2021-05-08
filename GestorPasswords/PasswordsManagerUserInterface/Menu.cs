@@ -32,9 +32,9 @@ namespace PasswordsManagerUserInterface
 
         private void btnCreditCards_Click(object sender, EventArgs e)
         {
-            //pnlMainWindow.Controls.Clear();
-            //UserControl creditCards = new CreditCards(PasswordManager, pnlMainWindow);
-            //pnlMainWindow.Controls.Add(creditCards);
+            pnlMainWindow.Controls.Clear();
+            UserControl creditCards = new CreditCards(PasswordManager, pnlMainWindow);
+            pnlMainWindow.Controls.Add(creditCards);
         }
 
         private void btnLogOut_Click(object sender, EventArgs e)

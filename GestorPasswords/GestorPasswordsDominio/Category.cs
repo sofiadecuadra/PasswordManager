@@ -31,8 +31,7 @@ namespace GestorPasswordsDominio
             this.userPasswordPairsHash = new Dictionary<string, UserPasswordPair>();
         }
 
-        override
-            public string ToString()
+        public override string ToString()
         {
             return Name;
         }

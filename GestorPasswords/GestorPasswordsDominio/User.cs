@@ -466,6 +466,16 @@ namespace GestorPasswordsDominio
             return (leakedPasswordsOfUserList, leakedCreditCardsOfUserList);
         }
 
+        public CreditCard[] GetCreditCards()
+        {
+            List<CreditCard> allCreditCards = new List<CreditCard>();
+            foreach (Category category in this.GetCategories())
+            {
+                allCreditCards.AddRange(category.GetCreditCards());
+            }
+            return allCreditCards.ToArray();
+        }
+
         public UserPasswordPair[] GetUserPasswordPairs()
         {
             List<UserPasswordPair> allUserPasswordPairs = new List<UserPasswordPair>();
