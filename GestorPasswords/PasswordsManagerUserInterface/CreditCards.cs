@@ -111,5 +111,6 @@ namespace PasswordsManagerUserInterface
             UserControl modifyCreditCard = new ModifyCreditCard(PasswordManager, pnlMainWindow, selected);
             pnlMainWindow.Controls.Add(modifyCreditCard);
         }
+
     }
 }

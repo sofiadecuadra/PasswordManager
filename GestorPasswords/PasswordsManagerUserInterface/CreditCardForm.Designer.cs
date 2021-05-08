@@ -66,6 +66,7 @@ namespace PasswordsManagerUserInterface
             // txtName
             // 
             this.txtName.Location = new System.Drawing.Point(95, 72);
+            this.txtName.MaxLength = 25;
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(196, 20);
             this.txtName.TabIndex = 2;
@@ -73,6 +74,7 @@ namespace PasswordsManagerUserInterface
             // txtType
             // 
             this.txtType.Location = new System.Drawing.Point(95, 114);
+            this.txtType.MaxLength = 25;
             this.txtType.Name = "txtType";
             this.txtType.Size = new System.Drawing.Size(196, 20);
             this.txtType.TabIndex = 3;
@@ -80,13 +82,16 @@ namespace PasswordsManagerUserInterface
             // txtNumber
             // 
             this.txtNumber.Location = new System.Drawing.Point(95, 157);
+            this.txtNumber.MaxLength = 19;
             this.txtNumber.Name = "txtNumber";
             this.txtNumber.Size = new System.Drawing.Size(196, 20);
             this.txtNumber.TabIndex = 4;
+            this.txtNumber.TextChanged += new System.EventHandler(this.txtNumber_TextChanged);
             // 
             // txtCode
             // 
             this.txtCode.Location = new System.Drawing.Point(95, 202);
+            this.txtCode.MaxLength = 4;
             this.txtCode.Name = "txtCode";
             this.txtCode.Size = new System.Drawing.Size(196, 20);
             this.txtCode.TabIndex = 5;
@@ -94,6 +99,7 @@ namespace PasswordsManagerUserInterface
             // txtNotes
             // 
             this.txtNotes.Location = new System.Drawing.Point(95, 295);
+            this.txtNotes.MaxLength = 250;
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
             this.txtNotes.Size = new System.Drawing.Size(196, 83);

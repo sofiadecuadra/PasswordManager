@@ -15,7 +15,7 @@ namespace GestorPasswordsDominio
         {
             get { return number; }
             set {
-                 number = value.Replace(" ", string.Empty);
+                number = RemoveAllBlankSpaces(value);
             }
         }
         public string Type { get; set; }
@@ -47,6 +47,26 @@ namespace GestorPasswordsDominio
             return creditCardNumber;
         }
         public Category Category { get; set; }
+
+        public static string FormatNumber(string creditCardNumber)
+        {
+            creditCardNumber = RemoveAllBlankSpaces(creditCardNumber);
+            return AddBlankSpacesAfter4Characters(creditCardNumber);
+        }
+
+        private static string AddBlankSpacesAfter4Characters(string creditCardNumber)
+        {
+            if (creditCardNumber.Length >= 5) creditCardNumber = creditCardNumber.Insert(4, " ");
+            if (creditCardNumber.Length >= 10) creditCardNumber = creditCardNumber.Insert(9, " ");
+            if (creditCardNumber.Length >= 15) creditCardNumber = creditCardNumber.Insert(14, " ");
+
+            return creditCardNumber;
+        }
+
+        private static string RemoveAllBlankSpaces(string creditCardNumber)
+        {
+            return creditCardNumber.Replace(" ", string.Empty);
+        }
 
         override
             public string ToString()

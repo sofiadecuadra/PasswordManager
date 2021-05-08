@@ -37,7 +37,7 @@ namespace PasswordsManagerUserInterface
             cbCategory.SelectedItem = aCreditCard.Category;
             txtName.Text = aCreditCard.Name;
             txtType.Text = aCreditCard.Type;
-            txtNumber.Text = aCreditCard.Number;
+            txtNumber.Text = CreditCard.FormatNumber(aCreditCard.Number);
             txtCode.Text = aCreditCard.Code;
             dtpExpirationDate.Value = aCreditCard.ExpirationDate;
             txtNotes.Text = aCreditCard.Notes;
@@ -87,6 +87,12 @@ namespace PasswordsManagerUserInterface
         public string GetNotes()
         {
             return txtNotes.Text;
+        }
+
+        private void txtNumber_TextChanged(object sender, EventArgs e)
+        {
+            txtNumber.Text = CreditCard.FormatNumber(txtNumber.Text);
+            txtNumber.SelectionStart = txtNumber.Text.Length;
         }
     }
 }

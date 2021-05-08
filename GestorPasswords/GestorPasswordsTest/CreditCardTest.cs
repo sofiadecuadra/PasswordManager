@@ -37,7 +37,16 @@ namespace GestorPasswordsTest
             };
             Assert.AreEqual(aCreditCard.ToString(), "[Visa Gold] [Visa] [1234 5678 9123 4567]");
         }
+        
+        [TestMethod]
+        public void FormatCreditCardNumber()
+        {
+            string creditCardNumber = "1234567891234567";
+            Assert.AreEqual("1234 5678 9123 4567 ", CreditCard.FormatNumber(creditCardNumber));
+        }
     }
 }
 
 
+
+        
