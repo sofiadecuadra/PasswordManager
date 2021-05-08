@@ -72,7 +72,7 @@ namespace PasswordsManagerUserInterface
             }
             else
             {
-                MessageBox.Show("The category cannot be null", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("The category cannot be null \n To add a category go to Menu -> Categories -> Add", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
