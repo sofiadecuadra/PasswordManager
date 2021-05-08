@@ -29,7 +29,6 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-
         [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void NewMasterPasswordWithLengthUnder5()
         {
@@ -286,6 +285,50 @@ namespace GestorPasswordsTest
             aUser.AddCategory(aCategory);
 
             aUser.ModifyCategory(aCategory, "thisIsAnInvalidLength");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionCategoryAlreadyExists))]
+        public void ModifyCategoryToAnExistingName()
+        {
+            User aUser = new User()
+            {
+                MasterPassword = "myPassword"
+            };
+
+            Category aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+            aUser.AddCategory(aCategory);
+
+            Category otherCategory = new Category()
+            {
+                User = aUser,
+                Name = "otherCategory"
+            };
+            aUser.AddCategory(otherCategory);
+
+            aUser.ModifyCategory(otherCategory, "myCategory");
+        }
+
+        [TestMethod]
+        public void ModifyCategoryNameToItsOwnName()
+        {
+            User aUser = new User()
+            {
+                MasterPassword = "myPassword"
+            };
+
+            Category aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+            aUser.AddCategory(aCategory);
+
+            Assert.IsFalse(aUser.ModifyCategory(aCategory, "myCategory"));
         }
 
         [TestMethod]
