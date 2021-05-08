@@ -57,11 +57,11 @@ namespace PasswordsManagerUserInterface
 
         public string GetSite()
         {
-            return txtSite.Text;
+            return txtSite.Text.Trim();
         }
         public string GetUsername()
         {
-            return txtUser.Text;
+            return txtUser.Text.Trim();
         }
         public string GetPassword()
         {
@@ -69,7 +69,7 @@ namespace PasswordsManagerUserInterface
         }
         public string GetNotes()
         {
-            return txtNotes.Text;
+            return txtNotes.Text.Trim();
         }
 
         private void btnGenerate_Click(object sender, EventArgs e)
