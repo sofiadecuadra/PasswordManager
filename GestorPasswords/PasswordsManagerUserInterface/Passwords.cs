@@ -75,9 +75,16 @@ namespace PasswordsManagerUserInterface
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            //pnlMainWindow.Controls.Clear();
-            //UserControl deleteUserPasswordPairControl = new DeleteUserPasswordPair(PasswordManager, pnlMainWindow);
-            //pnlMainWindow.Controls.Add(deleteUserPasswordPairControl);
+            try
+            {
+                UserPasswordPair selected = dgvPasswords.SelectedRows[0].DataBoundItem as UserPasswordPair;
+                selected.Category.RemoveUserPasswordPair(selected);
+                dgvPasswords.DataSource = PasswordManager.CurrentUser.GetUserPasswordPairs();
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                MessageBox.Show("Select the password to delete", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnModify_Click(object sender, EventArgs e)
