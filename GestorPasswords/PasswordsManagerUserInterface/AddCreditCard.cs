@@ -49,6 +49,10 @@ namespace PasswordsManagerUserInterface
             {
                 AddNewCreditCard();
             }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Please, choose a category", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             catch (ExceptionCreditCardNumberAlreadyExistsInUser exception)
             {
                 MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
