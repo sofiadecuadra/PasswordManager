@@ -791,6 +791,34 @@ namespace GestorPasswordsTest
             CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
         }
 
+        [TestMethod]
+        public void GetAllPasswordPairsWithOnlyOneInside()
+        {
+            var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+            UserPasswordPair[] allUserPasswordPairs = aUser.GetUserPasswordPairs();
+            Assert.AreEqual(1, allUserPasswordPairs.Length);
+            Assert.AreEqual(aUserPasswordPair, allUserPasswordPairs[0]);
+        }
 
+        private UserPasswordPair LoadTestCategoryToMyUserWithAUserPasswordPair()
+        {
+            var aCategory = new Category()
+            {
+                Name = "aCategory",
+                User = aUser
+            };
+            var aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAPassword",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+            aUser.AddCategory(aCategory);
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+            return aUserPasswordPair;
+        }
     }
 }

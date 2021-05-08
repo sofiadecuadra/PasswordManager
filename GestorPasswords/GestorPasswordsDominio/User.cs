@@ -465,5 +465,15 @@ namespace GestorPasswordsDominio
             }
             return (leakedPasswordsOfUserList, leakedCreditCardsOfUserList);
         }
+
+        public UserPasswordPair[] GetUserPasswordPairs()
+        {
+            List<UserPasswordPair> allUserPasswordPairs = new List<UserPasswordPair>();
+            foreach (var category in this.GetCategories())
+            {
+                allUserPasswordPairs.AddRange(category.GetUserPasswordsPairs());
+            }
+            return allUserPasswordPairs.ToArray();
+        }
     }
 }
