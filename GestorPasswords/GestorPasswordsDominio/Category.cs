@@ -31,6 +31,12 @@ namespace GestorPasswordsDominio
             this.userPasswordPairsHash = new Dictionary<string, UserPasswordPair>();
         }
 
+        override
+            public string ToString()
+        {
+            return Name;
+        }
+
         public CreditCard[] GetCreditCards()
         {
             return creditCardHashTable.Values.ToArray();

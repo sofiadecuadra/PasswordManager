@@ -68,9 +68,9 @@ namespace PasswordsManagerUserInterface
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            //pnlMainWindow.Controls.Clear();
-            //UserControl addUserPasswordPairControl = new AddUserPasswordPair(PasswordManager, pnlMainWindow);
-            //pnlMainWindow.Controls.Add(addUserPasswordPairControl);
+            pnlMainWindow.Controls.Clear();
+            UserControl addUserPasswordPairControl = new AddUserPasswordPair(PasswordManager, pnlMainWindow);
+            pnlMainWindow.Controls.Add(addUserPasswordPairControl);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -82,8 +82,9 @@ namespace PasswordsManagerUserInterface
 
         private void btnModify_Click(object sender, EventArgs e)
         {
+            //UserPasswordPair selected = dgvPasswords.SelectedRows[0].DataBoundItem as UserPasswordPair;
             //pnlMainWindow.Controls.Clear();
-            //UserControl modifyUserPasswordPairControl = new ModifyUserPasswordPair(PasswordManager, pnlMainWindow);
+            //UserControl modifyUserPasswordPairControl = new ModifyUserPasswordPair(PasswordManager, pnlMainWindow, selected);
             //pnlMainWindow.Controls.Add(modifyUserPasswordPairControl);
         }
     }
