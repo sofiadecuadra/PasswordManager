@@ -18,6 +18,7 @@ namespace PasswordsManagerUserInterface
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
+            txtPassword.PasswordChar = '*';
             LoadCategories();
         }
 
@@ -25,6 +26,7 @@ namespace PasswordsManagerUserInterface
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
+            txtPassword.PasswordChar = '*';
             LoadCategories();
             comboCategory.SelectedItem = passwordToModify.Category;
             txtSite.Text = passwordToModify.Site;
