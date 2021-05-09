@@ -55,27 +55,27 @@ namespace PasswordsManagerUserInterface
             dgvData.AutoGenerateColumns = false;
             dgvData.ColumnCount = 6;
             dgvData.Columns[0].Name = "Category";
-            dgvData.Columns[0].Width = 135;
+            dgvData.Columns[0].Width = 132;
 
             dgvData.Columns[1].Name = "Name";
-            dgvData.Columns[1].Width = 210;
+            dgvData.Columns[1].Width = 286;
 
             dgvData.Columns[2].Name = "Type";
-            dgvData.Columns[2].Width = 210;
+            dgvData.Columns[2].Width = 286;
 
             dgvData.Columns[3].Name = "Number";
-            dgvData.Columns[3].Width = 290;
+            dgvData.Columns[3].Width = 120;
 
             dgvData.Columns[4].Name = "Code";
-            dgvData.Columns[4].Width = 30;
+            dgvData.Columns[4].Width = 44;
 
-            dgvData.Columns[5].Name = "ExpirationDate";
+            dgvData.Columns[5].Name = "Expiration Date";
             dgvData.Columns[5].DefaultCellStyle.Format = "MM/yyyy";
-            dgvData.Columns[5].Width = 70;
+            dgvData.Columns[5].Width = 79;
 
             dgvData.BackgroundColor = SystemColors.Control;
 
-            dgvData.Rows.Add(aCreditCard.Category, aCreditCard.Name, aCreditCard.Type, aCreditCard.Number, aCreditCard.Code, aCreditCard.ExpirationDate);
+            dgvData.Rows.Add(aCreditCard.Category, aCreditCard.Name, aCreditCard.Type, CreditCard.FormatNumber(aCreditCard.Number), aCreditCard.Code, aCreditCard.ExpirationDate);
             txtNotes.Text = aCreditCard.Notes;
         }
 

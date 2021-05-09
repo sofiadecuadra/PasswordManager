@@ -134,7 +134,8 @@ namespace PasswordsManagerUserInterface
             if (e.ColumnIndex == 5)
             {
                 CreditCard selected = dgvCreditCards.Rows[e.RowIndex].DataBoundItem as CreditCard;
-                // Load pop-up window
+                PopUp30Seconds popUp = new PopUp30Seconds(selected);
+                popUp.Visible = true;
             }
         }
     }

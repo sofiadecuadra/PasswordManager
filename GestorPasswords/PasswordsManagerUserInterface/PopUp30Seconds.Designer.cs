@@ -43,7 +43,7 @@ namespace PasswordsManagerUserInterface
             this.dgvData.AllowUserToDeleteRows = false;
             this.dgvData.AllowUserToResizeColumns = false;
             this.dgvData.AllowUserToResizeRows = false;
-            this.dgvData.ColumnHeadersHeight = 30;
+            this.dgvData.ColumnHeadersHeight = 40;
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvData.Location = new System.Drawing.Point(21, 12);
             this.dgvData.MultiSelect = false;
@@ -51,7 +51,7 @@ namespace PasswordsManagerUserInterface
             this.dgvData.RowHeadersVisible = false;
             this.dgvData.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvData.Size = new System.Drawing.Size(950, 55);
+            this.dgvData.Size = new System.Drawing.Size(950, 61);
             this.dgvData.TabIndex = 0;
             // 
             // txtNotes
