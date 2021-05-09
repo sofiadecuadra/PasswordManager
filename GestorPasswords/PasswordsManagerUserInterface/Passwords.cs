@@ -114,6 +114,7 @@ namespace PasswordsManagerUserInterface
                 pnlMainWindow.Controls.Clear();
                 UserControl modifyUserPasswordPairControl = new ModifyUserPasswordPair(PasswordManager, pnlMainWindow, selected);
                 pnlMainWindow.Controls.Add(modifyUserPasswordPairControl);
+                dgvPasswords.DataSource = PasswordManager.CurrentUser.GetUserPasswordPairs();
             }
             catch (ArgumentOutOfRangeException)
             {
