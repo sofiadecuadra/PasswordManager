@@ -475,5 +475,10 @@ namespace GestorPasswordsDominio
             }
             return allUserPasswordPairs.ToArray();
         }
+
+        public UserPasswordPair[] GetSharedUserPasswordPairs()
+        {
+            return this.SharedPasswords.GetUserPasswordsPairs();
+        }
     }
 }
