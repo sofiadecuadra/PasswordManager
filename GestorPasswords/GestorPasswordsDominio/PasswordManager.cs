@@ -23,6 +23,16 @@ namespace GestorPasswordsDominio
             set { currentUser = ReturnUserIfItExists(value); }
         }
 
+        public User[] Users
+        {
+            get
+            {
+                User[] usersToReturn = new User[users.Count];
+                users.Values.CopyTo(usersToReturn, 0);
+                return usersToReturn;
+            }
+        }
+
         private User ReturnUserIfItExists(User value)
         {
             return HasUser(value.Name) ? value : throw new ExceptionUserDoesNotExist();
