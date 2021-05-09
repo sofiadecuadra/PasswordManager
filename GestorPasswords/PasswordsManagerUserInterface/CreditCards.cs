@@ -30,31 +30,38 @@ namespace PasswordsManagerUserInterface
             dgvCreditCards.Columns[0].Name = "Category";
             dgvCreditCards.Columns[0].HeaderText = "Category";
             dgvCreditCards.Columns[0].DataPropertyName = "Category";
-            dgvCreditCards.Columns[0].Width = 100;
+            dgvCreditCards.Columns[0].Width = 140;
 
             dgvCreditCards.Columns[1].Name = "Name";
             dgvCreditCards.Columns[1].HeaderText = "Name";
             dgvCreditCards.Columns[1].DataPropertyName = "Name";
-            dgvCreditCards.Columns[1].Width = 100;
+            dgvCreditCards.Columns[1].Width = 153;
 
             dgvCreditCards.Columns[2].Name = "Type";
             dgvCreditCards.Columns[2].HeaderText = "Type";
             dgvCreditCards.Columns[2].DataPropertyName = "Type";
-            dgvCreditCards.Columns[2].Width = 100;
+            dgvCreditCards.Columns[2].Width = 153;
 
             dgvCreditCards.Columns[3].Name = "Number";
             dgvCreditCards.Columns[3].HeaderText = "Number";
-            dgvCreditCards.Columns[3].DataPropertyName = "Number";
-            dgvCreditCards.Columns[3].Width = 120;
+            dgvCreditCards.Columns[3].DataPropertyName = "HideNumber";
+            dgvCreditCards.Columns[3].Width = 140;
 
             dgvCreditCards.Columns[4].Name = "ExpirationDate";
             dgvCreditCards.Columns[4].HeaderText = "Expiration Date";
             dgvCreditCards.Columns[4].DataPropertyName = "ExpirationDate";
-            dgvCreditCards.Columns[4].Width = 103;
+            dgvCreditCards.Columns[4].DefaultCellStyle.Format = "MM/yyyy";
+            dgvCreditCards.Columns[4].Width = 71;
 
             dgvCreditCards.DataSource = PasswordManager.CurrentUser.GetCreditCards();
-        }
 
+            for (int i = 0; i < dgvCreditCards.Rows.Count; i++)
+            {
+                string numberFormatted = CreditCard.FormatNumber(dgvCreditCards.Rows[i].Cells[3].Value.ToString());
+                dgvCreditCards.Rows[i].Cells[3].Value = numberFormatted;
+            }
+        }
+        
         private void btnBack_Click(object sender, EventArgs e)
         {
             pnlMainWindow.Controls.Clear();
@@ -111,6 +118,5 @@ namespace PasswordsManagerUserInterface
             UserControl modifyCreditCard = new ModifyCreditCard(PasswordManager, pnlMainWindow, selected);
             pnlMainWindow.Controls.Add(modifyCreditCard);
         }
-
     }
 }

@@ -85,13 +85,13 @@ namespace PasswordsManagerUserInterface
             this.dgvCreditCards.AllowUserToResizeRows = false;
             this.dgvCreditCards.ColumnHeadersHeight = 40;
             this.dgvCreditCards.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvCreditCards.Location = new System.Drawing.Point(141, 133);
+            this.dgvCreditCards.Location = new System.Drawing.Point(77, 137);
             this.dgvCreditCards.MultiSelect = false;
             this.dgvCreditCards.Name = "dgvCreditCards";
             this.dgvCreditCards.ReadOnly = true;
             this.dgvCreditCards.RowHeadersVisible = false;
             this.dgvCreditCards.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCreditCards.Size = new System.Drawing.Size(526, 158);
+            this.dgvCreditCards.Size = new System.Drawing.Size(660, 150);
             this.dgvCreditCards.TabIndex = 5;
             // 
             // CreditCards

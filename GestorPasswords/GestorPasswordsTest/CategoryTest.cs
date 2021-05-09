@@ -62,7 +62,7 @@ namespace GestorPasswordsTest
         {
             CreditCard aCreditCard = new CreditCard()
             {
-                Number = "12345678912",
+                Number = "12345678912345",
                 Type = "Visa",
                 Name = "Visa Gold",
                 Code = "234",
