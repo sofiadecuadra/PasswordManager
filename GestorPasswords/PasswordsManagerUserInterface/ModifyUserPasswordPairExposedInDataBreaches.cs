@@ -11,18 +11,20 @@ using System.Windows.Forms;
 
 namespace PasswordsManagerUserInterface
 {
-    public partial class ModifyUserPasswordPair : UserControl
+    public partial class ModifyUserPasswordPairExposedInDataBreaches : UserControl
     {
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public UserPasswordPairForm Form { get; private set; }
         public UserPasswordPair PasswordToModified { get; private set; }
-        public ModifyUserPasswordPair(PasswordManager aPasswordManager, Panel panel, UserPasswordPair password)
+        public IDataBreachesFormatter DataBreaches { get; private set; }
+        public ModifyUserPasswordPairExposedInDataBreaches(PasswordManager aPasswordManager, Panel panel, UserPasswordPair password, IDataBreachesFormatter dataBreaches)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
             PnlMainWindow = panel;
             PasswordToModified = password;
+            DataBreaches = dataBreaches;
             LoadUserPasswordPairForm(password);
         }
 
@@ -31,34 +33,6 @@ namespace PasswordsManagerUserInterface
             pnlModifyUserPasswordPair.Controls.Clear();
             Form = new UserPasswordPairForm(PasswordManager, passwordToModified);
             pnlModifyUserPasswordPair.Controls.Add(Form);
-        }
-
-        private void btnAccept_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                ModifyPassword();
-            }
-            catch (ExceptionExistingUserPasswordPair exception)
-            {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (ExceptionUserPasswordPairHasInvalidUsernameLength exception)
-            {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (ExceptionUserPasswordPairHasInvalidPasswordLength exception)
-            {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (ExceptionUserPasswordPairHasInvalidSiteLength exception)
-            {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (ExceptionUserPasswordPairHasInvalidNotesLength exception)
-            {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         public void ModifyPassword()
@@ -87,12 +61,11 @@ namespace PasswordsManagerUserInterface
 
             return userPasswordPair;
         }
-
         private void GoBack()
         {
             PnlMainWindow.Controls.Clear();
-            UserControl passwords = new Passwords(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(passwords);
+            UserControl dataBreaches = new DataBreachesResult(PasswordManager, PnlMainWindow, DataBreaches);
+            PnlMainWindow.Controls.Add(dataBreaches);
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -105,6 +78,34 @@ namespace PasswordsManagerUserInterface
             PnlMainWindow.Controls.Clear();
             UserControl menu = new Menu(PasswordManager, PnlMainWindow);
             PnlMainWindow.Controls.Add(menu);
+        }
+
+        private void btnAccept_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                ModifyPassword();
+            }
+            catch (ExceptionExistingUserPasswordPair exception)
+            {
+                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (ExceptionUserPasswordPairHasInvalidUsernameLength exception)
+            {
+                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (ExceptionUserPasswordPairHasInvalidPasswordLength exception)
+            {
+                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (ExceptionUserPasswordPairHasInvalidSiteLength exception)
+            {
+                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (ExceptionUserPasswordPairHasInvalidNotesLength exception)
+            {
+                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
