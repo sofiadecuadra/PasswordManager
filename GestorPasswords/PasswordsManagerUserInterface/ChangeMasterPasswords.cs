@@ -38,7 +38,7 @@ namespace PasswordsManagerUserInterface
             this.txtOldPassword.Location = new System.Drawing.Point(338, 185);
             this.txtOldPassword.Name = "txtOldPassword";
             this.txtOldPassword.PasswordChar = '*';
-            this.txtOldPassword.Size = new System.Drawing.Size(231, 22);
+            this.txtOldPassword.Size = new System.Drawing.Size(231, 20);
             this.txtOldPassword.TabIndex = 0;
             // 
             // lblOldPassword
@@ -47,7 +47,7 @@ namespace PasswordsManagerUserInterface
             this.lblOldPassword.AutoSize = true;
             this.lblOldPassword.Location = new System.Drawing.Point(207, 188);
             this.lblOldPassword.Name = "lblOldPassword";
-            this.lblOldPassword.Size = new System.Drawing.Size(103, 17);
+            this.lblOldPassword.Size = new System.Drawing.Size(78, 13);
             this.lblOldPassword.TabIndex = 1;
             this.lblOldPassword.Text = "Old Password: ";
             // 
@@ -57,7 +57,7 @@ namespace PasswordsManagerUserInterface
             this.lblNewPassword.AutoSize = true;
             this.lblNewPassword.Location = new System.Drawing.Point(207, 244);
             this.lblNewPassword.Name = "lblNewPassword";
-            this.lblNewPassword.Size = new System.Drawing.Size(108, 17);
+            this.lblNewPassword.Size = new System.Drawing.Size(84, 13);
             this.lblNewPassword.TabIndex = 3;
             this.lblNewPassword.Text = "New Password: ";
             // 
@@ -69,14 +69,14 @@ namespace PasswordsManagerUserInterface
             this.txtNewPassword.Location = new System.Drawing.Point(338, 241);
             this.txtNewPassword.Name = "txtNewPassword";
             this.txtNewPassword.PasswordChar = '*';
-            this.txtNewPassword.Size = new System.Drawing.Size(231, 22);
+            this.txtNewPassword.Size = new System.Drawing.Size(231, 20);
             this.txtNewPassword.TabIndex = 2;
             // 
             // btnUpdateMasterPassword
             // 
-            this.btnUpdateMasterPassword.Location = new System.Drawing.Point(338, 320);
+            this.btnUpdateMasterPassword.Location = new System.Drawing.Point(376, 322);
             this.btnUpdateMasterPassword.Name = "btnUpdateMasterPassword";
-            this.btnUpdateMasterPassword.Size = new System.Drawing.Size(231, 23);
+            this.btnUpdateMasterPassword.Size = new System.Drawing.Size(75, 23);
             this.btnUpdateMasterPassword.TabIndex = 4;
             this.btnUpdateMasterPassword.Text = "Update";
             this.btnUpdateMasterPassword.UseVisualStyleBackColor = true;
@@ -85,10 +85,10 @@ namespace PasswordsManagerUserInterface
             // btnBack
             // 
             this.btnBack.AutoSize = true;
-            this.btnBack.Location = new System.Drawing.Point(647, 23);
+            this.btnBack.Location = new System.Drawing.Point(677, 22);
             this.btnBack.Margin = new System.Windows.Forms.Padding(4);
             this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(100, 28);
+            this.btnBack.Size = new System.Drawing.Size(75, 23);
             this.btnBack.TabIndex = 5;
             this.btnBack.Text = "Back";
             this.btnBack.UseVisualStyleBackColor = true;
@@ -105,7 +105,7 @@ namespace PasswordsManagerUserInterface
             this.Controls.Add(this.txtOldPassword);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ChangeMasterPasswords";
-            this.Size = new System.Drawing.Size(1072, 555);
+            this.Size = new System.Drawing.Size(804, 451);
             this.ResumeLayout(false);
             this.PerformLayout();
 

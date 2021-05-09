@@ -14,12 +14,12 @@ namespace PasswordsManagerUserInterface
     public partial class SignUp : UserControl
     {
         public PasswordManager PasswordManager { get; private set; }
-        public Panel pnlMainWindow { get; private set; }
+        public Panel PnlMainWindow { get; private set; }
         public SignUp(PasswordManager passwordManager, Panel panel)
         {
             InitializeComponent();
             PasswordManager = passwordManager;
-            pnlMainWindow = panel;
+            PnlMainWindow = panel;
         }
 
         private void btnSignUp_Click(object sender, EventArgs e)
@@ -85,16 +85,16 @@ namespace PasswordsManagerUserInterface
 
         private void LoadApplication()
         {
-            pnlMainWindow.Controls.Clear();
-            UserControl menu = new Menu(PasswordManager, pnlMainWindow);
-            pnlMainWindow.Controls.Add(menu);
+            PnlMainWindow.Controls.Clear();
+            UserControl menu = new Menu(PasswordManager, PnlMainWindow);
+            PnlMainWindow.Controls.Add(menu);
         }
 
         private void btnLogIn_Click(object sender, EventArgs e)
         {
-            pnlMainWindow.Controls.Clear();
-            UserControl logIn = new LogIn(PasswordManager, pnlMainWindow);
-            pnlMainWindow.Controls.Add(logIn);
+            PnlMainWindow.Controls.Clear();
+            UserControl logIn = new LogIn(PasswordManager, PnlMainWindow);
+            PnlMainWindow.Controls.Add(logIn);
         }
     }
 }

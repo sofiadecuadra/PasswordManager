@@ -14,12 +14,12 @@ namespace PasswordsManagerUserInterface
     public partial class CreditCards : UserControl
     {
         public PasswordManager PasswordManager { get; private set; }
-        public Panel pnlMainWindow { get; private set; }
+        public Panel PnlMainWindow { get; private set; }
         public CreditCards(PasswordManager aPasswordManager, Panel panel)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
-            pnlMainWindow = panel;
+            PnlMainWindow = panel;
             LoadDataGridViewData();
         }
 
@@ -64,16 +64,16 @@ namespace PasswordsManagerUserInterface
         
         private void btnBack_Click(object sender, EventArgs e)
         {
-            pnlMainWindow.Controls.Clear();
-            UserControl menu = new Menu(PasswordManager, pnlMainWindow);
-            pnlMainWindow.Controls.Add(menu);
+            PnlMainWindow.Controls.Clear();
+            UserControl menu = new Menu(PasswordManager, PnlMainWindow);
+            PnlMainWindow.Controls.Add(menu);
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            pnlMainWindow.Controls.Clear();
-            UserControl addCreditCard = new AddCreditCard(PasswordManager, pnlMainWindow);
-            pnlMainWindow.Controls.Add(addCreditCard);
+            PnlMainWindow.Controls.Clear();
+            UserControl addCreditCard = new AddCreditCard(PasswordManager, PnlMainWindow);
+            PnlMainWindow.Controls.Add(addCreditCard);
         }
 
         private void btnRemove_Click(object sender, EventArgs e)
@@ -114,9 +114,9 @@ namespace PasswordsManagerUserInterface
         private void LoadModifyCreditCardForm()
         {
             CreditCard selected = dgvCreditCards.SelectedRows[0].DataBoundItem as CreditCard;
-            pnlMainWindow.Controls.Clear();
-            UserControl modifyCreditCard = new ModifyCreditCard(PasswordManager, pnlMainWindow, selected);
-            pnlMainWindow.Controls.Add(modifyCreditCard);
+            PnlMainWindow.Controls.Clear();
+            UserControl modifyCreditCard = new ModifyCreditCard(PasswordManager, PnlMainWindow, selected);
+            PnlMainWindow.Controls.Add(modifyCreditCard);
         }
     }
 }

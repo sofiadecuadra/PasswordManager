@@ -18,7 +18,6 @@ namespace PasswordsManagerUserInterface
         public CategoryForm Form { get; private set; }
         public Category CategoryToModified { get; private set; }
 
-
         public ModifyCategory(PasswordManager aPasswordManager, Panel panel, Category category)
         {
             InitializeComponent();
