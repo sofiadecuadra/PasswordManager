@@ -13,6 +13,7 @@ namespace PasswordsManagerUserInterface
 {
     public partial class LogIn : UserControl
     {
+        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         public PasswordManager PasswordManager { get; private set; }
         public Panel pnlMainWindow { get; private set; }
 
@@ -61,5 +62,6 @@ namespace PasswordsManagerUserInterface
             UserControl signUp = new SignUp(PasswordManager, pnlMainWindow);
             pnlMainWindow.Controls.Add(signUp);
         }
+
     }
 }

@@ -45,6 +45,7 @@ namespace PasswordsManagerUserInterface
             // txtName
             // 
             this.txtName.Location = new System.Drawing.Point(26, 49);
+            this.txtName.MaxLength = 15;
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(150, 20);
             this.txtName.TabIndex = 1;

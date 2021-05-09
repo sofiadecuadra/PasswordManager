@@ -16,11 +16,13 @@ namespace PasswordsManagerUserInterface
     {
         public PasswordManager PasswordManager { get; private set; }
         public Panel pnlMainWindow { get; private set; }
+        private readonly DataGridViewButtonColumn fullView;
         public Passwords(PasswordManager aPasswordManager, Panel panel)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
             pnlMainWindow = panel;
+            fullView = new DataGridViewButtonColumn();
             LoadDataGridViewData();
         }
 
@@ -34,22 +36,29 @@ namespace PasswordsManagerUserInterface
             dgvPasswords.Columns[0].Name = "Category";
             dgvPasswords.Columns[0].HeaderText = "Category";
             dgvPasswords.Columns[0].DataPropertyName = "CategoryName";
-            dgvPasswords.Columns[0].Width = 185;
+            dgvPasswords.Columns[0].Width = 135;
 
             dgvPasswords.Columns[1].Name = "Site";
             dgvPasswords.Columns[1].HeaderText = "Site";
             dgvPasswords.Columns[1].DataPropertyName = "Site";
-            dgvPasswords.Columns[1].Width = 200;
+            dgvPasswords.Columns[1].Width = 215;
 
             dgvPasswords.Columns[2].Name = "User";
             dgvPasswords.Columns[2].HeaderText = "User";
             dgvPasswords.Columns[2].DataPropertyName = "Username";
-            dgvPasswords.Columns[2].Width = 150;
+            dgvPasswords.Columns[2].Width = 215;
 
             dgvPasswords.Columns[3].Name = "LastModified";
             dgvPasswords.Columns[3].HeaderText = "Last Modified";
             dgvPasswords.Columns[3].DataPropertyName = "LastModifiedShortFormat";
-            dgvPasswords.Columns[3].Width = 150;
+            dgvPasswords.Columns[3].Width = 70;
+
+            dgvPasswords.Columns.Add(fullView);
+            fullView.HeaderText = @"";
+            fullView.Name = "Full view";
+            fullView.Text = "Full view";
+            fullView.Width = 61;
+            fullView.UseColumnTextForButtonValue = true;
 
             dgvPasswords.DataSource = userPasswordPairs;
         }
@@ -99,6 +108,16 @@ namespace PasswordsManagerUserInterface
             catch (ArgumentOutOfRangeException)
             {
                 MessageBox.Show("Select the password to modify", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dgvPasswords_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 4)
+            {
+                UserPasswordPair selected = dgvPasswords.Rows[e.RowIndex].DataBoundItem as UserPasswordPair;
+                PopUp30Seconds fullView = new PopUp30Seconds(selected);
+                fullView.Visible = true;
             }
         }
     }
