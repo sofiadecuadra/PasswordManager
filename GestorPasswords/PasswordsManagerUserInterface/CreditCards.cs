@@ -15,11 +15,14 @@ namespace PasswordsManagerUserInterface
     {
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
+        
+        private readonly DataGridViewButtonColumn fullView;
         public CreditCards(PasswordManager aPasswordManager, Panel panel)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
             PnlMainWindow = panel;
+            fullView = new DataGridViewButtonColumn();
             LoadDataGridViewData();
         }
 
@@ -52,6 +55,13 @@ namespace PasswordsManagerUserInterface
             dgvCreditCards.Columns[4].DataPropertyName = "ExpirationDate";
             dgvCreditCards.Columns[4].DefaultCellStyle.Format = "MM/yyyy";
             dgvCreditCards.Columns[4].Width = 71;
+
+            dgvCreditCards.Columns.Add(fullView);
+            fullView.HeaderText = @"";
+            fullView.Name = "Full view";
+            fullView.Text = "Full view";
+            fullView.Width = 60;
+            fullView.UseColumnTextForButtonValue = true;
 
             dgvCreditCards.DataSource = PasswordManager.CurrentUser.GetCreditCards();
 
@@ -117,6 +127,15 @@ namespace PasswordsManagerUserInterface
             PnlMainWindow.Controls.Clear();
             UserControl modifyCreditCard = new ModifyCreditCard(PasswordManager, PnlMainWindow, selected);
             PnlMainWindow.Controls.Add(modifyCreditCard);
+        }
+
+        private void dgvCreditCards_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 5)
+            {
+                CreditCard selected = dgvCreditCards.Rows[e.RowIndex].DataBoundItem as CreditCard;
+                // Load pop-up window
+            }
         }
     }
 }
