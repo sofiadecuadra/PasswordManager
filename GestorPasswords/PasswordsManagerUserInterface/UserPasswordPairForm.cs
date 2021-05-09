@@ -102,5 +102,17 @@ namespace PasswordsManagerUserInterface
             };
             return conditions;
         }
+
+        private void checkBoxShow_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxShow.Checked)
+            {
+                txtPassword.PasswordChar = '\0';
+            }
+            else
+            {
+                txtPassword.PasswordChar = '*';
+            }         
+        }
     }
 }

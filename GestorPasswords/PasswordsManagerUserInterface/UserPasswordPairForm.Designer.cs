@@ -47,6 +47,7 @@ namespace PasswordsManagerUserInterface
             this.comboCategory = new System.Windows.Forms.ComboBox();
             this.lblCategory = new System.Windows.Forms.Label();
             this.lblPassword2 = new System.Windows.Forms.Label();
+            this.checkBoxShow = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLength)).BeginInit();
             this.SuspendLayout();
             // 
@@ -228,10 +229,22 @@ namespace PasswordsManagerUserInterface
             this.lblPassword2.TabIndex = 21;
             this.lblPassword2.Text = "Password";
             // 
+            // checkBoxShow
+            // 
+            this.checkBoxShow.AutoSize = true;
+            this.checkBoxShow.Location = new System.Drawing.Point(493, 244);
+            this.checkBoxShow.Name = "checkBoxShow";
+            this.checkBoxShow.Size = new System.Drawing.Size(97, 29);
+            this.checkBoxShow.TabIndex = 39;
+            this.checkBoxShow.Text = "Show";
+            this.checkBoxShow.UseVisualStyleBackColor = true;
+            this.checkBoxShow.CheckedChanged += new System.EventHandler(this.checkBoxShow_CheckedChanged);
+            // 
             // UserPasswordPairForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.checkBoxShow);
             this.Controls.Add(this.txtNotes);
             this.Controls.Add(this.lblNotes);
             this.Controls.Add(this.btnGenerate);
@@ -277,5 +290,6 @@ namespace PasswordsManagerUserInterface
         private System.Windows.Forms.ComboBox comboCategory;
         private System.Windows.Forms.Label lblCategory;
         private System.Windows.Forms.Label lblPassword2;
+        private System.Windows.Forms.CheckBox checkBoxShow;
     }
 }
