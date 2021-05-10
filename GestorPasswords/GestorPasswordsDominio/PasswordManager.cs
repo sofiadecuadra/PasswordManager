@@ -23,6 +23,16 @@ namespace GestorPasswordsDominio
             set { currentUser = ReturnUserIfItExists(value); }
         }
 
+        public User[] Users
+        {
+            get
+            {
+                User[] usersToReturn = new User[users.Count];
+                users.Values.CopyTo(usersToReturn, 0);
+                return usersToReturn;
+            }
+        }
+
         private User ReturnUserIfItExists(User value)
         {
             return HasUser(value.Name) ? value : throw new ExceptionUserDoesNotExist();
@@ -50,11 +60,11 @@ namespace GestorPasswordsDominio
                 .MasterPassword.Equals(masterPassword);
         }
 
-        public void ValidateAndSetCurrentUser(string username, string masterPassword)
+        public void LogIn(string username, string masterPassword)
         {
-            if (ValidateUser(username, masterPassword))
+            if (ValidateUser(username.Trim(), masterPassword))
             {
-                this.CurrentUser = FindUser(username);
+                this.CurrentUser = FindUser(username.Trim());
             }
             else
             {

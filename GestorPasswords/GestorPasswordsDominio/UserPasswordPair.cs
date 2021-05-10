@@ -11,7 +11,8 @@ namespace GestorPasswordsDominio
     {
         public string Password { get; set; }
 
-        public Hashtable UsersWithAccess{ get; set; }
+
+        public Hashtable UsersWithAccess{ get; private set; }
 
         private string username;
         public string Username
@@ -32,7 +33,11 @@ namespace GestorPasswordsDominio
 
         public DateTime LastModifiedDate { get; private set; }
 
+        public String LastModifiedShortFormat { get { return LastModifiedDate.ToString("d"); } }
+
         public Category Category { get; set; }
+
+        public String CategoryName { get { return Category.Name; }  }
 
         public UserPasswordPair()
         {
@@ -52,6 +57,24 @@ namespace GestorPasswordsDominio
         internal void RemoveFromUsersWithAccess(User userToRevokeSharedPassword)
         {
             UsersWithAccess.Remove(userToRevokeSharedPassword.Name);
+        }
+
+        override
+        public string ToString()
+        {
+            return "[" + Category.Name + "] [" + Site + "] [" + Username + "]";
+        }
+
+        public User[] GetUsersWithAccessArray()
+        {
+            if (UsersWithAccess.Count == 0)
+            {
+                throw new ExceptionUserPasswordPairIsNotSharedWithAnyone();
+            }
+
+            User[] usersToReturn = new User[UsersWithAccess.Count];
+            UsersWithAccess.Values.CopyTo(usersToReturn, 0);
+            return usersToReturn;
         }
     }
 }

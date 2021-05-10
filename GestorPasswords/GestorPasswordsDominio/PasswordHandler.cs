@@ -154,32 +154,32 @@ namespace GestorPasswordsDominio
             return randomizer == 0 && conditions.HasLowerCase;
         }
 
-        private static string AddLower()
+        private static char AddLower()
         {
             string lower = "abcdefghijklmnopqrstuvwxyz";
 
-            return lower[rand.Next(0, lower.Length)] + "";
+            return lower[rand.Next(0, lower.Length)];
         }
 
-        private static string AddUpper()
+        private static char AddUpper()
         {
             string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-            return upper[rand.Next(0, upper.Length)] + "";
+            return upper[rand.Next(0, upper.Length)];
         }
 
-        private static string AddDigit()
+        private static char AddDigit()
         {
             string digits = "0123456789";
 
-            return digits[rand.Next(0, digits.Length)] + "";
+            return digits[rand.Next(0, digits.Length)];
         }
 
-        private static string AddSymbol()
+        private static char AddSymbol()
         {
             string symbols = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
-            return symbols[rand.Next(0, symbols.Length)] + "";
+            return symbols[rand.Next(0, symbols.Length)];
         }
 
         private static string AddMustHaveCharacters(PasswordGenerationConditions conditions)
