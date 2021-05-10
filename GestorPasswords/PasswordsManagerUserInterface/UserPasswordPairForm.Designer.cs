@@ -54,7 +54,7 @@ namespace PasswordsManagerUserInterface
             // txtNotes
             // 
             this.txtNotes.Location = new System.Drawing.Point(84, 305);
-            this.txtNotes.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtNotes.Margin = new System.Windows.Forms.Padding(2);
             this.txtNotes.MaxLength = 250;
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
@@ -74,7 +74,7 @@ namespace PasswordsManagerUserInterface
             // btnGenerate
             // 
             this.btnGenerate.Location = new System.Drawing.Point(207, 265);
-            this.btnGenerate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnGenerate.Margin = new System.Windows.Forms.Padding(2);
             this.btnGenerate.Name = "btnGenerate";
             this.btnGenerate.Size = new System.Drawing.Size(71, 21);
             this.btnGenerate.TabIndex = 36;
@@ -86,7 +86,7 @@ namespace PasswordsManagerUserInterface
             // 
             this.checkBoxSymbols.AutoSize = true;
             this.checkBoxSymbols.Location = new System.Drawing.Point(166, 244);
-            this.checkBoxSymbols.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBoxSymbols.Margin = new System.Windows.Forms.Padding(2);
             this.checkBoxSymbols.Name = "checkBoxSymbols";
             this.checkBoxSymbols.Size = new System.Drawing.Size(65, 17);
             this.checkBoxSymbols.TabIndex = 35;
@@ -97,7 +97,7 @@ namespace PasswordsManagerUserInterface
             // 
             this.checkBoxDigits.AutoSize = true;
             this.checkBoxDigits.Location = new System.Drawing.Point(166, 223);
-            this.checkBoxDigits.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBoxDigits.Margin = new System.Windows.Forms.Padding(2);
             this.checkBoxDigits.Name = "checkBoxDigits";
             this.checkBoxDigits.Size = new System.Drawing.Size(52, 17);
             this.checkBoxDigits.TabIndex = 34;
@@ -108,7 +108,7 @@ namespace PasswordsManagerUserInterface
             // 
             this.checkBoxLowerCase.AutoSize = true;
             this.checkBoxLowerCase.Location = new System.Drawing.Point(166, 202);
-            this.checkBoxLowerCase.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBoxLowerCase.Margin = new System.Windows.Forms.Padding(2);
             this.checkBoxLowerCase.Name = "checkBoxLowerCase";
             this.checkBoxLowerCase.Size = new System.Drawing.Size(82, 17);
             this.checkBoxLowerCase.TabIndex = 33;
@@ -119,7 +119,7 @@ namespace PasswordsManagerUserInterface
             // 
             this.checkBoxUpperCase.AutoSize = true;
             this.checkBoxUpperCase.Location = new System.Drawing.Point(166, 181);
-            this.checkBoxUpperCase.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBoxUpperCase.Margin = new System.Windows.Forms.Padding(2);
             this.checkBoxUpperCase.Name = "checkBoxUpperCase";
             this.checkBoxUpperCase.Size = new System.Drawing.Size(82, 17);
             this.checkBoxUpperCase.TabIndex = 32;
@@ -129,7 +129,7 @@ namespace PasswordsManagerUserInterface
             // numericUpDownLength
             // 
             this.numericUpDownLength.Location = new System.Drawing.Point(218, 152);
-            this.numericUpDownLength.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numericUpDownLength.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDownLength.Maximum = new decimal(new int[] {
             25,
             0,
@@ -153,7 +153,7 @@ namespace PasswordsManagerUserInterface
             // lblLength
             // 
             this.lblLength.AutoSize = true;
-            this.lblLength.Location = new System.Drawing.Point(163, 154);
+            this.lblLength.Location = new System.Drawing.Point(174, 154);
             this.lblLength.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblLength.Name = "lblLength";
             this.lblLength.Size = new System.Drawing.Size(40, 13);
@@ -163,7 +163,7 @@ namespace PasswordsManagerUserInterface
             // txtPassword
             // 
             this.txtPassword.Location = new System.Drawing.Point(84, 125);
-            this.txtPassword.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtPassword.Margin = new System.Windows.Forms.Padding(2);
             this.txtPassword.MaxLength = 25;
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(194, 20);
@@ -182,7 +182,7 @@ namespace PasswordsManagerUserInterface
             // txtUser
             // 
             this.txtUser.Location = new System.Drawing.Point(84, 99);
-            this.txtUser.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtUser.Margin = new System.Windows.Forms.Padding(2);
             this.txtUser.MaxLength = 25;
             this.txtUser.Name = "txtUser";
             this.txtUser.Size = new System.Drawing.Size(194, 20);
@@ -201,7 +201,7 @@ namespace PasswordsManagerUserInterface
             // txtSite
             // 
             this.txtSite.Location = new System.Drawing.Point(84, 74);
-            this.txtSite.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtSite.Margin = new System.Windows.Forms.Padding(2);
             this.txtSite.MaxLength = 25;
             this.txtSite.Name = "txtSite";
             this.txtSite.Size = new System.Drawing.Size(194, 20);
@@ -222,7 +222,7 @@ namespace PasswordsManagerUserInterface
             this.comboCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboCategory.FormattingEnabled = true;
             this.comboCategory.Location = new System.Drawing.Point(84, 49);
-            this.comboCategory.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboCategory.Margin = new System.Windows.Forms.Padding(2);
             this.comboCategory.Name = "comboCategory";
             this.comboCategory.Size = new System.Drawing.Size(194, 21);
             this.comboCategory.TabIndex = 23;
@@ -250,9 +250,9 @@ namespace PasswordsManagerUserInterface
             // checkBoxShow
             // 
             this.checkBoxShow.AutoSize = true;
-            this.checkBoxShow.Location = new System.Drawing.Point(493, 244);
+            this.checkBoxShow.Location = new System.Drawing.Point(300, 127);
             this.checkBoxShow.Name = "checkBoxShow";
-            this.checkBoxShow.Size = new System.Drawing.Size(97, 29);
+            this.checkBoxShow.Size = new System.Drawing.Size(53, 17);
             this.checkBoxShow.TabIndex = 39;
             this.checkBoxShow.Text = "Show";
             this.checkBoxShow.UseVisualStyleBackColor = true;
@@ -281,9 +281,9 @@ namespace PasswordsManagerUserInterface
             this.Controls.Add(this.comboCategory);
             this.Controls.Add(this.lblCategory);
             this.Controls.Add(this.lblPassword2);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "UserPasswordPairForm";
-            this.Size = new System.Drawing.Size(295, 389);
+            this.Size = new System.Drawing.Size(368, 389);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLength)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
