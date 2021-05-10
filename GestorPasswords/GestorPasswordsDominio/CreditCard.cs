@@ -38,7 +38,7 @@ namespace GestorPasswordsDominio
         override
         public string ToString()
         {
-            return "[" + Name + "] [" + Type + "] [" + DisplayCreditCard() + "]";
+            return "[" + Name + "] [" + Type + "] [" + AddBlankSpacesAfter4Characters(Number) + "]";
         }
 
         public static string FormatNumber(string creditCardNumber)
@@ -76,20 +76,6 @@ namespace GestorPasswordsDominio
             string formattedNumber = FormatNumber(creditCardNumber);
             string last4digits = formattedNumber.Substring(LAST_4_DIGITS_START_POSITION);
             return "XXXX XXXX XXXX " + last4digits;
-        }
-
-        private string DisplayCreditCard()
-        {
-            string creditCardNumber = "";
-            for (int i = 1; i <= 16; i++)
-            {
-                creditCardNumber += Number[i - 1];
-                if (i % 4 == 0 && i != 16)
-                {
-                    creditCardNumber += " ";
-                }
-            }
-            return creditCardNumber;
         }
 
         public bool CreditCardDataIsValid()
