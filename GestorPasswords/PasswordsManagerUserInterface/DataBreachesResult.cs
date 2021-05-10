@@ -55,5 +55,21 @@ namespace PasswordsManagerUserInterface
             UserControl menu = new Menu(PasswordManager, pnlMainWindow);
             pnlMainWindow.Controls.Add(menu);
         }
+
+        private void btnModify_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                UserPasswordPair selected = (UserPasswordPair)listExposedPasswords.SelectedItem;
+                UserControl modifyUserPasswordPairControl = new ModifyUserPasswordPairExposedInDataBreaches(PasswordManager, pnlMainWindow, selected, DataBreaches);
+                pnlMainWindow.Controls.Clear();
+                pnlMainWindow.Controls.Add(modifyUserPasswordPairControl);
+                
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Select the password to modify", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

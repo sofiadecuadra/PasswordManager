@@ -448,7 +448,7 @@ namespace GestorPasswordsDominio
                 {
                     CreditCard aLeakedCreditCardOfUser = ReturnCreditCardThatAppeardInDataBreaches(element.Trim());
 
-                    if (aLeakedCreditCardOfUser != null)
+                    if (aLeakedCreditCardOfUser != null && !leakedCreditCardsOfUserList.Contains(aLeakedCreditCardOfUser))
                     {
                         leakedCreditCardsOfUserList.Add(aLeakedCreditCardOfUser);
                     }
@@ -459,7 +459,10 @@ namespace GestorPasswordsDominio
 
                     foreach (UserPasswordPair pair in leakedPasswordsOfUser)
                     {
-                        leakedPasswordsOfUserList.Add(pair);
+                        if (!leakedPasswordsOfUserList.Contains(pair))
+                        {
+                            leakedPasswordsOfUserList.Add(pair);
+                        }
                     }
                 }              
             }
@@ -484,6 +487,11 @@ namespace GestorPasswordsDominio
                 allUserPasswordPairs.AddRange(category.GetUserPasswordsPairs());
             }
             return allUserPasswordPairs.ToArray();
+        }
+
+        public UserPasswordPair[] GetSharedUserPasswordPairs()
+        {
+            return this.SharedPasswords.GetUserPasswordsPairs();
         }
     }
 }

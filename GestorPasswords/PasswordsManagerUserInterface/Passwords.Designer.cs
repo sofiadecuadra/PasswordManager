@@ -34,7 +34,11 @@ namespace PasswordsManagerUserInterface
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnModify = new System.Windows.Forms.Button();
+            this.dgvSharedPasswords = new System.Windows.Forms.DataGridView();
+            this.btnShare = new System.Windows.Forms.Button();
+            this.btnUnshare = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPasswords)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSharedPasswords)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvPasswords
@@ -102,10 +106,53 @@ namespace PasswordsManagerUserInterface
             this.btnModify.UseVisualStyleBackColor = true;
             this.btnModify.Click += new System.EventHandler(this.btnModify_Click);
             // 
+            // dgvSharedPasswords
+            // 
+            this.dgvSharedPasswords.AllowUserToAddRows = false;
+            this.dgvSharedPasswords.AllowUserToDeleteRows = false;
+            this.dgvSharedPasswords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSharedPasswords.Location = new System.Drawing.Point(44, 338);
+            this.dgvSharedPasswords.MultiSelect = false;
+            this.dgvSharedPasswords.Name = "dgvSharedPasswords";
+            this.dgvSharedPasswords.ReadOnly = true;
+            this.dgvSharedPasswords.RowHeadersVisible = false;
+            this.dgvSharedPasswords.RowHeadersWidth = 51;
+            this.dgvSharedPasswords.RowTemplate.Height = 24;
+            this.dgvSharedPasswords.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvSharedPasswords.Size = new System.Drawing.Size(989, 152);
+            this.dgvSharedPasswords.TabIndex = 10;
+            // 
+            // btnShare
+            // 
+            this.btnShare.AutoSize = true;
+            this.btnShare.Location = new System.Drawing.Point(553, 510);
+            this.btnShare.Margin = new System.Windows.Forms.Padding(4);
+            this.btnShare.Name = "btnShare";
+            this.btnShare.Size = new System.Drawing.Size(100, 28);
+            this.btnShare.TabIndex = 11;
+            this.btnShare.Text = "Share";
+            this.btnShare.UseVisualStyleBackColor = true;
+            this.btnShare.Click += new System.EventHandler(this.btnShare_Click);
+            // 
+            // btnUnshare
+            // 
+            this.btnUnshare.AutoSize = true;
+            this.btnUnshare.Location = new System.Drawing.Point(429, 510);
+            this.btnUnshare.Margin = new System.Windows.Forms.Padding(4);
+            this.btnUnshare.Name = "btnUnshare";
+            this.btnUnshare.Size = new System.Drawing.Size(100, 28);
+            this.btnUnshare.TabIndex = 12;
+            this.btnUnshare.Text = "Unshare";
+            this.btnUnshare.UseVisualStyleBackColor = true;
+            this.btnUnshare.Click += new System.EventHandler(this.btnUnshare_Click);
+            // 
             // Passwords
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnUnshare);
+            this.Controls.Add(this.btnShare);
+            this.Controls.Add(this.dgvSharedPasswords);
             this.Controls.Add(this.btnModify);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnAdd);
@@ -114,6 +161,7 @@ namespace PasswordsManagerUserInterface
             this.Name = "Passwords";
             this.Size = new System.Drawing.Size(804, 451);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPasswords)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSharedPasswords)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -126,5 +174,8 @@ namespace PasswordsManagerUserInterface
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnModify;
+        private System.Windows.Forms.DataGridView dgvSharedPasswords;
+        private System.Windows.Forms.Button btnShare;
+        private System.Windows.Forms.Button btnUnshare;
     }
 }

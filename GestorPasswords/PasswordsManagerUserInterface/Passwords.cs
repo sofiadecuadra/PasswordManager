@@ -11,7 +11,7 @@ using GestorPasswordsDominio;
 
 namespace PasswordsManagerUserInterface
 {
-   
+
     public partial class Passwords : UserControl
     {
         public PasswordManager PasswordManager { get; private set; }
@@ -23,44 +23,63 @@ namespace PasswordsManagerUserInterface
             PasswordManager = aPasswordManager;
             pnlMainWindow = panel;
             fullView = new DataGridViewButtonColumn();
-            LoadDataGridViewData();
+            LoadNormalPasswords();
+            LoadSharedPasswords();
         }
 
-        private void LoadDataGridViewData()
+        private void LoadDataGridViewData(UserPasswordPair[] userPasswordPairs, DataGridView dgv)
         {
-            var userPasswordPairs = PasswordManager.
-                CurrentUser.GetUserPasswordPairs();
+            dgv.AutoGenerateColumns = false;
+            dgv.ColumnCount = 4;
+            dgv.Columns[0].Name = "Category";
+            dgv.Columns[0].HeaderText = "Category";
+            if (dgv == dgvPasswords)
+            {
+                dgv.Columns[0].DataPropertyName = "CategoryName";
+            }
+            else
+            {
+                dgv.Columns[0].DefaultCellStyle.NullValue = "Shared Passwords";
+            }
+            dgv.Columns[0].Width = 135;
 
-            dgvPasswords.AutoGenerateColumns = false;
-            dgvPasswords.ColumnCount = 4;
-            dgvPasswords.Columns[0].Name = "Category";
-            dgvPasswords.Columns[0].HeaderText = "Category";
-            dgvPasswords.Columns[0].DataPropertyName = "CategoryName";
-            dgvPasswords.Columns[0].Width = 135;
+            dgv.Columns[1].Name = "Site";
+            dgv.Columns[1].HeaderText = "Site";
+            dgv.Columns[1].DataPropertyName = "Site";
+            dgv.Columns[1].Width = 215;
 
-            dgvPasswords.Columns[1].Name = "Site";
-            dgvPasswords.Columns[1].HeaderText = "Site";
-            dgvPasswords.Columns[1].DataPropertyName = "Site";
-            dgvPasswords.Columns[1].Width = 215;
+            dgv.Columns[2].Name = "User";
+            dgv.Columns[2].HeaderText = "User";
+            dgv.Columns[2].DataPropertyName = "Username";
+            dgv.Columns[2].Width = 215;
 
-            dgvPasswords.Columns[2].Name = "User";
-            dgvPasswords.Columns[2].HeaderText = "User";
-            dgvPasswords.Columns[2].DataPropertyName = "Username";
-            dgvPasswords.Columns[2].Width = 215;
+            dgv.Columns[3].Name = "LastModified";
+            dgv.Columns[3].HeaderText = "Last Modified";
+            dgv.Columns[3].DataPropertyName = "LastModifiedShortFormat";
+            dgv.Columns[3].Width = 70;
 
-            dgvPasswords.Columns[3].Name = "LastModified";
-            dgvPasswords.Columns[3].HeaderText = "Last Modified";
-            dgvPasswords.Columns[3].DataPropertyName = "LastModifiedShortFormat";
-            dgvPasswords.Columns[3].Width = 70;
-
-            dgvPasswords.Columns.Add(fullView);
+            dgv.Columns.Add(fullView);
             fullView.HeaderText = @"";
             fullView.Name = "Full view";
             fullView.Text = "Full view";
             fullView.Width = 61;
             fullView.UseColumnTextForButtonValue = true;
 
-            dgvPasswords.DataSource = userPasswordPairs;
+            dgv.DataSource = userPasswordPairs;
+        }
+
+        public void LoadNormalPasswords()
+        {
+            var userPasswordPairs = PasswordManager.
+                CurrentUser.GetUserPasswordPairs();
+            LoadDataGridViewData(userPasswordPairs, dgvPasswords);
+        }
+
+        public void LoadSharedPasswords()
+        {
+            var userPasswordPairs = PasswordManager.
+                CurrentUser.GetSharedUserPasswordPairs();
+            LoadDataGridViewData(userPasswordPairs, dgvSharedPasswords);
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -104,6 +123,7 @@ namespace PasswordsManagerUserInterface
                 pnlMainWindow.Controls.Clear();
                 UserControl modifyUserPasswordPairControl = new ModifyUserPasswordPair(PasswordManager, pnlMainWindow, selected);
                 pnlMainWindow.Controls.Add(modifyUserPasswordPairControl);
+                dgvPasswords.DataSource = PasswordManager.CurrentUser.GetUserPasswordPairs();
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -118,6 +138,41 @@ namespace PasswordsManagerUserInterface
                 UserPasswordPair selected = dgvPasswords.Rows[e.RowIndex].DataBoundItem as UserPasswordPair;
                 PopUp30Seconds fullView = new PopUp30Seconds(selected);
                 fullView.Visible = true;
+            }
+        }
+        
+        private void btnShare_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                UserPasswordPair selected = dgvPasswords.SelectedRows[0].DataBoundItem as UserPasswordPair;
+                pnlMainWindow.Controls.Clear();
+                UserControl shareUserPasswordPairControl = new ShareUserPasswordPair(PasswordManager, pnlMainWindow, selected);
+                pnlMainWindow.Controls.Add(shareUserPasswordPairControl);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                MessageBox.Show("Select the password to Share", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnUnshare_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var selected = dgvPasswords.SelectedRows[0].DataBoundItem as UserPasswordPair;
+                selected.GetUsersWithAccessArray();
+                pnlMainWindow.Controls.Clear();
+                UserControl unshareUserPasswordPairControl = new UnshareUserPasswordPair(PasswordManager, pnlMainWindow, selected);
+                pnlMainWindow.Controls.Add(unshareUserPasswordPairControl);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                MessageBox.Show("Select the password to Unshare", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (ExceptionUserPasswordPairIsNotSharedWithAnyone)
+            {
+                MessageBox.Show("This password has not been shared with anyone", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
