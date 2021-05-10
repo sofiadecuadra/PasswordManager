@@ -14,12 +14,12 @@ namespace PasswordsManagerUserInterface
     public partial class Categories : UserControl
     {
         public PasswordManager PasswordManager { get; private set; }
-        public Panel pnlMainWindow { get; private set; }
+        public Panel PnlMainWindow { get; private set; }
         public Categories(PasswordManager aPasswordManager, Panel panel)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
-            pnlMainWindow = panel;
+            PnlMainWindow = panel;
             LoadDataGridViewData();
         }
 
@@ -36,24 +36,36 @@ namespace PasswordsManagerUserInterface
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            pnlMainWindow.Controls.Clear();
-            UserControl menu = new Menu(PasswordManager, pnlMainWindow);
-            pnlMainWindow.Controls.Add(menu);
+            PnlMainWindow.Controls.Clear();
+            UserControl menu = new Menu(PasswordManager, PnlMainWindow);
+            PnlMainWindow.Controls.Add(menu);
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            pnlMainWindow.Controls.Clear();
-            UserControl addCategory = new AddCategory(PasswordManager, pnlMainWindow);
-            pnlMainWindow.Controls.Add(addCategory);
+            PnlMainWindow.Controls.Clear();
+            UserControl addCategory = new AddCategory(PasswordManager, PnlMainWindow);
+            PnlMainWindow.Controls.Add(addCategory);
         }
 
         private void btnModify_Click(object sender, EventArgs e)
         {
+            try
+            {
+                LoadModifyCategoryForm();
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                MessageBox.Show("Please, choose a category to modify", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadModifyCategoryForm()
+        {
             Category selected = dgvCategories.SelectedRows[0].DataBoundItem as Category;
-            pnlMainWindow.Controls.Clear();
-            UserControl modifyCategory = new ModifyCategory(PasswordManager, pnlMainWindow, selected);
-            pnlMainWindow.Controls.Add(modifyCategory);
+            PnlMainWindow.Controls.Clear();
+            UserControl modifyCategory = new ModifyCategory(PasswordManager, PnlMainWindow, selected);
+            PnlMainWindow.Controls.Add(modifyCategory);
         }
     }
 }

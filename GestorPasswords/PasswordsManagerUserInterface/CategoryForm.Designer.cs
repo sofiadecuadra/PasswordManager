@@ -36,7 +36,7 @@ namespace PasswordsManagerUserInterface
             // lblName
             // 
             this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(23, 17);
+            this.lblName.Location = new System.Drawing.Point(3, 22);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(35, 13);
             this.lblName.TabIndex = 0;
@@ -44,9 +44,10 @@ namespace PasswordsManagerUserInterface
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(26, 49);
+            this.txtName.Location = new System.Drawing.Point(3, 49);
+            this.txtName.MaxLength = 15;
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(150, 20);
+            this.txtName.Size = new System.Drawing.Size(194, 20);
             this.txtName.TabIndex = 1;
             // 
             // CategoryForm

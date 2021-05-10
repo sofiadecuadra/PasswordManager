@@ -37,7 +37,37 @@ namespace GestorPasswordsTest
             };
             Assert.AreEqual(aCreditCard.ToString(), "[Visa Gold] [Visa] [1234 5678 9123 4567]");
         }
+        
+        [TestMethod]
+        public void FormatCreditCardNumber()
+        {
+            string creditCardNumber = "1234567891234567";
+            Assert.AreEqual("1234 5678 9123 4567", CreditCard.FormatNumber(creditCardNumber));
+        }
+
+        [TestMethod]
+        public void HideCreditCardNumber()
+        {
+            Category aCategory = new Category()
+            {
+                Name = "Category",
+                User = new User() { MasterPassword = "password", Name = "UserName" }
+            };
+            CreditCard creditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa Gold",
+                Name = "Visa",
+                Code = "123",
+                Notes = "",
+                ExpirationDate = DateTime.Now,
+                Category = aCategory
+            };
+            Assert.AreEqual("XXXX XXXX XXXX 4567", creditCard.HideNumber);
+        }
     }
 }
 
 
+
+        

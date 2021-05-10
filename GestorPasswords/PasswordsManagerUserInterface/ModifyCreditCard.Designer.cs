@@ -1,7 +1,7 @@
 ﻿
 namespace PasswordsManagerUserInterface
 {
-    partial class AddUserPasswordPair
+    partial class ModifyCreditCard
     {
         /// <summary> 
         /// Variable del diseñador necesaria.
@@ -30,58 +30,54 @@ namespace PasswordsManagerUserInterface
         private void InitializeComponent()
         {
             this.btnBack = new System.Windows.Forms.Button();
-            this.pnlAddUserPasswordPair = new System.Windows.Forms.Panel();
+            this.pnlModifyCreditCard = new System.Windows.Forms.Panel();
             this.btnAccept = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnBack
             // 
-            this.btnBack.AutoSize = true;
-            this.btnBack.Location = new System.Drawing.Point(698, 15);
+            this.btnBack.Location = new System.Drawing.Point(677, 22);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(75, 23);
-            this.btnBack.TabIndex = 18;
+            this.btnBack.TabIndex = 0;
             this.btnBack.Text = "Back";
             this.btnBack.UseVisualStyleBackColor = true;
             this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
-            // pnlAddUserPasswordPair
+            // pnlModifyCreditCard
             // 
-            this.pnlAddUserPasswordPair.Location = new System.Drawing.Point(259, 15);
-            this.pnlAddUserPasswordPair.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.pnlAddUserPasswordPair.Name = "pnlAddUserPasswordPair";
-            this.pnlAddUserPasswordPair.Size = new System.Drawing.Size(295, 389);
-            this.pnlAddUserPasswordPair.TabIndex = 20;
+            this.pnlModifyCreditCard.Location = new System.Drawing.Point(270, 20);
+            this.pnlModifyCreditCard.Name = "pnlModifyCreditCard";
+            this.pnlModifyCreditCard.Size = new System.Drawing.Size(303, 390);
+            this.pnlModifyCreditCard.TabIndex = 1;
             // 
             // btnAccept
             // 
-            this.btnAccept.Location = new System.Drawing.Point(480, 419);
-            this.btnAccept.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnAccept.Location = new System.Drawing.Point(371, 416);
             this.btnAccept.Name = "btnAccept";
-            this.btnAccept.Size = new System.Drawing.Size(74, 20);
-            this.btnAccept.TabIndex = 40;
+            this.btnAccept.Size = new System.Drawing.Size(75, 23);
+            this.btnAccept.TabIndex = 2;
             this.btnAccept.Text = "Accept";
             this.btnAccept.UseVisualStyleBackColor = true;
-            this.btnAccept.Click += new System.EventHandler(this.btnAccept_Click_1);
+            this.btnAccept.Click += new System.EventHandler(this.btnAccept_Click);
             // 
-            // AddUserPasswordPair
+            // ModifyCreditCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.btnAccept);
-            this.Controls.Add(this.pnlAddUserPasswordPair);
+            this.Controls.Add(this.pnlModifyCreditCard);
             this.Controls.Add(this.btnBack);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.Name = "AddUserPasswordPair";
+            this.Name = "ModifyCreditCard";
             this.Size = new System.Drawing.Size(804, 451);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
+
         private System.Windows.Forms.Button btnBack;
-        private System.Windows.Forms.Panel pnlAddUserPasswordPair;
+        private System.Windows.Forms.Panel pnlModifyCreditCard;
         private System.Windows.Forms.Button btnAccept;
     }
 }

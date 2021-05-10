@@ -37,6 +37,8 @@ namespace PasswordsManagerUserInterface
             this.dgvSharedPasswords = new System.Windows.Forms.DataGridView();
             this.btnShare = new System.Windows.Forms.Button();
             this.btnUnshare = new System.Windows.Forms.Button();
+            this.lblSharedWithMePasswords = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPasswords)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSharedPasswords)).BeginInit();
             this.SuspendLayout();
@@ -45,8 +47,12 @@ namespace PasswordsManagerUserInterface
             // 
             this.dgvPasswords.AllowUserToAddRows = false;
             this.dgvPasswords.AllowUserToDeleteRows = false;
-            this.dgvPasswords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPasswords.Location = new System.Drawing.Point(44, 64);
+            this.dgvPasswords.AllowUserToResizeColumns = false;
+            this.dgvPasswords.AllowUserToResizeRows = false;
+            this.dgvPasswords.ColumnHeadersHeight = 40;
+            this.dgvPasswords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgvPasswords.Location = new System.Drawing.Point(53, 55);
+            this.dgvPasswords.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.dgvPasswords.MultiSelect = false;
             this.dgvPasswords.Name = "dgvPasswords";
             this.dgvPasswords.ReadOnly = true;
@@ -54,16 +60,16 @@ namespace PasswordsManagerUserInterface
             this.dgvPasswords.RowHeadersWidth = 51;
             this.dgvPasswords.RowTemplate.Height = 24;
             this.dgvPasswords.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPasswords.Size = new System.Drawing.Size(989, 253);
+            this.dgvPasswords.Size = new System.Drawing.Size(700, 177);
             this.dgvPasswords.TabIndex = 0;
+            this.dgvPasswords.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPasswords_CellContentClick);
             // 
             // btnBack
             // 
             this.btnBack.AutoSize = true;
-            this.btnBack.Location = new System.Drawing.Point(933, 18);
-            this.btnBack.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnBack.Location = new System.Drawing.Point(700, 15);
             this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(100, 28);
+            this.btnBack.Size = new System.Drawing.Size(75, 23);
             this.btnBack.TabIndex = 6;
             this.btnBack.Text = "Back";
             this.btnBack.UseVisualStyleBackColor = true;
@@ -72,10 +78,9 @@ namespace PasswordsManagerUserInterface
             // btnAdd
             // 
             this.btnAdd.AutoSize = true;
-            this.btnAdd.Location = new System.Drawing.Point(678, 510);
-            this.btnAdd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAdd.Location = new System.Drawing.Point(476, 251);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(100, 28);
+            this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 7;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -84,10 +89,9 @@ namespace PasswordsManagerUserInterface
             // btnDelete
             // 
             this.btnDelete.AutoSize = true;
-            this.btnDelete.Location = new System.Drawing.Point(808, 510);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDelete.Location = new System.Drawing.Point(577, 251);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(100, 28);
+            this.btnDelete.Size = new System.Drawing.Size(75, 23);
             this.btnDelete.TabIndex = 8;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -96,10 +100,9 @@ namespace PasswordsManagerUserInterface
             // btnModify
             // 
             this.btnModify.AutoSize = true;
-            this.btnModify.Location = new System.Drawing.Point(933, 510);
-            this.btnModify.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnModify.Location = new System.Drawing.Point(678, 251);
             this.btnModify.Name = "btnModify";
-            this.btnModify.Size = new System.Drawing.Size(100, 28);
+            this.btnModify.Size = new System.Drawing.Size(75, 23);
             this.btnModify.TabIndex = 9;
             this.btnModify.Text = "Modify";
             this.btnModify.UseVisualStyleBackColor = true;
@@ -110,7 +113,7 @@ namespace PasswordsManagerUserInterface
             this.dgvSharedPasswords.AllowUserToAddRows = false;
             this.dgvSharedPasswords.AllowUserToDeleteRows = false;
             this.dgvSharedPasswords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvSharedPasswords.Location = new System.Drawing.Point(44, 338);
+            this.dgvSharedPasswords.Location = new System.Drawing.Point(53, 298);
             this.dgvSharedPasswords.MultiSelect = false;
             this.dgvSharedPasswords.Name = "dgvSharedPasswords";
             this.dgvSharedPasswords.ReadOnly = true;
@@ -118,16 +121,17 @@ namespace PasswordsManagerUserInterface
             this.dgvSharedPasswords.RowHeadersWidth = 51;
             this.dgvSharedPasswords.RowTemplate.Height = 24;
             this.dgvSharedPasswords.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvSharedPasswords.Size = new System.Drawing.Size(989, 152);
+            this.dgvSharedPasswords.Size = new System.Drawing.Size(700, 129);
             this.dgvSharedPasswords.TabIndex = 10;
+            this.dgvSharedPasswords.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSharedPasswords_CellContentClick);
             // 
             // btnShare
             // 
             this.btnShare.AutoSize = true;
-            this.btnShare.Location = new System.Drawing.Point(553, 510);
+            this.btnShare.Location = new System.Drawing.Point(275, 251);
             this.btnShare.Margin = new System.Windows.Forms.Padding(4);
             this.btnShare.Name = "btnShare";
-            this.btnShare.Size = new System.Drawing.Size(100, 28);
+            this.btnShare.Size = new System.Drawing.Size(75, 23);
             this.btnShare.TabIndex = 11;
             this.btnShare.Text = "Share";
             this.btnShare.UseVisualStyleBackColor = true;
@@ -136,19 +140,39 @@ namespace PasswordsManagerUserInterface
             // btnUnshare
             // 
             this.btnUnshare.AutoSize = true;
-            this.btnUnshare.Location = new System.Drawing.Point(429, 510);
+            this.btnUnshare.Location = new System.Drawing.Point(377, 251);
             this.btnUnshare.Margin = new System.Windows.Forms.Padding(4);
             this.btnUnshare.Name = "btnUnshare";
-            this.btnUnshare.Size = new System.Drawing.Size(100, 28);
+            this.btnUnshare.Size = new System.Drawing.Size(75, 23);
             this.btnUnshare.TabIndex = 12;
             this.btnUnshare.Text = "Unshare";
             this.btnUnshare.UseVisualStyleBackColor = true;
             this.btnUnshare.Click += new System.EventHandler(this.btnUnshare_Click);
             // 
+            // lblSharedWithMePasswords
+            // 
+            this.lblSharedWithMePasswords.AutoSize = true;
+            this.lblSharedWithMePasswords.Location = new System.Drawing.Point(50, 282);
+            this.lblSharedWithMePasswords.Name = "lblSharedWithMePasswords";
+            this.lblSharedWithMePasswords.Size = new System.Drawing.Size(145, 13);
+            this.lblSharedWithMePasswords.TabIndex = 13;
+            this.lblSharedWithMePasswords.Text = "Passwords Shared With You:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(50, 39);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(86, 13);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "Your Passwords:";
+            // 
             // Passwords
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblSharedWithMePasswords);
             this.Controls.Add(this.btnUnshare);
             this.Controls.Add(this.btnShare);
             this.Controls.Add(this.dgvSharedPasswords);
@@ -157,9 +181,8 @@ namespace PasswordsManagerUserInterface
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.dgvPasswords);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Passwords";
-            this.Size = new System.Drawing.Size(1072, 555);
+            this.Size = new System.Drawing.Size(804, 451);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPasswords)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSharedPasswords)).EndInit();
             this.ResumeLayout(false);
@@ -177,5 +200,7 @@ namespace PasswordsManagerUserInterface
         private System.Windows.Forms.DataGridView dgvSharedPasswords;
         private System.Windows.Forms.Button btnShare;
         private System.Windows.Forms.Button btnUnshare;
+        private System.Windows.Forms.Label lblSharedWithMePasswords;
+        private System.Windows.Forms.Label label1;
     }
 }

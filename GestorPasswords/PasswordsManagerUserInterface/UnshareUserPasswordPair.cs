@@ -61,5 +61,10 @@ namespace PasswordsManagerUserInterface
             UserControl menu = new Passwords(PasswordManager, PnlMainWindow);
             PnlMainWindow.Controls.Add(menu);
         }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            GoBackToPasswordView();
+        }
     }
 }

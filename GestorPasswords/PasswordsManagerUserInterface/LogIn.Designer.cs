@@ -89,7 +89,7 @@ namespace PasswordsManagerUserInterface
             this.btnLogIn.UseVisualStyleBackColor = true;
             this.btnLogIn.Click += new System.EventHandler(this.btnLogIn_Click);
             // 
-            // Start
+            // LogIn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -99,7 +99,7 @@ namespace PasswordsManagerUserInterface
             this.Controls.Add(this.btnLogIn);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUsername);
-            this.Name = "Start";
+            this.Name = "LogIn";
             this.Size = new System.Drawing.Size(804, 451);
             this.ResumeLayout(false);
             this.PerformLayout();
