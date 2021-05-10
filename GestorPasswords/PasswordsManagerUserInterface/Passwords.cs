@@ -215,5 +215,12 @@ namespace PasswordsManagerUserInterface
                 fullView.Visible = true;
             }
         }
+
+        private void btnPasswordsReport_Click(object sender, EventArgs e)
+        {
+            PnlMainWindow.Controls.Clear();
+            UserControl passwordsReport = new PasswordsStrengthTable(PasswordManager, PnlMainWindow);
+            PnlMainWindow.Controls.Add(passwordsReport);
+        }
     }
 }

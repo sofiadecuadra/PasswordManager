@@ -84,7 +84,7 @@ namespace GestorPasswordsDominio
             };
         }
 
-        public List<Tuple<string,int, UserPasswordPair[]>> GetPasswordsStrengthReport()
+        public Tuple<string,int, UserPasswordPair[]>[] GetPasswordsStrengthReport()
         {
             List<Tuple<string, int, UserPasswordPair[]>> listWithStrengthReport = new List<Tuple<string, int, UserPasswordPair[]>>();
 
@@ -94,7 +94,7 @@ namespace GestorPasswordsDominio
             AddLightGreenPasswordsStrengthReport(listWithStrengthReport);
             AddDarkGreenPasswordsStrengthReport(listWithStrengthReport);
 
-            return listWithStrengthReport;
+            return listWithStrengthReport.ToArray();
         }
 
         private void AddRedPasswordsStrengthReport(List<Tuple<string, int, UserPasswordPair[]>> listWithStrengthReport)
