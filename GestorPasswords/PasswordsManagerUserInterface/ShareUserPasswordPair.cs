@@ -33,10 +33,6 @@ namespace PasswordsManagerUserInterface
             {
                 AddUserNameToComboUsers(user);
             }
-            if (users.Length > 0)
-            {
-                comboUsers.SelectedIndex = 0;
-            }
         }
 
         private void AddUserNameToComboUsers(User user)
@@ -62,9 +58,7 @@ namespace PasswordsManagerUserInterface
             }
             catch (ExceptionUserDoesNotExist anException)
             {
-
                 MessageBox.Show(anException.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
             }
         }
 

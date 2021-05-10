@@ -37,20 +37,21 @@ namespace PasswordsManagerUserInterface
             // 
             // btnBack
             // 
-            this.btnBack.Location = new System.Drawing.Point(870, 57);
+            this.btnBack.Location = new System.Drawing.Point(652, 46);
             this.btnBack.Margin = new System.Windows.Forms.Padding(2);
             this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(95, 26);
+            this.btnBack.Size = new System.Drawing.Size(71, 21);
             this.btnBack.TabIndex = 42;
             this.btnBack.Text = "Back";
             this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // btnUnshare
             // 
-            this.btnUnshare.Location = new System.Drawing.Point(489, 347);
+            this.btnUnshare.Location = new System.Drawing.Point(367, 282);
             this.btnUnshare.Margin = new System.Windows.Forms.Padding(2);
             this.btnUnshare.Name = "btnUnshare";
-            this.btnUnshare.Size = new System.Drawing.Size(95, 26);
+            this.btnUnshare.Size = new System.Drawing.Size(71, 21);
             this.btnUnshare.TabIndex = 41;
             this.btnUnshare.Text = "Unshare";
             this.btnUnshare.UseVisualStyleBackColor = true;
@@ -59,10 +60,10 @@ namespace PasswordsManagerUserInterface
             // lblUnshare
             // 
             this.lblUnshare.AutoSize = true;
-            this.lblUnshare.Location = new System.Drawing.Point(241, 222);
+            this.lblUnshare.Location = new System.Drawing.Point(181, 180);
             this.lblUnshare.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblUnshare.Name = "lblUnshare";
-            this.lblUnshare.Size = new System.Drawing.Size(209, 17);
+            this.lblUnshare.Size = new System.Drawing.Size(157, 13);
             this.lblUnshare.TabIndex = 40;
             this.lblUnshare.Text = "Who to unshare your password:";
             // 
@@ -70,22 +71,23 @@ namespace PasswordsManagerUserInterface
             // 
             this.comboUsers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboUsers.FormattingEnabled = true;
-            this.comboUsers.Location = new System.Drawing.Point(454, 219);
+            this.comboUsers.Location = new System.Drawing.Point(340, 178);
             this.comboUsers.Margin = new System.Windows.Forms.Padding(2);
             this.comboUsers.Name = "comboUsers";
-            this.comboUsers.Size = new System.Drawing.Size(205, 24);
+            this.comboUsers.Size = new System.Drawing.Size(155, 21);
             this.comboUsers.TabIndex = 39;
             // 
             // UnshareUserPasswordPair
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.btnUnshare);
             this.Controls.Add(this.lblUnshare);
             this.Controls.Add(this.comboUsers);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "UnshareUserPasswordPair";
-            this.Size = new System.Drawing.Size(1072, 555);
+            this.Size = new System.Drawing.Size(804, 451);
             this.ResumeLayout(false);
             this.PerformLayout();
 
