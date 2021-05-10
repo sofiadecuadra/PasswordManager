@@ -47,16 +47,16 @@ namespace PasswordsManagerUserInterface
             // 
             // pnlAddUserPasswordPair
             // 
-            this.pnlAddUserPasswordPair.Location = new System.Drawing.Point(259, 15);
-            this.pnlAddUserPasswordPair.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pnlAddUserPasswordPair.Location = new System.Drawing.Point(228, 15);
+            this.pnlAddUserPasswordPair.Margin = new System.Windows.Forms.Padding(2);
             this.pnlAddUserPasswordPair.Name = "pnlAddUserPasswordPair";
-            this.pnlAddUserPasswordPair.Size = new System.Drawing.Size(295, 389);
+            this.pnlAddUserPasswordPair.Size = new System.Drawing.Size(368, 389);
             this.pnlAddUserPasswordPair.TabIndex = 20;
             // 
             // btnAccept
             // 
-            this.btnAccept.Location = new System.Drawing.Point(480, 419);
-            this.btnAccept.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnAccept.Location = new System.Drawing.Point(381, 419);
+            this.btnAccept.Margin = new System.Windows.Forms.Padding(2);
             this.btnAccept.Name = "btnAccept";
             this.btnAccept.Size = new System.Drawing.Size(74, 20);
             this.btnAccept.TabIndex = 40;
@@ -71,7 +71,7 @@ namespace PasswordsManagerUserInterface
             this.Controls.Add(this.btnAccept);
             this.Controls.Add(this.pnlAddUserPasswordPair);
             this.Controls.Add(this.btnBack);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "AddUserPasswordPair";
             this.Size = new System.Drawing.Size(804, 451);
             this.ResumeLayout(false);
