@@ -38,7 +38,7 @@ namespace GestorPasswordsDominio
         override
         public string ToString()
         {
-            return "[" + Name + "] [" + Type + "] [" + AddBlankSpacesAfter4Characters(Number) + "]";
+            return $"[{Name}] [{Type}] [{AddBlankSpacesAfter4Characters(Number)}]";
         }
 
         public static string FormatNumber(string creditCardNumber)
