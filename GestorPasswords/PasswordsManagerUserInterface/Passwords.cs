@@ -103,6 +103,10 @@ namespace PasswordsManagerUserInterface
             var userPasswordPairs = PasswordManager.
                 CurrentUser.GetUserPasswordPairs();
             LoadDataGridNormalPasswords(userPasswordPairs);
+            if (dgvPasswords.Controls.OfType<ScrollBar>().Last().Visible)
+            {
+                dgvPasswords.Width = 715;
+            }
         }
 
         public void LoadSharedPasswords()
@@ -110,6 +114,10 @@ namespace PasswordsManagerUserInterface
             var userPasswordPairs = PasswordManager.
                 CurrentUser.GetSharedUserPasswordPairs();
             LoadDataGridSharedPasswords(userPasswordPairs);
+            if (dgvSharedPasswords.Controls.OfType<ScrollBar>().Last().Visible)
+            {
+                dgvSharedPasswords.Width = 715;
+            }
         }
 
         private void btnBack_Click(object sender, EventArgs e)
