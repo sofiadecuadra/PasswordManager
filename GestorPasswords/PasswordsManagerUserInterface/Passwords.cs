@@ -51,7 +51,8 @@ namespace PasswordsManagerUserInterface
 
             dgvSharedPasswords.Columns[3].Name = "LastModified";
             dgvSharedPasswords.Columns[3].HeaderText = "Last Modified";
-            dgvSharedPasswords.Columns[3].DataPropertyName = "LastModifiedShortFormat";
+            dgvSharedPasswords.Columns[3].DataPropertyName = "LastModifiedDate";
+            dgvSharedPasswords.Columns[3].DefaultCellStyle.Format = "dd/MM/yyyy";
             dgvSharedPasswords.Columns[3].Width = 70;
 
             dgvSharedPasswords.Columns.Add(fullViewNormalPasswords);
@@ -85,7 +86,8 @@ namespace PasswordsManagerUserInterface
 
             dgvPasswords.Columns[3].Name = "LastModified";
             dgvPasswords.Columns[3].HeaderText = "Last Modified";
-            dgvPasswords.Columns[3].DataPropertyName = "LastModifiedShortFormat";
+            dgvPasswords.Columns[3].DataPropertyName = "LastModifiedDate";
+            dgvPasswords.Columns[3].DefaultCellStyle.Format = "dd/MM/yyyy";
             dgvPasswords.Columns[3].Width = 70;
 
             dgvPasswords.Columns.Add(fullViewSharedPasswords);
@@ -230,6 +232,16 @@ namespace PasswordsManagerUserInterface
             PnlMainWindow.Controls.Clear();
             UserControl passwordsReport = new PasswordsStrengthReportTable(PasswordManager, PnlMainWindow);
             PnlMainWindow.Controls.Add(passwordsReport);
+        }
+
+        private void dgvSharedPasswords_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 4)
+            {
+                UserPasswordPair selected = dgvSharedPasswords.Rows[e.RowIndex].DataBoundItem as UserPasswordPair;
+                PopUp30Seconds fullView = new PopUp30Seconds(selected);
+                fullView.Visible = true;
+            }
         }
     }
 }

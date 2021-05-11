@@ -84,9 +84,9 @@ namespace GestorPasswordsDominio
             };
         }
 
-        public Tuple<string,int, UserPasswordPair[]>[] GetPasswordsStrengthReport()
+        public Tuple<PasswordStrengthType, int>[] GetPasswordsStrengthReport()
         {
-            List<Tuple<string, int, UserPasswordPair[]>> listWithStrengthReport = new List<Tuple<string, int, UserPasswordPair[]>>();
+            List<Tuple<PasswordStrengthType, int>> listWithStrengthReport = new List<Tuple<PasswordStrengthType, int>>();
 
             AddRedPasswordsStrengthReport(listWithStrengthReport);
             AddOrangePasswordsStrengthReport(listWithStrengthReport);
@@ -97,29 +97,55 @@ namespace GestorPasswordsDominio
             return listWithStrengthReport.ToArray();
         }
 
-        private void AddRedPasswordsStrengthReport(List<Tuple<string, int, UserPasswordPair[]>> listWithStrengthReport)
+        private void AddRedPasswordsStrengthReport(List<Tuple<PasswordStrengthType, int>> listWithStrengthReport)
         {
-            listWithStrengthReport.Add(new Tuple<string, int, UserPasswordPair[]>("Red", redUserPasswordPairs.Count, GetRedUserPasswordPairs()));
+            listWithStrengthReport.Add(new Tuple<PasswordStrengthType, int>(PasswordStrengthType.Red, redUserPasswordPairs.Count));
         }
 
-        private void AddOrangePasswordsStrengthReport(List<Tuple<string, int, UserPasswordPair[]>> listWithStrengthReport)
+        private void AddOrangePasswordsStrengthReport(List<Tuple<PasswordStrengthType, int>> listWithStrengthReport)
         {
-            listWithStrengthReport.Add(new Tuple<string, int, UserPasswordPair[]>("Orange", orangeUserPasswordPairs.Count, GetOrangeUserPasswordPairs()));
+            listWithStrengthReport.Add(new Tuple<PasswordStrengthType, int>(PasswordStrengthType.Orange, orangeUserPasswordPairs.Count));
         }
 
-        private void AddYellowPasswordsStrengthReport(List<Tuple<string, int, UserPasswordPair[]>> listWithStrengthReport)
+        private void AddYellowPasswordsStrengthReport(List<Tuple<PasswordStrengthType, int>> listWithStrengthReport)
         {
-            listWithStrengthReport.Add(new Tuple<string, int, UserPasswordPair[]>("Yellow", yellowUserPasswordPairs.Count, GetYellowUserPasswordPairs()));
+            listWithStrengthReport.Add(new Tuple<PasswordStrengthType, int>(PasswordStrengthType.Yellow, yellowUserPasswordPairs.Count));
         }
 
-        private void AddLightGreenPasswordsStrengthReport(List<Tuple<string, int, UserPasswordPair[]>> listWithStrengthReport)
+        private void AddLightGreenPasswordsStrengthReport(List<Tuple<PasswordStrengthType, int>> listWithStrengthReport)
         {
-            listWithStrengthReport.Add(new Tuple<string, int, UserPasswordPair[]>("Light Green", lightGreenUserPasswordPairs.Count, GetLightGreenUserPasswordPairs()));
+            listWithStrengthReport.Add(new Tuple<PasswordStrengthType, int>(PasswordStrengthType.LightGreen, lightGreenUserPasswordPairs.Count));
         }
 
-        private void AddDarkGreenPasswordsStrengthReport(List<Tuple<string, int, UserPasswordPair[]>> listWithStrengthReport)
+        private void AddDarkGreenPasswordsStrengthReport(List<Tuple<PasswordStrengthType, int>> listWithStrengthReport)
         {
-            listWithStrengthReport.Add(new Tuple<string, int, UserPasswordPair[]>("Dark Green", darkGreenUserPasswordPairs.Count, GetDarkGreenUserPasswordPairs()));
+            listWithStrengthReport.Add(new Tuple<PasswordStrengthType, int>(PasswordStrengthType.DarkGreen, darkGreenUserPasswordPairs.Count));
+        }
+
+        public UserPasswordPair[] GetUserPasswordPairsOfASpecificColor(PasswordStrengthType aColorGroup)
+        {
+            if (aColorGroup == PasswordStrengthType.Red)
+            {
+                return GetRedUserPasswordPairs();
+            }
+            if (aColorGroup == PasswordStrengthType.Orange)
+            {
+                return GetOrangeUserPasswordPairs();
+            }
+            if (aColorGroup == PasswordStrengthType.Yellow)
+            {
+                return GetYellowUserPasswordPairs();
+            }
+            if (aColorGroup == PasswordStrengthType.LightGreen)
+            {
+                return GetLightGreenUserPasswordPairs();
+            }
+            if (aColorGroup == PasswordStrengthType.DarkGreen)
+            {
+                return GetDarkGreenUserPasswordPairs();
+            }
+
+            return GetRedUserPasswordPairs();
         }
 
         public UserPasswordPair[] GetRedUserPasswordPairs()

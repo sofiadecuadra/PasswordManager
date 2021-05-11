@@ -16,7 +16,7 @@ namespace PasswordsManagerUserInterface
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         private readonly DataGridViewButtonColumn seeList;
-        Tuple<string, int, UserPasswordPair[]>[] passwordsReportData;
+        Tuple<PasswordStrengthType, int>[] passwordsReportData;
 
         public PasswordsStrengthReportTable(PasswordManager aPasswordManager, Panel panel)
         {
@@ -49,7 +49,7 @@ namespace PasswordsManagerUserInterface
 
             passwordsReportData = PasswordManager.CurrentUser.GetPasswordsStrengthReport();
 
-            foreach (Tuple<string, int, UserPasswordPair[]> colorReport in passwordsReportData)
+            foreach (Tuple<PasswordStrengthType, int> colorReport in passwordsReportData)
             {
                 dgvPasswordsReport.Rows.Add(colorReport.Item1, colorReport.Item2);
             }
@@ -61,7 +61,8 @@ namespace PasswordsManagerUserInterface
             {
                 int rowIndex = e.RowIndex;
                 PnlMainWindow.Controls.Clear();
-                PasswordsReportPasswordsList passwordsList = new PasswordsReportPasswordsList(PasswordManager, passwordsReportData[rowIndex].Item3, PnlMainWindow, passwordsReportData[rowIndex].Item1);
+                PasswordStrengthType color = passwordsReportData[rowIndex].Item1;
+                PasswordsReportPasswordsList passwordsList = new PasswordsReportPasswordsList(PasswordManager, PnlMainWindow, color);
                 PnlMainWindow.Controls.Add(passwordsList);
             }
         }

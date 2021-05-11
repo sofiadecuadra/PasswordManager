@@ -16,18 +16,20 @@ namespace PasswordsManagerUserInterface
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         private readonly DataGridViewButtonColumn fullViewPasswords;
+        private PasswordStrengthType color;
 
-        public PasswordsReportPasswordsList(PasswordManager passwordManager, UserPasswordPair[] userPasswordPairs, Panel panel, string color)
+        public PasswordsReportPasswordsList(PasswordManager passwordManager, Panel panel, PasswordStrengthType aColor)
         {
             InitializeComponent();
             PasswordManager = passwordManager;
             PnlMainWindow = panel;
             fullViewPasswords = new DataGridViewButtonColumn();
-            LoadTableData(userPasswordPairs);
+            color = aColor;
+            LoadTableData();
             lblPasswordsOfColor.Text = color + " passwords:";
         }
 
-        private void LoadTableData(UserPasswordPair[] userPasswordPairs)
+        private void LoadTableData()
         {
             dgvPasswordsOfColor.AutoGenerateColumns = false;
             dgvPasswordsOfColor.ColumnCount = 4;
@@ -49,6 +51,7 @@ namespace PasswordsManagerUserInterface
             dgvPasswordsOfColor.Columns[3].Name = "LastModified";
             dgvPasswordsOfColor.Columns[3].HeaderText = "Last Modified";
             dgvPasswordsOfColor.Columns[3].DataPropertyName = "LastModifiedShortFormat";
+            dgvPasswordsOfColor.Columns[3].DefaultCellStyle.Format = "dd/MM/yyyy";
             dgvPasswordsOfColor.Columns[3].Width = 70;
 
             dgvPasswordsOfColor.Columns.Add(fullViewPasswords);
@@ -58,7 +61,7 @@ namespace PasswordsManagerUserInterface
             fullViewPasswords.Width = 61;
             fullViewPasswords.UseColumnTextForButtonValue = true;
 
-            dgvPasswordsOfColor.DataSource = userPasswordPairs;
+            dgvPasswordsOfColor.DataSource = PasswordManager.CurrentUser.GetUserPasswordPairsOfASpecificColor(color);
         }
 
         private void dgvPasswordsOfColor_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -77,7 +80,7 @@ namespace PasswordsManagerUserInterface
             {
                 UserPasswordPair selected = dgvPasswordsOfColor.SelectedRows[0].DataBoundItem as UserPasswordPair;
                 PnlMainWindow.Controls.Clear();
-                UserControl modifyUserPasswordPairControl = new ModifyUserPasswordPair(PasswordManager, PnlMainWindow, selected);
+                UserControl modifyUserPasswordPairControl = new ModifyReportedUserPasswordPair(PasswordManager, PnlMainWindow, selected, color);
                 PnlMainWindow.Controls.Add(modifyUserPasswordPairControl);
             }
             catch (ArgumentOutOfRangeException)

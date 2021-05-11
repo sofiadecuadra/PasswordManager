@@ -86,22 +86,6 @@ namespace PasswordsManagerUserInterface
             PnlMainWindow.Controls.Add(addCreditCard);
         }
 
-        private void btnRemove_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                RemoveCreditCard();
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                MessageBox.Show("Please, choose a credit card to remove", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (ExceptionCreditCardDoesNotExist)
-            {
-                MessageBox.Show("The credit card does not exist", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
         private void RemoveCreditCard()
         {
             CreditCard selected = dgvCreditCards.SelectedRows[0].DataBoundItem as CreditCard;
@@ -136,6 +120,22 @@ namespace PasswordsManagerUserInterface
                 CreditCard selected = dgvCreditCards.Rows[e.RowIndex].DataBoundItem as CreditCard;
                 PopUp30Seconds popUp = new PopUp30Seconds(selected);
                 popUp.Visible = true;
+            }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                RemoveCreditCard();
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                MessageBox.Show("Please, choose a credit card to remove", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (ExceptionCreditCardDoesNotExist)
+            {
+                MessageBox.Show("The credit card does not exist", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

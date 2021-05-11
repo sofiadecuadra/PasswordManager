@@ -179,6 +179,7 @@ namespace PasswordsManagerUserInterface
             this.dgvSharedPasswords.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvSharedPasswords.Size = new System.Drawing.Size(700, 128);
             this.dgvSharedPasswords.TabIndex = 16;
+            this.dgvSharedPasswords.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSharedPasswords_CellContentClick_1);
             // 
             // Passwords
             // 
