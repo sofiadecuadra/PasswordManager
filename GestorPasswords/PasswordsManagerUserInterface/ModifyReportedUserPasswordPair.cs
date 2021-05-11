@@ -1,5 +1,4 @@
-﻿using GestorPasswordsDominio;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,29 +7,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GestorPasswordsDominio;
 
 namespace PasswordsManagerUserInterface
 {
-    public partial class ModifyUserPasswordPair : UserControl
+    public partial class ModifyReportedUserPasswordPair : UserControl
     {
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public UserPasswordPairForm Form { get; private set; }
         public UserPasswordPair PasswordToModified { get; private set; }
-        public ModifyUserPasswordPair(PasswordManager aPasswordManager, Panel panel, UserPasswordPair password)
+        public UserPasswordPair[] sameColorPasswords;
+        public PasswordStrengthType passwordColor;
+        public ModifyReportedUserPasswordPair(PasswordManager aPasswordManager, Panel panel, UserPasswordPair password, PasswordStrengthType color)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
             PnlMainWindow = panel;
             PasswordToModified = password;
+            passwordColor = color;
             LoadUserPasswordPairForm(password);
         }
 
         private void LoadUserPasswordPairForm(UserPasswordPair passwordToModified)
         {
-            pnlModifyUserPasswordPair.Controls.Clear();
+            pnlModifyPassword.Controls.Clear();
             Form = new UserPasswordPairForm(PasswordManager, passwordToModified);
-            pnlModifyUserPasswordPair.Controls.Add(Form);
+            pnlModifyPassword.Controls.Add(Form);
         }
 
         private void btnAccept_Click(object sender, EventArgs e)
@@ -91,7 +94,7 @@ namespace PasswordsManagerUserInterface
         private void GoBack()
         {
             PnlMainWindow.Controls.Clear();
-            UserControl passwords = new Passwords(PasswordManager, PnlMainWindow);
+            UserControl passwords = new PasswordsReportPasswordsList(PasswordManager, PnlMainWindow, passwordColor);
             PnlMainWindow.Controls.Add(passwords);
         }
 

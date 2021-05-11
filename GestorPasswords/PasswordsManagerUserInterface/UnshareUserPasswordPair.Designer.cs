@@ -69,23 +69,21 @@ namespace PasswordsManagerUserInterface
             // 
             // comboUsers
             // 
-            this.comboUsers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboUsers.FormattingEnabled = true;
-            this.comboUsers.Location = new System.Drawing.Point(340, 178);
-            this.comboUsers.Margin = new System.Windows.Forms.Padding(2);
+            this.comboUsers.Location = new System.Drawing.Point(340, 177);
             this.comboUsers.Name = "comboUsers";
             this.comboUsers.Size = new System.Drawing.Size(155, 21);
-            this.comboUsers.TabIndex = 39;
+            this.comboUsers.TabIndex = 43;
             // 
             // UnshareUserPasswordPair
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.comboUsers);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.btnUnshare);
             this.Controls.Add(this.lblUnshare);
-            this.Controls.Add(this.comboUsers);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "UnshareUserPasswordPair";
             this.Size = new System.Drawing.Size(804, 451);
             this.ResumeLayout(false);
