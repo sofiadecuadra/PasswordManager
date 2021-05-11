@@ -19,6 +19,10 @@ namespace GestorPasswordsDominio
                 number = RemoveAllBlankSpaces(value);
             }
         }
+        public string NumberFormatted
+        {
+            get { return FormatNumber(Number); }
+        }
         public string HideNumber { get; private set; }
         public string Type { get; set; }
         public string Name { get; set; }
@@ -90,7 +94,7 @@ namespace GestorPasswordsDominio
         override
             public string ToString()
         {
-            return "[" + Name + "] [" + Type + "] [" + DisplayCreditCard() + "]";
+            return AddBlankSpacesAfter4Characters(Number);
         }
     }
 }
