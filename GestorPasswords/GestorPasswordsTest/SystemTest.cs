@@ -238,6 +238,23 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        public void AUserPasswordPairInSharedPasswordsArray()
+        {
+            var aUser = new User()
+            {
+                MasterPassword = "myMasterPassword123$",
+                Name = "JuanPa"
+            };
+            _PasswordManager.CurrentUser = myUser;
+            _PasswordManager.AddUser(aUser);
+            UserPasswordPair aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+
+            _PasswordManager.SharePassword(aUserPasswordPair, aUser.Name);
+            Assert.AreEqual(1, aUser.GetSharedUserPasswordPairs().Length);
+            Assert.AreEqual(aUserPasswordPair, aUser.GetSharedUserPasswordPairs()[0]);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ExceptionUserPasswordPairIsNotSharedWithAnyone))]
         public void UserPasswordPairHasNotBeenShared()
         {
