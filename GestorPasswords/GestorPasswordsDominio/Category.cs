@@ -354,10 +354,13 @@ namespace GestorPasswordsDominio
             }
             if (!hasSameCategory && !passwordsAreEqual)
             {
-                RemoveUserPasswordPairFromCollection(oldUserPasswordPair);
                 DeleteUserPasswordPairFromStrengthGroup(oldUserPasswordPair);
-                newUserPasswordPair.Category.AddUserPasswordPairToHashTable(newUserPasswordPair);
-                AddUserPasswordPairToStrengthGroup(newUserPasswordPair);
+                UpdateUsernameSiteAndNotes(oldUserPasswordPair, newUserPasswordPair);
+                UpdatePassword(oldUserPasswordPair, newUserPasswordPair);
+                RemoveUserPasswordPairFromCollection(oldUserPasswordPair);
+                UpdateCategory(oldUserPasswordPair, newUserPasswordPair);
+                oldUserPasswordPair.Category.AddUserPasswordPairToHashTable(oldUserPasswordPair);
+                AddUserPasswordPairToStrengthGroup(oldUserPasswordPair);
             }
         }
 

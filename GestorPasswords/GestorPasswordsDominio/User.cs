@@ -25,7 +25,6 @@ namespace GestorPasswordsDominio
         private List<UserPasswordPair> lightGreenUserPasswordPairs;
         private List<UserPasswordPair> darkGreenUserPasswordPairs;
 
-
         public string Name
         {
             get { return name; }
@@ -101,7 +100,7 @@ namespace GestorPasswordsDominio
         {
             listWithStrengthReport.Add(new Tuple<PasswordStrengthType, int>(PasswordStrengthType.Red, redUserPasswordPairs.Count));
         }
-
+        
         private void AddOrangePasswordsStrengthReport(List<Tuple<PasswordStrengthType, int>> listWithStrengthReport)
         {
             listWithStrengthReport.Add(new Tuple<PasswordStrengthType, int>(PasswordStrengthType.Orange, orangeUserPasswordPairs.Count));

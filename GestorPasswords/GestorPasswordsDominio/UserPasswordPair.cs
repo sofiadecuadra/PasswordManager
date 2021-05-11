@@ -10,10 +10,7 @@ namespace GestorPasswordsDominio
     public class UserPasswordPair
     {
         public string Password { get; set; }
-
-
         public Hashtable UsersWithAccess{ get; private set; }
-
         private string username;
         public string Username
         {
