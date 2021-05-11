@@ -5,7 +5,7 @@ using System;
 namespace GestorPasswordsTest
 {
     [TestClass]
-    public class CategoryTest 
+    public class ValidityWhenModifyingCreditCardInCategoryTest
     {
         private Category aCategory;
         private User aUser;
@@ -518,12 +518,6 @@ namespace GestorPasswordsTest
             };
 
             _ = aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
-        }
-
-        [TestMethod]
-        public void CategoryToString()
-        {
-            Assert.AreEqual(aCategory.ToString(), "category");
         }
     }
 }
