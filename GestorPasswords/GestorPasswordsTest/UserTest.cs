@@ -695,6 +695,70 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        public void PasswordWithBlankSpacesAndOnlyDigitsOfUserAppearedInDataBreaches()
+        {
+            var aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "4444 555 6666 2323",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aUser.AddCategory(aCategory);
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
+            {
+                txtDataBreaches = "4444 555 6666 2323"
+            };
+
+            List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
+            expectedUserPasswordPairList.Add(aUserPasswordPair);
+
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
+        }
+
+        [TestMethod]
+        public void PasswordWithBlankSpacesOfUserAppearedInDataBreaches()
+        {
+            var aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "rfkg s67r sjdh liks",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aUser.AddCategory(aCategory);
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
+            {
+                txtDataBreaches = "rfkg s67r sjdh liks"
+            };
+
+            List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
+            expectedUserPasswordPairList.Add(aUserPasswordPair);
+
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
+        }
+
+        [TestMethod]
         public void MultiplePasswordsAndCreditCardsOfUserAppearedInDataBreaches()
         {
             var aCategory = new Category()

@@ -448,16 +448,25 @@ namespace GestorPasswordsDominio
 
         private bool ItsACreditCard(string element)
         {
-            string [] dataToCheck = element.Split (' ');
+            bool itsACreditCard = true;
+            string[] dataToCheck = element.Split(' ');
 
-            foreach (string item in dataToCheck)
+            if (dataToCheck.Length != 4)
             {
-                if (!ContainsOnlyDigits (item) || !LengthIsFour (item))
+                itsACreditCard = false;
+            }
+            else
+            {
+                foreach (string item in dataToCheck)
                 {
-                    return false;
+                    if (!ContainsOnlyDigits(item) || !LengthIsFour(item))
+                    {
+                        itsACreditCard = false;
+                        break;
+                    }
                 }
             }
-            return true;
+            return itsACreditCard;
         }
 
         public (List <UserPasswordPair>, List <CreditCard>) CheckDataBreaches(IDataBreachesFormatter dataBreaches)
