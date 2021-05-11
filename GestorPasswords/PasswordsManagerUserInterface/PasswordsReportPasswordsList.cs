@@ -50,7 +50,7 @@ namespace PasswordsManagerUserInterface
 
             dgvPasswordsOfColor.Columns[3].Name = "LastModified";
             dgvPasswordsOfColor.Columns[3].HeaderText = "Last Modified";
-            dgvPasswordsOfColor.Columns[3].DataPropertyName = "LastModifiedShortFormat";
+            dgvPasswordsOfColor.Columns[3].DataPropertyName = "LastModifiedDate";
             dgvPasswordsOfColor.Columns[3].DefaultCellStyle.Format = "dd/MM/yyyy";
             dgvPasswordsOfColor.Columns[3].Width = 70;
 
