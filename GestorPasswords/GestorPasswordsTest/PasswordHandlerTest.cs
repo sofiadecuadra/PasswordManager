@@ -20,6 +20,18 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        public void PasswordWithLength8()
+        {
+            Assert.AreEqual(PasswordStrengthType.Orange, PasswordHandler.PasswordStrength("holamund"));
+        }
+
+        [TestMethod]
+        public void PasswordWithLength14()
+        {
+            Assert.AreEqual(PasswordStrengthType.Orange, PasswordHandler.PasswordStrength("holamundoestoe"));
+        }
+
+        [TestMethod]
         public void PasswordWithLengthOver14AndJustLowerCase()
         {
             Assert.AreEqual(PasswordStrengthType.Yellow, PasswordHandler.PasswordStrength("holamundoestoesunapass"));
