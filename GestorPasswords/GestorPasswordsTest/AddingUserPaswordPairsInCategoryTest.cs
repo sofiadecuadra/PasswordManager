@@ -76,6 +76,18 @@ namespace GestorPasswordsTest
             Assert.AreEqual(2, aCategory.GetUserPasswordsPairs().Length);
         }
 
+        private static string GenerateNoteText()
+        {
+            string aNote = "";
+
+            for (int i = 0; i <= 251; i++)
+            {
+                aNote += "a";
+            }
+
+            return aNote;
+        }
+
         [TestMethod]
         [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidNotesLength))]
         public void AddUserPasswordPairWithNotesLengthGreaterThan250()
