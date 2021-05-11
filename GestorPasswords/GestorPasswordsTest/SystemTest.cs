@@ -238,6 +238,23 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        public void AUserPasswordPairInSharedPasswordsArray()
+        {
+            var aUser = new User()
+            {
+                MasterPassword = "myMasterPassword123$",
+                Name = "JuanPa"
+            };
+            _PasswordManager.CurrentUser = myUser;
+            _PasswordManager.AddUser(aUser);
+            UserPasswordPair aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+
+            _PasswordManager.SharePassword(aUserPasswordPair, aUser.Name);
+            Assert.AreEqual(1, aUser.GetSharedUserPasswordPairs().Length);
+            Assert.AreEqual(aUserPasswordPair, aUser.GetSharedUserPasswordPairs()[0]);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ExceptionUserPasswordPairIsNotSharedWithAnyone))]
         public void UserPasswordPairHasNotBeenShared()
         {
@@ -296,6 +313,35 @@ namespace GestorPasswordsTest
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
             return aUserPasswordPair;
+        }
+
+        [TestMethod]
+        public void GettingAllUsersWhitJustOne()
+        {
+            var allUsers = _PasswordManager.Users;
+            Assert.AreEqual(1, allUsers.Length);
+            Assert.AreEqual(myUser, allUsers[0]);
+        }
+
+        [TestMethod]
+        public void GettingAllUsersWithManyOnManager()
+        {
+            var aUser = new User()
+            {
+                Name = "User2",
+                MasterPassword = "AMasterPassword123$"
+            };
+            var anotherUser = new User()
+            {
+                Name = "User3",
+                MasterPassword = "AMasterPassword123$"
+            };
+
+            _PasswordManager.AddUser(aUser);
+            _PasswordManager.AddUser(anotherUser);
+
+            var allUsers = _PasswordManager.Users;
+            Assert.AreEqual(3, allUsers.Length);
         }
     }
 }
