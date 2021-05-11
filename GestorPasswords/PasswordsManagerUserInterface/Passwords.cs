@@ -70,7 +70,7 @@ namespace PasswordsManagerUserInterface
             dgvPasswords.ColumnCount = 4;
             dgvPasswords.Columns[0].Name = "Category";
             dgvPasswords.Columns[0].HeaderText = "Category";
-            dgvPasswords.Columns[0].DataPropertyName = "CategoryName";
+            dgvPasswords.Columns[0].DataPropertyName = "Category";
             dgvPasswords.Columns[0].Width = 135;
 
             dgvPasswords.Columns[1].Name = "Site";

@@ -9,6 +9,10 @@ namespace GestorPasswordsDominio
 {
     public class CreditCard
     {
+        private const int LAST_4_DIGITS_START_POSITION = 15;
+        private const int MIN_TEXT_FIELD_LENGTH = 3;
+        private const int MAX_TEXT_FIELD_LENGTH = 25;
+        private const int MAX_NOTES_LENGTH = 250;
         private string number;
         public string Number
         {
@@ -35,8 +39,8 @@ namespace GestorPasswordsDominio
         }
         public Category Category { get; set; }
 
-        override
-        public string ToString()
+        
+        public override string ToString()
         {
             return $"[{Name}] [{Type}] [{AddBlankSpacesAfter4Characters(Number)}]";
         }
@@ -70,7 +74,7 @@ namespace GestorPasswordsDominio
             return creditCardNumber.Replace(" ", string.Empty);
         }
 
-        private const int LAST_4_DIGITS_START_POSITION = 15;
+
         private string NumberHiding(string creditCardNumber)
         {
             string formattedNumber = FormatNumber(creditCardNumber);
@@ -117,7 +121,7 @@ namespace GestorPasswordsDominio
 
         private static bool LengthBetween3And25(string stringToCheck)
         {
-            return stringToCheck.Length >= 3 && stringToCheck.Length <= 25;
+            return stringToCheck.Length >= MIN_TEXT_FIELD_LENGTH && stringToCheck.Length <= MAX_TEXT_FIELD_LENGTH;
         }
 
         private bool CodeHasValidLength()
@@ -137,7 +141,7 @@ namespace GestorPasswordsDominio
 
         private bool NotesHaveValidLength()
         {
-            return Notes.Length <= 250;
+            return Notes.Length <= MAX_NOTES_LENGTH;
         }
 
         private bool CreditCardHasExpired()

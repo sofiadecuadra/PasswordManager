@@ -30,7 +30,6 @@ namespace GestorPasswordsDominio
         public DateTime LastModifiedDate { get; private set; }
         public string LastModifiedShortFormat { get { return LastModifiedDate.ToString("d"); } }
         public Category Category { get; set; }
-        public string CategoryName { get { return Category.Name; }  }
         public UserPasswordPair()
         {
             UsersWithAccess = new Hashtable();
