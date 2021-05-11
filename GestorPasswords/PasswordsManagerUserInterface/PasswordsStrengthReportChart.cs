@@ -11,11 +11,11 @@ using GestorPasswordsDominio;
 
 namespace PasswordsManagerUserInterface
 {
-    public partial class PasswordsStrengthChart : UserControl
+    public partial class PasswordsStrengthReportChart : UserControl
     {
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
-        public PasswordsStrengthChart(PasswordManager aPasswordManager, Panel panel)
+        public PasswordsStrengthReportChart(PasswordManager aPasswordManager, Panel panel)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
@@ -26,7 +26,7 @@ namespace PasswordsManagerUserInterface
         private void btnBack_Click(object sender, EventArgs e)
         {
             PnlMainWindow.Controls.Clear();
-            UserControl passwordReportTable = new PasswordsStrengthTable(PasswordManager, PnlMainWindow);
+            UserControl passwordReportTable = new PasswordsStrengthReportTable(PasswordManager, PnlMainWindow);
             PnlMainWindow.Controls.Add(passwordReportTable);
         }
 

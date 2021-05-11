@@ -160,6 +160,7 @@ namespace PasswordsManagerUserInterface
                 UserPasswordPair selected = dgvPasswords.SelectedRows[0].DataBoundItem as UserPasswordPair;
                 PnlMainWindow.Controls.Clear();
                 UserControl modifyUserPasswordPairControl = new ModifyUserPasswordPair(PasswordManager, PnlMainWindow, selected);
+
                 PnlMainWindow.Controls.Add(modifyUserPasswordPairControl);
                 dgvPasswords.DataSource = PasswordManager.CurrentUser.GetUserPasswordPairs();
             }
@@ -227,7 +228,7 @@ namespace PasswordsManagerUserInterface
         private void btnPasswordsReport_Click(object sender, EventArgs e)
         {
             PnlMainWindow.Controls.Clear();
-            UserControl passwordsReport = new PasswordsStrengthTable(PasswordManager, PnlMainWindow);
+            UserControl passwordsReport = new PasswordsStrengthReportTable(PasswordManager, PnlMainWindow);
             PnlMainWindow.Controls.Add(passwordsReport);
         }
     }

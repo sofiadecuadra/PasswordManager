@@ -171,6 +171,7 @@ namespace PasswordsManagerUserInterface
             this.dgvSharedPasswords.ColumnHeadersHeight = 40;
             this.dgvSharedPasswords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvSharedPasswords.Location = new System.Drawing.Point(53, 308);
+            this.dgvSharedPasswords.MultiSelect = false;
             this.dgvSharedPasswords.Name = "dgvSharedPasswords";
             this.dgvSharedPasswords.ReadOnly = true;
             this.dgvSharedPasswords.RowHeadersVisible = false;

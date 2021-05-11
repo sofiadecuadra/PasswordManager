@@ -11,14 +11,14 @@ using GestorPasswordsDominio;
 
 namespace PasswordsManagerUserInterface
 {
-    public partial class PasswordsStrengthTable : UserControl
+    public partial class PasswordsStrengthReportTable : UserControl
     {
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         private readonly DataGridViewButtonColumn seeList;
         Tuple<string, int, UserPasswordPair[]>[] passwordsReportData;
 
-        public PasswordsStrengthTable(PasswordManager aPasswordManager, Panel panel)
+        public PasswordsStrengthReportTable(PasswordManager aPasswordManager, Panel panel)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
@@ -59,7 +59,10 @@ namespace PasswordsManagerUserInterface
         {
             if (e.ColumnIndex == 2)
             {
-                
+                int rowIndex = e.RowIndex;
+                PnlMainWindow.Controls.Clear();
+                PasswordsReportPasswordsList passwordsList = new PasswordsReportPasswordsList(PasswordManager, passwordsReportData[rowIndex].Item3, PnlMainWindow, passwordsReportData[rowIndex].Item1);
+                PnlMainWindow.Controls.Add(passwordsList);
             }
         }
 
@@ -73,7 +76,7 @@ namespace PasswordsManagerUserInterface
         private void btnChart_Click(object sender, EventArgs e)
         {
             PnlMainWindow.Controls.Clear();
-            UserControl passwords = new PasswordsStrengthChart(PasswordManager, PnlMainWindow);
+            UserControl passwords = new PasswordsStrengthReportChart(PasswordManager, PnlMainWindow);
             PnlMainWindow.Controls.Add(passwords);
         }
     }

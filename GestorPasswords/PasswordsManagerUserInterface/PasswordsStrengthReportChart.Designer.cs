@@ -1,7 +1,7 @@
 ﻿
 namespace PasswordsManagerUserInterface
 {
-    partial class PasswordsStrengthChart
+    partial class PasswordsStrengthReportChart
     {
         /// <summary> 
         /// Variable del diseñador necesaria.

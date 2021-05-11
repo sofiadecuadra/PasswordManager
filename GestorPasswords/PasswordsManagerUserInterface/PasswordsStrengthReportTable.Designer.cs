@@ -1,7 +1,7 @@
 ﻿
 namespace PasswordsManagerUserInterface
 {
-    partial class PasswordsStrengthTable
+    partial class PasswordsStrengthReportTable
     {
         /// <summary> 
         /// Variable del diseñador necesaria.
@@ -44,6 +44,7 @@ namespace PasswordsManagerUserInterface
             this.dgvPasswordsReport.ColumnHeadersHeight = 40;
             this.dgvPasswordsReport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvPasswordsReport.Location = new System.Drawing.Point(270, 123);
+            this.dgvPasswordsReport.MultiSelect = false;
             this.dgvPasswordsReport.Name = "dgvPasswordsReport";
             this.dgvPasswordsReport.ReadOnly = true;
             this.dgvPasswordsReport.RowHeadersVisible = false;
@@ -72,14 +73,14 @@ namespace PasswordsManagerUserInterface
             this.btnChart.UseVisualStyleBackColor = true;
             this.btnChart.Click += new System.EventHandler(this.btnChart_Click);
             // 
-            // PasswordsStrengthReport
+            // PasswordsStrengthReportTable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.btnChart);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.dgvPasswordsReport);
-            this.Name = "PasswordsStrengthReport";
+            this.Name = "PasswordsStrengthReportTable";
             this.Size = new System.Drawing.Size(804, 451);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPasswordsReport)).EndInit();
             this.ResumeLayout(false);
