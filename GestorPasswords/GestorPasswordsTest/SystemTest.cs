@@ -297,5 +297,34 @@ namespace GestorPasswordsTest
             aCategory.AddUserPasswordPair(aUserPasswordPair);
             return aUserPasswordPair;
         }
+
+        [TestMethod]
+        public void GettingAllUsersWhitJustOne()
+        {
+            var allUsers = _PasswordManager.Users;
+            Assert.AreEqual(1, allUsers.Length);
+            Assert.AreEqual(myUser, allUsers[0]);
+        }
+
+        [TestMethod]
+        public void GettingAllUsersWithManyOnManager()
+        {
+            var aUser = new User()
+            {
+                Name = "User2",
+                MasterPassword = "AMasterPassword123$"
+            };
+            var anotherUser = new User()
+            {
+                Name = "User3",
+                MasterPassword = "AMasterPassword123$"
+            };
+
+            _PasswordManager.AddUser(aUser);
+            _PasswordManager.AddUser(anotherUser);
+
+            var allUsers = _PasswordManager.Users;
+            Assert.AreEqual(3, allUsers.Length);
+        }
     }
 }
