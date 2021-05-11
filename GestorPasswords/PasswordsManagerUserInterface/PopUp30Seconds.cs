@@ -81,7 +81,7 @@ namespace PasswordsManagerUserInterface
 
         private void PopUp30Seconds_Load(object sender, EventArgs e)
         {
-            timer.Interval = 3000;
+            timer.Interval = 30000;
             timer.Tick += new EventHandler(timer_Tick);
             timer.Start();
         }

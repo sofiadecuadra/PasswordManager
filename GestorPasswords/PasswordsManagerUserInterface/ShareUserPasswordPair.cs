@@ -60,6 +60,10 @@ namespace PasswordsManagerUserInterface
             {
                 MessageBox.Show(anException.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            catch (ArgumentException)
+            {
+                MessageBox.Show("The password has already been shared with the selected user", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void GoBackToPasswordView()

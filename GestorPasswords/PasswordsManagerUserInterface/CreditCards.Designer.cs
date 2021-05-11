@@ -30,7 +30,7 @@ namespace PasswordsManagerUserInterface
         private void InitializeComponent()
         {
             this.btnAdd = new System.Windows.Forms.Button();
-            this.btnRemove = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.btnModify = new System.Windows.Forms.Button();
             this.btnBack = new System.Windows.Forms.Button();
             this.dgvCreditCards = new System.Windows.Forms.DataGridView();
@@ -47,15 +47,15 @@ namespace PasswordsManagerUserInterface
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // btnRemove
+            // btnDelete
             // 
-            this.btnRemove.Location = new System.Drawing.Point(370, 333);
-            this.btnRemove.Name = "btnRemove";
-            this.btnRemove.Size = new System.Drawing.Size(75, 23);
-            this.btnRemove.TabIndex = 2;
-            this.btnRemove.Text = "Remove";
-            this.btnRemove.UseVisualStyleBackColor = true;
-            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            this.btnDelete.Location = new System.Drawing.Point(370, 333);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnDelete.TabIndex = 2;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnModify
             // 
@@ -102,7 +102,7 @@ namespace PasswordsManagerUserInterface
             this.Controls.Add(this.dgvCreditCards);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.btnModify);
-            this.Controls.Add(this.btnRemove);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnAdd);
             this.Name = "CreditCards";
             this.Size = new System.Drawing.Size(804, 451);
@@ -113,7 +113,7 @@ namespace PasswordsManagerUserInterface
 
         #endregion
         private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.Button btnRemove;
+        private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnModify;
         private System.Windows.Forms.Button btnBack;
         private System.Windows.Forms.DataGridView dgvCreditCards;
