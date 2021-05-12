@@ -77,9 +77,16 @@ namespace PasswordsManagerUserInterface
 
         private void AddNewCreditCard()
         {
-            CreditCard newCreditCard = CreateCreditCard();
-            newCreditCard.Category.AddCreditCard(newCreditCard);
-            GoBack();
+            if (Form.GetCategory() != null)
+            {
+                CreditCard newCreditCard = CreateCreditCard();
+                newCreditCard.Category.AddCreditCard(newCreditCard);
+                GoBack();
+            }
+            else
+            {
+                MessageBox.Show("The category cannot be null \n To add a category go to Menu -> Categories -> Add", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private CreditCard CreateCreditCard()
