@@ -69,10 +69,10 @@ namespace PasswordsManagerUserInterface
             dgvData.Columns[1].Width = 286;
 
             dgvData.Columns[2].Name = "Type";
-            dgvData.Columns[2].Width = 286;
+            dgvData.Columns[2].Width = 186;
 
             dgvData.Columns[3].Name = "Number";
-            dgvData.Columns[3].Width = 120;
+            dgvData.Columns[3].Width = 220;
 
             dgvData.Columns[4].Name = "Code";
             dgvData.Columns[4].Width = 44;
