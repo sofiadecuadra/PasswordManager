@@ -1,7 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections;
-using System.Linq;
-
 
 namespace GestorPasswordsDominio
 {
@@ -17,7 +14,7 @@ namespace GestorPasswordsDominio
 
         public PasswordManager()
         {
-            this.users = new Dictionary<string, User>();
+            users = new Dictionary<string, User>();
         }
 
         public User[] GetUsers()
@@ -32,15 +29,27 @@ namespace GestorPasswordsDominio
             return HasUser(value.Name) ? value : throw new ExceptionUserDoesNotExist("The user does not exist");
         }
 
+        public bool HasUser(string name)
+        {
+            return users.ContainsKey(name.ToLower());
+        }
+
         public bool AddUser(User myUser)
         {
             users.Add(myUser.Name, myUser);
             return true;
         }
 
-        public bool HasUser(string name)
+        public void LogIn(string username, string masterPassword)
         {
-            return users.ContainsKey(name.ToLower());
+            if (ValidateUser(username.Trim(), masterPassword))
+            {
+                CurrentUser = FindUser(username.Trim());
+            }
+            else
+            {
+                throw new ExceptionIncorrectMasterPassword("Wrong password");
+            }
         }
 
         public bool ValidateUser(string username, string masterPassword)
@@ -54,18 +63,6 @@ namespace GestorPasswordsDominio
                 .MasterPassword.Equals(masterPassword);
         }
 
-        public void LogIn(string username, string masterPassword)
-        {
-            if (ValidateUser(username.Trim(), masterPassword))
-            {
-                this.CurrentUser = FindUser(username.Trim());
-            }
-            else
-            {
-                throw new ExceptionIncorrectMasterPassword("Wrong password");
-            }
-        }
-
         public User FindUser(string name)
         {
             return users[name.ToLower()];
@@ -77,7 +74,6 @@ namespace GestorPasswordsDominio
             {
                 throw new ExceptionUserDoesNotExist($"The user {name} does not exist");
             }
-
             var userToRecivePassword = FindUser(name);
             passwordToShare.IncludeInUsersWithAccess(userToRecivePassword);
             userToRecivePassword.AddSharedUserPasswordPair(passwordToShare);
@@ -89,7 +85,6 @@ namespace GestorPasswordsDominio
             {
                 throw new ExceptionUserDoesNotExist($"The user {name} does not exist");
             }
-
             var userToRevokeSharedPassword = FindUser(name);
             passwordToStopSharing.RemoveFromUsersWithAccess(userToRevokeSharedPassword);
             userToRevokeSharedPassword.UnshareUserPasswordPair(passwordToStopSharing);
