@@ -13,33 +13,27 @@ namespace PasswordsManagerUserInterface
 {
     public partial class ModifyUserPasswordPairExposedInDataBreaches : UserControl
     {
+        private const string ERROR_MESSAGE = "An error has occurred";
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public UserPasswordPairForm Form { get; private set; }
-        public UserPasswordPair PasswordToModified { get; private set; }
+        public UserPasswordPair PasswordToModify { get; private set; }
         public IDataBreachesFormatter DataBreaches { get; private set; }
         public ModifyUserPasswordPairExposedInDataBreaches(PasswordManager aPasswordManager, Panel panel, UserPasswordPair password, IDataBreachesFormatter dataBreaches)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
             PnlMainWindow = panel;
-            PasswordToModified = password;
+            PasswordToModify = password;
             DataBreaches = dataBreaches;
             LoadUserPasswordPairForm(password);
         }
 
-        private void LoadUserPasswordPairForm(UserPasswordPair passwordToModified)
+        private void LoadUserPasswordPairForm(UserPasswordPair PasswordToModify)
         {
             pnlModifyUserPasswordPair.Controls.Clear();
-            Form = new UserPasswordPairForm(PasswordManager, passwordToModified);
+            Form = new UserPasswordPairForm(PasswordManager, PasswordToModify);
             pnlModifyUserPasswordPair.Controls.Add(Form);
-        }
-
-        public void ModifyPassword()
-        {
-            UserPasswordPair newPassword = CreatePassword();
-            PasswordToModified.Category.ModifyUserPasswordPair(PasswordToModified, newPassword);
-            GoBack();
         }
 
         private UserPasswordPair CreatePassword()
@@ -58,26 +52,7 @@ namespace PasswordsManagerUserInterface
                 Password = password,
                 Notes = notes
             };
-
             return userPasswordPair;
-        }
-        private void GoBack()
-        {
-            PnlMainWindow.Controls.Clear();
-            UserControl dataBreaches = new DataBreachesResult(PasswordManager, PnlMainWindow, DataBreaches);
-            PnlMainWindow.Controls.Add(dataBreaches);
-        }
-
-        private void btnBack_Click(object sender, EventArgs e)
-        {
-            GoBack();
-        }
-
-        private void btnMenu_Click(object sender, EventArgs e)
-        {
-            PnlMainWindow.Controls.Clear();
-            UserControl menu = new Menu(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(menu);
         }
 
         private void btnAccept_Click_1(object sender, EventArgs e)
@@ -88,12 +63,38 @@ namespace PasswordsManagerUserInterface
             }
             catch (ExceptionExistingUserPasswordPair exception)
             {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(exception.Message, ERROR_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (ExceptionIncorrectLength exception)
             {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(exception.Message, ERROR_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        public void ModifyPassword()
+        {
+            UserPasswordPair newPassword = CreatePassword();
+            PasswordToModify.Category.ModifyUserPasswordPair(PasswordToModify, newPassword);
+            GoBack();
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            GoBack();
+        }
+
+        private void GoBack()
+        {
+            PnlMainWindow.Controls.Clear();
+            UserControl dataBreachesResult = new DataBreachesResult(PasswordManager, PnlMainWindow, DataBreaches);
+            PnlMainWindow.Controls.Add(dataBreachesResult);
+        }
+
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+            PnlMainWindow.Controls.Clear();
+            UserControl menu = new Menu(PasswordManager, PnlMainWindow);
+            PnlMainWindow.Controls.Add(menu);
         }
     }
 }

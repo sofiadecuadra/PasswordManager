@@ -14,12 +14,12 @@ namespace PasswordsManagerUserInterface
     public partial class CheckDataBreaches : UserControl
     {
         public PasswordManager PasswordManager { get; private set; }
-        public Panel pnlMainWindow { get; private set; }
+        public Panel PnlMainWindow { get; private set; }
         public CheckDataBreaches(PasswordManager aPasswordManager, Panel panel)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
-            pnlMainWindow = panel;
+            PnlMainWindow = panel;
         }
 
         private void btnCheck_Click(object sender, EventArgs e)
@@ -29,21 +29,21 @@ namespace PasswordsManagerUserInterface
             {
                 txtDataBreaches = dataBreaches
             };
-            LoadApplication(textBoxDataBreaches);
+            LoadDataBreachesResult(textBoxDataBreaches);
         }
 
-        private void LoadApplication(IDataBreachesFormatter dataBreaches)
+        private void LoadDataBreachesResult(IDataBreachesFormatter dataBreaches)
         {
-            pnlMainWindow.Controls.Clear();
-            UserControl dataBreachesResult = new DataBreachesResult(PasswordManager, pnlMainWindow, dataBreaches);
-            pnlMainWindow.Controls.Add(dataBreachesResult);
+            PnlMainWindow.Controls.Clear();
+            UserControl dataBreachesResult = new DataBreachesResult(PasswordManager, PnlMainWindow, dataBreaches);
+            PnlMainWindow.Controls.Add(dataBreachesResult);
         }
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            pnlMainWindow.Controls.Clear();
-            UserControl menu = new Menu(PasswordManager, pnlMainWindow);
-            pnlMainWindow.Controls.Add(menu);
+            PnlMainWindow.Controls.Clear();
+            UserControl menu = new Menu(PasswordManager, PnlMainWindow);
+            PnlMainWindow.Controls.Add(menu);
         }
     }
 }
