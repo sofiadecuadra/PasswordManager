@@ -28,7 +28,6 @@ namespace GestorPasswordsDominio
         }
         public string Notes { get; set; }
         public DateTime LastModifiedDate { get; private set; }
-        public string LastModifiedShortFormat { get { return LastModifiedDate.ToString("d"); } }
         public NormalCategory Category { get; set; }
         public UserPasswordPair()
         {
