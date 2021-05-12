@@ -11,9 +11,11 @@ namespace GestorPasswordsDominio
     public class User
     {
         public string masterPassword;
-        public string MasterPassword {
+        public string MasterPassword
+        {
             get { return masterPassword; }
-            set {
+            set
+            {
                 masterPassword = ValidMasterPassword(value);
             }
         }
@@ -124,35 +126,37 @@ namespace GestorPasswordsDominio
 
         public UserPasswordPair[] GetUserPasswordPairsOfASpecificColor(PasswordStrengthType aColorGroup)
         {
+            UserPasswordPair[] arrayToReturn = new UserPasswordPair[1];
+
             if (aColorGroup == PasswordStrengthType.Red)
             {
-                return GetRedUserPasswordPairs();
+                arrayToReturn = GetRedUserPasswordPairs();
             }
             if (aColorGroup == PasswordStrengthType.Orange)
             {
-                return GetOrangeUserPasswordPairs();
+                arrayToReturn = GetOrangeUserPasswordPairs();
             }
             if (aColorGroup == PasswordStrengthType.Yellow)
             {
-                return GetYellowUserPasswordPairs();
+                arrayToReturn = GetYellowUserPasswordPairs();
             }
             if (aColorGroup == PasswordStrengthType.LightGreen)
             {
-                return GetLightGreenUserPasswordPairs();
+                arrayToReturn = GetLightGreenUserPasswordPairs();
             }
             if (aColorGroup == PasswordStrengthType.DarkGreen)
             {
-                return GetDarkGreenUserPasswordPairs();
+                arrayToReturn = GetDarkGreenUserPasswordPairs();
             }
 
-            return GetRedUserPasswordPairs();
+            return arrayToReturn;
         }
 
         public UserPasswordPair[] GetRedUserPasswordPairs()
         {
             UserPasswordPair[] redUserPasswordPairsArray = new UserPasswordPair[redUserPasswordPairs.Count];
             redUserPasswordPairs.CopyTo(redUserPasswordPairsArray);
-            return redUserPasswordPairsArray; 
+            return redUserPasswordPairsArray;
         }
 
         public void AddRedUserPasswordPair(UserPasswordPair aRedUserPasswordPair)
@@ -195,7 +199,7 @@ namespace GestorPasswordsDominio
 
         public void DeleteYellowUserPasswordPair(UserPasswordPair aYellowUserPasswordPair)
         {
-           yellowUserPasswordPairs.Remove(aYellowUserPasswordPair);
+            yellowUserPasswordPairs.Remove(aYellowUserPasswordPair);
         }
 
         public UserPasswordPair[] GetLightGreenUserPasswordPairs()
@@ -324,7 +328,7 @@ namespace GestorPasswordsDominio
 
             if (CategoryExists(newName))
             {
-                throw new ExceptionCategoryAlreadyExists("The category already exists" );
+                throw new ExceptionCategoryAlreadyExists("The category already exists");
             }
 
             return CategoryHasValidLength(newName);
@@ -390,7 +394,7 @@ namespace GestorPasswordsDominio
                 }
             }
 
-            return userPasswordPair != null ? userPasswordPair : throw new ExceptionUserPasswordPairDoesNotExist(); 
+            return userPasswordPair != null ? userPasswordPair : throw new ExceptionUserPasswordPairDoesNotExist();
         }
 
         private CreditCard ReturnCreditCardInCategoryThatAppeardInDataBreaches(Category aCategory, string creditCardNumber)
@@ -408,7 +412,7 @@ namespace GestorPasswordsDominio
 
                 creditCard = ReturnCreditCardInCategoryThatAppeardInDataBreaches(pair.Value, creditCardNumberWithoutBlankSpace);
 
-                if (creditCard!= null)
+                if (creditCard != null)
                 {
                     break;
                 }
@@ -421,7 +425,7 @@ namespace GestorPasswordsDominio
             return aCategory.ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(aPassword);
         }
 
-        private List <UserPasswordPair> ReturnListOfUserPasswordPairWhosePasswordAppearedInDataBreaches(string aPassword)
+        private List<UserPasswordPair> ReturnListOfUserPasswordPairWhosePasswordAppearedInDataBreaches(string aPassword)
         {
             List<UserPasswordPair> userPasswordPairList = new List<UserPasswordPair>();
 
@@ -442,7 +446,7 @@ namespace GestorPasswordsDominio
             return Regex.IsMatch(element, @"^[0-9]+$");
         }
 
-        private bool LengthIsFour (string element)
+        private bool LengthIsFour(string element)
         {
             return element.Length == 4;
         }
@@ -470,13 +474,13 @@ namespace GestorPasswordsDominio
             return itsACreditCard;
         }
 
-        public (List <UserPasswordPair>, List <CreditCard>) CheckDataBreaches(IDataBreachesFormatter dataBreaches)
+        public (List<UserPasswordPair>, List<CreditCard>) CheckDataBreaches(IDataBreachesFormatter dataBreaches)
         {
             List<CreditCard> leakedCreditCardsOfUserList = new List<CreditCard>();
 
             List<UserPasswordPair> leakedPasswordsOfUserList = new List<UserPasswordPair>();
 
-            string [] leakedData = dataBreaches.ConvertToArray();
+            string[] leakedData = dataBreaches.ConvertToArray();
 
             foreach (string element in leakedData)
             {
@@ -500,7 +504,7 @@ namespace GestorPasswordsDominio
                             leakedPasswordsOfUserList.Add(pair);
                         }
                     }
-                }              
+                }
             }
             return (leakedPasswordsOfUserList, leakedCreditCardsOfUserList);
         }
