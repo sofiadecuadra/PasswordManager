@@ -153,6 +153,10 @@ namespace PasswordsManagerUserInterface
             {
                 MessageBox.Show("Select the password to delete", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            catch (ExceptionUserPasswordPairDoesNotExist exception)
+            {
+                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnModify_Click(object sender, EventArgs e)
