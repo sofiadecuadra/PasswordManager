@@ -30,7 +30,7 @@ namespace GestorPasswordsDominio
 
         public DateTime LastModifiedDate { get; private set; }
 
-        public Category Category { get; set; }
+        public NormalCategory Category { get; set; }
 
         public String CategoryName { get { return Category.Name; }  }
 

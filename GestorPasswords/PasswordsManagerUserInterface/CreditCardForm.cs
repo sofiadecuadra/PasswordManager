@@ -53,9 +53,9 @@ namespace PasswordsManagerUserInterface
             cbCategory.DataSource = PasswordManager.CurrentUser.GetCategories();
         }
 
-        public Category GetCategory()
+        public NormalCategory GetCategory()
         {
-            Category selectedCategory = cbCategory.SelectedItem as Category;
+            NormalCategory selectedCategory = cbCategory.SelectedItem as NormalCategory;
             return selectedCategory;
         }
 

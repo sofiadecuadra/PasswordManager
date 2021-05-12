@@ -50,15 +50,15 @@ namespace PasswordsManagerUserInterface
 
         private void AddCategory_()
         {
-            Category newCategory = CreateCategory();
+            NormalCategory newCategory = CreateCategory();
             PasswordManager.CurrentUser.AddCategory(newCategory);
             GoBack();
         }
 
-        private Category CreateCategory()
+        private NormalCategory CreateCategory()
         {
             string name = Form.GetName();
-            Category newCategory = new Category()
+            NormalCategory newCategory = new NormalCategory()
             {
                 Name = name,
                 User = PasswordManager.CurrentUser

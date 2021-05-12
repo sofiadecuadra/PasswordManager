@@ -62,7 +62,7 @@ namespace PasswordsManagerUserInterface
 
         private void LoadModifyCategoryForm()
         {
-            Category selected = dgvCategories.SelectedRows[0].DataBoundItem as Category;
+            NormalCategory selected = dgvCategories.SelectedRows[0].DataBoundItem as NormalCategory;
             PnlMainWindow.Controls.Clear();
             UserControl modifyCategory = new ModifyCategory(PasswordManager, PnlMainWindow, selected);
             PnlMainWindow.Controls.Add(modifyCategory);

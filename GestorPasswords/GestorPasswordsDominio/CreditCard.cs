@@ -48,7 +48,7 @@ namespace GestorPasswordsDominio
             }
             return creditCardNumber;
         }
-        public Category Category { get; set; }
+        public NormalCategory Category { get; set; }
 
         public static string FormatNumber(string creditCardNumber)
         {
