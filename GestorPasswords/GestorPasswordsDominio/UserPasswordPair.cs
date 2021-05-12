@@ -1,31 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GestorPasswordsDominio
 {
     public class UserPasswordPair
     {
-        public string Password { get; set; }
+        public string password;
+        public string Password {
+            get { return password; }
+            set 
+            {
+                LastModifiedDate = DateTime.Now;
+                password = value;
+            }
+        }
+
         public Hashtable UsersWithAccess{ get; private set; }
+
         private string username;
         public string Username
         {
             get { return username; }
-            set {
-                LastModifiedDate = DateTime.Now;
-                username = value.ToLower(); 
-            }
+            set { username = value.ToLower(); }
         }
+
         private string site;
         public string Site
         {
             get { return site; }
             set { site = value.ToLower(); }
         }
+
         public string Notes { get; set; }
 
         public DateTime LastModifiedDate { get; private set; }
@@ -52,8 +57,7 @@ namespace GestorPasswordsDominio
             UsersWithAccess.Remove(userToRevokeSharedPassword.Name);
         }
 
-        override
-        public string ToString()
+        public override string ToString()
         {
             return "[" + Category.Name + "] [" + Site + "] [" + Username + "]";
         }
@@ -62,9 +66,8 @@ namespace GestorPasswordsDominio
         {
             if (UsersWithAccess.Count == 0)
             {
-                throw new ExceptionUserPasswordPairIsNotSharedWithAnyone();
+                throw new ExceptionUserPasswordPairIsNotSharedWithAnyone("This password has not been shared with anyone");
             }
-
             User[] usersToReturn = new User[UsersWithAccess.Count];
             UsersWithAccess.Values.CopyTo(usersToReturn, 0);
             return usersToReturn;
