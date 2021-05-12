@@ -10,7 +10,7 @@ namespace GestorPasswordsDominio
     {
         public SpecialCategory()
         {
-            Name = "Shared Passwords";
+            Name = "Passwords Shared With me";
         }
 
         public override bool AddUserPasswordPair(UserPasswordPair aUserPasswordPair)
