@@ -35,7 +35,7 @@ namespace GestorPasswordsDominio
 
         private User ReturnUserIfItExists(User value)
         {
-            return HasUser(value.Name) ? value : throw new ExceptionUserDoesNotExist();
+            return HasUser(value.Name) ? value : throw new ExceptionUserDoesNotExist("The user does not exist");
         }
 
         public bool AddUser(User myUser)
@@ -68,7 +68,7 @@ namespace GestorPasswordsDominio
             }
             else
             {
-                throw new ExceptionIncorrectMasterPassword();
+                throw new ExceptionIncorrectMasterPassword("Wrong password");
             }
         }
 

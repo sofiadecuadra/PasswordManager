@@ -31,13 +31,13 @@ namespace PasswordsManagerUserInterface
             {
                 UserLogIn();
             }
-            catch (ExceptionUserDoesNotExist)
+            catch (ExceptionUserDoesNotExist exception)
             {
-                MessageBox.Show("The user does not exist", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch (ExceptionIncorrectMasterPassword)
+            catch (ExceptionIncorrectMasterPassword exception)
             {
-                MessageBox.Show("Wrong password", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

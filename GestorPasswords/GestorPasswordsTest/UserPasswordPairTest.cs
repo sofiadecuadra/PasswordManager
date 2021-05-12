@@ -35,5 +35,20 @@ namespace GestorPasswordsTest
             };
             Assert.AreEqual(aUserPasswordPair.ToString(), "[category] [mysite] [myusername]");
         }
+
+        [TestMethod]
+        public void GettingLastModifiedDate()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "myPassword",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            Assert.AreEqual(DateTime.Now, aUserPasswordPair.LastModifiedDate);
+        }
     }
 }

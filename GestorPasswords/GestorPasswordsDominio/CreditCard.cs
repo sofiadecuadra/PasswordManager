@@ -9,7 +9,10 @@ namespace GestorPasswordsDominio
 {
     public class CreditCard
     {
-
+        private const int LAST_4_DIGITS_START_POSITION = 15;
+        private const int MIN_TEXT_FIELD_LENGTH = 3;
+        private const int MAX_TEXT_FIELD_LENGTH = 25;
+        private const int MAX_NOTES_LENGTH = 250;
         private string number;
         public string Number
         {
@@ -38,21 +41,13 @@ namespace GestorPasswordsDominio
                 expirationDate = new DateTime (value.Year, value.Month, lastDayOfMonth);
             }
         }
-
-        private string DisplayCreditCard()
-        {
-            string creditCardNumber = "";
-            for(int i=1; i<=16; i++)
-            {
-                creditCardNumber += this.Number[i-1];
-                if(i%4 == 0 && i!=16)
-                {
-                    creditCardNumber += " ";
-                }
-            }
-            return creditCardNumber;
-        }
         public Category Category { get; set; }
+
+        
+        public override string ToString()
+        {
+            return $"[{Name}] [{Type}] [{AddBlankSpacesAfter4Characters(Number)}]";
+        }
 
         public static string FormatNumber(string creditCardNumber)
         {
@@ -83,7 +78,7 @@ namespace GestorPasswordsDominio
             return creditCardNumber.Replace(" ", string.Empty);
         }
 
-        private const int LAST_4_DIGITS_START_POSITION = 15;
+
         private string NumberHiding(string creditCardNumber)
         {
             string formattedNumber = FormatNumber(creditCardNumber);
@@ -91,10 +86,72 @@ namespace GestorPasswordsDominio
             return "XXXX XXXX XXXX " + last4digits;
         }
 
-        override
-            public string ToString()
+        public bool CreditCardDataIsValid()
         {
-            return AddBlankSpacesAfter4Characters(Number);
+            if (!LengthBetween3And25(Name))
+            {
+                throw new ExceptionIncorrectLength($"The name's length must be between 3 and 25, but it's current length is: {Name.Length}");
+            }
+            if (!LengthBetween3And25(Type))
+            {
+                throw new ExceptionIncorrectLength($"The type's length must be between 3 and 25, but it's current length is:  {Type.Length}");
+            }
+            if (!ContainNumericCharactersOnly(Number))
+            {
+                throw new ExceptionCreditCardDoesNotContainOnlyDigits($"The number must contain numeric characters only, but it is: {Number}");
+            }
+            if (!CreditCardNumberHasValidLength())
+            {
+                throw new ExceptionIncorrectLength($"The credit card number must contain 16 digits, but currently it has: {Number.Length}");
+            }
+            if (!CodeHasValidLength())
+            {
+                throw new ExceptionIncorrectLength($"The code's length must be between 3 and 4, but it's current length is: {Code.Length}");
+            }
+            if (!ContainNumericCharactersOnly(Code))
+            {
+                throw new ExceptionCreditCardCodeHasNonNumericCharacters($"The code must contain numeric characters only, but it is: {Code}");
+            }
+            if (!NotesHaveValidLength())
+            {
+                throw new ExceptionIncorrectLength($"The notes' length must be up to 250, but it's current length is: {Notes.Length}");
+            }
+            if (CreditCardHasExpired())
+            {
+                throw new ExceptionCreditCardHasExpired($"The credit card must be valid, but it has expired in {ExpirationDate.Month}  / {ExpirationDate.Year}");
+            }
+            return true;
         }
+
+        private static bool LengthBetween3And25(string stringToCheck)
+        {
+            return stringToCheck.Length >= MIN_TEXT_FIELD_LENGTH && stringToCheck.Length <= MAX_TEXT_FIELD_LENGTH;
+        }
+
+        private bool CodeHasValidLength()
+        {
+            return Code.Length == 3 || Code.Length == 4;
+        }
+
+        private static bool ContainNumericCharactersOnly(string stringToCheck)
+        {
+            return Regex.IsMatch(stringToCheck, @"^[0-9]+$");
+        }
+
+        private bool CreditCardNumberHasValidLength()
+        {
+            return Number.Length == 16;
+        }
+
+        private bool NotesHaveValidLength()
+        {
+            return Notes.Length <= MAX_NOTES_LENGTH;
+        }
+
+        private bool CreditCardHasExpired()
+        {
+            return ExpirationDate < DateTime.Now;
+        }
+
     }
 }

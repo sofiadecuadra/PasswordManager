@@ -9,6 +9,7 @@ namespace GestorPasswordsTest
     public class UserTest
     {
         private User aUser;
+        private Category aCategory;
 
         [TestInitialize]
         public void Initialize()
@@ -17,6 +18,13 @@ namespace GestorPasswordsTest
             {
                 MasterPassword = "myPassword"
             };
+
+            aCategory = new Category()
+            {
+                User = aUser,
+                Name = "myCategory"
+            };
+            aUser.AddCategory(aCategory);
         }
 
         [TestMethod]
@@ -57,13 +65,6 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void AddUserPasswordPairsInDifferentCategoriesAndGetPasswordsStrengthReport()
         {
-            Category aCategory = new Category()
-            {
-                User = aUser,
-                Name = "myCategory"
-            };
-            aUser.AddCategory(aCategory);
-
             UserPasswordPair aRedUserPasswordPair = new UserPasswordPair()
             {
                 Password = "myPass",
@@ -132,74 +133,39 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void AddValidCategory()
         {
-            User aUser = new User()
-            {
-                MasterPassword = "myPassword"
-            };
-
-            Category aCategory = new Category()
-            {
-                User = aUser,
-                Name = "myCategory"
-            };
-
-            Assert.IsTrue(aUser.AddCategory(aCategory));
             Assert.AreEqual(1, aUser.GetCategories().Length);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionCategoryHasInvalidNameLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void AddCategoryWithLengthLessThan3()
         {
-            User aUser = new User()
-            {
-                MasterPassword = "myPassword"
-            };
-
-            Category aCategory = new Category()
+            Category anotherCategory = new Category()
             {
                 User = aUser,
                 Name = "my"
             };
 
-            aUser.AddCategory(aCategory);
+            aUser.AddCategory(anotherCategory);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionCategoryHasInvalidNameLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void AddCategoryWithLengthGreaterThan15()
         {
-            User aUser = new User()
-            {
-                MasterPassword = "myPassword"
-            };
-
-            Category aCategory = new Category()
+            Category anotherCategory = new Category()
             {
                 User = aUser,
                 Name = "myCategoryNameIsInvalid"
             };
 
-            aUser.AddCategory(aCategory);
+            aUser.AddCategory(anotherCategory);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void AddExistingCategory()
         {
-            User aUser = new User()
-            {
-                MasterPassword = "myPassword"
-            };
-
-            Category aCategory = new Category()
-            {
-                User = aUser,
-                Name = "myCategory"
-            };
-
-            aUser.AddCategory(aCategory);
-
             Category anotherCategory = new Category()
             {
                 User = aUser,
@@ -212,19 +178,6 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void ModifyCategoryNormally()
         {
-            User aUser = new User()
-            {
-                MasterPassword = "myPassword"
-            };
-
-            Category aCategory = new Category()
-            {
-                User = aUser,
-                Name = "myCategory"
-            };
-
-            aUser.AddCategory(aCategory);
-
             Assert.IsTrue(aUser.ModifyCategory(aCategory, "newName"));
             Assert.AreEqual("newname", aCategory.Name);
         }
@@ -233,57 +186,26 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionCategoryNotExists))]
         public void ModifyCategoryThatDoesNotExist()
         {
-            User aUser = new User()
-            {
-                MasterPassword = "myPassword"
-            };
-
-            Category aCategory = new Category()
+            Category anotherCategory = new Category()
             {
                 User = aUser,
-                Name = "myCategory"
+                Name = "anotherCategory"
             };
 
-            aUser.ModifyCategory(aCategory, "newName");
+            aUser.ModifyCategory(anotherCategory, "newName");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionCategoryHasInvalidNameLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void ModifyCategoryWithNewLengthLessThan3()
         {
-            User aUser = new User()
-            {
-                MasterPassword = "myPassword"
-            };
-
-            Category aCategory = new Category()
-            {
-                User = aUser,
-                Name = "myCategory"
-            };
-
-            aUser.AddCategory(aCategory);
-
             aUser.ModifyCategory(aCategory, "no");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionCategoryHasInvalidNameLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void ModifyCategoryWithNewLengthGreaterThan15()
         {
-            User aUser = new User()
-            {
-                MasterPassword = "myPassword"
-            };
-
-            Category aCategory = new Category()
-            {
-                User = aUser,
-                Name = "myCategory"
-            };
-
-            aUser.AddCategory(aCategory);
-
             aUser.ModifyCategory(aCategory, "thisIsAnInvalidLength");
         }
 
@@ -291,90 +213,33 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionCategoryAlreadyExists))]
         public void ModifyCategoryToAnExistingName()
         {
-            User aUser = new User()
-            {
-                MasterPassword = "myPassword"
-            };
-
-            Category aCategory = new Category()
-            {
-                User = aUser,
-                Name = "myCategory"
-            };
-            aUser.AddCategory(aCategory);
-
-            Category otherCategory = new Category()
+            Category anotherCategory = new Category()
             {
                 User = aUser,
                 Name = "otherCategory"
             };
-            aUser.AddCategory(otherCategory);
-
-            aUser.ModifyCategory(otherCategory, "myCategory");
+            aUser.AddCategory(anotherCategory);
+            
+            aUser.ModifyCategory(anotherCategory, "myCategory");
         }
 
         [TestMethod]
         public void ModifyCategoryNameToItsOwnName()
         {
-            User aUser = new User()
-            {
-                MasterPassword = "myPassword"
-            };
-
-            Category aCategory = new Category()
-            {
-                User = aUser,
-                Name = "myCategory"
-            };
-            aUser.AddCategory(aCategory);
-
             Assert.IsFalse(aUser.ModifyCategory(aCategory, "myCategory"));
         }
 
         [TestMethod]
         public void AddCreditCardToCategoryAndGetCreditCardslist()
         {
-            Category aCategory = new Category()
-            {
-                User = aUser,
-                Name = "myCategory"
-            };
-            aUser.AddCategory(aCategory);
-
-            CreditCard aCreditCard = new CreditCard()
-            {
-                Category = aCategory,
-                Name = "VISA",
-                Type = "Visa Gold",
-                Number = "1234567891234567",
-                Code = "123",
-                ExpirationDate = DateTime.Now,
-                Notes = "Notes"
-            };
-            aCategory.AddCreditCard(aCreditCard);
-
+            LoadTestCategoryToMyUserWithACreditCard();
             Assert.AreEqual(1, aUser.GetCreditCards().Length);
         }
 
         [TestMethod]
         public void RetriveExistingUserPasswordPair()
         {
-            var aCategory = new Category()
-            {
-                User = aUser,
-                Name = "myCategory"
-            };
-            var aUserPasswordPair = new UserPasswordPair()
-            {
-                Password = "thisIsAPassword",
-                Notes = "these are my notes",
-                Username = "myUserName",
-                Site = "mySite",
-                Category = aCategory,
-            };
-
-            aCategory.AddUserPasswordPair(aUserPasswordPair);
-            aUser.AddCategory(aCategory);
+            var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
 
             Assert.AreEqual(aUser.FindUserPasswordPair(aUserPasswordPair.Username, aUserPasswordPair.Site), aUserPasswordPair);
         }
@@ -383,11 +248,6 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionUserPasswordPairDoesNotExist))]
         public void RetriveNonExistingUserPasswordPair()
         {
-            var aCategory = new Category()
-            {
-                User = aUser,
-                Name = "myCategory"
-            };
             var aUserPasswordPair = new UserPasswordPair()
             {
                 Password = "thisIsAPassword",
@@ -397,45 +257,13 @@ namespace GestorPasswordsTest
                 Category = aCategory,
             };
 
-            aUser.AddCategory(aCategory);
-
             aUser.FindUserPasswordPair(aUserPasswordPair.Username, aUserPasswordPair.Site);
         }
 
         [TestMethod]
         public void ACreditCardOfUserAppearedInDataBreaches()
         {
-            var aCategory = new Category()
-            {
-                User = aUser,
-                Name = "myCategory"
-            };
-
-            CreditCard aCreditCard = new CreditCard()
-            {
-                Number = "1234567891234567",
-                Type = "Visa",
-                Name = "Visa Gold",
-                Code = "234",
-                Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25),
-                Category = aCategory,
-            };
-
-            CreditCard anotherCreditCard = new CreditCard()
-            {
-                Number = "1234567891234222",
-                Type = "Visa",
-                Name = "Visa Gold",
-                Code = "234",
-                Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25),
-                Category = aCategory,
-            };
-
-            aUser.AddCategory(aCategory);
-            aCategory.AddCreditCard(aCreditCard);
-            aCategory.AddCreditCard(anotherCreditCard);
+            var aCreditCard = LoadTestCategoryToMyUserWithACreditCard();
 
             IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
             {
@@ -448,41 +276,11 @@ namespace GestorPasswordsTest
             CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item2, expectedCreditCardList);
         }
 
-
         [TestMethod]
-        public void TwoCreditCardsOfUserAppearedInDataBreaches()
+        public void MultipleCreditCardsOfUserAppearedInDataBreaches()
         {
-            var aCategory = new Category()
-            {
-                User = aUser,
-                Name = "myCategory"
-            };
-
-            CreditCard aCreditCard = new CreditCard()
-            {
-                Number = "1234567891234567",
-                Type = "Visa",
-                Name = "Visa Gold",
-                Code = "234",
-                Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25),
-                Category = aCategory,
-            };
-
-            CreditCard anotherCreditCard = new CreditCard()
-            {
-                Number = "1234567891234222",
-                Type = "Visa",
-                Name = "Visa Gold",
-                Code = "234",
-                Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25),
-                Category = aCategory,
-            };
-
-            aUser.AddCategory(aCategory);
-            aCategory.AddCreditCard(aCreditCard);
-            aCategory.AddCreditCard(anotherCreditCard);
+            var aCreditCard = LoadTestCategoryToMyUserWithACreditCard();
+            var anotherCreditCard = LoadTestCategoryToMyUserWithAnotherCreditCard();
 
             IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
             {
@@ -499,33 +297,8 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void APasswordOfUserAppearedInDataBreaches()
         {
-            var aCategory = new Category()
-            {
-                User = aUser,
-                Name = "myCategory"
-            };
-
-            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
-            {
-                Password = "thisIsAPassword",
-                Notes = "these are my notes",
-                Username = "myUserName",
-                Site = "mySite",
-                Category = aCategory,
-            };
-
-            UserPasswordPair anotherUserPasswordPair = new UserPasswordPair()
-            {
-                Password = "thisIsAnotherPassword",
-                Notes = "these are my notes",
-                Username = "anotherUserName",
-                Site = "mySite",
-                Category = aCategory,
-            };
-
-            aUser.AddCategory(aCategory);
-            aCategory.AddUserPasswordPair(aUserPasswordPair);
-            aCategory.AddUserPasswordPair(anotherUserPasswordPair);
+            var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+            var anotherUserPasswordPair = LoadTestCategoryToMyUserWithAnotherUserPasswordPair();
 
             IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
             {
@@ -541,35 +314,9 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void APasswordAndACreditCardOfUserAppearedInDataBreaches()
         {
-            var aCategory = new Category()
-            {
-                User = aUser,
-                Name = "myCategory"
-            };
+            var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+            var aCreditCard = LoadTestCategoryToMyUserWithACreditCard();
 
-            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
-            {
-                Password = "thisIsAPassword",
-                Notes = "these are my notes",
-                Username = "myUserName",
-                Site = "mySite",
-                Category = aCategory,
-            };
-
-            CreditCard aCreditCard = new CreditCard()
-            {
-                Number = "1234567891234567",
-                Type = "Visa",
-                Name = "Visa Gold",
-                Code = "234",
-                Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25),
-                Category = aCategory,
-            };
-
-            aUser.AddCategory(aCategory);
-            aCategory.AddUserPasswordPair(aUserPasswordPair);
-            aCategory.AddCreditCard(aCreditCard);
 
             IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
             {
@@ -589,23 +336,7 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void SamePasswordAppearedMoreThanOnceInDataBreaches()
         {
-            var aCategory = new Category()
-            {
-                User = aUser,
-                Name = "myCategory"
-            };
-
-            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
-            {
-                Password = "thisIsAPassword",
-                Notes = "these are my notes",
-                Username = "myUserName",
-                Site = "mySite",
-                Category = aCategory,
-            };
-
-            aUser.AddCategory(aCategory);
-            aCategory.AddUserPasswordPair(aUserPasswordPair);
+            var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
 
             IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
             {
@@ -621,24 +352,7 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void SameCreditCardAppearedMoreThanOnceInDataBreaches()
         {
-            var aCategory = new Category()
-            {
-                User = aUser,
-                Name = "myCategory"
-            };
-            CreditCard aCreditCard = new CreditCard()
-            {
-                Number = "1234567891234567",
-                Type = "Visa",
-                Name = "Visa Gold",
-                Code = "234",
-                Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25),
-                Category = aCategory,
-            };
-
-            aUser.AddCategory(aCategory);
-            aCategory.AddCreditCard(aCreditCard);
+            var aCreditCard = LoadTestCategoryToMyUserWithACreditCard();
 
             IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
             {
@@ -654,33 +368,8 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void PasswordsOfUserAppearedInDataBreaches()
         {
-            var aCategory = new Category()
-            {
-                User = aUser,
-                Name = "myCategory"
-            };
-
-            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
-            {
-                Password = "thisIsAPassword",
-                Notes = "these are my notes",
-                Username = "myUserName",
-                Site = "mySite",
-                Category = aCategory,
-            };
-
-            UserPasswordPair anotherUserPasswordPair = new UserPasswordPair()
-            {
-                Password = "thisIsAnotherPassword",
-                Notes = "these are my notes",
-                Username = "anotherUserName",
-                Site = "mySite",
-                Category = aCategory,
-            };
-
-            aUser.AddCategory(aCategory);
-            aCategory.AddUserPasswordPair(aUserPasswordPair);
-            aCategory.AddUserPasswordPair(anotherUserPasswordPair);
+            var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+            var anotherUserPasswordPair = LoadTestCategoryToMyUserWithAnotherUserPasswordPair();
 
             IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
             {
@@ -697,12 +386,6 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void PasswordWithBlankSpacesAndOnlyDigitsOfUserAppearedInDataBreaches()
         {
-            var aCategory = new Category()
-            {
-                User = aUser,
-                Name = "myCategory"
-            };
-
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
                 Password = "4444 555 6666 2323",
@@ -712,7 +395,6 @@ namespace GestorPasswordsTest
                 Category = aCategory,
             };
 
-            aUser.AddCategory(aCategory);
             aCategory.AddUserPasswordPair(aUserPasswordPair);
 
             IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
@@ -729,12 +411,6 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void PasswordWithBlankSpacesOfUserAppearedInDataBreaches()
         {
-            var aCategory = new Category()
-            {
-                User = aUser,
-                Name = "myCategory"
-            };
-
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
                 Password = "rfkg s67r sjdh liks",
@@ -744,7 +420,6 @@ namespace GestorPasswordsTest
                 Category = aCategory,
             };
 
-            aUser.AddCategory(aCategory);
             aCategory.AddUserPasswordPair(aUserPasswordPair);
 
             IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
@@ -761,59 +436,12 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void MultiplePasswordsAndCreditCardsOfUserAppearedInDataBreaches()
         {
-            var aCategory = new Category()
-            {
-                User = aUser,
-                Name = "myCategory"
-            };
+            var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+            var anotherUserPasswordPair = LoadTestCategoryToMyUserWithAnotherUserPasswordPair();
 
-            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
-            {
-                Password = "thisIsAPassword",
-                Notes = "these are my notes",
-                Username = "myUserName",
-                Site = "mySite",
-                Category = aCategory,
-            };
+            var aCreditCard = LoadTestCategoryToMyUserWithACreditCard();
+            var anotherCreditCard = LoadTestCategoryToMyUserWithAnotherCreditCard();
 
-            UserPasswordPair anotherUserPasswordPair = new UserPasswordPair()
-            {
-                Password = "thisIsAnotherPassword",
-                Notes = "these are my notes",
-                Username = "anotherUserName",
-                Site = "mySite",
-                Category = aCategory,
-            };
-
-            CreditCard aCreditCard = new CreditCard()
-            {
-                Number = "1234567891234567",
-                Type = "Visa",
-                Name = "Visa Gold",
-                Code = "234",
-                Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25),
-                Category = aCategory,
-            };
-
-            CreditCard anotherCreditCard = new CreditCard()
-            {
-                Number = "1234567891234222",
-                Type = "Visa",
-                Name = "Visa Gold",
-                Code = "234",
-                Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25),
-                Category = aCategory,
-            };
-
-            aUser.AddCategory(aCategory);
-
-            aCategory.AddUserPasswordPair(aUserPasswordPair);
-            aCategory.AddUserPasswordPair(anotherUserPasswordPair);
-
-            aCategory.AddCreditCard(aCreditCard);
-            aCategory.AddCreditCard(anotherCreditCard);
 
             IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
             {
@@ -835,59 +463,11 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void NoPasswordsOrCreditCardsOfUserAppearedInDataBreaches()
         {
-            var aCategory = new Category()
-            {
-                User = aUser,
-                Name = "myCategory"
-            };
+            var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+            var anotherUserPasswordPair = LoadTestCategoryToMyUserWithAnotherUserPasswordPair();
 
-            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
-            {
-                Password = "thisIsAPassword",
-                Notes = "these are my notes",
-                Username = "myUserName",
-                Site = "mySite",
-                Category = aCategory,
-            };
-
-            UserPasswordPair anotherUserPasswordPair = new UserPasswordPair()
-            {
-                Password = "thisIsAnotherPassword",
-                Notes = "these are my notes",
-                Username = "anotherUserName",
-                Site = "mySite",
-                Category = aCategory,
-            };
-
-            CreditCard aCreditCard = new CreditCard()
-            {
-                Number = "1234567891234567",
-                Type = "Visa",
-                Name = "Visa Gold",
-                Code = "234",
-                Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25),
-                Category = aCategory,
-            };
-
-            CreditCard anotherCreditCard = new CreditCard()
-            {
-                Number = "1234567891234222",
-                Type = "Visa",
-                Name = "Visa Gold",
-                Code = "234",
-                Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25),
-                Category = aCategory,
-            };
-
-            aUser.AddCategory(aCategory);
-
-            aCategory.AddUserPasswordPair(aUserPasswordPair);
-            aCategory.AddUserPasswordPair(anotherUserPasswordPair);
-
-            aCategory.AddCreditCard(aCreditCard);
-            aCategory.AddCreditCard(anotherCreditCard);
+            var aCreditCard = LoadTestCategoryToMyUserWithACreditCard();
+            var anotherCreditCard = LoadTestCategoryToMyUserWithAnotherCreditCard();
 
             IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
             {
@@ -905,20 +485,7 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void PasswordUsedInMultipleSitesOfUserAppearedInDataBreaches()
         {
-            var aCategory = new Category()
-            {
-                User = aUser,
-                Name = "myCategory"
-            };
-
-            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
-            {
-                Password = "thisIsAPassword",
-                Notes = "these are my notes",
-                Username = "myUserName",
-                Site = "mySite",
-                Category = aCategory,
-            };
+            var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
 
             UserPasswordPair anotherUserPasswordPair = new UserPasswordPair()
             {
@@ -929,8 +496,6 @@ namespace GestorPasswordsTest
                 Category = aCategory,
             };
 
-            aUser.AddCategory(aCategory);
-            aCategory.AddUserPasswordPair(aUserPasswordPair);
             aCategory.AddUserPasswordPair(anotherUserPasswordPair);
 
             IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
@@ -956,11 +521,6 @@ namespace GestorPasswordsTest
 
         private UserPasswordPair LoadTestCategoryToMyUserWithAUserPasswordPair()
         {
-            var aCategory = new Category()
-            {
-                Name = "aCategory",
-                User = aUser
-            };
             var aUserPasswordPair = new UserPasswordPair()
             {
                 Password = "thisIsAPassword",
@@ -969,10 +529,57 @@ namespace GestorPasswordsTest
                 Site = "mySite",
                 Category = aCategory,
             };
-            aUser.AddCategory(aCategory);
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
             return aUserPasswordPair;
+        }
+
+        private UserPasswordPair LoadTestCategoryToMyUserWithAnotherUserPasswordPair()
+        {
+            UserPasswordPair anotherUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAnotherPassword",
+                Notes = "these are my notes",
+                Username = "anotherUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(anotherUserPasswordPair);
+            return anotherUserPasswordPair;
+        }
+
+        private CreditCard LoadTestCategoryToMyUserWithACreditCard()
+        {
+            CreditCard aCreditCard = new CreditCard()
+            {
+                Number = "1234567891234567",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = "",
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
+            };
+
+            aCategory.AddCreditCard(aCreditCard);
+            return aCreditCard;
+        }
+
+        private CreditCard LoadTestCategoryToMyUserWithAnotherCreditCard()
+        {
+            CreditCard anotherCreditCard = new CreditCard()
+            {
+                Number = "1234567891234222",
+                Type = "Visa",
+                Name = "Visa Gold",
+                Code = "234",
+                Notes = "",
+                ExpirationDate = new DateTime(2023, 12, 25),
+                Category = aCategory,
+            };
+            aCategory.AddCreditCard(anotherCreditCard);
+            return anotherCreditCard;
         }
     }
 }
