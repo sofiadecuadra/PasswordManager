@@ -39,16 +39,16 @@ namespace GestorPasswordsDominio
                 return PasswordStrengthType.LightGreen;
             }
 
-            bool isYellow = ContainsJustUpperOrLowerCase(passwordToCheck)
+            /*bool isYellow = ContainsJustUpperOrLowerCase(passwordToCheck)
                             || ContainsJustSymbolsAndNumbers(passwordToCheck)
                             || ContainsJustUpperOrLowerCaseAndSymbolsOrNumbers(passwordToCheck)
                             || ContainsJustSymbolsOrNumbers(passwordToCheck);
             if (isYellow)
-            {
+            {*/
                 return PasswordStrengthType.Yellow;
-            }
+            /*}
 
-            return PasswordStrengthType.Red;
+            return PasswordStrengthType.Red;*/
         }
 
         private static bool PasswordSizeOutSideBoundaries(string passwordToCheck)
@@ -61,20 +61,20 @@ namespace GestorPasswordsDominio
             return Regex.IsMatch(passwordToCheck, @"(?=^.{14,}$)((?=.*\d+)(?=.*\W+))(?![.\n])(?=.*([A-Z]|[a-z])+).*$");
         }
 
-        private static bool ContainsJustSymbolsOrNumbers(string passwordToCheck)
+        /*private static bool ContainsJustSymbolsOrNumbers(string passwordToCheck)
         {
             return Regex.IsMatch(passwordToCheck, @"(?=^.{14,}$)((?=.*((\d)|(\W))+)).*$");
-        }
+        }*/
 
-        private static bool ContainsJustUpperOrLowerCaseAndSymbolsOrNumbers(string passwordToCheck)
+        /*private static bool ContainsJustUpperOrLowerCaseAndSymbolsOrNumbers(string passwordToCheck)
         {
             return Regex.IsMatch(passwordToCheck, @"(?=^.{14,}$)((?=.*((\d)|(\W))+))(?![.\n])(?=.*(([A-Z])|([a-z]))+).*$");
-        }
+        }*/
 
-        private static bool ContainsJustSymbolsAndNumbers(string passwordToCheck)
+        /*private static bool ContainsJustSymbolsAndNumbers(string passwordToCheck)
         {
             return Regex.IsMatch(passwordToCheck, @"(?=^.{14,}$)((?=.*\d+)(?=.*\W+))(?![.\n]).*$");
-        }
+        }*/
 
         private static bool ContainsJustUpperAndLowerCaseAndSymbolsOrNumbers(string passwordToCheck)
         {
@@ -91,10 +91,10 @@ namespace GestorPasswordsDominio
             return Regex.IsMatch(passwordToCheck, @"^(?=[a-z]+[A-Z]+|[A-Z]+[a-z]+)[a-zA-Z]{14,25}$");
         }
 
-        private static bool ContainsJustUpperOrLowerCase(string passwordToCheck)
+        /*private static bool ContainsJustUpperOrLowerCase(string passwordToCheck)
         {
             return Regex.IsMatch(passwordToCheck, @"^[A-Za-z\s]+$");
-        }
+        }*/
 
         private static bool ContainsLessThan8Characters(string passwordToCheck)
         {
@@ -103,7 +103,7 @@ namespace GestorPasswordsDominio
 
         private static bool ContainsBetween8And14Characters(string passwordToCheck)
         {
-            return passwordToCheck.Length >= 8 && passwordToCheck.Length <= 14;
+            return passwordToCheck.Length <= 14;
         }
 
         private static Random rand;
