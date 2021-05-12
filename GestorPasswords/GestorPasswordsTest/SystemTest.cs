@@ -296,7 +296,7 @@ namespace GestorPasswordsTest
 
         private UserPasswordPair LoadTestCategoryToMyUserWithAUserPasswordPair()
         {
-            var aCategory = new NormalCategory()
+            var aCategory = new Category()
             {
                 Name = "aCategory",
                 User = myUser

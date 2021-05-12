@@ -32,9 +32,9 @@ namespace PasswordsManagerUserInterface
 
         private void LoadChartData()
         {
-            NormalCategory[] categories = PasswordManager.CurrentUser.GetCategories();
+            Category[] categories = PasswordManager.CurrentUser.GetCategories();
 
-            foreach (NormalCategory category in categories)
+            foreach (Category category in categories)
             {
                 chartPasswordsReport.Series["Red"].Points.AddXY(category.Name, category.RedUserPasswordPairsQuantity);
                 chartPasswordsReport.Series["Orange"].Points.AddXY(category.Name, category.OrangeUserPasswordPairsQuantity);
