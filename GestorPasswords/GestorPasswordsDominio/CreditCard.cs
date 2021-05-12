@@ -1,9 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace GestorPasswordsDominio
 {
     public class CreditCard
     {
+
         private string number;
         public string Number
         {
@@ -13,24 +19,15 @@ namespace GestorPasswordsDominio
                 number = RemoveAllBlankSpaces(value);
             }
         }
-
         public string NumberFormatted
         {
             get { return FormatNumber(Number); }
         }
-
-        public NormalCategory Category { get; set; }
-
         public string HideNumber { get; private set; }
-
         public string Type { get; set; }
-
         public string Name { get; set; }
-
         public string Code { get; set; }
-
         public string Notes { get; set; }
-
         private DateTime expirationDate;
         public DateTime ExpirationDate
         {
@@ -42,6 +39,21 @@ namespace GestorPasswordsDominio
             }
         }
 
+        private string DisplayCreditCard()
+        {
+            string creditCardNumber = "";
+            for(int i=1; i<=16; i++)
+            {
+                creditCardNumber += this.Number[i-1];
+                if(i%4 == 0 && i!=16)
+                {
+                    creditCardNumber += " ";
+                }
+            }
+            return creditCardNumber;
+        }
+        public NormalCategory Category { get; set; }
+
         public static string FormatNumber(string creditCardNumber)
         {
             creditCardNumber = RemoveAllBlankSpaces(creditCardNumber);
@@ -50,39 +62,19 @@ namespace GestorPasswordsDominio
 
         private static string AddBlankSpacesAfter4Characters(string creditCardNumber)
         {
-            creditCardNumber = AddFirstBlankSpace(creditCardNumber);
-            creditCardNumber = AddSecondBlankSpace(creditCardNumber);
-            creditCardNumber = AddThirdBlankSpace(creditCardNumber);
-            return creditCardNumber;
-        }
-
-        private const int POSTITION_TO_INSERT_FIRST_BLANK_SPACE = 4;
-        private static string AddFirstBlankSpace(string creditCardNumber)
-        {
-            if (creditCardNumber.Length > POSTITION_TO_INSERT_FIRST_BLANK_SPACE)
+            if (creditCardNumber.Length >= 5)
             {
-                creditCardNumber = creditCardNumber.Insert(POSTITION_TO_INSERT_FIRST_BLANK_SPACE, " ");
+                creditCardNumber = creditCardNumber.Insert(4, " ");
             }
-            return creditCardNumber;
-        }
-
-        private const int POSTITION_TO_INSERT_SECOND_BLANK_SPACE = 9;
-        private static string AddSecondBlankSpace(string creditCardNumber)
-        {
-            if (creditCardNumber.Length > POSTITION_TO_INSERT_SECOND_BLANK_SPACE)
+            if (creditCardNumber.Length >= 10)
             {
-                creditCardNumber = creditCardNumber.Insert(POSTITION_TO_INSERT_SECOND_BLANK_SPACE, " ");
+                creditCardNumber = creditCardNumber.Insert(9, " ");
             }
-            return creditCardNumber;
-        }
-
-        private const int POSTITION_TO_INSERT_THIRD_BLANK_SPACE = 14;
-        private static string AddThirdBlankSpace(string creditCardNumber)
-        {
-            if (creditCardNumber.Length > POSTITION_TO_INSERT_THIRD_BLANK_SPACE)
+            if (creditCardNumber.Length >= 15)
             {
-                creditCardNumber = creditCardNumber.Insert(POSTITION_TO_INSERT_THIRD_BLANK_SPACE, " ");
+                creditCardNumber = creditCardNumber.Insert(14, " ");
             }
+
             return creditCardNumber;
         }
 
@@ -99,9 +91,10 @@ namespace GestorPasswordsDominio
             return "XXXX XXXX XXXX " + last4digits;
         }
 
-        public override string ToString()
+        override
+            public string ToString()
         {
-            return "[" + Name + "] [" + Type + "] [" + FormatNumber(Number) + "]";
+            return AddBlankSpacesAfter4Characters(Number);
         }
     }
 }
