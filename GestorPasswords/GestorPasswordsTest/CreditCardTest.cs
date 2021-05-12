@@ -47,7 +47,6 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void FormatCreditCardNumber()
         {
-            var creditCardNumber = "1234567891234567";
             Assert.AreEqual("1234 5678 9123 4567", aCreditCard.NumberFormatted);
         }
 

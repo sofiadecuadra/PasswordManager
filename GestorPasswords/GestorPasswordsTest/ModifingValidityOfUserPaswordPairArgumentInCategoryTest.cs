@@ -99,6 +99,40 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
+        public void ModifyPasswordOfUserPasswordPairToAValidOneChangingCategoryAndNotThePassword()
+        {
+            NormalCategory anotherCategory = new NormalCategory()
+            {
+                User = aUser,
+                Name = "anotherCategory"
+            };
+            aUser.AddCategory(anotherCategory);
+
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "password",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "password",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = anotherCategory,
+            };
+
+            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            Assert.AreEqual(0, aCategory.GetUserPasswordsPairs().Length);
+            Assert.AreEqual(1, anotherCategory.GetUserPasswordsPairs().Length);
+        }
+
+        [TestMethod]
         public void ModifyUsernameOfUserPasswordPairToAValidOne()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
