@@ -206,7 +206,7 @@ namespace GestorPasswordsDominio
             bool passwordsAreEqual = PasswordsAreEqual(oldUserPasswordPair.Password, newUserPasswordPair.Password);
             if (hasSameCategory && !passwordsAreEqual)
             {
-                UpdatePassword(oldUserPasswordPair, newUserPasswordPair);
+                UpdateAllPropertiesExceptCategory(oldUserPasswordPair, newUserPasswordPair);
             }
             if (hasSameCategory && passwordsAreEqual)
             {
@@ -214,15 +214,15 @@ namespace GestorPasswordsDominio
             }
             if (!hasSameCategory && passwordsAreEqual)
             {
-                UpdateCategory(oldUserPasswordPair, newUserPasswordPair);
+                UpdateAllPropertiesExceptPassword(oldUserPasswordPair, newUserPasswordPair);
             }
             if (!hasSameCategory && !passwordsAreEqual)
             {
-                UpdatePasswordAndCategory(oldUserPasswordPair, newUserPasswordPair);
+                UpdateAllProperties(oldUserPasswordPair, newUserPasswordPair);
             }
         }
 
-        public void UpdatePassword(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
+        public void UpdateAllPropertiesExceptCategory(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
         {
             DeleteUserPasswordPairFromStrengthGroup(oldUserPasswordPair);
             UpdateUsernameSiteAndNotes(oldUserPasswordPair, newUserPasswordPair);
@@ -230,7 +230,7 @@ namespace GestorPasswordsDominio
             AddUserPasswordPairToStrengthGroup(oldUserPasswordPair);
         }
 
-        public void UpdateCategory(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
+        public void UpdateAllPropertiesExceptPassword(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
         {
             DeleteUserPasswordPairFromStrengthGroup(oldUserPasswordPair);
             UpdateUsernameSiteAndNotes(oldUserPasswordPair, newUserPasswordPair);
@@ -240,7 +240,7 @@ namespace GestorPasswordsDominio
             AddUserPasswordPairToStrengthGroup(oldUserPasswordPair);
         }
 
-        public void UpdatePasswordAndCategory(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
+        public void UpdateAllProperties(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
         {
             DeleteUserPasswordPairFromStrengthGroup(oldUserPasswordPair);
             UpdateUsernameSiteAndNotes(oldUserPasswordPair, newUserPasswordPair);
