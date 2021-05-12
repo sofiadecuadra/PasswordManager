@@ -27,9 +27,9 @@ namespace PasswordsManagerUserInterface
 
         private void LoadUsers()
         {
-            var users = PasswordManager.Users;
+            User[] users = PasswordManager.GetUsers();
 
-            foreach (var user in users)
+            foreach (User user in users)
             {
                 AddUserNameToComboUsers(user);
             }

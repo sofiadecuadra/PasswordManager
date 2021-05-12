@@ -7,7 +7,7 @@ namespace GestorPasswordsTest
     [TestClass]
     public class CreditCardTest
     {
-        private Category aCategory;
+        private NormalCategory aCategory;
         private User aUser;
         private CreditCard aCreditCard;
 
@@ -19,7 +19,7 @@ namespace GestorPasswordsTest
                 MasterPassword = "password",
                 Name = "UserName"
             };
-            aCategory = new Category()
+            aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "Category"

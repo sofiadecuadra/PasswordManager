@@ -9,7 +9,7 @@ namespace GestorPasswordsTest
     public class UserTest
     {
         private User aUser;
-        private Category aCategory;
+        private NormalCategory aCategory;
 
         [TestInitialize]
         public void Initialize()
@@ -19,7 +19,7 @@ namespace GestorPasswordsTest
                 MasterPassword = "myPassword"
             };
 
-            aCategory = new Category()
+            aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -96,7 +96,7 @@ namespace GestorPasswordsTest
             aCategory.AddUserPasswordPair(aDarkGreenUserPasswordPair);
 
 
-            Category otherCategory = new Category()
+            NormalCategory otherCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "otherCategory"
@@ -140,7 +140,7 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void AddCategoryWithLengthLessThan3()
         {
-            Category anotherCategory = new Category()
+            NormalCategory anotherCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "my"
@@ -153,7 +153,7 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void AddCategoryWithLengthGreaterThan15()
         {
-            Category anotherCategory = new Category()
+            NormalCategory anotherCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategoryNameIsInvalid"
@@ -166,7 +166,7 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ArgumentException))]
         public void AddExistingCategory()
         {
-            Category anotherCategory = new Category()
+            NormalCategory anotherCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -186,7 +186,7 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionCategoryNotExists))]
         public void ModifyCategoryThatDoesNotExist()
         {
-            Category anotherCategory = new Category()
+            NormalCategory anotherCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "anotherCategory"
@@ -213,7 +213,7 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionCategoryAlreadyExists))]
         public void ModifyCategoryToAnExistingName()
         {
-            Category anotherCategory = new Category()
+            NormalCategory anotherCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "otherCategory"

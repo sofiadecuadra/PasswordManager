@@ -29,7 +29,7 @@ namespace GestorPasswordsDominio
         public string Notes { get; set; }
         public DateTime LastModifiedDate { get; private set; }
         public string LastModifiedShortFormat { get { return LastModifiedDate.ToString("d"); } }
-        public Category Category { get; set; }
+        public NormalCategory Category { get; set; }
         public UserPasswordPair()
         {
             UsersWithAccess = new Hashtable();
@@ -50,8 +50,8 @@ namespace GestorPasswordsDominio
             UsersWithAccess.Remove(userToRevokeSharedPassword.Name);
         }
 
-        override
-        public string ToString()
+        
+        public override string ToString()
         {
             return $"[{Category.Name}] [{Site}] [{Username}]";
         }

@@ -296,7 +296,7 @@ namespace GestorPasswordsTest
 
         private UserPasswordPair LoadTestCategoryToMyUserWithAUserPasswordPair()
         {
-            var aCategory = new Category()
+            var aCategory = new NormalCategory()
             {
                 Name = "aCategory",
                 User = myUser
@@ -318,7 +318,7 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void GettingAllUsersWhitJustOne()
         {
-            var allUsers = _PasswordManager.Users;
+            var allUsers = _PasswordManager.GetUsers();
             Assert.AreEqual(1, allUsers.Length);
             Assert.AreEqual(myUser, allUsers[0]);
         }
@@ -340,7 +340,7 @@ namespace GestorPasswordsTest
             _PasswordManager.AddUser(aUser);
             _PasswordManager.AddUser(anotherUser);
 
-            var allUsers = _PasswordManager.Users;
+            var allUsers = _PasswordManager.GetUsers();
             Assert.AreEqual(3, allUsers.Length);
         }
     }

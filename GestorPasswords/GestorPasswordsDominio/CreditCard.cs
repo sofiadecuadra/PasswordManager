@@ -41,8 +41,7 @@ namespace GestorPasswordsDominio
                 expirationDate = new DateTime (value.Year, value.Month, lastDayOfMonth);
             }
         }
-        public Category Category { get; set; }
-
+        public NormalCategory Category { get; set; }
         
         public override string ToString()
         {
