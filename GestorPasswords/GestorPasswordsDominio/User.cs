@@ -305,10 +305,10 @@ namespace GestorPasswordsDominio
         private bool CategoryCouldBeModified(NormalCategory aCategory, string newName)
         {
             CheckIfOldCategoryExists(aCategory);
-            CheckIfNewNameAlreadyExists(newName);
             bool couldBeModified = false;
             if (NewNameIsDifferentFromOldName(aCategory, newName))
             {
+                CheckIfNewNameAlreadyExists(newName);
                 couldBeModified = CategoryIsValid(newName);
             }
             return couldBeModified;
