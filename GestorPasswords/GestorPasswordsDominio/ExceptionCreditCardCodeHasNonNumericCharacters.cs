@@ -8,8 +8,6 @@ namespace GestorPasswordsDominio
 {
     public class ExceptionCreditCardCodeHasNonNumericCharacters : Exception
     {
-        public ExceptionCreditCardCodeHasNonNumericCharacters() { }
         public ExceptionCreditCardCodeHasNonNumericCharacters(string message) : base(message) { }
-        public ExceptionCreditCardCodeHasNonNumericCharacters(string message, Exception inner) : base(message, inner) { }
     }
 }

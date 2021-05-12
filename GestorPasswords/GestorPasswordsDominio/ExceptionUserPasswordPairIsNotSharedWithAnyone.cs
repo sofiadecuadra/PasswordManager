@@ -8,8 +8,6 @@ namespace GestorPasswordsDominio
 {
     public class ExceptionUserPasswordPairIsNotSharedWithAnyone : Exception
     {
-        public ExceptionUserPasswordPairIsNotSharedWithAnyone() { }
         public ExceptionUserPasswordPairIsNotSharedWithAnyone(string message) : base(message) { }
-        public ExceptionUserPasswordPairIsNotSharedWithAnyone(string message, Exception inner) : base(message, inner) { }
     }
 }

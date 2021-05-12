@@ -49,7 +49,7 @@ namespace GestorPasswordsDominio
             if (!isBetween5And25Characters(value))
             {
                 string errorMessage = $"The provided user name should be between 5 and 25 characters but is: {value.Length} charachterslong";
-                throw new ExceptionIncorrectUserNameLength(errorMessage);
+                throw new ExceptionIncorrectLength(errorMessage);
             }
             if (HasBlankSpace(value))
             {
@@ -278,7 +278,7 @@ namespace GestorPasswordsDominio
         {
             if (categoryName.Length < 3 || categoryName.Length > 15)
             {
-                throw new ExceptionCategoryHasInvalidNameLength("The category length must be between 3 and 15, but it's current length is " + categoryName.Length);
+                throw new ExceptionIncorrectLength("The category length must be between 3 and 15, but it's current length is " + categoryName.Length);
             }
 
             return true;
@@ -319,7 +319,7 @@ namespace GestorPasswordsDominio
 
             if (!CategoryExists(aCategory.Name))
             {
-                throw new ExceptionCategoryNotExists();
+                throw new ExceptionCategoryNotExists("The category does not exist");
             }
 
             if (CategoryExists(newName))
@@ -390,7 +390,7 @@ namespace GestorPasswordsDominio
                 }
             }
 
-            return userPasswordPair != null ? userPasswordPair : throw new ExceptionUserPasswordPairDoesNotExist(); 
+            return userPasswordPair != null ? userPasswordPair : throw new ExceptionUserPasswordPairDoesNotExist("The User-Password Pair does not exist"); 
         }
 
         private CreditCard ReturnCreditCardInCategoryThatAppeardInDataBreaches(Category aCategory, string creditCardNumber)

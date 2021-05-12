@@ -137,7 +137,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionCategoryHasInvalidNameLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void AddCategoryWithLengthLessThan3()
         {
             Category anotherCategory = new Category()
@@ -150,7 +150,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionCategoryHasInvalidNameLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void AddCategoryWithLengthGreaterThan15()
         {
             Category anotherCategory = new Category()
@@ -196,14 +196,14 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionCategoryHasInvalidNameLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void ModifyCategoryWithNewLengthLessThan3()
         {
             aUser.ModifyCategory(aCategory, "no");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionCategoryHasInvalidNameLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void ModifyCategoryWithNewLengthGreaterThan15()
         {
             aUser.ModifyCategory(aCategory, "thisIsAnInvalidLength");

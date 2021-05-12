@@ -89,7 +89,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidNotesLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void AddUserPasswordPairWithNotesLengthGreaterThan250()
         {
             string aNote = GenerateNoteText();
@@ -107,7 +107,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidPasswordLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void AddUserPasswordPairWithPasswordLengthGreaterThan25()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
@@ -123,7 +123,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidPasswordLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void AddUserPasswordPairWithPasswordLengthLessThan5()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
@@ -139,7 +139,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidSiteLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void AddUserPasswordPairWithSiteLengthGreaterThan25()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
@@ -155,7 +155,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidSiteLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void AddUserPasswordPairWithSiteLengthLessThan3()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
@@ -171,7 +171,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidUsernameLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void AddUserPasswordPairWithUsernameLengthGreaterThan25()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
@@ -187,7 +187,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidUsernameLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void AddUserPasswordPairWithUsernameLengthLessThan5()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()

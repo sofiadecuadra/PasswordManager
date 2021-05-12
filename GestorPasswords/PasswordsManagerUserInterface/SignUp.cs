@@ -32,10 +32,6 @@ namespace PasswordsManagerUserInterface
             {
                 MessageBox.Show("The user already exists", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch (ExceptionIncorrectUserNameLength exception)
-            {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
             catch (ExceptionIncorrectLength exception)
             {
                 MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -8,8 +8,6 @@ namespace GestorPasswordsDominio
 {
     public class ExceptionCreditCardDoesNotContainOnlyDigits : Exception
     {
-        public ExceptionCreditCardDoesNotContainOnlyDigits() { }
         public ExceptionCreditCardDoesNotContainOnlyDigits(string message) : base(message) { }
-        public ExceptionCreditCardDoesNotContainOnlyDigits(string message, Exception inner) : base(message, inner) { }
     }
 }

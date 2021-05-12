@@ -90,11 +90,11 @@ namespace GestorPasswordsDominio
         {
             if (!LengthBetween3And25(Name))
             {
-                throw new ExceptionCreditCardHasInvalidNameLength($"The name's length must be between 3 and 25, but it's current length is: {Name.Length}");
+                throw new ExceptionIncorrectLength($"The name's length must be between 3 and 25, but it's current length is: {Name.Length}");
             }
             if (!LengthBetween3And25(Type))
             {
-                throw new ExceptionCreditCardHasInvalidTypeLength($"The type's length must be between 3 and 25, but it's current length is:  {Type.Length}");
+                throw new ExceptionIncorrectLength($"The type's length must be between 3 and 25, but it's current length is:  {Type.Length}");
             }
             if (!ContainNumericCharactersOnly(Number))
             {
@@ -102,11 +102,11 @@ namespace GestorPasswordsDominio
             }
             if (!CreditCardNumberHasValidLength())
             {
-                throw new ExceptionCreditCardHasInvalidNumberLength($"The credit card number must contain 16 digits, but currently it has: {Number.Length}");
+                throw new ExceptionIncorrectLength($"The credit card number must contain 16 digits, but currently it has: {Number.Length}");
             }
             if (!CodeHasValidLength())
             {
-                throw new ExceptionCreditCardHasInvalidCodeLength($"The code's length must be between 3 and 4, but it's current length is: {Code.Length}");
+                throw new ExceptionIncorrectLength($"The code's length must be between 3 and 4, but it's current length is: {Code.Length}");
             }
             if (!ContainNumericCharactersOnly(Code))
             {
@@ -114,7 +114,7 @@ namespace GestorPasswordsDominio
             }
             if (!NotesHaveValidLength())
             {
-                throw new ExceptionCreditCardHasInvalidNotesLength($"The notes' length must be up to 250, but it's current length is: {Notes.Length}");
+                throw new ExceptionIncorrectLength($"The notes' length must be up to 250, but it's current length is: {Notes.Length}");
             }
             if (CreditCardHasExpired())
             {

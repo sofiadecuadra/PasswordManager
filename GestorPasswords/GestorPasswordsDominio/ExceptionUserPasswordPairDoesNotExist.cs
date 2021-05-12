@@ -8,10 +8,7 @@ namespace GestorPasswordsDominio
 {
     public class ExceptionUserPasswordPairDoesNotExist : Exception
     {
-
-        public ExceptionUserPasswordPairDoesNotExist() { }
         public ExceptionUserPasswordPairDoesNotExist(string message) : base(message) { }
-        public ExceptionUserPasswordPairDoesNotExist(string message, Exception inner) : base(message, inner) { }
 
     }
 }

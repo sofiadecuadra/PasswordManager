@@ -8,8 +8,6 @@ namespace GestorPasswordsDominio
 {
     public class ExceptionCategoryNotExists : Exception
     {
-        public ExceptionCategoryNotExists() { }
         public ExceptionCategoryNotExists(string message) : base(message) { }
-        public ExceptionCategoryNotExists(string message, Exception inner) : base(message, inner) { }
     }
 }

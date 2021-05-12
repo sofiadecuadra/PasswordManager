@@ -44,7 +44,7 @@ namespace PasswordsManagerUserInterface
             {
                 MessageBox.Show("The category does not exist", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch (ExceptionCategoryHasInvalidNameLength exception)
+            catch (ExceptionIncorrectLength exception)
             {
                 MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

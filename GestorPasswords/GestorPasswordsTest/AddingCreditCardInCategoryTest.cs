@@ -40,7 +40,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionCreditCardHasInvalidCodeLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void AddCreditCardWithCodeLengthGreaterThan4()
         {
             CreditCard aCreditCard = new CreditCard()
@@ -57,7 +57,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionCreditCardHasInvalidCodeLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void AddCreditCardWithCodeLengthLessThan3()
         {
             CreditCard aCreditCard = new CreditCard()
@@ -91,7 +91,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionCreditCardHasInvalidNameLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void AddCreditCardWithNameLengthGreaterThan25()
         {
             CreditCard aCreditCard = new CreditCard()
@@ -108,7 +108,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionCreditCardHasInvalidNameLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void AddCreditCardWithNameLengthLessThan3()
         {
             CreditCard aCreditCard = new CreditCard()
@@ -126,7 +126,7 @@ namespace GestorPasswordsTest
 
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionCreditCardHasInvalidNotesLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void AddCreditCardWithNotesLengthGreaterThan250()
         {
             string aNote = "";
@@ -166,7 +166,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionCreditCardHasInvalidNumberLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void AddCreditCardWithNumberLengthDifferentThan16()
         {
             CreditCard aCreditCard = new CreditCard()
@@ -183,7 +183,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionCreditCardHasInvalidTypeLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void AddCreditCardWithTypeLengthGreaterThan25()
         {
             CreditCard aCreditCard = new CreditCard()
@@ -200,7 +200,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionCreditCardHasInvalidTypeLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void AddCreditCardWithTypeLengthLessThan3()
         {
             CreditCard aCreditCard = new CreditCard()

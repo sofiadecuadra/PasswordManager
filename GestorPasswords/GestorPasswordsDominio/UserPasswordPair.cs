@@ -60,7 +60,7 @@ namespace GestorPasswordsDominio
         {
             if (UsersWithAccess.Count == 0)
             {
-                throw new ExceptionUserPasswordPairIsNotSharedWithAnyone();
+                throw new ExceptionUserPasswordPairIsNotSharedWithAnyone("This password has not been shared with anyone");
             }
             User[] usersToReturn = new User[UsersWithAccess.Count];
             UsersWithAccess.Values.CopyTo(usersToReturn, 0);
@@ -71,19 +71,19 @@ namespace GestorPasswordsDominio
         {
             if (!SiteHasValidLength())
             {
-                throw new ExceptionUserPasswordPairHasInvalidSiteLength($"The site's length must be between 3 and 25, but it's current length is: {Site.Length}");
+                throw new ExceptionIncorrectLength($"The site's length must be between 3 and 25, but it's current length is: {Site.Length}");
             }
             if (!LengthBetween5And25(Username))
             {
-                throw new ExceptionUserPasswordPairHasInvalidUsernameLength($"The username's length must be between 5 and 25, but it's current length is: {Username.Length}");
+                throw new ExceptionIncorrectLength($"The username's length must be between 5 and 25, but it's current length is: {Username.Length}");
             }
             if (!LengthBetween5And25(Password))
             {
-                throw new ExceptionUserPasswordPairHasInvalidPasswordLength($"The password's length must be between 5 and 25, but it's current length is: {Password.Length}");
+                throw new ExceptionIncorrectLength($"The password's length must be between 5 and 25, but it's current length is: {Password.Length}");
             }
             if (!NotesHaveValidLength())
             {
-                throw new ExceptionUserPasswordPairHasInvalidNotesLength($"The notes' length must be up to 250, but it's current length is: {Notes.Length}");
+                throw new ExceptionIncorrectLength($"The notes' length must be up to 250, but it's current length is: {Notes.Length}");
             }
             return true;
         }

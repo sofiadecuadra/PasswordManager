@@ -8,8 +8,6 @@ namespace GestorPasswordsDominio
 {
     public class ExceptionIncorrectGenerationPasswordType : Exception
     {
-        public ExceptionIncorrectGenerationPasswordType() { }
         public ExceptionIncorrectGenerationPasswordType(string message) : base(message) { }
-        public ExceptionIncorrectGenerationPasswordType(string message, Exception inner) : base(message, inner) { }
     }
 }

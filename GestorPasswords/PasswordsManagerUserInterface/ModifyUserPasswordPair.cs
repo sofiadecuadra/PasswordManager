@@ -43,19 +43,7 @@ namespace PasswordsManagerUserInterface
             {
                 MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch (ExceptionUserPasswordPairHasInvalidUsernameLength exception)
-            {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (ExceptionUserPasswordPairHasInvalidPasswordLength exception)
-            {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (ExceptionUserPasswordPairHasInvalidSiteLength exception)
-            {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (ExceptionUserPasswordPairHasInvalidNotesLength exception)
+            catch (ExceptionIncorrectLength exception)
             {
                 MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

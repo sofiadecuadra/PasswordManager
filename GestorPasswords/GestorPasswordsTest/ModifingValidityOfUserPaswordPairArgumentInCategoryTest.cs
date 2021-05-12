@@ -125,7 +125,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidUsernameLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void ModifyUsernameOfUserPasswordPairToAnInvalidOne()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
@@ -178,7 +178,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidSiteLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void ModifySiteOfUserPasswordPairToAnInvalidOne()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
@@ -231,7 +231,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionUserPasswordPairHasInvalidNotesLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void ModifyNotesOfUserPasswordPairToAnInvalidOne()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()

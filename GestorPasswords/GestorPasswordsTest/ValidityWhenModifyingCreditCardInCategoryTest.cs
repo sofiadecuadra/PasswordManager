@@ -85,7 +85,7 @@ namespace GestorPasswordsTest
 
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionCreditCardHasInvalidNumberLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void ModifyNumberOfCreditCardToAnInvalidOne()
         {
             CreditCard aCreditCard = new CreditCard()
@@ -116,7 +116,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionCreditCardHasInvalidTypeLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void ModifyTypeOfCreditCardToAnInvalidOne()
         {
             CreditCard aCreditCard = new CreditCard()
@@ -147,7 +147,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionCreditCardHasInvalidNameLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void ModifyNameOfCreditCardToAnInvalidOne()
         {
             CreditCard aCreditCard = new CreditCard()
@@ -178,7 +178,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionCreditCardHasInvalidCodeLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void ModifyCodeOfCreditCardToAnInvalidOne()
         {
             CreditCard aCreditCard = new CreditCard()
@@ -242,7 +242,7 @@ namespace GestorPasswordsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ExceptionCreditCardHasInvalidNotesLength))]
+        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void ModifyNotesOfCreditCardToAnInvalidOne()
         {
             CreditCard aCreditCard = new CreditCard()
