@@ -20,7 +20,7 @@ namespace GestorPasswordsDominio
         public string Number
         {
             get { return number; }
-            set 
+            set
             {
                 HideNumber = NumberHiding(value);
                 number = RemoveAllBlankSpaces(value);
@@ -42,11 +42,11 @@ namespace GestorPasswordsDominio
             set
             {
                 int lastDayOfMonth = DateTime.DaysInMonth(value.Year, value.Month);
-                expirationDate = new DateTime (value.Year, value.Month, lastDayOfMonth);
+                expirationDate = new DateTime(value.Year, value.Month, lastDayOfMonth);
             }
         }
         public NormalCategory Category { get; set; }
-        
+
         public override string ToString()
         {
             return $"[{Name}] [{Type}] [{AddBlankSpacesAfter4Characters(Number)}]";
@@ -115,16 +115,32 @@ namespace GestorPasswordsDominio
         private string NumberHiding(string creditCardNumber)
         {
             string formattedNumber = FormatNumber(creditCardNumber);
+            CheckNumberContent(RemoveAllBlankSpaces(formattedNumber));
+            CheckNumberLength(RemoveAllBlankSpaces(formattedNumber));
             string last4digits = formattedNumber.Substring(LAST_4_DIGITS_START_POSITION);
             return "XXXX XXXX XXXX " + last4digits;
+        }
+
+        private void CheckNumberContent(string creditCardNumber)
+        {
+            if (!ContainNumericCharactersOnly(creditCardNumber))
+            {
+                throw new ExceptionCreditCardDoesNotContainOnlyDigits($"The number must contain numeric characters only, but it is: {creditCardNumber}");
+            }
+        }
+
+        private void CheckNumberLength(string creditCardNumber)
+        {
+            if (!CreditCardNumberHasValidLength(creditCardNumber))
+            {
+                throw new ExceptionIncorrectLength($"The credit card number must contain 16 digits, but currently it has: {creditCardNumber.Length}");
+            }
         }
 
         public bool CreditCardDataIsValid()
         {
             CheckNameLength();
             CheckTypeLength();
-            CheckNumberContent();
-            CheckNumberLength();
             CheckCodeLength();
             CheckCodeContent();
             CheckNotesLength();
@@ -153,30 +169,14 @@ namespace GestorPasswordsDominio
             }
         }
 
-        private void CheckNumberContent()
-        {
-            if (!ContainNumericCharactersOnly(Number))
-            {
-                throw new ExceptionCreditCardDoesNotContainOnlyDigits($"The number must contain numeric characters only, but it is: {Number}");
-            }
-        }
-
         private static bool ContainNumericCharactersOnly(string stringToCheck)
         {
             return Regex.IsMatch(stringToCheck, @"^[0-9]+$");
         }
 
-        private void CheckNumberLength()
+        private bool CreditCardNumberHasValidLength(string stringToCheck)
         {
-            if (!CreditCardNumberHasValidLength())
-            {
-                throw new ExceptionIncorrectLength($"The credit card number must contain 16 digits, but currently it has: {Number.Length}");
-            }
-        }
-
-        private bool CreditCardNumberHasValidLength()
-        {
-            return Number.Length == CREDIT_CARD_LENGTH;
+            return stringToCheck.Length == CREDIT_CARD_LENGTH;
         }
 
         private void CheckCodeLength()
@@ -227,3 +227,4 @@ namespace GestorPasswordsDominio
         }
     }
 }
+
