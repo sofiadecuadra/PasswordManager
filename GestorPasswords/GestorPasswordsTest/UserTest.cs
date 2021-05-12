@@ -57,7 +57,7 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void AddUserPasswordPairsInDifferentCategoriesAndGetPasswordsStrengthReport()
         {
-            Category aCategory = new Category()
+            NormalCategory aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -95,7 +95,7 @@ namespace GestorPasswordsTest
             aCategory.AddUserPasswordPair(aDarkGreenUserPasswordPair);
 
 
-            Category otherCategory = new Category()
+            NormalCategory otherCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "otherCategory"
@@ -137,7 +137,7 @@ namespace GestorPasswordsTest
                 MasterPassword = "myPassword"
             };
 
-            Category aCategory = new Category()
+            NormalCategory aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -156,7 +156,7 @@ namespace GestorPasswordsTest
                 MasterPassword = "myPassword"
             };
 
-            Category aCategory = new Category()
+            NormalCategory aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "my"
@@ -174,7 +174,7 @@ namespace GestorPasswordsTest
                 MasterPassword = "myPassword"
             };
 
-            Category aCategory = new Category()
+            NormalCategory aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategoryNameIsInvalid"
@@ -192,7 +192,7 @@ namespace GestorPasswordsTest
                 MasterPassword = "myPassword"
             };
 
-            Category aCategory = new Category()
+            NormalCategory aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -200,7 +200,7 @@ namespace GestorPasswordsTest
 
             aUser.AddCategory(aCategory);
 
-            Category anotherCategory = new Category()
+            NormalCategory anotherCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -217,7 +217,7 @@ namespace GestorPasswordsTest
                 MasterPassword = "myPassword"
             };
 
-            Category aCategory = new Category()
+            NormalCategory aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -238,7 +238,7 @@ namespace GestorPasswordsTest
                 MasterPassword = "myPassword"
             };
 
-            Category aCategory = new Category()
+            NormalCategory aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -256,7 +256,7 @@ namespace GestorPasswordsTest
                 MasterPassword = "myPassword"
             };
 
-            Category aCategory = new Category()
+            NormalCategory aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -276,7 +276,7 @@ namespace GestorPasswordsTest
                 MasterPassword = "myPassword"
             };
 
-            Category aCategory = new Category()
+            NormalCategory aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -296,14 +296,14 @@ namespace GestorPasswordsTest
                 MasterPassword = "myPassword"
             };
 
-            Category aCategory = new Category()
+            NormalCategory aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
             };
             aUser.AddCategory(aCategory);
 
-            Category otherCategory = new Category()
+            NormalCategory otherCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "otherCategory"
@@ -321,7 +321,7 @@ namespace GestorPasswordsTest
                 MasterPassword = "myPassword"
             };
 
-            Category aCategory = new Category()
+            NormalCategory aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -334,7 +334,7 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void AddCreditCardToCategoryAndGetCreditCardslist()
         {
-            Category aCategory = new Category()
+            NormalCategory aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -359,7 +359,7 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void RetriveExistingUserPasswordPair()
         {
-            var aCategory = new Category()
+            var aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -383,7 +383,7 @@ namespace GestorPasswordsTest
         [ExpectedException(typeof(ExceptionUserPasswordPairDoesNotExist))]
         public void RetriveNonExistingUserPasswordPair()
         {
-            var aCategory = new Category()
+            var aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -405,7 +405,7 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void ACreditCardOfUserAppearedInDataBreaches()
         {
-            var aCategory = new Category()
+            var aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -452,7 +452,7 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void TwoCreditCardsOfUserAppearedInDataBreaches()
         {
-            var aCategory = new Category()
+            var aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -499,7 +499,7 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void APasswordOfUserAppearedInDataBreaches()
         {
-            var aCategory = new Category()
+            var aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -541,7 +541,7 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void APasswordAndACreditCardOfUserAppearedInDataBreaches()
         {
-            var aCategory = new Category()
+            var aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -589,7 +589,7 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void SamePasswordAppearedMoreThanOnceInDataBreaches()
         {
-            var aCategory = new Category()
+            var aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -621,7 +621,7 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void SameCreditCardAppearedMoreThanOnceInDataBreaches()
         {
-            var aCategory = new Category()
+            var aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -654,7 +654,7 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void PasswordsOfUserAppearedInDataBreaches()
         {
-            var aCategory = new Category()
+            var aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -697,7 +697,7 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void PasswordWithBlankSpacesAndOnlyDigitsOfUserAppearedInDataBreaches()
         {
-            var aCategory = new Category()
+            var aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -729,7 +729,7 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void PasswordWithBlankSpacesOfUserAppearedInDataBreaches()
         {
-            var aCategory = new Category()
+            var aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -761,7 +761,7 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void MultiplePasswordsAndCreditCardsOfUserAppearedInDataBreaches()
         {
-            var aCategory = new Category()
+            var aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -835,7 +835,7 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void NoPasswordsOrCreditCardsOfUserAppearedInDataBreaches()
         {
-            var aCategory = new Category()
+            var aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -905,7 +905,7 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void PasswordUsedInMultipleSitesOfUserAppearedInDataBreaches()
         {
-            var aCategory = new Category()
+            var aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "myCategory"
@@ -956,7 +956,7 @@ namespace GestorPasswordsTest
 
         private UserPasswordPair LoadTestCategoryToMyUserWithAUserPasswordPair()
         {
-            var aCategory = new Category()
+            var aCategory = new NormalCategory()
             {
                 Name = "aCategory",
                 User = aUser

@@ -7,14 +7,14 @@ namespace GestorPasswordsTest
     [TestClass]
     public class CategoryTest
     {
-        private Category aCategory;
+        private NormalCategory aCategory;
         private User aUser;
 
         [TestInitialize]
         public void Initialize()
         {
             aUser = new User();
-            aCategory = new Category()
+            aCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "Category"
@@ -582,7 +582,7 @@ namespace GestorPasswordsTest
 
             aCategory.AddCreditCard(aCreditCard);
 
-            Category otherCategory = new Category()
+            NormalCategory otherCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "otherCategory"
@@ -1105,7 +1105,7 @@ namespace GestorPasswordsTest
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
 
-            Category otherCategory = new Category()
+            NormalCategory otherCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "otherCategory"
@@ -1884,7 +1884,7 @@ namespace GestorPasswordsTest
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
 
-            Category otherCategory = new Category()
+            NormalCategory otherCategory = new NormalCategory()
             {
                 User = aUser,
                 Name = "otherCategory"

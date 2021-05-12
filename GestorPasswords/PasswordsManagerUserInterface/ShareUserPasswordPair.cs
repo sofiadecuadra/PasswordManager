@@ -14,8 +14,11 @@ namespace PasswordsManagerUserInterface
     public partial class ShareUserPasswordPair : UserControl
     {
         public PasswordManager PasswordManager { get; private set; }
+
         public Panel PnlMainWindow { get; private set; }
+
         public UserPasswordPair PasswordToShare { get; private set; }
+
         public ShareUserPasswordPair(PasswordManager aPasswordManager, Panel panel, UserPasswordPair password)
         {
             InitializeComponent();
@@ -27,9 +30,9 @@ namespace PasswordsManagerUserInterface
 
         private void LoadUsers()
         {
-            var users = PasswordManager.Users;
+            User[] users = PasswordManager.GetUsers();
 
-            foreach (var user in users)
+            foreach (User user in users)
             {
                 AddUserNameToComboUsers(user);
             }

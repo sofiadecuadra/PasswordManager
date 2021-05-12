@@ -1,36 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace GestorPasswordsDominio
 {
     public class PasswordManager
     {
-        private Hashtable users;
-        public PasswordManager()
-        {
-            this.users = new Hashtable();
-        }
-
+        private Dictionary<string, User> users;
         private User currentUser;
-
         public User CurrentUser
         {
             get { return currentUser; }
             set { currentUser = ReturnUserIfItExists(value); }
         }
 
-        public User[] Users
+        public PasswordManager()
         {
-            get
-            {
-                User[] usersToReturn = new User[users.Count];
-                users.Values.CopyTo(usersToReturn, 0);
-                return usersToReturn;
-            }
+            users = new Dictionary<string, User>();
+        }
+
+        public User[] GetUsers()
+        {
+            User[] usersToReturn = new User[users.Count];
+            users.Values.CopyTo(usersToReturn, 0);
+            return usersToReturn;
         }
 
         private User ReturnUserIfItExists(User value)
@@ -46,7 +37,7 @@ namespace GestorPasswordsDominio
 
         public bool HasUser(string name)
         {
-            return users.Contains(name.ToLower());
+            return users.ContainsKey(name.ToLower());
         }
 
         public bool ValidateUser(string username, string masterPassword)
@@ -74,7 +65,7 @@ namespace GestorPasswordsDominio
 
         public User FindUser(string name)
         {
-            return (User)users[name.ToLower()];
+            return users[name.ToLower()];
         }
 
         public void SharePassword(UserPasswordPair passwordToShare, string name)

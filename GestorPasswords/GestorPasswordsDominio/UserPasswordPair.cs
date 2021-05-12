@@ -10,10 +10,7 @@ namespace GestorPasswordsDominio
     public class UserPasswordPair
     {
         public string Password { get; set; }
-
-
         public Hashtable UsersWithAccess{ get; private set; }
-
         private string username;
         public string Username
         {
@@ -33,9 +30,7 @@ namespace GestorPasswordsDominio
 
         public DateTime LastModifiedDate { get; private set; }
 
-        public Category Category { get; set; }
-
-        public String CategoryName { get { return Category.Name; }  }
+        public NormalCategory Category { get; set; }
 
         public UserPasswordPair()
         {
