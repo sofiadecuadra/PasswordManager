@@ -292,5 +292,41 @@ namespace GestorPasswordsTest
 
             _ = aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionExistingUserPasswordPair))]
+        public void ModifyUserPasswordPairToOneThatAlreadyExistsInUser()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "password",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "mySite",
+                Category = aCategory,
+            };
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            UserPasswordPair newUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "otherPassword",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "myOtherSite",
+                Category = aCategory,
+            };
+
+            UserPasswordPair anotherUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "otherPassword",
+                Notes = "myNotes",
+                Username = "myUsername",
+                Site = "myOtherSite",
+                Category = aCategory,
+            };
+            aCategory.AddUserPasswordPair(anotherUserPasswordPair);
+
+            _ = aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
+        }
     }
 }

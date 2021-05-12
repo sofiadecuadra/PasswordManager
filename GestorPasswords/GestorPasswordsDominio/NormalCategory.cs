@@ -194,10 +194,34 @@ namespace GestorPasswordsDominio
             bool modified = false;
             if (newUserPasswordPair.UserPasswordPairDataIsValid())
             {
-                ChangeUserPasswordPairData(oldUserPasswordPair, newUserPasswordPair);
-                modified = true;
+                if (!NewUserPasswordPairAlreadyExistsInUser(oldUserPasswordPair, newUserPasswordPair))
+                {
+                    ChangeUserPasswordPairData(oldUserPasswordPair, newUserPasswordPair);
+                    modified = true;
+                }
             }
             return modified;
+        }
+
+        private bool NewUserPasswordPairAlreadyExistsInUser(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
+        {
+            if(!UsernamesAreEqual(oldUserPasswordPair.Username, newUserPasswordPair.Username) || !SitesAreEqual(oldUserPasswordPair.Site, newUserPasswordPair.Site))
+            {
+                if (UserPasswordPairAlredyExistsInUser(newUserPasswordPair.Username, newUserPasswordPair.Site))
+                {
+                    throw new ExceptionExistingUserPasswordPair("The userPassword pair already exists in user");
+                }
+            }
+            return false;
+        }
+
+        private bool UsernamesAreEqual(String aUsername, String otherUsername)
+        {
+            return aUsername == otherUsername;
+        }
+        private bool SitesAreEqual(String aSite, String otherSite)
+        {
+            return aSite == otherSite;
         }
 
         private void ChangeUserPasswordPairData(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
