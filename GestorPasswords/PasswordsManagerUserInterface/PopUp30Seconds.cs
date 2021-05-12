@@ -24,23 +24,31 @@ namespace PasswordsManagerUserInterface
             dgvData.AutoGenerateColumns = false;
             dgvData.ColumnCount = 5;
             dgvData.Columns[0].Name = "Category";
+            dgvData.Columns[0].DefaultCellStyle.NullValue = "Shared Passwords";
             dgvData.Columns[0].Width = 150;
 
             dgvData.Columns[1].Name = "Site";
+            dgvData.Columns[1].DataPropertyName = "Site";
             dgvData.Columns[1].Width = 218;
 
             dgvData.Columns[2].Name = "User";
+            dgvData.Columns[2].DataPropertyName = "Username";
             dgvData.Columns[2].Width = 218;
 
             dgvData.Columns[3].Name = "Password";
+            dgvData.Columns[3].DataPropertyName = "Password";
             dgvData.Columns[3].Width = 290;
 
             dgvData.Columns[4].Name = "LastModified";
+            dgvData.Columns[4].DataPropertyName = "LastModifiedDate";
             dgvData.Columns[4].DefaultCellStyle.Format = "dd/MM/yyyy";
             dgvData.Columns[4].Width = 70;
             dgvData.BackgroundColor = SystemColors.Control;
 
-            dgvData.Rows.Add(aUserPasswordPair.Category, aUserPasswordPair.Site, aUserPasswordPair.Username, aUserPasswordPair.Password, aUserPasswordPair.LastModifiedDate);
+            UserPasswordPair[] array = new UserPasswordPair[1];
+            array[0] = aUserPasswordPair;
+            dgvData.DataSource = array;
+
             txtNotes.Text = aUserPasswordPair.Notes;
         }
 

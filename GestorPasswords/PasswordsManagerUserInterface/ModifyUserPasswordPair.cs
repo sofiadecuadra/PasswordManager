@@ -58,7 +58,7 @@ namespace PasswordsManagerUserInterface
 
         private UserPasswordPair CreatePassword()
         {
-            Category category = Form.GetCategory();
+            NormalCategory category = Form.GetCategory();
             string site = Form.GetSite();
             string username = Form.GetUsername();
             string password = Form.GetPassword();

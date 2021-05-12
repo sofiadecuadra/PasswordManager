@@ -20,13 +20,12 @@ namespace GestorPasswordsDominio
             }
         }
         private string name;
-        private SortedList<string, Category> categoriesList;
+        private SortedList<string, NormalCategory> categoriesList;
         private List<UserPasswordPair> redUserPasswordPairs;
         private List<UserPasswordPair> orangeUserPasswordPairs;
         private List<UserPasswordPair> yellowUserPasswordPairs;
         private List<UserPasswordPair> lightGreenUserPasswordPairs;
         private List<UserPasswordPair> darkGreenUserPasswordPairs;
-
 
         public string Name
         {
@@ -34,7 +33,21 @@ namespace GestorPasswordsDominio
             set { name = ValidUserName(value.Trim()); }
         }
 
-        public Category SharedPasswords { get; private set; }
+        public SpecialCategory SharedPasswords { get; private set; }
+
+        public User()
+        {
+            categoriesList = new SortedList<string, NormalCategory>();
+            redUserPasswordPairs = new List<UserPasswordPair>();
+            orangeUserPasswordPairs = new List<UserPasswordPair>();
+            yellowUserPasswordPairs = new List<UserPasswordPair>();
+            lightGreenUserPasswordPairs = new List<UserPasswordPair>();
+            darkGreenUserPasswordPairs = new List<UserPasswordPair>();
+            SharedPasswords = new SpecialCategory()
+            {
+                User = this,
+            };
+        }
 
         private static string ValidMasterPassword(string password)
         {
@@ -69,21 +82,6 @@ namespace GestorPasswordsDominio
         private static bool HasBlankSpace(string value)
         {
             return value.Contains(" ");
-        }
-
-        public User()
-        {
-            categoriesList = new SortedList<string, Category>();
-            redUserPasswordPairs = new List<UserPasswordPair>();
-            orangeUserPasswordPairs = new List<UserPasswordPair>();
-            yellowUserPasswordPairs = new List<UserPasswordPair>();
-            lightGreenUserPasswordPairs = new List<UserPasswordPair>();
-            darkGreenUserPasswordPairs = new List<UserPasswordPair>();
-            SharedPasswords = new Category()
-            {
-                User = this,
-                Name = "Shared Passwords"
-            };
         }
 
         public Tuple<PasswordStrengthType, int>[] GetPasswordsStrengthReport()
@@ -261,7 +259,7 @@ namespace GestorPasswordsDominio
             SharedPasswords.RemoveUserPasswordPair(passwordToStopSharing);
         }
 
-        public bool AddCategory(Category aCategory)
+        public bool AddCategory(NormalCategory aCategory)
         {
             bool categoryAdded = false;
             if (CategoryHasValidLength(aCategory.Name))
@@ -273,7 +271,7 @@ namespace GestorPasswordsDominio
             return categoryAdded;
         }
 
-        private void AddCategoryToSortedList(Category aCategory)
+        private void AddCategoryToSortedList(NormalCategory aCategory)
         {
             this.categoriesList.Add(aCategory.Name, aCategory);
         }
@@ -288,13 +286,13 @@ namespace GestorPasswordsDominio
             return true;
         }
 
-        public Category[] GetCategories()
+        public NormalCategory[] GetCategories()
         {
-            IList<Category> categories = categoriesList.Values;
+            IList<NormalCategory> categories = categoriesList.Values;
             return categories.ToArray();
         }
 
-        public bool ModifyCategory(Category aCategory, string newName)
+        public bool ModifyCategory(NormalCategory aCategory, string newName)
         {
             bool categoryModified = false;
             if (CategoryCouldBeModified(aCategory, newName.ToLower()))
@@ -305,19 +303,19 @@ namespace GestorPasswordsDominio
             return categoryModified;
         }
 
-        private void UpdateCategory(Category aCategory, string newName)
+        private void UpdateCategory(NormalCategory aCategory, string newName)
         {
             RemoveCategoryFromCategoriesCollection(aCategory);
             aCategory.Name = newName;
             AddCategoryToSortedList(aCategory);
         }
 
-        private void RemoveCategoryFromCategoriesCollection(Category aCategory)
+        private void RemoveCategoryFromCategoriesCollection(NormalCategory aCategory)
         {
             this.categoriesList.Remove(aCategory.Name);
         }
 
-        private bool CategoryCouldBeModified(Category aCategory, string newName)
+        private bool CategoryCouldBeModified(NormalCategory aCategory, string newName)
         {
             if (aCategory.Name == newName) return false;
 
@@ -342,7 +340,7 @@ namespace GestorPasswordsDominio
         public bool CreditCardNumberExists(string creditCardNumber)
         {
             bool creditCardExists = false;
-            foreach (KeyValuePair<string, Category> pair in this.categoriesList)
+            foreach (KeyValuePair<string, NormalCategory> pair in this.categoriesList)
             {
                 if (CreditCardExistsInCategory(pair.Value, creditCardNumber))
                 {
@@ -358,7 +356,7 @@ namespace GestorPasswordsDominio
             return SharedPasswords.UserPasswordPairAlredyExistsInCategory(username, site);
         }
 
-        private static bool CreditCardExistsInCategory(Category aCategory, string creditCardNumber)
+        private static bool CreditCardExistsInCategory(NormalCategory aCategory, string creditCardNumber)
         {
             return aCategory.CreditCardNumberAlreadyExistsInCategory(creditCardNumber);
         }
@@ -366,7 +364,7 @@ namespace GestorPasswordsDominio
         public bool UserPasswordPairExists(string username, string site)
         {
             bool pairExists = false;
-            foreach (KeyValuePair<string, Category> pair in this.categoriesList)
+            foreach (KeyValuePair<string, NormalCategory> pair in this.categoriesList)
             {
                 if (UserPasswordPairExistsInCategory(pair.Value, username, site))
                 {
@@ -377,7 +375,7 @@ namespace GestorPasswordsDominio
             return pairExists;
         }
 
-        private static bool UserPasswordPairExistsInCategory(Category aCategory, string username, string site)
+        private static bool UserPasswordPairExistsInCategory(NormalCategory aCategory, string username, string site)
         {
             return aCategory.UserPasswordPairAlredyExistsInCategory(username, site);
         }
@@ -385,7 +383,7 @@ namespace GestorPasswordsDominio
         public UserPasswordPair FindUserPasswordPair(string username, string site)
         {
             UserPasswordPair userPasswordPair = null;
-            foreach (KeyValuePair<string, Category> pair in this.categoriesList)
+            foreach (KeyValuePair<string, NormalCategory> pair in this.categoriesList)
             {
                 if (UserPasswordPairExistsInCategory(pair.Value, username, site))
                 {
@@ -397,7 +395,7 @@ namespace GestorPasswordsDominio
             return userPasswordPair != null ? userPasswordPair : throw new ExceptionUserPasswordPairDoesNotExist("The User-Password Pair does not exist");
         }
 
-        private CreditCard ReturnCreditCardInCategoryThatAppeardInDataBreaches(Category aCategory, string creditCardNumber)
+        private CreditCard ReturnCreditCardInCategoryThatAppeardInDataBreaches(NormalCategory aCategory, string creditCardNumber)
         {
             return aCategory.ReturnCreditCardInCategoryThatAppearedInDataBreaches(creditCardNumber);
         }
@@ -406,7 +404,7 @@ namespace GestorPasswordsDominio
         {
             CreditCard creditCard = null;
 
-            foreach (KeyValuePair<string, Category> pair in this.categoriesList)
+            foreach (KeyValuePair<string, NormalCategory> pair in this.categoriesList)
             {
                 string creditCardNumberWithoutBlankSpace = creditCardNumber.Replace(" ", string.Empty);
 
@@ -420,7 +418,7 @@ namespace GestorPasswordsDominio
             return creditCard;
         }
 
-        private List<UserPasswordPair> ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(Category aCategory, string aPassword)
+        private List<UserPasswordPair> ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(NormalCategory aCategory, string aPassword)
         {
             return aCategory.ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(aPassword);
         }
@@ -429,7 +427,7 @@ namespace GestorPasswordsDominio
         {
             List<UserPasswordPair> userPasswordPairList = new List<UserPasswordPair>();
 
-            foreach (KeyValuePair<string, Category> pair in this.categoriesList)
+            foreach (KeyValuePair<string, NormalCategory> pair in this.categoriesList)
             {
                 List<UserPasswordPair> userPasswordPairListInCategory = ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(pair.Value, aPassword);
 
@@ -512,7 +510,7 @@ namespace GestorPasswordsDominio
         public CreditCard[] GetCreditCards()
         {
             List<CreditCard> allCreditCards = new List<CreditCard>();
-            foreach (Category category in this.GetCategories())
+            foreach (NormalCategory category in this.GetCategories())
             {
                 allCreditCards.AddRange(category.GetCreditCards());
             }
