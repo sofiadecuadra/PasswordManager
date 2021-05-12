@@ -32,8 +32,6 @@ namespace GestorPasswordsDominio
 
         public NormalCategory Category { get; set; }
 
-        public String CategoryName { get { return Category.Name; }  }
-
         public UserPasswordPair()
         {
             UsersWithAccess = new Hashtable();
