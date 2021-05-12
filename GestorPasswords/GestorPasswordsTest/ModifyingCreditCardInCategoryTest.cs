@@ -5,7 +5,7 @@ using System;
 namespace GestorPasswordsTest
 {
     [TestClass]
-    public class ValidityWhenModifyingCreditCardInCategoryTest
+    public class ModifyingCreditCardInCategoryTest
     {
         private Category aCategory;
         private User aUser;
