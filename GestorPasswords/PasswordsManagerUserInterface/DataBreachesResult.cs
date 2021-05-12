@@ -1,12 +1,6 @@
 ﻿using GestorPasswordsDominio;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PasswordsManagerUserInterface
@@ -25,28 +19,8 @@ namespace PasswordsManagerUserInterface
             DataBreaches = dataBreaches;
             modifyExposedPassword = new DataGridViewButtonColumn();
             (List<UserPasswordPair>, List<CreditCard>) ExposedPasswordsAndCreditCards = PasswordManager.CurrentUser.CheckDataBreaches(DataBreaches);
-            List <UserPasswordPair> exposedPasswords = new List<UserPasswordPair>(ExposedPasswordsAndCreditCards.Item1);
-            List<CreditCard> exposedCreditCards = new List<CreditCard>(ExposedPasswordsAndCreditCards.Item2);
-            LoadExposedPasswords(exposedPasswords);
-            LoadExposedCreditCards(exposedCreditCards);
-        }
-
-        private static string AddBlankSpacesAfter4Characters(string creditCardNumber)
-        {
-            if (creditCardNumber.Length >= 5)
-            {
-                creditCardNumber = creditCardNumber.Insert(4, " ");
-            }
-            if (creditCardNumber.Length >= 10)
-            {
-                creditCardNumber = creditCardNumber.Insert(9, " ");
-            }
-            if (creditCardNumber.Length >= 15)
-            {
-                creditCardNumber = creditCardNumber.Insert(14, " ");
-            }
-
-            return creditCardNumber;
+            LoadExposedPasswords(ExposedPasswordsAndCreditCards.Item1);
+            LoadExposedCreditCards(ExposedPasswordsAndCreditCards.Item2);
         }
 
         private void LoadExposedPasswords(List<UserPasswordPair> exposedPasswords)
@@ -98,12 +72,12 @@ namespace PasswordsManagerUserInterface
             dgvExposedCreditCards.Columns[1].Name = "Name";
             dgvExposedCreditCards.Columns[1].HeaderText = "Name";
             dgvExposedCreditCards.Columns[1].DataPropertyName = "Name";
-            dgvExposedCreditCards.Columns[1].Width = 135;
+            dgvExposedCreditCards.Columns[1].Width = 185;
 
             dgvExposedCreditCards.Columns[2].Name = "Type";
             dgvExposedCreditCards.Columns[2].HeaderText = "Type";
             dgvExposedCreditCards.Columns[2].DataPropertyName = "Type";
-            dgvExposedCreditCards.Columns[2].Width = 215;
+            dgvExposedCreditCards.Columns[2].Width = 165;
 
             dgvExposedCreditCards.Columns[3].Name = "Number";
             dgvExposedCreditCards.Columns[3].HeaderText = "Number";
