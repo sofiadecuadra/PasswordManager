@@ -1,50 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GestorPasswordsDominio
 {
     public abstract class Category
     {
+        private String name;
         public String Name
         {
             get { return name; }
             set { name = value.ToLower(); }
         }
-        private String name;
         public User User { get; set; }
-        public Dictionary<string, UserPasswordPair> userPasswordPairsHash;
+        public Dictionary<string, UserPasswordPair> userPasswordPairs;
 
         public Category()
         {
-            userPasswordPairsHash = new Dictionary<string, UserPasswordPair>();
+            userPasswordPairs = new Dictionary<string, UserPasswordPair>();
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
 
         public UserPasswordPair[] GetUserPasswordsPairs()
         {
-            return userPasswordPairsHash.Values.ToArray();
+            return userPasswordPairs.Values.ToArray();
+        }
+
+        protected void AddUserPasswordPairToCollection(UserPasswordPair aUserPasswordPair)
+        {
+            userPasswordPairs.Add(aUserPasswordPair.Site + aUserPasswordPair.Username, aUserPasswordPair);
+        }
+
+        protected void RemoveUserPasswordPairFromCollection(UserPasswordPair aUserPasswordPair)
+        {
+            userPasswordPairs.Remove($"{aUserPasswordPair.Site}{ aUserPasswordPair.Username}");
         }
 
         public abstract bool AddUserPasswordPair(UserPasswordPair aUserPasswordPair);
 
         public abstract bool RemoveUserPasswordPair(UserPasswordPair aUserPasswordPair);
 
-        protected void AddUserPasswordPairToHashTable(UserPasswordPair aUserPasswordPair)
-        {
-            this.userPasswordPairsHash.Add(aUserPasswordPair.Site + aUserPasswordPair.Username, aUserPasswordPair);
-        }
-
-        protected void RemoveUserPasswordPairFromCollection(UserPasswordPair aUserPasswordPair)
-        {
-            this.userPasswordPairsHash.Remove($"{aUserPasswordPair.Site}{ aUserPasswordPair.Username}");
-        }
-
         public bool UserPasswordPairAlredyExistsInCategory(string username, string site)
         {
-            return this.userPasswordPairsHash.ContainsKey(site + username);
+            return userPasswordPairs.ContainsKey(site + username);
         }
-
     }
 }

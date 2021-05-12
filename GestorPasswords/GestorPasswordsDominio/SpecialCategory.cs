@@ -15,7 +15,7 @@ namespace GestorPasswordsDominio
 
         public override bool AddUserPasswordPair(UserPasswordPair aUserPasswordPair)
         {
-            AddUserPasswordPairToHashTable(aUserPasswordPair);
+            AddUserPasswordPairToCollection(aUserPasswordPair);
             return true;
         }
 

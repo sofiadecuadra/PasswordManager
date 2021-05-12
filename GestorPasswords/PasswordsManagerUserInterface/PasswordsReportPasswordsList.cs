@@ -35,7 +35,7 @@ namespace PasswordsManagerUserInterface
             dgvPasswordsOfColor.ColumnCount = 4;
             dgvPasswordsOfColor.Columns[0].Name = "Category";
             dgvPasswordsOfColor.Columns[0].HeaderText = "Category";
-            dgvPasswordsOfColor.Columns[0].DataPropertyName = "CategoryName";
+            dgvPasswordsOfColor.Columns[0].DataPropertyName = "Category";
             dgvPasswordsOfColor.Columns[0].Width = 135;
 
             dgvPasswordsOfColor.Columns[1].Name = "Site";

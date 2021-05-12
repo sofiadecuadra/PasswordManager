@@ -1,24 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GestorPasswordsDominio
 {
     public class UserPasswordPair
     {
-        public string Password { get; set; }
-        public Hashtable UsersWithAccess{ get; private set; }
+        public string password;
+        public string Password
+        {
+            get { return password; }
+            set
+            {
+                LastModifiedDate = DateTime.Now;
+                PasswordStrength = PasswordHandler.PasswordStrength(value);
+                password = value;
+            }
+        }
+        public Hashtable UsersWithAccess { get; private set; }
         private string username;
         public string Username
         {
             get { return username; }
-            set {
-                LastModifiedDate = DateTime.Now;
-                username = value.ToLower(); 
-            }
+            set { username = value.ToLower(); }
         }
         private string site;
         public string Site
@@ -29,6 +32,8 @@ namespace GestorPasswordsDominio
         public string Notes { get; set; }
         public DateTime LastModifiedDate { get; private set; }
         public NormalCategory Category { get; set; }
+        public PasswordStrengthType PasswordStrength { get; private set; }
+
         public UserPasswordPair()
         {
             UsersWithAccess = new Hashtable();
@@ -49,7 +54,6 @@ namespace GestorPasswordsDominio
             UsersWithAccess.Remove(userToRevokeSharedPassword.Name);
         }
 
-        
         public override string ToString()
         {
             return $"[{Category.Name}] [{Site}] [{Username}]";
@@ -68,23 +72,19 @@ namespace GestorPasswordsDominio
 
         public bool UserPasswordPairDataIsValid()
         {
+            CheckSiteLength();
+            CheckUsernameLength();
+            CheckPasswordLength();
+            CheckNotesLength();
+            return true;
+        }
+
+        private void CheckSiteLength()
+        {
             if (!SiteHasValidLength())
             {
                 throw new ExceptionIncorrectLength($"The site's length must be between 3 and 25, but it's current length is: {Site.Length}");
             }
-            if (!LengthBetween5And25(Username))
-            {
-                throw new ExceptionIncorrectLength($"The username's length must be between 5 and 25, but it's current length is: {Username.Length}");
-            }
-            if (!LengthBetween5And25(Password))
-            {
-                throw new ExceptionIncorrectLength($"The password's length must be between 5 and 25, but it's current length is: {Password.Length}");
-            }
-            if (!NotesHaveValidLength())
-            {
-                throw new ExceptionIncorrectLength($"The notes' length must be up to 250, but it's current length is: {Notes.Length}");
-            }
-            return true;
         }
 
         private bool SiteHasValidLength()
@@ -92,14 +92,63 @@ namespace GestorPasswordsDominio
             return Site.Length >= 3 && Site.Length <= 25;
         }
 
+        private void CheckUsernameLength()
+        {
+            if (!LengthBetween5And25(Username))
+            {
+                throw new ExceptionIncorrectLength($"The username's length must be between 5 and 25, but it's current length is: {Username.Length}");
+            }
+        }
+
         private static bool LengthBetween5And25(string stringToCheck)
         {
             return stringToCheck.Length >= 5 && stringToCheck.Length <= 25;
         }
 
+        private void CheckPasswordLength()
+        {
+            if (!LengthBetween5And25(Password))
+            {
+                throw new ExceptionIncorrectLength($"The password's length must be between 5 and 25, but it's current length is: {Password.Length}");
+            }
+        }
+
+        private void CheckNotesLength()
+        {
+            if (!NotesHaveValidLength())
+            {
+                throw new ExceptionIncorrectLength($"The notes' length must be up to 250, but it's current length is: {Notes.Length}");
+            }
+        }
+
         private bool NotesHaveValidLength()
         {
             return Notes.Length <= 250;
+        }
+
+        public bool IsARedPassword()
+        {
+            return PasswordStrength == PasswordStrengthType.Red;
+        }
+
+        public bool IsAnOrangePassword()
+        {
+            return PasswordStrength == PasswordStrengthType.Orange;
+        }
+
+        public bool IsAYellowPassword()
+        {
+            return PasswordStrength == PasswordStrengthType.Yellow;
+        }
+
+        public bool IsALightGreenPassword()
+        {
+            return PasswordStrength == PasswordStrengthType.LightGreen;
+        }
+
+        public bool IsADarkGreenPassword()
+        {
+            return PasswordStrength == PasswordStrengthType.DarkGreen;
         }
     }
 }
