@@ -7,14 +7,14 @@ namespace GestorPasswordsTest
     [TestClass]
     public class UserPasswordPairTest
     {
-        private NormalCategory aCategory;
+        private Category aCategory;
         private User aUser;
 
         [TestInitialize]
         public void Initialize()
         {
             aUser = new User();
-            aCategory = new NormalCategory()
+            aCategory = new Category()
             {
                 User = aUser,
                 Name = "Category"

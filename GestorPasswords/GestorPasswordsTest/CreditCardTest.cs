@@ -7,14 +7,14 @@ namespace GestorPasswordsTest
     [TestClass]
     public class CreditCardTest
     {
-        private NormalCategory aCategory;
+        private Category aCategory;
         private User aUser;
 
         [TestInitialize]
         public void Initialize()
         {
             aUser = new User();
-            aCategory = new NormalCategory()
+            aCategory = new Category()
             {
                 User = aUser,
                 Name = "Category"
@@ -48,7 +48,7 @@ namespace GestorPasswordsTest
         [TestMethod]
         public void HideCreditCardNumber()
         {
-            NormalCategory aCategory = new NormalCategory()
+            Category aCategory = new Category()
             {
                 Name = "Category",
                 User = new User() { MasterPassword = "password", Name = "UserName" }

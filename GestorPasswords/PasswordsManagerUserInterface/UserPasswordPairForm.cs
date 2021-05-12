@@ -37,9 +37,9 @@ namespace PasswordsManagerUserInterface
 
         private void LoadCategories()
         {
-            NormalCategory[] categories = PasswordManager.CurrentUser.GetCategories();
+            Category[] categories = PasswordManager.CurrentUser.GetCategories();
 
-            foreach (NormalCategory category in categories)
+            foreach (Category category in categories)
             {
                 comboCategory.Items.Add(category);
             }
@@ -49,9 +49,9 @@ namespace PasswordsManagerUserInterface
             }
         }
 
-        public NormalCategory GetCategory()
+        public Category GetCategory()
         {
-            NormalCategory category = (NormalCategory)comboCategory.SelectedItem;
+            Category category = (Category)comboCategory.SelectedItem;
             return category;
         }
 
