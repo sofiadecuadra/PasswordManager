@@ -215,9 +215,9 @@ namespace PasswordsManagerUserInterface
             {
                 MessageBox.Show("Select the password to Unshare", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch (ExceptionUserPasswordPairIsNotSharedWithAnyone)
+            catch (ExceptionUserPasswordPairIsNotSharedWithAnyone exception)
             {
-                MessageBox.Show("This password has not been shared with anyone", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
