@@ -1,24 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GestorPasswordsDominio
 {
     public class PasswordGenerationConditions
     {
         private int length;
-        public int Length {
+        public int Length 
+        {
             get { return length; }
-            set {
+            set 
+            {
                 length = value;
                 CalulateNumberOfConditions();
-            } 
+            }
         }
-
         private bool hasUpperCase;
-
         public bool HasUpperCase
         {
             get { return hasUpperCase; }
@@ -28,9 +24,7 @@ namespace GestorPasswordsDominio
                 CalulateNumberOfConditions();
             }
         }
-
         private bool hasLowerCase;
-
         public bool HasLowerCase
         {
             get { return hasLowerCase; }
@@ -40,9 +34,7 @@ namespace GestorPasswordsDominio
                 CalulateNumberOfConditions();
             }
         }
-
         private bool hasDigits;
-
         public bool HasDigits
         {
             get { return hasDigits; }
@@ -52,9 +44,7 @@ namespace GestorPasswordsDominio
                 CalulateNumberOfConditions();
             }
         }
-
         private bool hasSymbols;
-
         public bool HasSymbols
         {
             get { return hasSymbols; }
@@ -64,7 +54,6 @@ namespace GestorPasswordsDominio
                 CalulateNumberOfConditions();
             }
         }
-
         public int NumberOfConditions { get; private set; }
 
         private void CalulateNumberOfConditions()
