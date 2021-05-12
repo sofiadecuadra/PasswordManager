@@ -65,23 +65,6 @@ namespace GestorPasswordsTest
             };
             Assert.AreEqual("XXXX XXXX XXXX 4567", creditCard.HideNumber);
         }
-
-        [TestMethod]
-        public void NumberFormatted()
-        {
-            CreditCard creditCard = new CreditCard()
-            {
-                Number = "1234567891234567",
-                Type = "Visa Gold",
-                Name = "Visa",
-                Code = "123",
-                Notes = "",
-                ExpirationDate = DateTime.Now,
-                Category = aCategory
-            };
-
-            Assert.AreEqual("1234 5678 9123 4567", creditCard.NumberFormatted);
-        }
     }
 }
 
