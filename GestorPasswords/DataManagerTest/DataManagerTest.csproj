@@ -155,9 +155,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataManagerDomain\PasswordsManagerDomain.csproj">
+    <ProjectReference Include="..\DataManagerDomain\DataManagerDomain.csproj">
       <Project>{13e3468e-7253-416b-ac3b-2411af1bac4c}</Project>
-      <Name>PasswordsManagerDomain</Name>
+      <Name>DataManagerDomain</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
