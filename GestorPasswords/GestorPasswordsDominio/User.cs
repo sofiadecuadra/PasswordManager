@@ -22,7 +22,7 @@ namespace DataManagerDomain
             get { return name; }
             set { name = ValidUserName(value.Trim()); }
         }
-        public SpecialCategory sharedPasswords;
+        private SpecialCategory sharedPasswords;
         private SortedList<string, NormalCategory> categories;
         private List<UserPasswordPair> redUserPasswordPairs;
         private List<UserPasswordPair> orangeUserPasswordPairs;
