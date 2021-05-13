@@ -11,20 +11,20 @@ namespace PasswordsManagerUserInterface
         public Panel PnlMainWindow { get; private set; }
         public CategoryForm Form { get; private set; }
         public NormalCategory CategoryToModify { get; private set; }
-        public ModifyCategory(PasswordManager aPasswordManager, Panel panel, NormalCategory aCategory)
+        public ModifyCategory(PasswordManager aPasswordManager, Panel aPanel, NormalCategory aCategory)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
-            PnlMainWindow = panel;
+            PnlMainWindow = aPanel;
             CategoryToModify = aCategory;
             LoadCategoryForm(aCategory);
         }
 
-        private void LoadCategoryForm(NormalCategory categoryToModified)
+        private void LoadCategoryForm(NormalCategory categoryToModify)
         {
-            pnlAddCategory.Controls.Clear();
-            Form = new CategoryForm(categoryToModified);
-            pnlAddCategory.Controls.Add(Form);
+            ClearControls();
+            Form = new CategoryForm(categoryToModify);
+            AddUserControl(Form);
         }
 
         private void btnAccept_Click(object sender, EventArgs e)
@@ -62,9 +62,19 @@ namespace PasswordsManagerUserInterface
 
         private void GoBack()
         {
-            PnlMainWindow.Controls.Clear();
+            ClearControls();
             UserControl categories = new Categories(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(categories);
+            AddUserControl(categories);
+        }
+
+        private void ClearControls()
+        {
+            PnlMainWindow.Controls.Clear();
+        }
+
+        private void AddUserControl(UserControl aUserControl)
+        {
+            PnlMainWindow.Controls.Add(aUserControl);
         }
     }
 }

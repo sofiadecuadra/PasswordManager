@@ -9,11 +9,11 @@ namespace PasswordsManagerUserInterface
         private const string ERROR_MESSAGE = "An error has occurred";
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
-        public Categories(PasswordManager aPasswordManager, Panel panel)
+        public Categories(PasswordManager aPasswordManager, Panel aPanel)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
-            PnlMainWindow = panel;
+            PnlMainWindow = aPanel;
             LoadDataGridViewData();
         }
 
@@ -26,14 +26,19 @@ namespace PasswordsManagerUserInterface
             dgvCategories.Columns[0].DataPropertyName = "Name";
             dgvCategories.Columns[0].Width = 215;
 
-            dgvCategories.DataSource = PasswordManager.CurrentUser.GetCategories();
+            dgvCategories.DataSource = GetCategories();
+        }
+
+        private NormalCategory [] GetCategories()
+        {
+            return PasswordManager.CurrentUser.GetCategories();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            PnlMainWindow.Controls.Clear();
+            ClearControls();
             UserControl addCategory = new AddCategory(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(addCategory);
+            AddUserControl(addCategory);
         }
 
         private void btnModify_Click(object sender, EventArgs e)
@@ -50,17 +55,32 @@ namespace PasswordsManagerUserInterface
 
         private void LoadModifyCategoryForm()
         {
-            NormalCategory selected = dgvCategories.SelectedRows[0].DataBoundItem as NormalCategory;
-            PnlMainWindow.Controls.Clear();
+            NormalCategory selected = SelectedCategory();
+            ClearControls();
             UserControl modifyCategory = new ModifyCategory(PasswordManager, PnlMainWindow, selected);
-            PnlMainWindow.Controls.Add(modifyCategory);
+            AddUserControl(modifyCategory);
+        }
+
+        private NormalCategory SelectedCategory()
+        {
+            return dgvCategories.SelectedRows[0].DataBoundItem as NormalCategory;
         }
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            PnlMainWindow.Controls.Clear();
+            ClearControls();
             UserControl menu = new Menu(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(menu);
+            AddUserControl(menu);
+        }
+
+        private void ClearControls()
+        {
+            PnlMainWindow.Controls.Clear();
+        }
+
+        private void AddUserControl(UserControl aUserControl)
+        {
+            PnlMainWindow.Controls.Add(aUserControl);
         }
     }
 }

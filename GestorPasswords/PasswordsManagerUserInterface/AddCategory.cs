@@ -10,19 +10,19 @@ namespace PasswordsManagerUserInterface
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public CategoryForm Form { get; private set; }
-        public AddCategory(PasswordManager aPasswordManager, Panel panel)
+        public AddCategory(PasswordManager aPasswordManager, Panel aPanel)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
-            PnlMainWindow = panel;
+            PnlMainWindow = aPanel;
             LoadCategoryForm();
         }
 
         private void LoadCategoryForm()
         {
-            pnlAddCategory.Controls.Clear();
+            ClearControls();
             Form = new CategoryForm();
-            pnlAddCategory.Controls.Add(Form);
+            AddUserControl(Form);
         }
 
         private void btnAccept_Click(object sender, EventArgs e)
@@ -44,7 +44,7 @@ namespace PasswordsManagerUserInterface
         private void AddCategory_()
         {
             NormalCategory newCategory = CreateCategory();
-            PasswordManager.CurrentUser.AddCategory(newCategory);
+            CurrentUser().AddCategory(newCategory);
             GoBack();
         }
 
@@ -54,15 +54,19 @@ namespace PasswordsManagerUserInterface
             NormalCategory newCategory = new NormalCategory()
             {
                 Name = name,
-                User = PasswordManager.CurrentUser
+                User = CurrentUser()
             };
-
             return newCategory;
         }
 
         private void ShowMessageBox(Exception exception)
         {
             MessageBox.Show(exception.Message, ERROR_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private User CurrentUser()
+        {
+            return PasswordManager.CurrentUser;
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -72,9 +76,19 @@ namespace PasswordsManagerUserInterface
 
         private void GoBack()
         {
-            PnlMainWindow.Controls.Clear();
+            ClearControls();
             UserControl categories = new Categories(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(categories);
+            AddUserControl(categories);
+        }
+
+        private void ClearControls()
+        {
+            PnlMainWindow.Controls.Clear();
+        }
+
+        private void AddUserControl(UserControl aUserControl)
+        {
+            PnlMainWindow.Controls.Add(aUserControl);
         }
     }
 }
