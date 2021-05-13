@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GestorPasswordsDominio;
 
@@ -15,7 +8,6 @@ namespace PasswordsManagerUserInterface
     {
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
-
         public Menu(PasswordManager aPasswordManager, Panel panel)
         {
             InitializeComponent();
@@ -25,44 +17,54 @@ namespace PasswordsManagerUserInterface
 
         private void btnPasswords_Click(object sender, EventArgs e)
         {
-            PnlMainWindow.Controls.Clear();
+            ClearControls();
             UserControl passwords = new Passwords(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(passwords);
+            AddUserControl(passwords);
         }
 
         private void btnCreditCards_Click(object sender, EventArgs e)
         {
-            PnlMainWindow.Controls.Clear();
+            ClearControls();
             UserControl creditCards = new CreditCards(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(creditCards);
+            AddUserControl(creditCards);
         }
 
         private void btnLogOut_Click(object sender, EventArgs e)
         {
-            PnlMainWindow.Controls.Clear();
+            ClearControls();
             UserControl logIn = new LogIn(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(logIn);
+            AddUserControl(logIn);
         }
 
         private void btnChangeMasterPassword_Click(object sender, EventArgs e)
         {
-            PnlMainWindow.Controls.Clear();
-            UserControl changeMasterPasswords = new ChangeMasterPasswords(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(changeMasterPasswords);
+            ClearControls();
+            UserControl changeMasterPassword = new ChangeMasterPasswords(PasswordManager, PnlMainWindow);
+            AddUserControl(changeMasterPassword);
         }
 
         private void btnCheckDataBreaches_Click(object sender, EventArgs e)
         {
-            PnlMainWindow.Controls.Clear();
+            ClearControls();
             UserControl checkDataBreaches = new CheckDataBreaches(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(checkDataBreaches);
+            AddUserControl(checkDataBreaches);
         }
 
         private void btnCategories_Click(object sender, EventArgs e)
         {
-            PnlMainWindow.Controls.Clear();
+            ClearControls();
             UserControl categories = new Categories(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(categories);
+            AddUserControl(categories);
+        }
+
+        private void ClearControls()
+        {
+            PnlMainWindow.Controls.Clear();
+        }
+
+        private void AddUserControl(UserControl aUserControl)
+        {
+            PnlMainWindow.Controls.Add(aUserControl);
         }
     }
 }
