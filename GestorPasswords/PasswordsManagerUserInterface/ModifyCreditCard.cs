@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GestorPasswordsDominio;
 
@@ -13,16 +6,17 @@ namespace PasswordsManagerUserInterface
 {
     public partial class ModifyCreditCard : UserControl
     {
+        private const string ERROR_MESSAGE = "An error has occurred";
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public CreditCardForm Form { get; private set; }
-        public CreditCard CreditCardToModified { get; private set; }
+        public CreditCard CreditCardToModify { get; private set; }
         public ModifyCreditCard(PasswordManager aPasswordManager, Panel panel, CreditCard aCreditCard)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
             PnlMainWindow = panel;
-            CreditCardToModified = aCreditCard;
+            CreditCardToModify = aCreditCard;
             LoadCreditCardForm(aCreditCard);
         }
 
@@ -33,43 +27,21 @@ namespace PasswordsManagerUserInterface
             pnlModifyCreditCard.Controls.Add(Form);
         }
 
-        private void btnBack_Click(object sender, EventArgs e)
-        {
-            GoBack();
-        }
-
-        private void GoBack()
-        {
-            PnlMainWindow.Controls.Clear();
-            UserControl creditCards = new CreditCards(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(creditCards);
-        }
-
         private void btnAccept_Click(object sender, EventArgs e)
         {
             try
             {
                 ModifyCreditCard_();
             }
-            catch (ExceptionCreditCardNumberAlreadyExistsInUser exception)
+            catch (Exception exception) when (
+                exception is ExceptionCreditCardNumberAlreadyExistsInUser
+                || exception is ExceptionCreditCardDoesNotContainOnlyDigits
+                || exception is ExceptionIncorrectLength
+                || exception is ExceptionCreditCardCodeHasNonNumericCharacters
+                || exception is ExceptionCreditCardHasExpired
+            )
             {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (ExceptionCreditCardDoesNotContainOnlyDigits exception)
-            {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (ExceptionIncorrectLength exception)
-            {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (ExceptionCreditCardCodeHasNonNumericCharacters exception)
-            {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (ExceptionCreditCardHasExpired exception)
-            {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowMessageBox(exception);
             }
         }
 
@@ -85,8 +57,25 @@ namespace PasswordsManagerUserInterface
                 ExpirationDate = Form.GetExpirationDate(),
                 Notes = Form.GetNotes()
             };
-            CreditCardToModified.Category.ModifyCreditCard(CreditCardToModified, modifiedCreditCard);
+            CreditCardToModify.Category.ModifyCreditCard(CreditCardToModify, modifiedCreditCard);
             GoBack();
+        }
+
+        private void ShowMessageBox(Exception exception)
+        {
+            MessageBox.Show(exception.Message, ERROR_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            GoBack();
+        }
+
+        private void GoBack()
+        {
+            PnlMainWindow.Controls.Clear();
+            UserControl creditCards = new CreditCards(PasswordManager, PnlMainWindow);
+            PnlMainWindow.Controls.Add(creditCards);
         }
     }
 }

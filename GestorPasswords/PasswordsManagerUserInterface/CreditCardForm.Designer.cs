@@ -49,7 +49,7 @@ namespace PasswordsManagerUserInterface
             // lblCreditCard
             // 
             this.lblCreditCard.AutoSize = true;
-            this.lblCreditCard.Location = new System.Drawing.Point(12, 0);
+            this.lblCreditCard.Location = new System.Drawing.Point(299, 12);
             this.lblCreditCard.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblCreditCard.Name = "lblCreditCard";
             this.lblCreditCard.Size = new System.Drawing.Size(121, 25);
@@ -61,7 +61,7 @@ namespace PasswordsManagerUserInterface
             this.cbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCategory.FormattingEnabled = true;
             this.cbCategory.Location = new System.Drawing.Point(190, 54);
-            this.cbCategory.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.cbCategory.Margin = new System.Windows.Forms.Padding(6);
             this.cbCategory.Name = "cbCategory";
             this.cbCategory.Size = new System.Drawing.Size(388, 33);
             this.cbCategory.TabIndex = 1;
@@ -69,7 +69,7 @@ namespace PasswordsManagerUserInterface
             // txtName
             // 
             this.txtName.Location = new System.Drawing.Point(190, 138);
-            this.txtName.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtName.Margin = new System.Windows.Forms.Padding(6);
             this.txtName.MaxLength = 25;
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(388, 31);
@@ -78,7 +78,7 @@ namespace PasswordsManagerUserInterface
             // txtType
             // 
             this.txtType.Location = new System.Drawing.Point(190, 219);
-            this.txtType.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtType.Margin = new System.Windows.Forms.Padding(6);
             this.txtType.MaxLength = 25;
             this.txtType.Name = "txtType";
             this.txtType.Size = new System.Drawing.Size(388, 31);
@@ -87,7 +87,7 @@ namespace PasswordsManagerUserInterface
             // txtNumber
             // 
             this.txtNumber.Location = new System.Drawing.Point(190, 302);
-            this.txtNumber.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtNumber.Margin = new System.Windows.Forms.Padding(6);
             this.txtNumber.MaxLength = 19;
             this.txtNumber.Name = "txtNumber";
             this.txtNumber.Size = new System.Drawing.Size(388, 31);
@@ -97,7 +97,7 @@ namespace PasswordsManagerUserInterface
             // txtCode
             // 
             this.txtCode.Location = new System.Drawing.Point(190, 388);
-            this.txtCode.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtCode.Margin = new System.Windows.Forms.Padding(6);
             this.txtCode.MaxLength = 4;
             this.txtCode.Name = "txtCode";
             this.txtCode.Size = new System.Drawing.Size(388, 31);
@@ -106,7 +106,7 @@ namespace PasswordsManagerUserInterface
             // txtNotes
             // 
             this.txtNotes.Location = new System.Drawing.Point(190, 567);
-            this.txtNotes.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtNotes.Margin = new System.Windows.Forms.Padding(6);
             this.txtNotes.MaxLength = 250;
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
@@ -189,7 +189,8 @@ namespace PasswordsManagerUserInterface
             this.dtpExpirationDate.CustomFormat = "MM/yyyy";
             this.dtpExpirationDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpExpirationDate.Location = new System.Drawing.Point(190, 477);
-            this.dtpExpirationDate.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.dtpExpirationDate.Margin = new System.Windows.Forms.Padding(6);
+            this.dtpExpirationDate.MinDate = new System.DateTime(2021, 5, 12, 0, 0, 0, 0);
             this.dtpExpirationDate.Name = "dtpExpirationDate";
             this.dtpExpirationDate.ShowUpDown = true;
             this.dtpExpirationDate.Size = new System.Drawing.Size(388, 31);
@@ -214,7 +215,7 @@ namespace PasswordsManagerUserInterface
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.cbCategory);
             this.Controls.Add(this.lblCreditCard);
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "CreditCardForm";
             this.Size = new System.Drawing.Size(606, 750);
             this.ResumeLayout(false);

@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GestorPasswordsDominio;
 
@@ -13,9 +6,9 @@ namespace PasswordsManagerUserInterface
 {
     public partial class CreditCards : UserControl
     {
+        private const string ERROR_MESSAGE = "An error has occurred";
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
-        
         private readonly DataGridViewButtonColumn fullView;
         public CreditCards(PasswordManager aPasswordManager, Panel panel)
         {
@@ -30,6 +23,7 @@ namespace PasswordsManagerUserInterface
         {
             dgvCreditCards.AutoGenerateColumns = false;
             dgvCreditCards.ColumnCount = 5;
+
             dgvCreditCards.Columns[0].Name = "Category";
             dgvCreditCards.Columns[0].HeaderText = "Category";
             dgvCreditCards.Columns[0].DataPropertyName = "Category";
@@ -64,19 +58,6 @@ namespace PasswordsManagerUserInterface
             fullView.UseColumnTextForButtonValue = true;
 
             dgvCreditCards.DataSource = PasswordManager.CurrentUser.GetCreditCards();
-
-            for (int i = 0; i < dgvCreditCards.Rows.Count; i++)
-            {
-                string numberFormatted = CreditCard.FormatNumber(dgvCreditCards.Rows[i].Cells[3].Value.ToString());
-                dgvCreditCards.Rows[i].Cells[3].Value = numberFormatted;
-            }
-        }
-        
-        private void btnBack_Click(object sender, EventArgs e)
-        {
-            PnlMainWindow.Controls.Clear();
-            UserControl menu = new Menu(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(menu);
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -84,13 +65,6 @@ namespace PasswordsManagerUserInterface
             PnlMainWindow.Controls.Clear();
             UserControl addCreditCard = new AddCreditCard(PasswordManager, PnlMainWindow);
             PnlMainWindow.Controls.Add(addCreditCard);
-        }
-
-        private void RemoveCreditCard()
-        {
-            CreditCard selected = dgvCreditCards.SelectedRows[0].DataBoundItem as CreditCard;
-            selected.Category.RemoveCreditCard(selected.Number);
-            dgvCreditCards.DataSource = PasswordManager.CurrentUser.GetCreditCards();
         }
 
         private void btnModify_Click(object sender, EventArgs e)
@@ -101,7 +75,7 @@ namespace PasswordsManagerUserInterface
             }
             catch (ArgumentOutOfRangeException)
             {
-                MessageBox.Show("Please, choose a credit card to modify", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please, choose a credit card to modify", ERROR_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -118,8 +92,10 @@ namespace PasswordsManagerUserInterface
             if (e.ColumnIndex == 5)
             {
                 CreditCard selected = dgvCreditCards.Rows[e.RowIndex].DataBoundItem as CreditCard;
-                PopUp30Seconds popUp = new PopUp30Seconds(selected);
-                popUp.Visible = true;
+                _ = new PopUp30Seconds(selected)
+                {
+                    Visible = true
+                };
             }
         }
 
@@ -131,12 +107,31 @@ namespace PasswordsManagerUserInterface
             }
             catch (ArgumentOutOfRangeException)
             {
-                MessageBox.Show("Please, choose a credit card to remove", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please, choose a credit card to remove", ERROR_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch (ExceptionCreditCardDoesNotExist)
+            catch (ExceptionCreditCardDoesNotExist exception)
             {
-                MessageBox.Show("The credit card does not exist", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowMessageBox(exception);
             }
+        }
+
+        private void RemoveCreditCard()
+        {
+            CreditCard selected = dgvCreditCards.SelectedRows[0].DataBoundItem as CreditCard;
+            selected.Category.RemoveCreditCard(selected.Number);
+            dgvCreditCards.DataSource = PasswordManager.CurrentUser.GetCreditCards();
+        }
+
+        private void ShowMessageBox(Exception exception)
+        {
+            MessageBox.Show(exception.Message, ERROR_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            PnlMainWindow.Controls.Clear();
+            UserControl menu = new Menu(PasswordManager, PnlMainWindow);
+            PnlMainWindow.Controls.Add(menu);
         }
     }
 }
