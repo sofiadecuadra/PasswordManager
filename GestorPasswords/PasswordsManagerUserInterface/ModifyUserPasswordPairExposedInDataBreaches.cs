@@ -54,13 +54,12 @@ namespace PasswordsManagerUserInterface
             {
                 ModifyPassword();
             }
-            catch (ExceptionExistingUserPasswordPair exception)
+            catch (Exception exception) when (
+                exception is ExceptionExistingUserPasswordPair
+                || exception is ExceptionIncorrectLength
+            )
             {
-                MessageBox.Show(exception.Message, ERROR_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (ExceptionIncorrectLength exception)
-            {
-                MessageBox.Show(exception.Message, ERROR_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowMessageBox(exception);
             }
         }
 
@@ -69,6 +68,11 @@ namespace PasswordsManagerUserInterface
             UserPasswordPair newPassword = CreatePassword();
             PasswordToModify.Category.ModifyUserPasswordPair(PasswordToModify, newPassword);
             GoBack();
+        }
+
+        private void ShowMessageBox(Exception exception)
+        {
+            MessageBox.Show(exception.Message, ERROR_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void btnBack_Click(object sender, EventArgs e)
