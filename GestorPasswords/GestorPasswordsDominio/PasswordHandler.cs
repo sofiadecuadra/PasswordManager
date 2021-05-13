@@ -16,7 +16,7 @@ namespace GestorPasswordsDominio
         {
             if (PasswordSizeOutSideBoundaries(passwordToCheck))
             {
-                throw new ExceptionIncorrectLength($"The password length must be between 5 and 25, but it's current length is: {passwordToCheck.Length}");
+                throw new ExceptionIncorrectLength($"The password's length must be between 5 and 25, but it's current length is: {passwordToCheck.Length}");
             }
             if (ContainsLessThan8Characters(passwordToCheck))
             {
@@ -238,7 +238,7 @@ namespace GestorPasswordsDominio
         {
             if (conditions.Length < MIN_PASSWORD_SIZE || conditions.Length > MAX_PASSWORD_SIZE)
             {
-                throw new ExceptionIncorrectLength("The length must be between 5 and 25, and the current length is " + conditions.Length);
+                throw new ExceptionIncorrectLength($"The password's length must be between 5 and 25, but it's current length is {conditions.Length}");
             }
 
             if (!conditions.HasUpperCase && !conditions.HasLowerCase && !conditions.HasDigits && !conditions.HasSymbols)
