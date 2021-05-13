@@ -10,6 +10,7 @@ namespace PasswordsManagerUserInterface
         public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         private readonly DataGridViewButtonColumn fullView;
+
         public CreditCards(DataManager aPasswordManager, Panel aPanel)
         {
             InitializeComponent();
@@ -21,43 +22,71 @@ namespace PasswordsManagerUserInterface
 
         private void LoadDataGridViewData()
         {
+            SetColumnsQuantity();
+            SetCategoryColumn();
+            SetNameColumn();
+            SetTypeColumn();
+            SetNumberColumn();
+            SetExpirationDateColumn();
+            SetFullViewColumn();
+            dgvCreditCards.DataSource = GetCreditCards();
+        }
+
+        private void SetColumnsQuantity()
+        {
             dgvCreditCards.AutoGenerateColumns = false;
             dgvCreditCards.ColumnCount = 5;
+        }
 
+        private void SetCategoryColumn()
+        {
             dgvCreditCards.Columns[0].Name = "Category";
             dgvCreditCards.Columns[0].HeaderText = "Category";
             dgvCreditCards.Columns[0].DataPropertyName = "Category";
             dgvCreditCards.Columns[0].Width = 140;
+        }
 
+        private void SetNameColumn()
+        {
             dgvCreditCards.Columns[1].Name = "Name";
             dgvCreditCards.Columns[1].HeaderText = "Name";
             dgvCreditCards.Columns[1].DataPropertyName = "Name";
             dgvCreditCards.Columns[1].Width = 153;
+        }
 
+        private void SetTypeColumn()
+        {
             dgvCreditCards.Columns[2].Name = "Type";
             dgvCreditCards.Columns[2].HeaderText = "Type";
             dgvCreditCards.Columns[2].DataPropertyName = "Type";
             dgvCreditCards.Columns[2].Width = 153;
+        }
 
+        private void SetNumberColumn()
+        {
             dgvCreditCards.Columns[3].Name = "Number";
             dgvCreditCards.Columns[3].HeaderText = "Number";
             dgvCreditCards.Columns[3].DataPropertyName = "HideNumber";
             dgvCreditCards.Columns[3].Width = 140;
+        }
 
+        private void SetExpirationDateColumn()
+        {
             dgvCreditCards.Columns[4].Name = "ExpirationDate";
             dgvCreditCards.Columns[4].HeaderText = "Expiration Date";
             dgvCreditCards.Columns[4].DataPropertyName = "ExpirationDate";
             dgvCreditCards.Columns[4].DefaultCellStyle.Format = "MM/yyyy";
             dgvCreditCards.Columns[4].Width = 71;
+        }
 
+        private void SetFullViewColumn()
+        {
             dgvCreditCards.Columns.Add(fullView);
             fullView.HeaderText = @"";
             fullView.Name = "Full view";
             fullView.Text = "Full view";
             fullView.Width = 60;
             fullView.UseColumnTextForButtonValue = true;
-
-            dgvCreditCards.DataSource = GetCreditCards();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -81,7 +110,7 @@ namespace PasswordsManagerUserInterface
 
         private void LoadModifyCreditCardForm()
         {
-            CreditCard selected = SelectedCreditCard(0);
+            CreditCard selected = SelectedCreditCard();
             ClearControls();
             UserControl modifyCreditCard = new ModifyCreditCard(PasswordManager, PnlMainWindow, selected);
             AddUserControl(modifyCreditCard);
@@ -89,9 +118,14 @@ namespace PasswordsManagerUserInterface
 
         private void RemoveCreditCard()
         {
-            CreditCard selected = SelectedCreditCard(0);
+            CreditCard selected = SelectedCreditCard();
             selected.Category.RemoveCreditCard(selected.Number);
             dgvCreditCards.DataSource = GetCreditCards();
+        }
+
+        private CreditCard SelectedCreditCard()
+        {
+            return dgvCreditCards.SelectedRows[0].DataBoundItem as CreditCard;
         }
 
         private CreditCard[] GetCreditCards()
@@ -103,17 +137,12 @@ namespace PasswordsManagerUserInterface
         {
             if (e.ColumnIndex == 5)
             {
-                CreditCard selected = SelectedCreditCard(e.RowIndex);
+                CreditCard selected = dgvCreditCards.Rows[e.RowIndex].DataBoundItem as CreditCard;
                 _ = new PopUp30Seconds(selected)
                 {
                     Visible = true
                 };
             }
-        }
-
-        private CreditCard SelectedCreditCard(int rowIndex)
-        {
-            return dgvCreditCards.SelectedRows[rowIndex].DataBoundItem as CreditCard;
         }
 
         private void btnDelete_Click(object sender, EventArgs e)

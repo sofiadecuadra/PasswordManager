@@ -11,6 +11,7 @@ namespace PasswordsManagerUserInterface
         public Panel PnlMainWindow { get; private set; }
         public CreditCardForm Form { get; private set; }
         public CreditCard CreditCardToModify { get; private set; }
+
         public ModifyCreditCard(DataManager aPasswordManager, Panel aPanel, CreditCard aCreditCard)
         {
             InitializeComponent();

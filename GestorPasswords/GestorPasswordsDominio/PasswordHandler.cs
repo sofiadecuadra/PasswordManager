@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 
 namespace DataManagerDomain
@@ -11,6 +8,7 @@ namespace DataManagerDomain
     {
         private const int MIN_PASSWORD_SIZE = 5;
         private const int MAX_PASSWORD_SIZE = 25;
+        private static Random rand;
 
         public static PasswordStrengthType PasswordStrength(String passwordToCheck)
         {
@@ -22,15 +20,14 @@ namespace DataManagerDomain
             {
                 return PasswordStrengthType.Red;
             }
-            if (ContainsBetween8And14Characters(passwordToCheck))
+            if (Contains14OrLessCharacters(passwordToCheck))
             {
                 return PasswordStrengthType.Orange;
             }
-            if (ContainsJustUpperAndLowerCaseSymbolsAndNumbers(passwordToCheck))
+            if (ContainsUpperAndLowerCaseSymbolsAndNumbers(passwordToCheck))
             {
                 return PasswordStrengthType.DarkGreen;
             }
-
             bool isLightGreen = ContainsJustUpperAndLowerCase(passwordToCheck)
                             || ContainsJustUpperAndLowerCaseAndSymbolsOrNumbers(passwordToCheck)
                             || ContainsJustNumbersSymbolsAndUpperOrLowerCase(passwordToCheck);
@@ -38,17 +35,7 @@ namespace DataManagerDomain
             {
                 return PasswordStrengthType.LightGreen;
             }
-
-            /*bool isYellow = ContainsJustUpperOrLowerCase(passwordToCheck)
-                            || ContainsJustSymbolsAndNumbers(passwordToCheck)
-                            || ContainsJustUpperOrLowerCaseAndSymbolsOrNumbers(passwordToCheck)
-                            || ContainsJustSymbolsOrNumbers(passwordToCheck);
-            if (isYellow)
-            {*/
-                return PasswordStrengthType.Yellow;
-            /*}
-
-            return PasswordStrengthType.Red;*/
+            return PasswordStrengthType.Yellow;
         }
 
         private static bool PasswordSizeOutSideBoundaries(string passwordToCheck)
@@ -61,27 +48,12 @@ namespace DataManagerDomain
             return Regex.IsMatch(passwordToCheck, @"(?=^.{14,}$)((?=.*\d+)(?=.*\W+))(?![.\n])(?=.*([A-Z]|[a-z])+).*$");
         }
 
-        /*private static bool ContainsJustSymbolsOrNumbers(string passwordToCheck)
-        {
-            return Regex.IsMatch(passwordToCheck, @"(?=^.{14,}$)((?=.*((\d)|(\W))+)).*$");
-        }*/
-
-        /*private static bool ContainsJustUpperOrLowerCaseAndSymbolsOrNumbers(string passwordToCheck)
-        {
-            return Regex.IsMatch(passwordToCheck, @"(?=^.{14,}$)((?=.*((\d)|(\W))+))(?![.\n])(?=.*(([A-Z])|([a-z]))+).*$");
-        }*/
-
-        /*private static bool ContainsJustSymbolsAndNumbers(string passwordToCheck)
-        {
-            return Regex.IsMatch(passwordToCheck, @"(?=^.{14,}$)((?=.*\d+)(?=.*\W+))(?![.\n]).*$");
-        }*/
-
         private static bool ContainsJustUpperAndLowerCaseAndSymbolsOrNumbers(string passwordToCheck)
         {
             return Regex.IsMatch(passwordToCheck, @"(?=^.{14,}$)((?=.*((\d)|(\W))+))(?![.\n])(?=.*[A-Z]+)(?=.*[a-z]+).*$");
         }
 
-        private static bool ContainsJustUpperAndLowerCaseSymbolsAndNumbers(string passwordToCheck)
+        private static bool ContainsUpperAndLowerCaseSymbolsAndNumbers(string passwordToCheck)
         {
             return Regex.IsMatch(passwordToCheck, @"(?=^.{14,}$)((?=.*\d+)(?=.*\W+))(?![.\n])(?=.*[A-Z]+)(?=.*[a-z]+).*$");
         }
@@ -91,34 +63,24 @@ namespace DataManagerDomain
             return Regex.IsMatch(passwordToCheck, @"^(?=[a-z]+[A-Z]+|[A-Z]+[a-z]+)[a-zA-Z]{14,25}$");
         }
 
-        /*private static bool ContainsJustUpperOrLowerCase(string passwordToCheck)
-        {
-            return Regex.IsMatch(passwordToCheck, @"^[A-Za-z\s]+$");
-        }*/
-
         private static bool ContainsLessThan8Characters(string passwordToCheck)
         {
             return passwordToCheck.Length < 8;
         }
 
-        private static bool ContainsBetween8And14Characters(string passwordToCheck)
+        private static bool Contains14OrLessCharacters(string passwordToCheck)
         {
             return passwordToCheck.Length <= 14;
         }
 
-        private static Random rand;
-
         public static String GenerateRandomPassword(PasswordGenerationConditions conditions)
         {
             String password = "";
-
             if (ConditionsAreValid(conditions))
             {
                 rand = new Random();
                 int randomizer = rand.Next(0, 4);
-
                 password = AddMustHaveCharacters(conditions);
-
                 int counter = 0;
                 while (counter < NumberOfCharactersToAdd(conditions))
                 {
@@ -142,13 +104,10 @@ namespace DataManagerDomain
                         password += AddSymbol();
                         counter++;
                     }
-
                     randomizer = rand.Next(0, 4);
                 }
-
                 password = RandomizeString(password);
             }
-
             return password;
         }
 
@@ -180,57 +139,46 @@ namespace DataManagerDomain
         private static char AddLower()
         {
             string lower = "abcdefghijklmnopqrstuvwxyz";
-
             return lower[rand.Next(0, lower.Length)];
         }
 
         private static char AddUpper()
         {
             string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
             return upper[rand.Next(0, upper.Length)];
         }
 
         private static char AddDigit()
         {
             string digits = "0123456789";
-
             return digits[rand.Next(0, digits.Length)];
         }
 
         private static char AddSymbol()
         {
             string symbols = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
-
             return symbols[rand.Next(0, symbols.Length)];
         }
 
         private static string AddMustHaveCharacters(PasswordGenerationConditions conditions)
         {
             string password = "";
-            string lower = "abcdefghijklmnopqrstuvwxyz";
-            string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            string digits = "0123456789";
-            string symbols = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
-
             if (conditions.HasLowerCase)
             {
-                password += lower[rand.Next(0, lower.Length)];
+                password += AddLower();
             }
             if (conditions.HasUpperCase)
             {
-                password += upper[rand.Next(0, upper.Length)];
+                password += AddUpper();
             }
             if (conditions.HasDigits)
             {
-                password += digits[rand.Next(0, digits.Length)];
+                password += AddDigit();
             }
             if (conditions.HasSymbols)
             {
-                password += symbols[rand.Next(0, symbols.Length)];
+                password += AddSymbol();
             }
-
-
             return password;
         }
 
@@ -240,12 +188,10 @@ namespace DataManagerDomain
             {
                 throw new ExceptionIncorrectLength($"The password's length must be between 5 and 25, but it's current length is {conditions.Length}");
             }
-
             if (!conditions.HasUpperCase && !conditions.HasLowerCase && !conditions.HasDigits && !conditions.HasSymbols)
             {
                 throw new ExceptionIncorrectGenerationPasswordType("Must select at least one condition for generation");
             }
-
             return true;
         }
 

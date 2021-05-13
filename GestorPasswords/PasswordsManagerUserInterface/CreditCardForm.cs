@@ -7,6 +7,7 @@ namespace PasswordsManagerUserInterface
     public partial class CreditCardForm : UserControl
     {
         public DataManager PasswordManager { get; private set; }
+
         public CreditCardForm(DataManager aPasswordManager)
         {
             InitializeComponent();
@@ -24,6 +25,11 @@ namespace PasswordsManagerUserInterface
             LoadDefaultValues(aCreditCard);
         }
 
+        private void LoadCategories()
+        {
+            cbCategory.DataSource = GetCategories();
+        }
+
         private void LoadDefaultValues(CreditCard aCreditCard)
         {
             cbCategory.SelectedItem = aCreditCard.Category;
@@ -38,11 +44,6 @@ namespace PasswordsManagerUserInterface
         private void SetMinExpirationDate()
         {
             dtpExpirationDate.MinDate = DateTime.Now;
-        }
-
-        private void LoadCategories()
-        {
-            cbCategory.DataSource = GetCategories();
         }
 
         private Category [] GetCategories()
