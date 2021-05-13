@@ -22,9 +22,9 @@ namespace PasswordsManagerUserInterface
 
         private void LoadCategoryForm(NormalCategory categoryToModify)
         {
-            ClearControls();
+            pnlAddCategory.Controls.Clear();
             Form = new CategoryForm(categoryToModify);
-            AddUserControl(Form);
+            pnlAddCategory.Controls.Add(Form);
         }
 
         private void btnAccept_Click(object sender, EventArgs e)

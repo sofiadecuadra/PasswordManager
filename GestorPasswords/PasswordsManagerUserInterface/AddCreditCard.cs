@@ -20,9 +20,9 @@ namespace PasswordsManagerUserInterface
 
         private void LoadCreditCardForm()
         {
-            ClearControls();
+            ClearControls(pnlAddCreditCard);
             Form = new CreditCardForm(PasswordManager);
-            AddUserControl(Form);
+            AddUserControl(pnlAddCreditCard, Form);
         }
 
         private void btnAccept_Click(object sender, EventArgs e)
@@ -84,19 +84,19 @@ namespace PasswordsManagerUserInterface
 
         private void GoBack()
         {
-            ClearControls();
+            ClearControls(PnlMainWindow);
             UserControl creditCards = new CreditCards(PasswordManager, PnlMainWindow);
-            AddUserControl(creditCards);
+            AddUserControl(PnlMainWindow, creditCards);
         }
 
-        private void ClearControls()
+        private void ClearControls(Panel aPanel)
         {
-            PnlMainWindow.Controls.Clear();
+            aPanel.Controls.Clear();
         }
 
-        private void AddUserControl(UserControl aUserControl)
+        private void AddUserControl(Panel aPanel, UserControl aUserControl)
         {
-            PnlMainWindow.Controls.Add(aUserControl);
+            aPanel.Controls.Add(aUserControl);
         }
     }
 }

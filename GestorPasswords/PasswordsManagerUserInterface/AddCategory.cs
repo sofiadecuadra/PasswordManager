@@ -20,9 +20,9 @@ namespace PasswordsManagerUserInterface
 
         private void LoadCategoryForm()
         {
-            ClearControls();
+            ClearControls(pnlAddCategory);
             Form = new CategoryForm();
-            AddUserControl(Form);
+            AddUserControl(pnlAddCategory,Form);
         }
 
         private void btnAccept_Click(object sender, EventArgs e)
@@ -76,19 +76,19 @@ namespace PasswordsManagerUserInterface
 
         private void GoBack()
         {
-            ClearControls();
+            ClearControls(PnlMainWindow);
             UserControl categories = new Categories(PasswordManager, PnlMainWindow);
-            AddUserControl(categories);
+            AddUserControl(PnlMainWindow, categories);
         }
 
-        private void ClearControls()
+        private void ClearControls(Panel aPanel)
         {
-            PnlMainWindow.Controls.Clear();
+            aPanel.Controls.Clear();
         }
 
-        private void AddUserControl(UserControl aUserControl)
+        private void AddUserControl(Panel aPanel, UserControl aUserControl)
         {
-            PnlMainWindow.Controls.Add(aUserControl);
+            aPanel.Controls.Add(aUserControl);
         }
     }
 }
