@@ -10,11 +10,11 @@ namespace PasswordsManagerUserInterface
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         private readonly DataGridViewButtonColumn fullView;
-        public CreditCards(PasswordManager aPasswordManager, Panel panel)
+        public CreditCards(PasswordManager aPasswordManager, Panel aPanel)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
-            PnlMainWindow = panel;
+            PnlMainWindow = aPanel;
             fullView = new DataGridViewButtonColumn();
             LoadDataGridViewData();
         }
@@ -57,14 +57,14 @@ namespace PasswordsManagerUserInterface
             fullView.Width = 60;
             fullView.UseColumnTextForButtonValue = true;
 
-            dgvCreditCards.DataSource = PasswordManager.CurrentUser.GetCreditCards();
+            dgvCreditCards.DataSource = GetCreditCards();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            PnlMainWindow.Controls.Clear();
+            ClearControls();
             UserControl addCreditCard = new AddCreditCard(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(addCreditCard);
+            AddUserControl(addCreditCard);
         }
 
         private void btnModify_Click(object sender, EventArgs e)
@@ -81,22 +81,39 @@ namespace PasswordsManagerUserInterface
 
         private void LoadModifyCreditCardForm()
         {
-            CreditCard selected = dgvCreditCards.SelectedRows[0].DataBoundItem as CreditCard;
-            PnlMainWindow.Controls.Clear();
+            CreditCard selected = SelectedCreditCard(0);
+            ClearControls();
             UserControl modifyCreditCard = new ModifyCreditCard(PasswordManager, PnlMainWindow, selected);
-            PnlMainWindow.Controls.Add(modifyCreditCard);
+            AddUserControl(modifyCreditCard);
+        }
+
+        private void RemoveCreditCard()
+        {
+            CreditCard selected = SelectedCreditCard(0);
+            selected.Category.RemoveCreditCard(selected.Number);
+            dgvCreditCards.DataSource = GetCreditCards();
+        }
+
+        private CreditCard[] GetCreditCards()
+        {
+            return PasswordManager.CurrentUser.GetCreditCards();
         }
 
         private void dgvCreditCards_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 5)
             {
-                CreditCard selected = dgvCreditCards.Rows[e.RowIndex].DataBoundItem as CreditCard;
+                CreditCard selected = SelectedCreditCard(e.RowIndex);
                 _ = new PopUp30Seconds(selected)
                 {
                     Visible = true
                 };
             }
+        }
+
+        private CreditCard SelectedCreditCard(int rowIndex)
+        {
+            return dgvCreditCards.SelectedRows[rowIndex].DataBoundItem as CreditCard;
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -115,13 +132,6 @@ namespace PasswordsManagerUserInterface
             }
         }
 
-        private void RemoveCreditCard()
-        {
-            CreditCard selected = dgvCreditCards.SelectedRows[0].DataBoundItem as CreditCard;
-            selected.Category.RemoveCreditCard(selected.Number);
-            dgvCreditCards.DataSource = PasswordManager.CurrentUser.GetCreditCards();
-        }
-
         private void ShowMessageBox(Exception exception)
         {
             MessageBox.Show(exception.Message, ERROR_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -129,9 +139,19 @@ namespace PasswordsManagerUserInterface
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            PnlMainWindow.Controls.Clear();
+            ClearControls();
             UserControl menu = new Menu(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(menu);
+            AddUserControl(menu);
+        }
+
+        private void ClearControls()
+        {
+            PnlMainWindow.Controls.Clear();
+        }
+
+        private void AddUserControl(UserControl aUserControl)
+        {
+            PnlMainWindow.Controls.Add(aUserControl);
         }
     }
 }

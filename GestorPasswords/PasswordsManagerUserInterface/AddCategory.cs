@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GestorPasswordsDominio;
 
@@ -13,22 +6,23 @@ namespace PasswordsManagerUserInterface
 {
     public partial class AddCategory : UserControl
     {
+        private const string ERROR_MESSAGE = "An error has occurred";
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public CategoryForm Form { get; private set; }
-        public AddCategory(PasswordManager aPasswordManager, Panel panel)
+        public AddCategory(PasswordManager aPasswordManager, Panel aPanel)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
-            PnlMainWindow = panel;
+            PnlMainWindow = aPanel;
             LoadCategoryForm();
         }
 
         private void LoadCategoryForm()
         {
-            pnlAddCategory.Controls.Clear();
-            Form = new CategoryForm(PasswordManager);
-            pnlAddCategory.Controls.Add(Form);
+            ClearControls(pnlAddCategory);
+            Form = new CategoryForm();
+            AddUserControl(pnlAddCategory,Form);
         }
 
         private void btnAccept_Click(object sender, EventArgs e)
@@ -39,19 +33,18 @@ namespace PasswordsManagerUserInterface
             }
             catch (ExceptionIncorrectLength exception)
             {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowMessageBox(exception);
             }
             catch (ArgumentException)
             {
-                MessageBox.Show("The category already exists", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("The category already exists", ERROR_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
 
         private void AddCategory_()
         {
             NormalCategory newCategory = CreateCategory();
-            PasswordManager.CurrentUser.AddCategory(newCategory);
+            CurrentUser().AddCategory(newCategory);
             GoBack();
         }
 
@@ -61,10 +54,19 @@ namespace PasswordsManagerUserInterface
             NormalCategory newCategory = new NormalCategory()
             {
                 Name = name,
-                User = PasswordManager.CurrentUser
+                User = CurrentUser()
             };
-
             return newCategory;
+        }
+
+        private void ShowMessageBox(Exception exception)
+        {
+            MessageBox.Show(exception.Message, ERROR_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private User CurrentUser()
+        {
+            return PasswordManager.CurrentUser;
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -74,9 +76,19 @@ namespace PasswordsManagerUserInterface
 
         private void GoBack()
         {
-            PnlMainWindow.Controls.Clear();
+            ClearControls(PnlMainWindow);
             UserControl categories = new Categories(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(categories);
+            AddUserControl(PnlMainWindow, categories);
+        }
+
+        private void ClearControls(Panel aPanel)
+        {
+            aPanel.Controls.Clear();
+        }
+
+        private void AddUserControl(Panel aPanel, UserControl aUserControl)
+        {
+            aPanel.Controls.Add(aUserControl);
         }
     }
 }

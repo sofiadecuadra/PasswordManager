@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GestorPasswordsDominio;
 
@@ -13,13 +6,14 @@ namespace PasswordsManagerUserInterface
 {
     public partial class Categories : UserControl
     {
+        private const string ERROR_MESSAGE = "An error has occurred";
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
-        public Categories(PasswordManager aPasswordManager, Panel panel)
+        public Categories(PasswordManager aPasswordManager, Panel aPanel)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
-            PnlMainWindow = panel;
+            PnlMainWindow = aPanel;
             LoadDataGridViewData();
         }
 
@@ -31,21 +25,20 @@ namespace PasswordsManagerUserInterface
             dgvCategories.Columns[0].HeaderText = "Categories";
             dgvCategories.Columns[0].DataPropertyName = "Name";
             dgvCategories.Columns[0].Width = 215;
-            dgvCategories.DataSource = PasswordManager.CurrentUser.GetCategories();
+
+            dgvCategories.DataSource = GetCategories();
         }
 
-        private void btnBack_Click(object sender, EventArgs e)
+        private NormalCategory [] GetCategories()
         {
-            PnlMainWindow.Controls.Clear();
-            UserControl menu = new Menu(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(menu);
+            return PasswordManager.CurrentUser.GetCategories();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            PnlMainWindow.Controls.Clear();
+            ClearControls();
             UserControl addCategory = new AddCategory(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(addCategory);
+            AddUserControl(addCategory);
         }
 
         private void btnModify_Click(object sender, EventArgs e)
@@ -56,16 +49,38 @@ namespace PasswordsManagerUserInterface
             }
             catch (ArgumentOutOfRangeException)
             {
-                MessageBox.Show("Please, choose a category to modify", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please, choose a category to modify", ERROR_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void LoadModifyCategoryForm()
         {
-            NormalCategory selected = dgvCategories.SelectedRows[0].DataBoundItem as NormalCategory;
-            PnlMainWindow.Controls.Clear();
+            NormalCategory selected = SelectedCategory();
+            ClearControls();
             UserControl modifyCategory = new ModifyCategory(PasswordManager, PnlMainWindow, selected);
-            PnlMainWindow.Controls.Add(modifyCategory);
+            AddUserControl(modifyCategory);
+        }
+
+        private NormalCategory SelectedCategory()
+        {
+            return dgvCategories.SelectedRows[0].DataBoundItem as NormalCategory;
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            ClearControls();
+            UserControl menu = new Menu(PasswordManager, PnlMainWindow);
+            AddUserControl(menu);
+        }
+
+        private void ClearControls()
+        {
+            PnlMainWindow.Controls.Clear();
+        }
+
+        private void AddUserControl(UserControl aUserControl)
+        {
+            PnlMainWindow.Controls.Add(aUserControl);
         }
     }
 }
