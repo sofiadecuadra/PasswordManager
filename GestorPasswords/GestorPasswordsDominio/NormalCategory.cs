@@ -362,7 +362,6 @@ namespace DataManagerDomain
             {
                 throw new ExceptionUserPasswordPairDoesNotExist($"The user-password pair ({aUserPasswordPair.Username}-{aUserPasswordPair.Site}) does not exist in {this.Name}");
             }
-
             RemoveUserPasswordPairFromCollection(aUserPasswordPair);
             DeleteUserPasswordPairFromStrengthGroup(aUserPasswordPair);
             return true;
