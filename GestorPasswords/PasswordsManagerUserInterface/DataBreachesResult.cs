@@ -87,6 +87,17 @@ namespace PasswordsManagerUserInterface
             dgvExposedCreditCards.DataSource = exposedCreditCards;
         }
 
+        private void dgvExposedPasswords_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 4)
+            {
+                UserPasswordPair selected = dgvExposedPasswords.Rows[e.RowIndex].DataBoundItem as UserPasswordPair;
+                UserControl modifyUserPasswordPairControl = new ModifyUserPasswordPairExposedInDataBreaches(PasswordManager, pnlMainWindow, selected, DataBreaches);
+                pnlMainWindow.Controls.Clear();
+                pnlMainWindow.Controls.Add(modifyUserPasswordPairControl);
+            }
+        }
+
         private void btnBack_Click(object sender, EventArgs e)
         {
             pnlMainWindow.Controls.Clear();
@@ -99,17 +110,6 @@ namespace PasswordsManagerUserInterface
             pnlMainWindow.Controls.Clear();
             UserControl menu = new Menu(PasswordManager, pnlMainWindow);
             pnlMainWindow.Controls.Add(menu);
-        }
-
-        private void dgvExposedPasswords_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == 4)
-            {
-                UserPasswordPair selected = dgvExposedPasswords.Rows[e.RowIndex].DataBoundItem as UserPasswordPair;
-                UserControl modifyUserPasswordPairControl = new ModifyUserPasswordPairExposedInDataBreaches(PasswordManager, pnlMainWindow, selected, DataBreaches);
-                pnlMainWindow.Controls.Clear();
-                pnlMainWindow.Controls.Add(modifyUserPasswordPairControl);
-            }
         }
     }
 }
