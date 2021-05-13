@@ -1,12 +1,5 @@
 ﻿using GestorPasswordsDominio;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PasswordsManagerUserInterface
@@ -16,6 +9,7 @@ namespace PasswordsManagerUserInterface
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public UserPasswordPairForm Form { get; private set; }
+
         public AddUserPasswordPair(PasswordManager aPasswordManager, Panel panel)
         {
             InitializeComponent();
@@ -30,24 +24,17 @@ namespace PasswordsManagerUserInterface
             Form = new UserPasswordPairForm(PasswordManager);
             pnlAddUserPasswordPair.Controls.Add(Form);
         }
+
         private void btnAccept_Click_1(object sender, EventArgs e)
         {
             try
             {
                 AddPassword();
             }
-            catch (ExceptionExistingUserPasswordPair exception)
+            catch (Exception ex) when (ex is ExceptionExistingUserPasswordPair || ex is ExceptionIncorrectLength)
             {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch (ExceptionIncorrectLength exception)
-            {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        private void btnBack_Click(object sender, EventArgs e)
-        {
-            GoBack();
         }
 
         public void AddPassword()
@@ -71,7 +58,6 @@ namespace PasswordsManagerUserInterface
             string username = Form.GetUsername();
             string password = Form.GetPassword();
             string notes = Form.GetNotes();
-
             UserPasswordPair userPasswordPair = new UserPasswordPair()
             {
                 Category = category,
@@ -80,7 +66,6 @@ namespace PasswordsManagerUserInterface
                 Password = password,
                 Notes = notes
             };
-
             return userPasswordPair;
         }
 
@@ -91,11 +76,9 @@ namespace PasswordsManagerUserInterface
             PnlMainWindow.Controls.Add(passwords);
         }
 
-        private void btnMenu_Click(object sender, EventArgs e)
+        private void btnBack_Click(object sender, EventArgs e)
         {
-            PnlMainWindow.Controls.Clear();
-            UserControl menu = new Menu(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(menu);
+            GoBack();
         }
     }
 }

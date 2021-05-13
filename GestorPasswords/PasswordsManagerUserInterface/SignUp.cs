@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GestorPasswordsDominio;
 
@@ -15,6 +8,7 @@ namespace PasswordsManagerUserInterface
     {
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
+
         public SignUp(PasswordManager passwordManager, Panel panel)
         {
             InitializeComponent();
@@ -37,6 +31,7 @@ namespace PasswordsManagerUserInterface
                 MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void UserSignUp()
         {
             User newUser = CreateUser();
@@ -53,21 +48,17 @@ namespace PasswordsManagerUserInterface
             {
                 MessageBox.Show("Wrong password", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            LoadApplication();
         }
 
         private User CreateUser()
         {
             string username = txtUsername.Text;
             string masterPassword = txtPassword.Text;
-
             User newUser = new User()
             {
                 Name = username,
                 MasterPassword = masterPassword,
             };
-
             return newUser;
         }
 

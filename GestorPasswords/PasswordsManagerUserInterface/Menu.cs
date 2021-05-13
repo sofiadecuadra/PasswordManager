@@ -47,7 +47,7 @@ namespace PasswordsManagerUserInterface
         private void btnChangeMasterPassword_Click(object sender, EventArgs e)
         {
             PnlMainWindow.Controls.Clear();
-            UserControl changeMasterPasswords = new ChangeMasterPasswords(PasswordManager, PnlMainWindow);
+            UserControl changeMasterPasswords = new ChangeMasterPassword(PasswordManager, PnlMainWindow);
             PnlMainWindow.Controls.Add(changeMasterPasswords);
         }
 

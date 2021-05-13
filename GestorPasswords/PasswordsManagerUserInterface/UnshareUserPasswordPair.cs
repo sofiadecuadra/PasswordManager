@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GestorPasswordsDominio;
 
@@ -16,6 +9,7 @@ namespace PasswordsManagerUserInterface
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public UserPasswordPair PasswordToUnshare { get; private set; }
+
         public UnshareUserPasswordPair(PasswordManager aPasswordManager, Panel panel, UserPasswordPair password)
         {
             InitializeComponent();
@@ -28,11 +22,15 @@ namespace PasswordsManagerUserInterface
         private void LoadUsers()
         {
             var users = PasswordToUnshare.GetUsersWithAccessArray();
-
             foreach (var user in users)
             {
                 comboUsers.Items.Add(user.Name);
             }
+            SetDefaultUser(users);
+        }
+
+        private void SetDefaultUser(User[] users)
+        {
             if (users.Length > 0)
             {
                 comboUsers.SelectedIndex = 0;
@@ -43,16 +41,19 @@ namespace PasswordsManagerUserInterface
         {
             try
             {
-                string userToUnshare = comboUsers.Text;
-                PasswordManager.UnsharePassword(PasswordToUnshare, userToUnshare);
-                GoBackToPasswordView();
+                Unshare();
             }
             catch (ExceptionUserDoesNotExist anException)
             {
-
                 MessageBox.Show(anException.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
             }
+        }
+
+        private void Unshare()
+        {
+            string userToUnshare = comboUsers.Text;
+            PasswordManager.UnsharePassword(PasswordToUnshare, userToUnshare);
+            GoBackToPasswordView();
         }
 
         private void GoBackToPasswordView()

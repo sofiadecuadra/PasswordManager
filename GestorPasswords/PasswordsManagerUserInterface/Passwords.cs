@@ -1,7 +1,7 @@
-﻿using System;
+﻿using GestorPasswordsDominio;
+using System;
 using System.Linq;
 using System.Windows.Forms;
-using GestorPasswordsDominio;
 
 namespace PasswordsManagerUserInterface
 {
@@ -187,7 +187,7 @@ namespace PasswordsManagerUserInterface
             UserControl modifyUserPasswordPairControl = new ModifyUserPasswordPair(PasswordManager, PnlMainWindow, selected);
             PnlMainWindow.Controls.Add(modifyUserPasswordPairControl);
         }
-        
+
         private void btnShare_Click(object sender, EventArgs e)
         {
             try
