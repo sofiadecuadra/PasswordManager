@@ -22,7 +22,7 @@ namespace DataManagerDomain
             get { return name; }
             set { name = ValidUserName(value.Trim()); }
         }
-        public SpecialCategory SharedPasswords { get; private set; }
+        private SpecialCategory sharedPasswords;
         private SortedList<string, NormalCategory> categories;
         private List<UserPasswordPair> redUserPasswordPairs;
         private List<UserPasswordPair> orangeUserPasswordPairs;
@@ -38,7 +38,7 @@ namespace DataManagerDomain
             yellowUserPasswordPairs = new List<UserPasswordPair>();
             lightGreenUserPasswordPairs = new List<UserPasswordPair>();
             darkGreenUserPasswordPairs = new List<UserPasswordPair>();
-            SharedPasswords = new SpecialCategory()
+            sharedPasswords = new SpecialCategory()
             {
                 User = this,
             };
@@ -410,22 +410,22 @@ namespace DataManagerDomain
 
         public UserPasswordPair[] GetSharedUserPasswordPairs()
         {
-            return SharedPasswords.GetUserPasswordsPairs();
+            return sharedPasswords.GetUserPasswordsPairs();
         }
 
         internal void AddSharedUserPasswordPair(UserPasswordPair passwordToShare)
         {
-            SharedPasswords.AddUserPasswordPair(passwordToShare);
+            sharedPasswords.AddUserPasswordPair(passwordToShare);
         }
 
         internal void UnshareUserPasswordPair(UserPasswordPair passwordToStopSharing)
         {
-            SharedPasswords.RemoveUserPasswordPair(passwordToStopSharing);
+            sharedPasswords.RemoveUserPasswordPair(passwordToStopSharing);
         }
 
         public bool HasSharedPasswordOf(string username, string site)
         {
-            return SharedPasswords.UserPasswordPairAlredyExistsInCategory(username, site);
+            return sharedPasswords.UserPasswordPairAlredyExistsInCategory(username, site);
         }
 
         public UserPasswordPair FindUserPasswordPair(string username, string site)
