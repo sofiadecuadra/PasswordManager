@@ -8,6 +8,7 @@ namespace PasswordsManagerUserInterface
     {
         public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
+
         public Menu(DataManager aPasswordManager, Panel panel)
         {
             InitializeComponent();

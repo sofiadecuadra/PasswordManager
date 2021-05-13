@@ -9,6 +9,7 @@ namespace PasswordsManagerUserInterface
         private const string ERROR_MESSAGE = "An error has occurred";
         public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
+
         public Categories(DataManager aPasswordManager, Panel aPanel)
         {
             InitializeComponent();
@@ -19,14 +20,23 @@ namespace PasswordsManagerUserInterface
 
         private void LoadDataGridViewData()
         {
+            SetColumnsQuantity();
+            SetNameColumn();
+            dgvCategories.DataSource = GetCategories();
+        }
+
+        private void SetColumnsQuantity()
+        {
             dgvCategories.AutoGenerateColumns = false;
             dgvCategories.ColumnCount = 1;
+        }
+
+        private void SetNameColumn()
+        {
             dgvCategories.Columns[0].Name = "Categories";
             dgvCategories.Columns[0].HeaderText = "Categories";
             dgvCategories.Columns[0].DataPropertyName = "Name";
             dgvCategories.Columns[0].Width = 215;
-
-            dgvCategories.DataSource = GetCategories();
         }
 
         private NormalCategory [] GetCategories()

@@ -10,6 +10,7 @@ namespace PasswordsManagerUserInterface
         public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public CategoryForm Form { get; private set; }
+
         public AddCategory(DataManager aPasswordManager, Panel aPanel)
         {
             InitializeComponent();

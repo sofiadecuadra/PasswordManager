@@ -10,6 +10,7 @@ namespace PasswordsManagerUserInterface
         public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public CreditCardForm Form { get; private set; }
+
         public AddCreditCard(DataManager aPasswordManager, Panel aPanel)
         {
             InitializeComponent();
@@ -45,7 +46,7 @@ namespace PasswordsManagerUserInterface
 
         private void AddNewCreditCard()
         {
-            if (Form.GetCategory() != null)
+            if (CategorySelectedIsValid())
             {
                 CreditCard newCreditCard = CreateCreditCard();
                 newCreditCard.Category.AddCreditCard(newCreditCard);
@@ -55,6 +56,11 @@ namespace PasswordsManagerUserInterface
             {
                 MessageBox.Show("The category cannot be null \n To add a category go to Menu -> Categories -> Add", ERROR_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private bool CategorySelectedIsValid()
+        {
+            return Form.GetCategory() != null;
         }
 
         private void ShowMessageBox(Exception exception)
