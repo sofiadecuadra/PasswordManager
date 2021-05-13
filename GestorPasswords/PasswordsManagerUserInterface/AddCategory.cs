@@ -7,10 +7,10 @@ namespace PasswordsManagerUserInterface
     public partial class AddCategory : UserControl
     {
         private const string ERROR_MESSAGE = "An error has occurred";
-        public PasswordManager PasswordManager { get; private set; }
+        public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public CategoryForm Form { get; private set; }
-        public AddCategory(PasswordManager aPasswordManager, Panel aPanel)
+        public AddCategory(DataManager aPasswordManager, Panel aPanel)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;

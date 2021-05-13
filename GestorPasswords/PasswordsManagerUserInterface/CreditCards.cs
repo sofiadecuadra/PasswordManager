@@ -7,10 +7,10 @@ namespace PasswordsManagerUserInterface
     public partial class CreditCards : UserControl
     {
         private const string ERROR_MESSAGE = "An error has occurred";
-        public PasswordManager PasswordManager { get; private set; }
+        public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         private readonly DataGridViewButtonColumn fullView;
-        public CreditCards(PasswordManager aPasswordManager, Panel aPanel)
+        public CreditCards(DataManager aPasswordManager, Panel aPanel)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;

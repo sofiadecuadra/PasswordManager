@@ -6,12 +6,12 @@ namespace PasswordsManagerUserInterface
 {
     public partial class PasswordsStrengthReportTable : UserControl
     {
-        public PasswordManager PasswordManager { get; private set; }
+        public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         private readonly DataGridViewButtonColumn seeList;
         Tuple<PasswordStrengthType, int>[] passwordsReportData;
 
-        public PasswordsStrengthReportTable(PasswordManager aPasswordManager, Panel panel)
+        public PasswordsStrengthReportTable(DataManager aPasswordManager, Panel panel)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;

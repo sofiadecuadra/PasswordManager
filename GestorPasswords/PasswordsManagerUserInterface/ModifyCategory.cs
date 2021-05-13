@@ -7,11 +7,11 @@ namespace PasswordsManagerUserInterface
     public partial class ModifyCategory : UserControl
     {
         private const string ERROR_MESSAGE = "An error has occurred";
-        public PasswordManager PasswordManager { get; private set; }
+        public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public CategoryForm Form { get; private set; }
         public NormalCategory CategoryToModify { get; private set; }
-        public ModifyCategory(PasswordManager aPasswordManager, Panel aPanel, NormalCategory aCategory)
+        public ModifyCategory(DataManager aPasswordManager, Panel aPanel, NormalCategory aCategory)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;

@@ -6,9 +6,9 @@ namespace PasswordsManagerUserInterface
 {
     public partial class Menu : UserControl
     {
-        public PasswordManager PasswordManager { get; private set; }
+        public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
-        public Menu(PasswordManager aPasswordManager, Panel panel)
+        public Menu(DataManager aPasswordManager, Panel panel)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;

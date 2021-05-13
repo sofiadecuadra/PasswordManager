@@ -5,11 +5,11 @@ namespace PasswordsManagerUserInterface
 {
     public partial class MainWindow : Form
     {
-        public PasswordManager PasswordManager { get; private set; }
+        public DataManager PasswordManager { get; private set; }
         public MainWindow()
         {
             InitializeComponent();
-            PasswordManager = new PasswordManager();
+            PasswordManager = new DataManager();
             LoadLogInUserControl();
         }
 

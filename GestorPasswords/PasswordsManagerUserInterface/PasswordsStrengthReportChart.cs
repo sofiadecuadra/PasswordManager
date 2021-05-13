@@ -6,10 +6,10 @@ namespace PasswordsManagerUserInterface
 {
     public partial class PasswordsStrengthReportChart : UserControl
     {
-        public PasswordManager PasswordManager { get; private set; }
+        public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
 
-        public PasswordsStrengthReportChart(PasswordManager aPasswordManager, Panel panel)
+        public PasswordsStrengthReportChart(DataManager aPasswordManager, Panel panel)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;

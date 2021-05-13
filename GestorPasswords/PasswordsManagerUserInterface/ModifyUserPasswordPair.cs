@@ -6,12 +6,12 @@ namespace PasswordsManagerUserInterface
 {
     public partial class ModifyUserPasswordPair : UserControl
     {
-        public PasswordManager PasswordManager { get; private set; }
+        public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public UserPasswordPairForm Form { get; private set; }
         public UserPasswordPair PasswordToModified { get; private set; }
 
-        public ModifyUserPasswordPair(PasswordManager aPasswordManager, Panel panel, UserPasswordPair password)
+        public ModifyUserPasswordPair(DataManager aPasswordManager, Panel panel, UserPasswordPair password)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;

@@ -6,11 +6,11 @@ namespace PasswordsManagerUserInterface
 {
     public partial class ShareUserPasswordPair : UserControl
     {
-        public PasswordManager PasswordManager { get; private set; }
+        public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public UserPasswordPair PasswordToShare { get; private set; }
 
-        public ShareUserPasswordPair(PasswordManager aPasswordManager, Panel panel, UserPasswordPair password)
+        public ShareUserPasswordPair(DataManager aPasswordManager, Panel panel, UserPasswordPair password)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;

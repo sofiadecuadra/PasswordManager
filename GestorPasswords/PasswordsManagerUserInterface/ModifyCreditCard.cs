@@ -7,11 +7,11 @@ namespace PasswordsManagerUserInterface
     public partial class ModifyCreditCard : UserControl
     {
         private const string ERROR_MESSAGE = "An error has occurred";
-        public PasswordManager PasswordManager { get; private set; }
+        public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public CreditCardForm Form { get; private set; }
         public CreditCard CreditCardToModify { get; private set; }
-        public ModifyCreditCard(PasswordManager aPasswordManager, Panel aPanel, CreditCard aCreditCard)
+        public ModifyCreditCard(DataManager aPasswordManager, Panel aPanel, CreditCard aCreditCard)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;

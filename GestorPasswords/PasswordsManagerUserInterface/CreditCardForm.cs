@@ -6,8 +6,8 @@ namespace PasswordsManagerUserInterface
 {
     public partial class CreditCardForm : UserControl
     {
-        public PasswordManager PasswordManager { get; private set; }
-        public CreditCardForm(PasswordManager aPasswordManager)
+        public DataManager PasswordManager { get; private set; }
+        public CreditCardForm(DataManager aPasswordManager)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
@@ -15,7 +15,7 @@ namespace PasswordsManagerUserInterface
             SetMinExpirationDate();
         }
 
-        public CreditCardForm(PasswordManager aPasswordManager, CreditCard aCreditCard)
+        public CreditCardForm(DataManager aPasswordManager, CreditCard aCreditCard)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;

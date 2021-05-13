@@ -7,12 +7,12 @@ namespace PasswordsManagerUserInterface
 {
     public partial class Passwords : UserControl
     {
-        public PasswordManager PasswordManager { get; private set; }
+        public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         private readonly DataGridViewButtonColumn fullViewNormalPasswords;
         private readonly DataGridViewButtonColumn fullViewSharedPasswords;
 
-        public Passwords(PasswordManager aPasswordManager, Panel panel)
+        public Passwords(DataManager aPasswordManager, Panel panel)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;

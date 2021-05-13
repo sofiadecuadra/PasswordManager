@@ -6,12 +6,12 @@ namespace PasswordsManagerUserInterface
 {
     public partial class PasswordsReportPasswordsList : UserControl
     {
-        public PasswordManager PasswordManager { get; private set; }
+        public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         private readonly DataGridViewButtonColumn fullViewPasswords;
         private PasswordStrengthType color;
 
-        public PasswordsReportPasswordsList(PasswordManager passwordManager, Panel panel, PasswordStrengthType aColor)
+        public PasswordsReportPasswordsList(DataManager passwordManager, Panel panel, PasswordStrengthType aColor)
         {
             InitializeComponent();
             PasswordManager = passwordManager;

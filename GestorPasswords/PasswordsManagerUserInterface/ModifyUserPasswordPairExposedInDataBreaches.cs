@@ -6,13 +6,13 @@ namespace PasswordsManagerUserInterface
 {
     public partial class ModifyUserPasswordPairExposedInDataBreaches : UserControl
     {
-        public PasswordManager PasswordManager { get; private set; }
+        public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public UserPasswordPairForm Form { get; private set; }
         public UserPasswordPair PasswordToModify { get; private set; }
         public IDataBreachesFormatter DataBreaches { get; private set; }
 
-        public ModifyUserPasswordPairExposedInDataBreaches(PasswordManager aPasswordManager, Panel panel, UserPasswordPair password, IDataBreachesFormatter dataBreaches)
+        public ModifyUserPasswordPairExposedInDataBreaches(DataManager aPasswordManager, Panel panel, UserPasswordPair password, IDataBreachesFormatter dataBreaches)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
