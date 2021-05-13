@@ -11,20 +11,20 @@ namespace PasswordsManagerUserInterface
         public Panel PnlMainWindow { get; private set; }
         public CreditCardForm Form { get; private set; }
         public CreditCard CreditCardToModify { get; private set; }
-        public ModifyCreditCard(PasswordManager aPasswordManager, Panel panel, CreditCard aCreditCard)
+        public ModifyCreditCard(PasswordManager aPasswordManager, Panel aPanel, CreditCard aCreditCard)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
-            PnlMainWindow = panel;
+            PnlMainWindow = aPanel;
             CreditCardToModify = aCreditCard;
             LoadCreditCardForm(aCreditCard);
         }
 
         private void LoadCreditCardForm(CreditCard creditCardToModify)
         {
-            pnlModifyCreditCard.Controls.Clear();
+            ClearControls();
             Form = new CreditCardForm(PasswordManager, creditCardToModify);
-            pnlModifyCreditCard.Controls.Add(Form);
+            AddUserControl(Form);
         }
 
         private void btnAccept_Click(object sender, EventArgs e)
@@ -47,6 +47,13 @@ namespace PasswordsManagerUserInterface
 
         private void ModifyCreditCard_()
         {
+            CreditCard modifiedCreditCard = CreateCreditCard();
+            CreditCardToModify.Category.ModifyCreditCard(CreditCardToModify, modifiedCreditCard);
+            GoBack();
+        }
+
+        private CreditCard CreateCreditCard()
+        {
             CreditCard modifiedCreditCard = new CreditCard()
             {
                 Category = Form.GetCategory(),
@@ -57,8 +64,7 @@ namespace PasswordsManagerUserInterface
                 ExpirationDate = Form.GetExpirationDate(),
                 Notes = Form.GetNotes()
             };
-            CreditCardToModify.Category.ModifyCreditCard(CreditCardToModify, modifiedCreditCard);
-            GoBack();
+            return modifiedCreditCard;
         }
 
         private void ShowMessageBox(Exception exception)
@@ -73,9 +79,19 @@ namespace PasswordsManagerUserInterface
 
         private void GoBack()
         {
-            PnlMainWindow.Controls.Clear();
+            ClearControls();
             UserControl creditCards = new CreditCards(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(creditCards);
+            AddUserControl(creditCards);
+        }
+
+        private void ClearControls()
+        {
+            PnlMainWindow.Controls.Clear();
+        }
+
+        private void AddUserControl(UserControl aUserControl)
+        {
+            PnlMainWindow.Controls.Add(aUserControl);
         }
     }
 }
