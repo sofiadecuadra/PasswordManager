@@ -5,7 +5,7 @@ namespace DataManagerDomain
 {
     public class UserPasswordPair
     {
-        public string password;
+        private string password;
         public string Password
         {
             get { return password; }

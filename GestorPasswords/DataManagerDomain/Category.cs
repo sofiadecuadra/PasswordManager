@@ -40,13 +40,13 @@ namespace DataManagerDomain
             userPasswordPairs.Remove($"{aUserPasswordPair.Site}{ aUserPasswordPair.Username}");
         }
 
-        public abstract bool AddUserPasswordPair(UserPasswordPair aUserPasswordPair);
-
-        public abstract bool RemoveUserPasswordPair(UserPasswordPair aUserPasswordPair);
-
         public bool UserPasswordPairAlredyExistsInCategory(string username, string site)
         {
             return userPasswordPairs.ContainsKey(site + username);
         }
+
+        public abstract bool AddUserPasswordPair(UserPasswordPair aUserPasswordPair);
+
+        public abstract bool RemoveUserPasswordPair(UserPasswordPair aUserPasswordPair);
     }
 }

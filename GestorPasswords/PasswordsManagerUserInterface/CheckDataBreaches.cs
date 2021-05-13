@@ -8,6 +8,7 @@ namespace PasswordsManagerUserInterface
     {
         public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
+
         public CheckDataBreaches(DataManager aPasswordManager, Panel aPanel)
         {
             InitializeComponent();

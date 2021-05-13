@@ -11,6 +11,7 @@ namespace PasswordsManagerUserInterface
         public Panel PnlMainWindow { get; private set; }
         public CategoryForm Form { get; private set; }
         public NormalCategory CategoryToModify { get; private set; }
+
         public ModifyCategory(DataManager aPasswordManager, Panel aPanel, NormalCategory aCategory)
         {
             InitializeComponent();

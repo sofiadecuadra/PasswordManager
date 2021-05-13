@@ -46,7 +46,7 @@ namespace DataManagerDomain
 
         private static string ValidMasterPassword(string password)
         {
-            if (!isBetween5And25Characters(password))
+            if (!IsBetween5And25Characters(password))
             {
                 string errorMessage = $"The password should be between 5 and 25 characters but is: {password.Length} charachterslong";
                 throw new ExceptionIncorrectLength(errorMessage);
@@ -54,7 +54,7 @@ namespace DataManagerDomain
             return password;
         }
 
-        private static bool isBetween5And25Characters(string value)
+        private static bool IsBetween5And25Characters(string value)
         {
             return value.Length >= 5 && value.Length <= 25;
         }
@@ -68,7 +68,7 @@ namespace DataManagerDomain
 
         private static void CheckUsernameLength(string value)
         {
-            if (!isBetween5And25Characters(value))
+            if (!IsBetween5And25Characters(value))
             {
                 string errorMessage = $"The provided user name should be between 5 and 25 characters but is: {value.Length} charachterslong";
                 throw new ExceptionIncorrectLength(errorMessage);
@@ -92,13 +92,11 @@ namespace DataManagerDomain
         public Tuple<PasswordStrengthType, int>[] GetPasswordsStrengthReport()
         {
             List<Tuple<PasswordStrengthType, int>> listWithStrengthReport = new List<Tuple<PasswordStrengthType, int>>();
-
             AddRedPasswordsStrengthReport(listWithStrengthReport);
             AddOrangePasswordsStrengthReport(listWithStrengthReport);
             AddYellowPasswordsStrengthReport(listWithStrengthReport);
             AddLightGreenPasswordsStrengthReport(listWithStrengthReport);
             AddDarkGreenPasswordsStrengthReport(listWithStrengthReport);
-
             return listWithStrengthReport.ToArray();
         }
 
@@ -130,7 +128,6 @@ namespace DataManagerDomain
         public UserPasswordPair[] GetUserPasswordPairsOfASpecificColor(PasswordStrengthType aColorGroup)
         {
             UserPasswordPair[] arrayToReturn = new UserPasswordPair[1];
-
             if (aColorGroup == PasswordStrengthType.Red)
             {
                 arrayToReturn = GetRedUserPasswordPairs();
@@ -151,7 +148,6 @@ namespace DataManagerDomain
             {
                 arrayToReturn = GetDarkGreenUserPasswordPairs();
             }
-
             return arrayToReturn;
         }
 
