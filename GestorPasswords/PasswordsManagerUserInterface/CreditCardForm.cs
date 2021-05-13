@@ -42,7 +42,12 @@ namespace PasswordsManagerUserInterface
 
         private void LoadCategories()
         {
-            cbCategory.DataSource = PasswordManager.CurrentUser.GetCategories();
+            cbCategory.DataSource = GetCategories();
+        }
+
+        private Category [] GetCategories()
+        {
+            return PasswordManager.CurrentUser.GetCategories();
         }
 
         public NormalCategory GetCategory()
