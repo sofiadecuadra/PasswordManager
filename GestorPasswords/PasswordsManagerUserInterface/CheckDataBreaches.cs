@@ -8,11 +8,11 @@ namespace PasswordsManagerUserInterface
     {
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
-        public CheckDataBreaches(PasswordManager aPasswordManager, Panel panel)
+        public CheckDataBreaches(PasswordManager aPasswordManager, Panel aPanel)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
-            PnlMainWindow = panel;
+            PnlMainWindow = aPanel;
         }
 
         private void btnCheck_Click(object sender, EventArgs e)
@@ -27,16 +27,26 @@ namespace PasswordsManagerUserInterface
 
         private void LoadDataBreachesResult(IDataBreachesFormatter dataBreaches)
         {
-            PnlMainWindow.Controls.Clear();
+            ClearControls();
             UserControl dataBreachesResult = new DataBreachesResult(PasswordManager, PnlMainWindow, dataBreaches);
-            PnlMainWindow.Controls.Add(dataBreachesResult);
+            AddUserControl(dataBreachesResult);
         }
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            PnlMainWindow.Controls.Clear();
+            ClearControls();
             UserControl menu = new Menu(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(menu);
+            AddUserControl(menu);
+        }
+
+        private void ClearControls()
+        {
+            PnlMainWindow.Controls.Clear();
+        }
+
+        private void AddUserControl(UserControl aUserControl)
+        {
+            PnlMainWindow.Controls.Add(aUserControl);
         }
     }
 }
