@@ -6,10 +6,10 @@ namespace PasswordsManagerUserInterface
 {
     public partial class SignUp : UserControl
     {
-        public PasswordManager PasswordManager { get; private set; }
+        public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
 
-        public SignUp(PasswordManager passwordManager, Panel panel)
+        public SignUp(DataManager passwordManager, Panel panel)
         {
             InitializeComponent();
             PasswordManager = passwordManager;

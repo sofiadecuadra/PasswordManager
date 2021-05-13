@@ -7,13 +7,13 @@ namespace GestorPasswordsTest
     [TestClass]
     public class SystemTest
     {
-        PasswordManager _PasswordManager;
+        DataManager _PasswordManager;
         User myUser;
 
         [TestInitialize]
         public void Initialize()
         {
-            _PasswordManager = new PasswordManager();
+            _PasswordManager = new DataManager();
             myUser = new User()
             {
                 MasterPassword = "myMasterPassword123$",

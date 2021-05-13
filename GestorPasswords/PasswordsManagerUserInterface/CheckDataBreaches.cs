@@ -6,9 +6,9 @@ namespace PasswordsManagerUserInterface
 {
     public partial class CheckDataBreaches : UserControl
     {
-        public PasswordManager PasswordManager { get; private set; }
+        public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
-        public CheckDataBreaches(PasswordManager aPasswordManager, Panel aPanel)
+        public CheckDataBreaches(DataManager aPasswordManager, Panel aPanel)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;

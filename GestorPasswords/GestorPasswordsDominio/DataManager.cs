@@ -2,7 +2,7 @@
 
 namespace GestorPasswordsDominio
 {
-    public class PasswordManager
+    public class DataManager
     {
         private Dictionary<string, User> users;
         private User currentUser;
@@ -12,7 +12,7 @@ namespace GestorPasswordsDominio
             set { currentUser = ReturnUserIfItExists(value); }
         }
 
-        public PasswordManager()
+        public DataManager()
         {
             users = new Dictionary<string, User>();
         }

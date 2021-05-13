@@ -7,7 +7,7 @@ namespace GestorPasswordsDominio
 {
     public class User
     {
-        public string masterPassword;
+        private string masterPassword;
         public string MasterPassword
         {
             get { return masterPassword; }

@@ -7,11 +7,11 @@ namespace PasswordsManagerUserInterface
 {
     public partial class DataBreachesResult : UserControl
     {
-        public PasswordManager PasswordManager { get; private set; }
+        public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public IDataBreachesFormatter DataBreaches { get; private set; }
         private readonly DataGridViewButtonColumn modifyExposedPassword;
-        public DataBreachesResult(PasswordManager aPasswordManager, Panel aPanel, IDataBreachesFormatter dataBreaches)
+        public DataBreachesResult(DataManager aPasswordManager, Panel aPanel, IDataBreachesFormatter dataBreaches)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;

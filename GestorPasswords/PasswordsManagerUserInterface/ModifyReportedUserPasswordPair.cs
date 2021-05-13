@@ -6,13 +6,13 @@ namespace PasswordsManagerUserInterface
 {
     public partial class ModifyReportedUserPasswordPair : UserControl
     {
-        public PasswordManager PasswordManager { get; private set; }
+        public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public UserPasswordPairForm Form { get; private set; }
         public UserPasswordPair PasswordToModified { get; private set; }
         public PasswordStrengthType passwordColor;
 
-        public ModifyReportedUserPasswordPair(PasswordManager aPasswordManager, Panel panel, UserPasswordPair password, PasswordStrengthType color)
+        public ModifyReportedUserPasswordPair(DataManager aPasswordManager, Panel panel, UserPasswordPair password, PasswordStrengthType color)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
