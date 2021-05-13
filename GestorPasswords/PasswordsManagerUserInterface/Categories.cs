@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GestorPasswordsDominio;
 
@@ -13,6 +6,7 @@ namespace PasswordsManagerUserInterface
 {
     public partial class Categories : UserControl
     {
+        private const string ERROR_MESSAGE = "An error has occurred";
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public Categories(PasswordManager aPasswordManager, Panel panel)
@@ -31,14 +25,8 @@ namespace PasswordsManagerUserInterface
             dgvCategories.Columns[0].HeaderText = "Categories";
             dgvCategories.Columns[0].DataPropertyName = "Name";
             dgvCategories.Columns[0].Width = 215;
-            dgvCategories.DataSource = PasswordManager.CurrentUser.GetCategories();
-        }
 
-        private void btnBack_Click(object sender, EventArgs e)
-        {
-            PnlMainWindow.Controls.Clear();
-            UserControl menu = new Menu(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(menu);
+            dgvCategories.DataSource = PasswordManager.CurrentUser.GetCategories();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -56,7 +44,7 @@ namespace PasswordsManagerUserInterface
             }
             catch (ArgumentOutOfRangeException)
             {
-                MessageBox.Show("Please, choose a category to modify", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please, choose a category to modify", ERROR_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -66,6 +54,13 @@ namespace PasswordsManagerUserInterface
             PnlMainWindow.Controls.Clear();
             UserControl modifyCategory = new ModifyCategory(PasswordManager, PnlMainWindow, selected);
             PnlMainWindow.Controls.Add(modifyCategory);
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            PnlMainWindow.Controls.Clear();
+            UserControl menu = new Menu(PasswordManager, PnlMainWindow);
+            PnlMainWindow.Controls.Add(menu);
         }
     }
 }

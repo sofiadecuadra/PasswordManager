@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GestorPasswordsDominio;
 
@@ -13,24 +6,24 @@ namespace PasswordsManagerUserInterface
 {
     public partial class ModifyCategory : UserControl
     {
+        private const string ERROR_MESSAGE = "An error has occurred";
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public CategoryForm Form { get; private set; }
-        public NormalCategory CategoryToModified { get; private set; }
-
-        public ModifyCategory(PasswordManager aPasswordManager, Panel panel, NormalCategory category)
+        public NormalCategory CategoryToModify { get; private set; }
+        public ModifyCategory(PasswordManager aPasswordManager, Panel panel, NormalCategory aCategory)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
             PnlMainWindow = panel;
-            CategoryToModified = category;
-            LoadCategoryForm(category);
+            CategoryToModify = aCategory;
+            LoadCategoryForm(aCategory);
         }
 
         private void LoadCategoryForm(NormalCategory categoryToModified)
         {
             pnlAddCategory.Controls.Clear();
-            Form = new CategoryForm(PasswordManager, categoryToModified);
+            Form = new CategoryForm(categoryToModified);
             pnlAddCategory.Controls.Add(Form);
         }
 
@@ -40,25 +33,26 @@ namespace PasswordsManagerUserInterface
             {
                 ModifyCategory_();
             }
-            catch (ExceptionCategoryNotExists)
+            catch (Exception exception) when (
+                exception is ExceptionCategoryNotExists
+                || exception is ExceptionIncorrectLength
+                || exception is ExceptionCategoryAlreadyExists
+            )
             {
-                MessageBox.Show("The category does not exist", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (ExceptionIncorrectLength exception)
-            {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (ExceptionCategoryAlreadyExists exception)
-            {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowMessageBox(exception);
             }
         }
 
         private void ModifyCategory_()
         {
             string newName = Form.GetName();
-            PasswordManager.CurrentUser.ModifyCategory(CategoryToModified, newName);
+            PasswordManager.CurrentUser.ModifyCategory(CategoryToModify, newName);
             GoBack();
+        }
+
+        private void ShowMessageBox(Exception exception)
+        {
+            MessageBox.Show(exception.Message, ERROR_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void btnBack_Click(object sender, EventArgs e)
