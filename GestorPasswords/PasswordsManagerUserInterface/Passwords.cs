@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+﻿using GestorPasswordsDominio;
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using GestorPasswordsDominio;
 
 namespace PasswordsManagerUserInterface
 {
-
     public partial class Passwords : UserControl
     {
         public PasswordManager PasswordManager { get; private set; }
@@ -30,85 +23,23 @@ namespace PasswordsManagerUserInterface
             LoadSharedPasswords();
         }
 
-        private void LoadDataGridSharedPasswords(UserPasswordPair[] userPasswordPairs)
-        {
-            dgvSharedPasswords.AutoGenerateColumns = false;
-            dgvSharedPasswords.ColumnCount = 4;
-            dgvSharedPasswords.Columns[0].Name = "Category";
-            dgvSharedPasswords.Columns[0].HeaderText = "Category";
-            dgvSharedPasswords.Columns[0].DefaultCellStyle.NullValue = "Shared Passwords";
-            dgvSharedPasswords.Columns[0].Width = 135;
-
-            dgvSharedPasswords.Columns[1].Name = "Site";
-            dgvSharedPasswords.Columns[1].HeaderText = "Site";
-            dgvSharedPasswords.Columns[1].DataPropertyName = "Site";
-            dgvSharedPasswords.Columns[1].Width = 215;
-
-            dgvSharedPasswords.Columns[2].Name = "User";
-            dgvSharedPasswords.Columns[2].HeaderText = "User";
-            dgvSharedPasswords.Columns[2].DataPropertyName = "Username";
-            dgvSharedPasswords.Columns[2].Width = 215;
-
-            dgvSharedPasswords.Columns[3].Name = "LastModified";
-            dgvSharedPasswords.Columns[3].HeaderText = "Last Modified";
-            dgvSharedPasswords.Columns[3].DataPropertyName = "LastModifiedDate";
-            dgvSharedPasswords.Columns[3].DefaultCellStyle.Format = "dd/MM/yyyy";
-            dgvSharedPasswords.Columns[3].Width = 70;
-
-            dgvSharedPasswords.Columns.Add(fullViewNormalPasswords);
-            fullViewNormalPasswords.HeaderText = @"";
-            fullViewNormalPasswords.Name = "Full view";
-            fullViewNormalPasswords.Text = "Full view";
-            fullViewNormalPasswords.Width = 61;
-            fullViewNormalPasswords.UseColumnTextForButtonValue = true;
-
-            dgvSharedPasswords.DataSource = userPasswordPairs;
-        }
-
-        private void LoadDataGridNormalPasswords(UserPasswordPair[] userPasswordPairs)
-        {
-            dgvPasswords.AutoGenerateColumns = false;
-            dgvPasswords.ColumnCount = 4;
-            dgvPasswords.Columns[0].Name = "Category";
-            dgvPasswords.Columns[0].HeaderText = "Category";
-            dgvPasswords.Columns[0].DataPropertyName = "Category";
-            dgvPasswords.Columns[0].Width = 135;
-
-            dgvPasswords.Columns[1].Name = "Site";
-            dgvPasswords.Columns[1].HeaderText = "Site";
-            dgvPasswords.Columns[1].DataPropertyName = "Site";
-            dgvPasswords.Columns[1].Width = 215;
-
-            dgvPasswords.Columns[2].Name = "User";
-            dgvPasswords.Columns[2].HeaderText = "User";
-            dgvPasswords.Columns[2].DataPropertyName = "Username";
-            dgvPasswords.Columns[2].Width = 215;
-
-            dgvPasswords.Columns[3].Name = "LastModified";
-            dgvPasswords.Columns[3].HeaderText = "Last Modified";
-            dgvPasswords.Columns[3].DataPropertyName = "LastModifiedDate";
-            dgvPasswords.Columns[3].DefaultCellStyle.Format = "dd/MM/yyyy";
-            dgvPasswords.Columns[3].Width = 70;
-
-            dgvPasswords.Columns.Add(fullViewSharedPasswords);
-            fullViewSharedPasswords.HeaderText = @"";
-            fullViewSharedPasswords.Name = "Full view";
-            fullViewSharedPasswords.Text = "Full view";
-            fullViewSharedPasswords.Width = 61;
-            fullViewSharedPasswords.UseColumnTextForButtonValue = true;
-
-            dgvPasswords.DataSource = userPasswordPairs;
-        }
-
         public void LoadNormalPasswords()
         {
             var userPasswordPairs = PasswordManager.
                 CurrentUser.GetUserPasswordPairs();
             LoadDataGridNormalPasswords(userPasswordPairs);
-            if (dgvPasswords.Controls.OfType<ScrollBar>().Last().Visible)
-            {
-                dgvPasswords.Width = 715;
-            }
+        }
+
+        private void LoadDataGridNormalPasswords(UserPasswordPair[] userPasswordPairs)
+        {
+            SetColumnsQuantity(dgvPasswords);
+            SetNormalCategoryColumn(dgvPasswords);
+            SetSiteColumn(dgvPasswords);
+            SetUsernameColumn(dgvPasswords);
+            SetLastModifiedColumn(dgvPasswords);
+            SetFullViewColumn(dgvPasswords, fullViewNormalPasswords);
+            dgvPasswords.DataSource = userPasswordPairs;
+            ChangeWidthWhenScrollBarIsVisible(dgvPasswords);
         }
 
         public void LoadSharedPasswords()
@@ -116,9 +47,82 @@ namespace PasswordsManagerUserInterface
             var userPasswordPairs = PasswordManager.
                 CurrentUser.GetSharedUserPasswordPairs();
             LoadDataGridSharedPasswords(userPasswordPairs);
-            if (dgvSharedPasswords.Controls.OfType<ScrollBar>().Last().Visible)
+        }
+
+        private void LoadDataGridSharedPasswords(UserPasswordPair[] userPasswordPairs)
+        {
+            SetColumnsQuantity(dgvSharedPasswords);
+            SetSharedCategoryColumn(dgvSharedPasswords);
+            SetSiteColumn(dgvSharedPasswords);
+            SetUsernameColumn(dgvSharedPasswords);
+            SetLastModifiedColumn(dgvSharedPasswords);
+            SetFullViewColumn(dgvSharedPasswords, fullViewSharedPasswords);
+            dgvSharedPasswords.DataSource = userPasswordPairs;
+            ChangeWidthWhenScrollBarIsVisible(dgvSharedPasswords);
+        }
+
+        private void SetColumnsQuantity(DataGridView dgv)
+        {
+            dgv.AutoGenerateColumns = false;
+            dgv.ColumnCount = 4;
+        }
+
+        private void SetNormalCategoryColumn(DataGridView dgv)
+        {
+            dgv.Columns[0].Name = "Category";
+            dgv.Columns[0].HeaderText = "Category";
+            dgv.Columns[0].DataPropertyName = "Category";
+            dgv.Columns[0].Width = 135;
+        }
+
+        private void SetSharedCategoryColumn(DataGridView dgv)
+        {
+            dgv.Columns[0].Name = "Category";
+            dgv.Columns[0].HeaderText = "Category";
+            dgv.Columns[0].DefaultCellStyle.NullValue = "Passwords shared with me";
+            dgv.Columns[0].Width = 135;
+        }
+
+        private void SetSiteColumn(DataGridView dgv)
+        {
+            dgv.Columns[1].Name = "Site";
+            dgv.Columns[1].HeaderText = "Site";
+            dgv.Columns[1].DataPropertyName = "Site";
+            dgv.Columns[1].Width = 215;
+        }
+
+        private void SetUsernameColumn(DataGridView dgv)
+        {
+            dgv.Columns[2].Name = "User";
+            dgv.Columns[2].HeaderText = "User";
+            dgv.Columns[2].DataPropertyName = "Username";
+            dgv.Columns[2].Width = 215;
+        }
+
+        private void SetLastModifiedColumn(DataGridView dgv)
+        {
+            dgv.Columns[3].Name = "LastModified";
+            dgv.Columns[3].HeaderText = "Last Modified";
+            dgv.Columns[3].DataPropertyName = "LastModifiedDate";
+            dgv.Columns[3].DefaultCellStyle.Format = "dd/MM/yyyy";
+            dgv.Columns[3].Width = 70;
+        }
+
+        private void SetFullViewColumn(DataGridView dgv, DataGridViewButtonColumn buttonColumn)
+        {
+            dgv.Columns.Add(buttonColumn);
+            buttonColumn.HeaderText = @"";
+            buttonColumn.Name = "Full view";
+            buttonColumn.Text = "Full view";
+            buttonColumn.Width = 61;
+            buttonColumn.UseColumnTextForButtonValue = true;
+        }
+
+        private void ChangeWidthWhenScrollBarIsVisible(DataGridView dgv)
+        {
+            if (dgv.Controls.OfType<ScrollBar>().Last().Visible)
             {
-                dgvSharedPasswords.Width = 715;
+                dgv.Width = 715;
             }
         }
 
@@ -145,9 +149,7 @@ namespace PasswordsManagerUserInterface
         {
             try
             {
-                UserPasswordPair selected = dgvPasswords.SelectedRows[0].DataBoundItem as UserPasswordPair;
-                selected.Category.RemoveUserPasswordPair(selected);
-                dgvPasswords.DataSource = PasswordManager.CurrentUser.GetUserPasswordPairs();
+                Delete();
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -159,16 +161,18 @@ namespace PasswordsManagerUserInterface
             }
         }
 
+        private void Delete()
+        {
+            UserPasswordPair selected = dgvPasswords.SelectedRows[0].DataBoundItem as UserPasswordPair;
+            selected.Category.RemoveUserPasswordPair(selected);
+            dgvPasswords.DataSource = PasswordManager.CurrentUser.GetUserPasswordPairs();
+        }
+
         private void btnModify_Click(object sender, EventArgs e)
         {
             try
             {
-                UserPasswordPair selected = dgvPasswords.SelectedRows[0].DataBoundItem as UserPasswordPair;
-                PnlMainWindow.Controls.Clear();
-                UserControl modifyUserPasswordPairControl = new ModifyUserPasswordPair(PasswordManager, PnlMainWindow, selected);
-
-                PnlMainWindow.Controls.Add(modifyUserPasswordPairControl);
-                dgvPasswords.DataSource = PasswordManager.CurrentUser.GetUserPasswordPairs();
+                LoadModifyTab();
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -176,24 +180,19 @@ namespace PasswordsManagerUserInterface
             }
         }
 
-        private void dgvPasswords_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void LoadModifyTab()
         {
-            if (e.ColumnIndex == 4)
-            {
-                UserPasswordPair selected = dgvPasswords.Rows[e.RowIndex].DataBoundItem as UserPasswordPair;
-                PopUp30Seconds fullView = new PopUp30Seconds(selected);
-                fullView.Visible = true;
-            }
+            UserPasswordPair selected = dgvPasswords.SelectedRows[0].DataBoundItem as UserPasswordPair;
+            PnlMainWindow.Controls.Clear();
+            UserControl modifyUserPasswordPairControl = new ModifyUserPasswordPair(PasswordManager, PnlMainWindow, selected);
+            PnlMainWindow.Controls.Add(modifyUserPasswordPairControl);
         }
-        
+
         private void btnShare_Click(object sender, EventArgs e)
         {
             try
             {
-                UserPasswordPair selected = dgvPasswords.SelectedRows[0].DataBoundItem as UserPasswordPair;
-                UserControl shareUserPasswordPairControl = new ShareUserPasswordPair(PasswordManager, PnlMainWindow, selected);
-                PnlMainWindow.Controls.Clear();
-                PnlMainWindow.Controls.Add(shareUserPasswordPairControl);
+                LoadShareTab();
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -201,15 +200,19 @@ namespace PasswordsManagerUserInterface
             }
         }
 
+        private void LoadShareTab()
+        {
+            UserPasswordPair selected = dgvPasswords.SelectedRows[0].DataBoundItem as UserPasswordPair;
+            UserControl shareUserPasswordPairControl = new ShareUserPasswordPair(PasswordManager, PnlMainWindow, selected);
+            PnlMainWindow.Controls.Clear();
+            PnlMainWindow.Controls.Add(shareUserPasswordPairControl);
+        }
+
         private void btnUnshare_Click(object sender, EventArgs e)
         {
             try
             {
-                var selected = dgvPasswords.SelectedRows[0].DataBoundItem as UserPasswordPair;
-                selected.GetUsersWithAccessArray();
-                PnlMainWindow.Controls.Clear();
-                UserControl unshareUserPasswordPairControl = new UnshareUserPasswordPair(PasswordManager, PnlMainWindow, selected);
-                PnlMainWindow.Controls.Add(unshareUserPasswordPairControl);
+                LoadUnshareTab();
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -221,14 +224,13 @@ namespace PasswordsManagerUserInterface
             }
         }
 
-        private void dgvSharedPasswords_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void LoadUnshareTab()
         {
-            if (e.ColumnIndex == 4)
-            {
-                UserPasswordPair selected = dgvSharedPasswords.Rows[e.RowIndex].DataBoundItem as UserPasswordPair;
-                PopUp30Seconds fullView = new PopUp30Seconds(selected);
-                fullView.Visible = true;
-            }
+            var selected = dgvPasswords.SelectedRows[0].DataBoundItem as UserPasswordPair;
+            selected.GetUsersWithAccessArray();
+            PnlMainWindow.Controls.Clear();
+            UserControl unshareUserPasswordPairControl = new UnshareUserPasswordPair(PasswordManager, PnlMainWindow, selected);
+            PnlMainWindow.Controls.Add(unshareUserPasswordPairControl);
         }
 
         private void btnPasswordsReport_Click(object sender, EventArgs e)
@@ -238,12 +240,22 @@ namespace PasswordsManagerUserInterface
             PnlMainWindow.Controls.Add(passwordsReport);
         }
 
-        private void dgvSharedPasswords_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        private void dgvPasswords_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 4)
+            {
+                UserPasswordPair selected = dgvPasswords.Rows[e.RowIndex].DataBoundItem as UserPasswordPair;
+                PopUp30Seconds fullView = new PopUp30Seconds(selected);
+                fullView.Visible = true;
+            }
+        }
+
+        private void dgvSharedPasswords_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 4)
             {
                 UserPasswordPair selected = dgvSharedPasswords.Rows[e.RowIndex].DataBoundItem as UserPasswordPair;
-                PopUp30Seconds fullView = new PopUp30Seconds(selected);
+                PopUp30Seconds fullView = new PopUp30Seconds(selected, "Passwords shared with me");
                 fullView.Visible = true;
             }
         }

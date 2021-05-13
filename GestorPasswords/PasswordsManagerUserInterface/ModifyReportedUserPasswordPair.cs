@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GestorPasswordsDominio;
 
@@ -17,8 +10,8 @@ namespace PasswordsManagerUserInterface
         public Panel PnlMainWindow { get; private set; }
         public UserPasswordPairForm Form { get; private set; }
         public UserPasswordPair PasswordToModified { get; private set; }
-        public UserPasswordPair[] sameColorPasswords;
         public PasswordStrengthType passwordColor;
+
         public ModifyReportedUserPasswordPair(PasswordManager aPasswordManager, Panel panel, UserPasswordPair password, PasswordStrengthType color)
         {
             InitializeComponent();
@@ -42,13 +35,9 @@ namespace PasswordsManagerUserInterface
             {
                 ModifyPassword();
             }
-            catch (ExceptionExistingUserPasswordPair exception)
+            catch (Exception ex) when (ex is ExceptionExistingUserPasswordPair || ex is ExceptionIncorrectLength)
             {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (ExceptionIncorrectLength exception)
-            {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -66,7 +55,6 @@ namespace PasswordsManagerUserInterface
             string username = Form.GetUsername();
             string password = Form.GetPassword();
             string notes = Form.GetNotes();
-
             UserPasswordPair userPasswordPair = new UserPasswordPair()
             {
                 Category = category,
@@ -75,7 +63,6 @@ namespace PasswordsManagerUserInterface
                 Password = password,
                 Notes = notes
             };
-
             return userPasswordPair;
         }
 

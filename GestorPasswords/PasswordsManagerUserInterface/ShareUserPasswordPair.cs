@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GestorPasswordsDominio;
 
@@ -16,6 +9,7 @@ namespace PasswordsManagerUserInterface
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public UserPasswordPair PasswordToShare { get; private set; }
+
         public ShareUserPasswordPair(PasswordManager aPasswordManager, Panel panel, UserPasswordPair password)
         {
             InitializeComponent();
@@ -28,11 +22,11 @@ namespace PasswordsManagerUserInterface
         private void LoadUsers()
         {
             User[] users = PasswordManager.GetUsers();
-
             foreach (User user in users)
             {
                 AddUserNameToComboUsers(user);
             }
+            SetDefaultUser(users);
         }
 
         private void AddUserNameToComboUsers(User user)
@@ -40,6 +34,14 @@ namespace PasswordsManagerUserInterface
             if (NotTheCurrentUser(user))
             {
                 comboUsers.Items.Add(user.Name);
+            }
+        }
+
+        private void SetDefaultUser(User[] users)
+        {
+            if (users.Length > 1)
+            {
+                comboUsers.SelectedIndex = 0;
             }
         }
 
@@ -52,9 +54,7 @@ namespace PasswordsManagerUserInterface
         {
             try
             {
-                string userToShareWith = comboUsers.Text;
-                PasswordManager.SharePassword(PasswordToShare, userToShareWith);
-                GoBackToPasswordView();
+                Share();
             }
             catch (ExceptionUserDoesNotExist anException)
             {
@@ -64,6 +64,13 @@ namespace PasswordsManagerUserInterface
             {
                 MessageBox.Show("The password has already been shared with the selected user", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void Share()
+        {
+            string userToShareWith = comboUsers.Text;
+            PasswordManager.SharePassword(PasswordToShare, userToShareWith);
+            GoBackToPasswordView();
         }
 
         private void GoBackToPasswordView()

@@ -166,6 +166,7 @@ namespace PasswordsManagerUserInterface
             this.txtPassword.Margin = new System.Windows.Forms.Padding(2);
             this.txtPassword.MaxLength = 25;
             this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(194, 20);
             this.txtPassword.TabIndex = 29;
             // 

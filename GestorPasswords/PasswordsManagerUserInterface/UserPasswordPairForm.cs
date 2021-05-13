@@ -1,12 +1,5 @@
 ﻿using GestorPasswordsDominio;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PasswordsManagerUserInterface
@@ -14,11 +7,11 @@ namespace PasswordsManagerUserInterface
     public partial class UserPasswordPairForm : UserControl
     {
         public PasswordManager PasswordManager { get; private set; }
+
         public UserPasswordPairForm(PasswordManager aPasswordManager)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
-            txtPassword.PasswordChar = '*';
             LoadCategories();
         }
 
@@ -26,27 +19,35 @@ namespace PasswordsManagerUserInterface
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
-            txtPassword.PasswordChar = '*';
             LoadCategories();
-            comboCategory.SelectedItem = passwordToModify.Category;
-            txtSite.Text = passwordToModify.Site;
-            txtUser.Text = passwordToModify.Username;
-            txtPassword.Text = passwordToModify.Password;
-            txtNotes.Text = passwordToModify.Notes;
+            SetDefaultValues(passwordToModify);
         }
 
         private void LoadCategories()
         {
             NormalCategory[] categories = PasswordManager.CurrentUser.GetCategories();
-
             foreach (NormalCategory category in categories)
             {
                 comboCategory.Items.Add(category);
             }
+            SetDefaultCategory(categories);
+        }
+
+        private void SetDefaultCategory(NormalCategory[] categories)
+        {
             if (categories.Length > 0)
             {
                 comboCategory.SelectedIndex = 0;
             }
+        }
+
+        private void SetDefaultValues(UserPasswordPair passwordToModify)
+        {
+            comboCategory.SelectedItem = passwordToModify.Category;
+            txtSite.Text = passwordToModify.Site;
+            txtUser.Text = passwordToModify.Username;
+            txtPassword.Text = passwordToModify.Password;
+            txtNotes.Text = passwordToModify.Notes;
         }
 
         public NormalCategory GetCategory()
@@ -59,14 +60,17 @@ namespace PasswordsManagerUserInterface
         {
             return txtSite.Text.Trim();
         }
+
         public string GetUsername()
         {
             return txtUser.Text.Trim();
         }
+
         public string GetPassword()
         {
             return txtPassword.Text;
         }
+
         public string GetNotes()
         {
             return txtNotes.Text.Trim();
@@ -77,16 +81,11 @@ namespace PasswordsManagerUserInterface
             PasswordGenerationConditions conditions = CreatePasswordGenerationConditions();
             try
             {
-                string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
-                txtPassword.Text = randomPassword;
+                GenerateRandomPassword(conditions);
             }
-            catch (ExceptionIncorrectLength exception)
+            catch (Exception ex) when (ex is ExceptionIncorrectLength || ex is ExceptionIncorrectGenerationPasswordType)
             {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (ExceptionIncorrectGenerationPasswordType exception)
-            {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -101,6 +100,12 @@ namespace PasswordsManagerUserInterface
                 HasSymbols = checkBoxSymbols.Checked,
             };
             return conditions;
+        }
+
+        private void GenerateRandomPassword(PasswordGenerationConditions conditions)
+        {
+            string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
+            txtPassword.Text = randomPassword;
         }
 
         private void checkBoxShow_CheckedChanged(object sender, EventArgs e)
