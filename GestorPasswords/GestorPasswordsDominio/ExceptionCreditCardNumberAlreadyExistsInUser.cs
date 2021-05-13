@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GestorPasswordsDominio
+namespace DataManagerDomain
 {
     public class ExceptionCreditCardNumberAlreadyExistsInUser : Exception
     {

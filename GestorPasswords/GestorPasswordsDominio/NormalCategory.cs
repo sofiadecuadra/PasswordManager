@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GestorPasswordsDominio
+namespace DataManagerDomain
 {
     public class NormalCategory : Category
     {

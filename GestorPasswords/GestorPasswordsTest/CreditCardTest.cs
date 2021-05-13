@@ -1,4 +1,4 @@
-﻿using GestorPasswordsDominio;
+﻿using DataManagerDomain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 

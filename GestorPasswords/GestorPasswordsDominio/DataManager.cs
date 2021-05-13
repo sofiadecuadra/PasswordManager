@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace GestorPasswordsDominio
+namespace DataManagerDomain
 {
     public class DataManager
     {
