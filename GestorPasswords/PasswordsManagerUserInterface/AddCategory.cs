@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GestorPasswordsDominio;
 
@@ -13,6 +6,7 @@ namespace PasswordsManagerUserInterface
 {
     public partial class AddCategory : UserControl
     {
+        private const string ERROR_MESSAGE = "An error has occurred";
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public CategoryForm Form { get; private set; }
@@ -27,7 +21,7 @@ namespace PasswordsManagerUserInterface
         private void LoadCategoryForm()
         {
             pnlAddCategory.Controls.Clear();
-            Form = new CategoryForm(PasswordManager);
+            Form = new CategoryForm();
             pnlAddCategory.Controls.Add(Form);
         }
 
@@ -39,13 +33,12 @@ namespace PasswordsManagerUserInterface
             }
             catch (ExceptionIncorrectLength exception)
             {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowMessageBox(exception);
             }
             catch (ArgumentException)
             {
-                MessageBox.Show("The category already exists", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("The category already exists", ERROR_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
 
         private void AddCategory_()
@@ -65,6 +58,11 @@ namespace PasswordsManagerUserInterface
             };
 
             return newCategory;
+        }
+
+        private void ShowMessageBox(Exception exception)
+        {
+            MessageBox.Show(exception.Message, ERROR_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void btnBack_Click(object sender, EventArgs e)
