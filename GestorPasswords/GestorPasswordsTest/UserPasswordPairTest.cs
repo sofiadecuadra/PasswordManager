@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace GestorPasswordsTest
+namespace DataManagerTest
 {
     [TestClass]
     public class UserPasswordPairTest

@@ -2,7 +2,7 @@
 using System;
 using DataManagerDomain;
 
-namespace GestorPasswordsTest
+namespace DataManagerTest
 {
     [TestClass]
     public class SystemTest
