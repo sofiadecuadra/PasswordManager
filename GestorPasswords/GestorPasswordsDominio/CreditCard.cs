@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace GestorPasswordsDominio
+namespace DataManagerDomain
 {
     public class CreditCard
     {

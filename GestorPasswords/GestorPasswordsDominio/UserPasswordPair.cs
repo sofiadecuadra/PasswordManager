@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 
-namespace GestorPasswordsDominio
+namespace DataManagerDomain
 {
     public class UserPasswordPair
     {

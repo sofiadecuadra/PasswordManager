@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GestorPasswordsDominio;
+using DataManagerDomain;
 using System;
 
-namespace GestorPasswordsTest
+namespace DataManagerTest
 {
     [TestClass]
     public class PasswordHandlerTest

@@ -1,4 +1,4 @@
-﻿namespace GestorPasswordsDominio
+﻿namespace DataManagerDomain
 {
     public interface IDataBreachesFormatter
     {

@@ -1,9 +1,9 @@
-﻿using GestorPasswordsDominio;
+﻿using DataManagerDomain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 
-namespace GestorPasswordsTest
+namespace DataManagerTest
 {
     [TestClass]
     public class UserTest
