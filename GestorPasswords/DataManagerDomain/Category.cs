@@ -10,7 +10,7 @@ namespace DataManagerDomain
         public String Name
         {
             get { return name; }
-            set { name = value.ToLower(); }
+            set { name = value.Trim().ToLower(); }
         }
         public User User { get; set; }
         public Dictionary<string, UserPasswordPair> userPasswordPairs;
