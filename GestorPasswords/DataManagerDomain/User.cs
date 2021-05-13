@@ -290,7 +290,8 @@ namespace DataManagerDomain
         public bool ModifyCategory(NormalCategory aCategory, string newName)
         {
             bool categoryModified = false;
-            if (CategoryCouldBeModified(aCategory, newName.ToLower()))
+            newName = newName.Trim().ToLower();
+            if (CategoryCouldBeModified(aCategory, newName))
             {
                 UpdateCategory(aCategory, newName);
                 categoryModified = true;
