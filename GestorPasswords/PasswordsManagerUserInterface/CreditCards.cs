@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GestorPasswordsDominio;
 
@@ -13,15 +6,15 @@ namespace PasswordsManagerUserInterface
 {
     public partial class CreditCards : UserControl
     {
+        private const string ERROR_MESSAGE = "An error has occurred";
         public PasswordManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
-        
         private readonly DataGridViewButtonColumn fullView;
-        public CreditCards(PasswordManager aPasswordManager, Panel panel)
+        public CreditCards(PasswordManager aPasswordManager, Panel aPanel)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
-            PnlMainWindow = panel;
+            PnlMainWindow = aPanel;
             fullView = new DataGridViewButtonColumn();
             LoadDataGridViewData();
         }
@@ -30,6 +23,7 @@ namespace PasswordsManagerUserInterface
         {
             dgvCreditCards.AutoGenerateColumns = false;
             dgvCreditCards.ColumnCount = 5;
+
             dgvCreditCards.Columns[0].Name = "Category";
             dgvCreditCards.Columns[0].HeaderText = "Category";
             dgvCreditCards.Columns[0].DataPropertyName = "Category";
@@ -63,34 +57,14 @@ namespace PasswordsManagerUserInterface
             fullView.Width = 60;
             fullView.UseColumnTextForButtonValue = true;
 
-            dgvCreditCards.DataSource = PasswordManager.CurrentUser.GetCreditCards();
-
-            for (int i = 0; i < dgvCreditCards.Rows.Count; i++)
-            {
-                string numberFormatted = CreditCard.FormatNumber(dgvCreditCards.Rows[i].Cells[3].Value.ToString());
-                dgvCreditCards.Rows[i].Cells[3].Value = numberFormatted;
-            }
-        }
-        
-        private void btnBack_Click(object sender, EventArgs e)
-        {
-            PnlMainWindow.Controls.Clear();
-            UserControl menu = new Menu(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(menu);
+            dgvCreditCards.DataSource = GetCreditCards();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            PnlMainWindow.Controls.Clear();
+            ClearControls();
             UserControl addCreditCard = new AddCreditCard(PasswordManager, PnlMainWindow);
-            PnlMainWindow.Controls.Add(addCreditCard);
-        }
-
-        private void RemoveCreditCard()
-        {
-            CreditCard selected = dgvCreditCards.SelectedRows[0].DataBoundItem as CreditCard;
-            selected.Category.RemoveCreditCard(selected.Number);
-            dgvCreditCards.DataSource = PasswordManager.CurrentUser.GetCreditCards();
+            AddUserControl(addCreditCard);
         }
 
         private void btnModify_Click(object sender, EventArgs e)
@@ -101,26 +75,45 @@ namespace PasswordsManagerUserInterface
             }
             catch (ArgumentOutOfRangeException)
             {
-                MessageBox.Show("Please, choose a credit card to modify", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please, choose a credit card to modify", ERROR_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void LoadModifyCreditCardForm()
         {
-            CreditCard selected = dgvCreditCards.SelectedRows[0].DataBoundItem as CreditCard;
-            PnlMainWindow.Controls.Clear();
+            CreditCard selected = SelectedCreditCard(0);
+            ClearControls();
             UserControl modifyCreditCard = new ModifyCreditCard(PasswordManager, PnlMainWindow, selected);
-            PnlMainWindow.Controls.Add(modifyCreditCard);
+            AddUserControl(modifyCreditCard);
+        }
+
+        private void RemoveCreditCard()
+        {
+            CreditCard selected = SelectedCreditCard(0);
+            selected.Category.RemoveCreditCard(selected.Number);
+            dgvCreditCards.DataSource = GetCreditCards();
+        }
+
+        private CreditCard[] GetCreditCards()
+        {
+            return PasswordManager.CurrentUser.GetCreditCards();
         }
 
         private void dgvCreditCards_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 5)
             {
-                CreditCard selected = dgvCreditCards.Rows[e.RowIndex].DataBoundItem as CreditCard;
-                PopUp30Seconds popUp = new PopUp30Seconds(selected);
-                popUp.Visible = true;
+                CreditCard selected = SelectedCreditCard(e.RowIndex);
+                _ = new PopUp30Seconds(selected)
+                {
+                    Visible = true
+                };
             }
+        }
+
+        private CreditCard SelectedCreditCard(int rowIndex)
+        {
+            return dgvCreditCards.SelectedRows[rowIndex].DataBoundItem as CreditCard;
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -131,12 +124,34 @@ namespace PasswordsManagerUserInterface
             }
             catch (ArgumentOutOfRangeException)
             {
-                MessageBox.Show("Please, choose a credit card to remove", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please, choose a credit card to remove", ERROR_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch (ExceptionCreditCardDoesNotExist)
+            catch (ExceptionCreditCardDoesNotExist exception)
             {
-                MessageBox.Show("The credit card does not exist", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowMessageBox(exception);
             }
+        }
+
+        private void ShowMessageBox(Exception exception)
+        {
+            MessageBox.Show(exception.Message, ERROR_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            ClearControls();
+            UserControl menu = new Menu(PasswordManager, PnlMainWindow);
+            AddUserControl(menu);
+        }
+
+        private void ClearControls()
+        {
+            PnlMainWindow.Controls.Clear();
+        }
+
+        private void AddUserControl(UserControl aUserControl)
+        {
+            PnlMainWindow.Controls.Add(aUserControl);
         }
     }
 }

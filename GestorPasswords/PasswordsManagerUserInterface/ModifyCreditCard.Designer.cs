@@ -36,9 +36,10 @@ namespace PasswordsManagerUserInterface
             // 
             // btnBack
             // 
-            this.btnBack.Location = new System.Drawing.Point(677, 22);
+            this.btnBack.Location = new System.Drawing.Point(1354, 42);
+            this.btnBack.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(75, 23);
+            this.btnBack.Size = new System.Drawing.Size(150, 44);
             this.btnBack.TabIndex = 0;
             this.btnBack.Text = "Back";
             this.btnBack.UseVisualStyleBackColor = true;
@@ -46,16 +47,18 @@ namespace PasswordsManagerUserInterface
             // 
             // pnlModifyCreditCard
             // 
-            this.pnlModifyCreditCard.Location = new System.Drawing.Point(270, 20);
+            this.pnlModifyCreditCard.Location = new System.Drawing.Point(540, 38);
+            this.pnlModifyCreditCard.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.pnlModifyCreditCard.Name = "pnlModifyCreditCard";
-            this.pnlModifyCreditCard.Size = new System.Drawing.Size(303, 390);
+            this.pnlModifyCreditCard.Size = new System.Drawing.Size(606, 750);
             this.pnlModifyCreditCard.TabIndex = 1;
             // 
             // btnAccept
             // 
-            this.btnAccept.Location = new System.Drawing.Point(371, 416);
+            this.btnAccept.Location = new System.Drawing.Point(742, 800);
+            this.btnAccept.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btnAccept.Name = "btnAccept";
-            this.btnAccept.Size = new System.Drawing.Size(75, 23);
+            this.btnAccept.Size = new System.Drawing.Size(150, 44);
             this.btnAccept.TabIndex = 2;
             this.btnAccept.Text = "Accept";
             this.btnAccept.UseVisualStyleBackColor = true;
@@ -63,13 +66,14 @@ namespace PasswordsManagerUserInterface
             // 
             // ModifyCreditCard
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.btnAccept);
             this.Controls.Add(this.pnlModifyCreditCard);
             this.Controls.Add(this.btnBack);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "ModifyCreditCard";
-            this.Size = new System.Drawing.Size(804, 451);
+            this.Size = new System.Drawing.Size(1608, 867);
             this.ResumeLayout(false);
 
         }

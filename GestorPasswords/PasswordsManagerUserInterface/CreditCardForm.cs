@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GestorPasswordsDominio;
 
@@ -14,7 +7,6 @@ namespace PasswordsManagerUserInterface
     public partial class CreditCardForm : UserControl
     {
         public PasswordManager PasswordManager { get; private set; }
-
         public CreditCardForm(PasswordManager aPasswordManager)
         {
             InitializeComponent();
@@ -37,7 +29,7 @@ namespace PasswordsManagerUserInterface
             cbCategory.SelectedItem = aCreditCard.Category;
             txtName.Text = aCreditCard.Name;
             txtType.Text = aCreditCard.Type;
-            txtNumber.Text = CreditCard.FormatNumber(aCreditCard.Number);
+            txtNumber.Text = FormattedNumber(aCreditCard.Number);
             txtCode.Text = aCreditCard.Code;
             dtpExpirationDate.Value = aCreditCard.ExpirationDate;
             txtNotes.Text = aCreditCard.Notes;
@@ -50,7 +42,12 @@ namespace PasswordsManagerUserInterface
 
         private void LoadCategories()
         {
-            cbCategory.DataSource = PasswordManager.CurrentUser.GetCategories();
+            cbCategory.DataSource = GetCategories();
+        }
+
+        private Category [] GetCategories()
+        {
+            return PasswordManager.CurrentUser.GetCategories();
         }
 
         public NormalCategory GetCategory()
@@ -91,8 +88,18 @@ namespace PasswordsManagerUserInterface
 
         private void txtNumber_TextChanged(object sender, EventArgs e)
         {
-            txtNumber.Text = CreditCard.FormatNumber(txtNumber.Text);
-            txtNumber.SelectionStart = txtNumber.Text.Length;
+            txtNumber.Text = FormattedNumber(txtNumber.Text);
+            txtNumber.SelectionStart = NumberLenght();
+        }
+
+        private string FormattedNumber(string numberToFormat)
+        {
+            return CreditCard.FormatNumber(numberToFormat);
+        }
+
+        private int NumberLenght()
+        {
+            return txtNumber.Text.Length;
         }
     }
 }

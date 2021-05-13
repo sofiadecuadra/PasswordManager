@@ -74,7 +74,6 @@ namespace GestorPasswordsDominio
         {
             CheckSiteLength();
             CheckUsernameLength();
-            CheckPasswordLength();
             CheckNotesLength();
             return true;
         }
@@ -103,14 +102,6 @@ namespace GestorPasswordsDominio
         private static bool LengthBetween5And25(string stringToCheck)
         {
             return stringToCheck.Length >= 5 && stringToCheck.Length <= 25;
-        }
-
-        private void CheckPasswordLength()
-        {
-            if (!LengthBetween5And25(Password))
-            {
-                throw new ExceptionIncorrectLength($"The password's length must be between 5 and 25, but it's current length is: {Password.Length}");
-            }
         }
 
         private void CheckNotesLength()

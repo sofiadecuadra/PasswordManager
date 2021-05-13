@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using GestorPasswordsDominio;
 
 namespace PasswordsManagerUserInterface
@@ -23,9 +15,19 @@ namespace PasswordsManagerUserInterface
 
         private void LoadLogInUserControl()
         {
-            pnlMain.Controls.Clear();
+            ClearControls();
             UserControl logIn = new LogIn(PasswordManager, pnlMain);
-            pnlMain.Controls.Add(logIn);
+            AddUserControl(logIn);
+        }
+
+        private void ClearControls()
+        {
+            pnlMain.Controls.Clear();
+        }
+
+        private void AddUserControl(UserControl aUserControl)
+        {
+            pnlMain.Controls.Add(aUserControl);
         }
     }
 }

@@ -8,16 +8,21 @@ namespace PasswordsManagerUserInterface
     public partial class DataBreachesResult : UserControl
     {
         public PasswordManager PasswordManager { get; private set; }
-        public Panel pnlMainWindow { get; private set; }
+        public Panel PnlMainWindow { get; private set; }
         public IDataBreachesFormatter DataBreaches { get; private set; }
         private readonly DataGridViewButtonColumn modifyExposedPassword;
-        public DataBreachesResult(PasswordManager aPasswordManager, Panel panel, IDataBreachesFormatter dataBreaches)
+        public DataBreachesResult(PasswordManager aPasswordManager, Panel aPanel, IDataBreachesFormatter dataBreaches)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
-            pnlMainWindow = panel;
+            PnlMainWindow = aPanel;
             DataBreaches = dataBreaches;
             modifyExposedPassword = new DataGridViewButtonColumn();
+            LoadExposedPasswordsAndCreditCards();
+        }
+
+        private void LoadExposedPasswordsAndCreditCards()
+        {
             (List<UserPasswordPair>, List<CreditCard>) ExposedPasswordsAndCreditCards = PasswordManager.CurrentUser.CheckDataBreaches(DataBreaches);
             LoadExposedPasswords(ExposedPasswordsAndCreditCards.Item1);
             LoadExposedCreditCards(ExposedPasswordsAndCreditCards.Item2);
@@ -89,27 +94,42 @@ namespace PasswordsManagerUserInterface
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            pnlMainWindow.Controls.Clear();
-            UserControl checkDataBreaches = new CheckDataBreaches(PasswordManager, pnlMainWindow);
-            pnlMainWindow.Controls.Add(checkDataBreaches);
+            ClearControls();
+            UserControl checkDataBreaches = new CheckDataBreaches(PasswordManager, PnlMainWindow);
+            AddUserControl(checkDataBreaches);
         }
 
         private void btnMenu_Click(object sender, EventArgs e)
         {
-            pnlMainWindow.Controls.Clear();
-            UserControl menu = new Menu(PasswordManager, pnlMainWindow);
-            pnlMainWindow.Controls.Add(menu);
+            ClearControls();
+            UserControl menu = new Menu(PasswordManager, PnlMainWindow);
+            AddUserControl(menu);
         }
 
         private void dgvExposedPasswords_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 4)
             {
-                UserPasswordPair selected = dgvExposedPasswords.Rows[e.RowIndex].DataBoundItem as UserPasswordPair;
-                UserControl modifyUserPasswordPairControl = new ModifyUserPasswordPairExposedInDataBreaches(PasswordManager, pnlMainWindow, selected, DataBreaches);
-                pnlMainWindow.Controls.Clear();
-                pnlMainWindow.Controls.Add(modifyUserPasswordPairControl);
+                UserPasswordPair selected = SelectedUserPasswordPair(e.RowIndex);
+                ClearControls();
+                UserControl modifyUserPasswordPairControl = new ModifyUserPasswordPairExposedInDataBreaches(PasswordManager, PnlMainWindow, selected, DataBreaches);
+                AddUserControl(modifyUserPasswordPairControl);
             }
+        }
+
+        private UserPasswordPair SelectedUserPasswordPair(int rowIndex)
+        {
+            return dgvExposedPasswords.Rows[rowIndex].DataBoundItem as UserPasswordPair;
+        }
+
+        private void ClearControls()
+        {
+            PnlMainWindow.Controls.Clear();
+        }
+
+        private void AddUserControl(UserControl aUserControl)
+        {
+            PnlMainWindow.Controls.Add(aUserControl);
         }
     }
 }
