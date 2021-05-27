@@ -51,70 +51,70 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddCreditCard.cs">
+    <Compile Include="CreditCard\AddCreditCard.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="AddCreditCard.Designer.cs">
+    <Compile Include="CreditCard\AddCreditCard.Designer.cs">
       <DependentUpon>AddCreditCard.cs</DependentUpon>
     </Compile>
-    <Compile Include="AddUserPasswordPair.cs">
+    <Compile Include="UserPasswordPair\AddUserPasswordPair.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="AddUserPasswordPair.Designer.cs">
+    <Compile Include="UserPasswordPair\AddUserPasswordPair.Designer.cs">
       <DependentUpon>AddUserPasswordPair.cs</DependentUpon>
     </Compile>
-    <Compile Include="ChangeMasterPassword.cs">
+    <Compile Include="GeneralUsage\ChangeMasterPassword.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ChangeMasterPassword.Designer.cs">
+    <Compile Include="GeneralUsage\ChangeMasterPassword.Designer.cs">
       <DependentUpon>ChangeMasterPassword.cs</DependentUpon>
     </Compile>
-    <Compile Include="CheckDataBreaches.cs">
+    <Compile Include="DataBreach\CheckDataBreaches.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CheckDataBreaches.Designer.cs">
+    <Compile Include="DataBreach\CheckDataBreaches.Designer.cs">
       <DependentUpon>CheckDataBreaches.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataBreachesResult.cs">
+    <Compile Include="DataBreach\DataBreachesResult.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DataBreachesResult.Designer.cs">
+    <Compile Include="DataBreach\DataBreachesResult.Designer.cs">
       <DependentUpon>DataBreachesResult.cs</DependentUpon>
     </Compile>
-    <Compile Include="AddCategory.cs">
+    <Compile Include="Category\AddCategory.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="AddCategory.Designer.cs">
+    <Compile Include="Category\AddCategory.Designer.cs">
       <DependentUpon>AddCategory.cs</DependentUpon>
     </Compile>
-    <Compile Include="Categories.cs">
+    <Compile Include="Category\Categories.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Categories.Designer.cs">
+    <Compile Include="Category\Categories.Designer.cs">
       <DependentUpon>Categories.cs</DependentUpon>
     </Compile>
-    <Compile Include="CategoryForm.cs">
+    <Compile Include="Category\CategoryForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CategoryForm.Designer.cs">
+    <Compile Include="Category\CategoryForm.Designer.cs">
       <DependentUpon>CategoryForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreditCardForm.cs">
+    <Compile Include="CreditCard\CreditCardForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CreditCardForm.Designer.cs">
+    <Compile Include="CreditCard\CreditCardForm.Designer.cs">
       <DependentUpon>CreditCardForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreditCards.cs">
+    <Compile Include="CreditCard\CreditCards.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CreditCards.Designer.cs">
+    <Compile Include="CreditCard\CreditCards.Designer.cs">
       <DependentUpon>CreditCards.cs</DependentUpon>
     </Compile>
-    <Compile Include="LogIn.cs">
+    <Compile Include="GeneralUsage\LogIn.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LogIn.Designer.cs">
+    <Compile Include="GeneralUsage\LogIn.Designer.cs">
       <DependentUpon>LogIn.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.cs">
@@ -123,162 +123,162 @@
     <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Menu.cs">
+    <Compile Include="GeneralUsage\Menu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Menu.Designer.cs">
+    <Compile Include="GeneralUsage\Menu.Designer.cs">
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
-    <Compile Include="ModifyCategory.cs">
+    <Compile Include="Category\ModifyCategory.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ModifyCategory.Designer.cs">
+    <Compile Include="Category\ModifyCategory.Designer.cs">
       <DependentUpon>ModifyCategory.cs</DependentUpon>
     </Compile>
-    <Compile Include="ModifyCreditCard.cs">
+    <Compile Include="CreditCard\ModifyCreditCard.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ModifyCreditCard.Designer.cs">
+    <Compile Include="CreditCard\ModifyCreditCard.Designer.cs">
       <DependentUpon>ModifyCreditCard.cs</DependentUpon>
     </Compile>
-    <Compile Include="ModifyReportedUserPasswordPair.cs">
+    <Compile Include="UserPasswordPair\Report\ModifyReportedUserPasswordPair.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ModifyReportedUserPasswordPair.Designer.cs">
+    <Compile Include="UserPasswordPair\Report\ModifyReportedUserPasswordPair.Designer.cs">
       <DependentUpon>ModifyReportedUserPasswordPair.cs</DependentUpon>
     </Compile>
-    <Compile Include="ModifyUserPasswordPair.cs">
+    <Compile Include="UserPasswordPair\ModifyUserPasswordPair.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ModifyUserPasswordPair.Designer.cs">
+    <Compile Include="UserPasswordPair\ModifyUserPasswordPair.Designer.cs">
       <DependentUpon>ModifyUserPasswordPair.cs</DependentUpon>
     </Compile>
-    <Compile Include="ModifyUserPasswordPairExposedInDataBreaches.cs">
+    <Compile Include="DataBreach\ModifyUserPasswordPairExposedInDataBreaches.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ModifyUserPasswordPairExposedInDataBreaches.Designer.cs">
+    <Compile Include="DataBreach\ModifyUserPasswordPairExposedInDataBreaches.Designer.cs">
       <DependentUpon>ModifyUserPasswordPairExposedInDataBreaches.cs</DependentUpon>
     </Compile>
-    <Compile Include="Passwords.cs">
+    <Compile Include="UserPasswordPair\Passwords.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Passwords.Designer.cs">
+    <Compile Include="UserPasswordPair\Passwords.Designer.cs">
       <DependentUpon>Passwords.cs</DependentUpon>
     </Compile>
-    <Compile Include="PasswordsReportPasswordsList.cs">
+    <Compile Include="UserPasswordPair\Report\PasswordsReportPasswordsList.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PasswordsReportPasswordsList.Designer.cs">
+    <Compile Include="UserPasswordPair\Report\PasswordsReportPasswordsList.Designer.cs">
       <DependentUpon>PasswordsReportPasswordsList.cs</DependentUpon>
     </Compile>
-    <Compile Include="PasswordsStrengthReportChart.cs">
+    <Compile Include="UserPasswordPair\Report\PasswordsStrengthReportChart.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PasswordsStrengthReportChart.Designer.cs">
+    <Compile Include="UserPasswordPair\Report\PasswordsStrengthReportChart.Designer.cs">
       <DependentUpon>PasswordsStrengthReportChart.cs</DependentUpon>
     </Compile>
-    <Compile Include="PasswordsStrengthReportTable.cs">
+    <Compile Include="UserPasswordPair\Report\PasswordsStrengthReportTable.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PasswordsStrengthReportTable.Designer.cs">
+    <Compile Include="UserPasswordPair\Report\PasswordsStrengthReportTable.Designer.cs">
       <DependentUpon>PasswordsStrengthReportTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="PopUp30Seconds.cs">
+    <Compile Include="GeneralUsage\PopUp30Seconds.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PopUp30Seconds.Designer.cs">
+    <Compile Include="GeneralUsage\PopUp30Seconds.Designer.cs">
       <DependentUpon>PopUp30Seconds.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShareUserPasswordPair.cs">
+    <Compile Include="UserPasswordPair\ShareUserPasswordPair.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ShareUserPasswordPair.Designer.cs">
+    <Compile Include="UserPasswordPair\ShareUserPasswordPair.Designer.cs">
       <DependentUpon>ShareUserPasswordPair.cs</DependentUpon>
     </Compile>
-    <Compile Include="SignUp.cs">
+    <Compile Include="GeneralUsage\SignUp.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SignUp.Designer.cs">
+    <Compile Include="GeneralUsage\SignUp.Designer.cs">
       <DependentUpon>SignUp.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="AddCreditCard.resx">
+    <EmbeddedResource Include="CreditCard\AddCreditCard.resx">
       <DependentUpon>AddCreditCard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CategoryForm.resx">
+    <EmbeddedResource Include="Category\CategoryForm.resx">
       <DependentUpon>CategoryForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ChangeMasterPassword.resx">
+    <EmbeddedResource Include="GeneralUsage\ChangeMasterPassword.resx">
       <DependentUpon>ChangeMasterPassword.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CreditCardForm.resx">
+    <EmbeddedResource Include="CreditCard\CreditCardForm.resx">
       <DependentUpon>CreditCardForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CreditCards.resx">
+    <EmbeddedResource Include="CreditCard\CreditCards.resx">
       <DependentUpon>CreditCards.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="UnshareUserPasswordPair.cs">
+    <Compile Include="UserPasswordPair\UnshareUserPasswordPair.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UnshareUserPasswordPair.Designer.cs">
+    <Compile Include="UserPasswordPair\UnshareUserPasswordPair.Designer.cs">
       <DependentUpon>UnshareUserPasswordPair.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserPasswordPairForm.cs">
+    <Compile Include="UserPasswordPair\UserPasswordPairForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserPasswordPairForm.Designer.cs">
+    <Compile Include="UserPasswordPair\UserPasswordPairForm.Designer.cs">
       <DependentUpon>UserPasswordPairForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="AddUserPasswordPair.resx">
+    <EmbeddedResource Include="UserPasswordPair\AddUserPasswordPair.resx">
       <DependentUpon>AddUserPasswordPair.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CheckDataBreaches.resx">
+    <EmbeddedResource Include="DataBreach\CheckDataBreaches.resx">
       <DependentUpon>CheckDataBreaches.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DataBreachesResult.resx">
+    <EmbeddedResource Include="DataBreach\DataBreachesResult.resx">
       <DependentUpon>DataBreachesResult.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AddCategory.resx">
+    <EmbeddedResource Include="Category\AddCategory.resx">
       <DependentUpon>AddCategory.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Categories.resx">
+    <EmbeddedResource Include="Category\Categories.resx">
       <DependentUpon>Categories.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LogIn.resx">
+    <EmbeddedResource Include="GeneralUsage\LogIn.resx">
       <DependentUpon>LogIn.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Menu.resx">
+    <EmbeddedResource Include="GeneralUsage\Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ModifyReportedUserPasswordPair.resx">
+    <EmbeddedResource Include="UserPasswordPair\Report\ModifyReportedUserPasswordPair.resx">
       <DependentUpon>ModifyReportedUserPasswordPair.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ModifyUserPasswordPair.resx">
+    <EmbeddedResource Include="UserPasswordPair\ModifyUserPasswordPair.resx">
       <DependentUpon>ModifyUserPasswordPair.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ModifyCreditCard.resx">
+    <EmbeddedResource Include="CreditCard\ModifyCreditCard.resx">
       <DependentUpon>ModifyCreditCard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ModifyUserPasswordPairExposedInDataBreaches.resx">
+    <EmbeddedResource Include="DataBreach\ModifyUserPasswordPairExposedInDataBreaches.resx">
       <DependentUpon>ModifyUserPasswordPairExposedInDataBreaches.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Passwords.resx">
+    <EmbeddedResource Include="UserPasswordPair\Passwords.resx">
       <DependentUpon>Passwords.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PasswordsReportPasswordsList.resx">
+    <EmbeddedResource Include="UserPasswordPair\Report\PasswordsReportPasswordsList.resx">
       <DependentUpon>PasswordsReportPasswordsList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PasswordsStrengthReportChart.resx">
+    <EmbeddedResource Include="UserPasswordPair\Report\PasswordsStrengthReportChart.resx">
       <DependentUpon>PasswordsStrengthReportChart.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PasswordsStrengthReportTable.resx">
+    <EmbeddedResource Include="UserPasswordPair\Report\PasswordsStrengthReportTable.resx">
       <DependentUpon>PasswordsStrengthReportTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PopUp30Seconds.resx">
+    <EmbeddedResource Include="GeneralUsage\PopUp30Seconds.resx">
       <DependentUpon>PopUp30Seconds.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -290,16 +290,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ShareUserPasswordPair.resx">
+    <EmbeddedResource Include="UserPasswordPair\ShareUserPasswordPair.resx">
       <DependentUpon>ShareUserPasswordPair.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SignUp.resx">
+    <EmbeddedResource Include="GeneralUsage\SignUp.resx">
       <DependentUpon>SignUp.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UnshareUserPasswordPair.resx">
+    <EmbeddedResource Include="UserPasswordPair\UnshareUserPasswordPair.resx">
       <DependentUpon>UnshareUserPasswordPair.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserPasswordPairForm.resx">
+    <EmbeddedResource Include="UserPasswordPair\UserPasswordPairForm.resx">
       <DependentUpon>UserPasswordPairForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
