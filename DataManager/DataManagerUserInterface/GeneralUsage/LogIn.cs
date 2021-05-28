@@ -1,6 +1,6 @@
-﻿using System;
+﻿using DataManagerDomain;
+using System;
 using System.Windows.Forms;
-using DataManagerDomain;
 
 namespace PasswordsManagerUserInterface
 {

@@ -57,6 +57,12 @@
     <Compile Include="CreditCard\AddCreditCard.Designer.cs">
       <DependentUpon>AddCreditCard.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataBreach\DataBreachesMethodSelection.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataBreach\DataBreachesMethodSelection.Designer.cs">
+      <DependentUpon>DataBreachesMethodSelection.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserPasswordPair\AddUserPasswordPair.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -208,6 +214,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Category\CategoryForm.resx">
       <DependentUpon>CategoryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataBreach\DataBreachesMethodSelection.resx">
+      <DependentUpon>DataBreachesMethodSelection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GeneralUsage\ChangeMasterPassword.resx">
       <DependentUpon>ChangeMasterPassword.cs</DependentUpon>

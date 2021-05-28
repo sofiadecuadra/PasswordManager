@@ -38,17 +38,19 @@ namespace PasswordsManagerUserInterface
             // 
             // txtDataBreaches
             // 
-            this.txtDataBreaches.Location = new System.Drawing.Point(418, 223);
+            this.txtDataBreaches.Location = new System.Drawing.Point(209, 116);
+            this.txtDataBreaches.Margin = new System.Windows.Forms.Padding(2);
             this.txtDataBreaches.Multiline = true;
             this.txtDataBreaches.Name = "txtDataBreaches";
-            this.txtDataBreaches.Size = new System.Drawing.Size(784, 414);
+            this.txtDataBreaches.Size = new System.Drawing.Size(394, 217);
             this.txtDataBreaches.TabIndex = 0;
             // 
             // btnCheck
             // 
-            this.btnCheck.Location = new System.Drawing.Point(1015, 687);
+            this.btnCheck.Location = new System.Drawing.Point(508, 357);
+            this.btnCheck.Margin = new System.Windows.Forms.Padding(2);
             this.btnCheck.Name = "btnCheck";
-            this.btnCheck.Size = new System.Drawing.Size(187, 41);
+            this.btnCheck.Size = new System.Drawing.Size(94, 21);
             this.btnCheck.TabIndex = 1;
             this.btnCheck.Text = "Check";
             this.btnCheck.UseVisualStyleBackColor = true;
@@ -57,27 +59,28 @@ namespace PasswordsManagerUserInterface
             // lblExposedText
             // 
             this.lblExposedText.AutoSize = true;
-            this.lblExposedText.Location = new System.Drawing.Point(413, 186);
+            this.lblExposedText.Location = new System.Drawing.Point(206, 97);
+            this.lblExposedText.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblExposedText.Name = "lblExposedText";
-            this.lblExposedText.Size = new System.Drawing.Size(144, 25);
+            this.lblExposedText.Size = new System.Drawing.Size(72, 13);
             this.lblExposedText.TabIndex = 2;
             this.lblExposedText.Text = "Exposed Text";
             // 
             // lblDataBreaches
             // 
             this.lblDataBreaches.AutoSize = true;
-            this.lblDataBreaches.Location = new System.Drawing.Point(740, 88);
+            this.lblDataBreaches.Location = new System.Drawing.Point(370, 46);
+            this.lblDataBreaches.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDataBreaches.Name = "lblDataBreaches";
-            this.lblDataBreaches.Size = new System.Drawing.Size(154, 25);
+            this.lblDataBreaches.Size = new System.Drawing.Size(78, 13);
             this.lblDataBreaches.TabIndex = 3;
             this.lblDataBreaches.Text = "Data Breaches";
             // 
             // btnBack
             // 
-            this.btnBack.Location = new System.Drawing.Point(1354, 43);
-            this.btnBack.Margin = new System.Windows.Forms.Padding(6);
+            this.btnBack.Location = new System.Drawing.Point(677, 22);
             this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(150, 44);
+            this.btnBack.Size = new System.Drawing.Size(75, 23);
             this.btnBack.TabIndex = 8;
             this.btnBack.Text = "Back";
             this.btnBack.UseVisualStyleBackColor = true;
@@ -85,15 +88,16 @@ namespace PasswordsManagerUserInterface
             // 
             // CheckDataBreaches
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.lblDataBreaches);
             this.Controls.Add(this.lblExposedText);
             this.Controls.Add(this.btnCheck);
             this.Controls.Add(this.txtDataBreaches);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "CheckDataBreaches";
-            this.Size = new System.Drawing.Size(1608, 867);
+            this.Size = new System.Drawing.Size(804, 451);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -1,4 +1,5 @@
 ﻿using DataManagerDomain;
+using PasswordsManagerUserInterface.DataBreach;
 using System;
 using System.Windows.Forms;
 
@@ -36,8 +37,8 @@ namespace PasswordsManagerUserInterface
         private void btnBack_Click(object sender, EventArgs e)
         {
             ClearControls();
-            UserControl menu = new Menu(PasswordManager, PnlMainWindow);
-            AddUserControl(menu);
+            UserControl dataBreachMethodSelection = new DataBreachesMethodSelection(PasswordManager, PnlMainWindow);
+            AddUserControl(dataBreachMethodSelection);
         }
 
         private void ClearControls()
