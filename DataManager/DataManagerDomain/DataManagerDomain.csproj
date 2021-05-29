@@ -67,6 +67,7 @@
     <Compile Include="DataManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CreditCard.cs" />
+    <Compile Include="TxtFileDataBreaches.cs" />
     <Compile Include="UserPasswordPair.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>

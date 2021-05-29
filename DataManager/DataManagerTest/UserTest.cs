@@ -261,7 +261,7 @@ namespace DataManagerTest
         }
 
         [TestMethod]
-        public void ACreditCardOfUserAppearedInDataBreaches()
+        public void ACreditCardOfUserAppearedInTextBoxDataBreaches()
         {
             var aCreditCard = LoadTestCategoryToMyUserWithACreditCard();
 
@@ -277,7 +277,7 @@ namespace DataManagerTest
         }
 
         [TestMethod]
-        public void MultipleCreditCardsOfUserAppearedInDataBreaches()
+        public void MultipleCreditCardsOfUserAppearedInTextBoxDataBreaches()
         {
             var aCreditCard = LoadTestCategoryToMyUserWithACreditCard();
             var anotherCreditCard = LoadTestCategoryToMyUserWithAnotherCreditCard();
@@ -295,7 +295,7 @@ namespace DataManagerTest
         }
 
         [TestMethod]
-        public void APasswordOfUserAppearedInDataBreaches()
+        public void APasswordOfUserAppearedInTextBoxDataBreaches()
         {
             var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
             var anotherUserPasswordPair = LoadTestCategoryToMyUserWithAnotherUserPasswordPair();
@@ -312,11 +312,10 @@ namespace DataManagerTest
         }
 
         [TestMethod]
-        public void APasswordAndACreditCardOfUserAppearedInDataBreaches()
+        public void APasswordAndACreditCardOfUserAppearedInTextBoxDataBreaches()
         {
             var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
             var aCreditCard = LoadTestCategoryToMyUserWithACreditCard();
-
 
             IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
             {
@@ -334,7 +333,7 @@ namespace DataManagerTest
         }
 
         [TestMethod]
-        public void SamePasswordAppearedMoreThanOnceInDataBreaches()
+        public void SamePasswordAppearedMoreThanOnceInTextBoxDataBreaches()
         {
             var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
 
@@ -350,7 +349,7 @@ namespace DataManagerTest
         }
 
         [TestMethod]
-        public void SameCreditCardAppearedMoreThanOnceInDataBreaches()
+        public void SameCreditCardAppearedMoreThanOnceInTextBoxDataBreaches()
         {
             var aCreditCard = LoadTestCategoryToMyUserWithACreditCard();
 
@@ -366,7 +365,7 @@ namespace DataManagerTest
         }
 
         [TestMethod]
-        public void PasswordsOfUserAppearedInDataBreaches()
+        public void PasswordsOfUserAppearedInTextBoxDataBreaches()
         {
             var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
             var anotherUserPasswordPair = LoadTestCategoryToMyUserWithAnotherUserPasswordPair();
@@ -384,7 +383,7 @@ namespace DataManagerTest
         }
 
         [TestMethod]
-        public void PasswordWithBlankSpacesAndOnlyDigitsOfUserAppearedInDataBreaches()
+        public void PasswordWithBlankSpacesAndOnlyDigitsOfUserAppearedInTextBoxDataBreaches()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
@@ -409,7 +408,7 @@ namespace DataManagerTest
         }
 
         [TestMethod]
-        public void PasswordWithBlankSpacesOfUserAppearedInDataBreaches()
+        public void PasswordWithBlankSpacesOfUserAppearedInTextBoxDataBreaches()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
@@ -434,14 +433,13 @@ namespace DataManagerTest
         }
 
         [TestMethod]
-        public void MultiplePasswordsAndCreditCardsOfUserAppearedInDataBreaches()
+        public void MultiplePasswordsAndCreditCardsOfUserAppearedInTextBoxDataBreaches()
         {
             var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
             var anotherUserPasswordPair = LoadTestCategoryToMyUserWithAnotherUserPasswordPair();
 
             var aCreditCard = LoadTestCategoryToMyUserWithACreditCard();
             var anotherCreditCard = LoadTestCategoryToMyUserWithAnotherCreditCard();
-
 
             IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
             {
@@ -461,7 +459,7 @@ namespace DataManagerTest
         }
 
         [TestMethod]
-        public void NoPasswordsOrCreditCardsOfUserAppearedInDataBreaches()
+        public void NoPasswordsOrCreditCardsOfUserAppearedInTextBoxDataBreaches()
         {
             var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
             var anotherUserPasswordPair = LoadTestCategoryToMyUserWithAnotherUserPasswordPair();
@@ -483,7 +481,255 @@ namespace DataManagerTest
         }
 
         [TestMethod]
-        public void PasswordUsedInMultipleSitesOfUserAppearedInDataBreaches()
+        public void PasswordUsedInMultipleSitesOfUserAppearedInTextBoxDataBreaches()
+        {
+            var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+
+            UserPasswordPair anotherUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "thisIsAPassword",
+                Notes = "these are my notes",
+                Username = "anotherUserName",
+                Site = "myOtherSite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(anotherUserPasswordPair);
+
+            IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
+            {
+                txtDataBreaches = "thisIsAPassword"
+            };
+
+            List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
+            expectedUserPasswordPairList.Add(aUserPasswordPair);
+            expectedUserPasswordPairList.Add(anotherUserPasswordPair);
+
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
+        }
+
+        [TestMethod]
+        public void ACreditCardOfUserAppearedInTxtFileDataBreaches()
+        {
+            var aCreditCard = LoadTestCategoryToMyUserWithACreditCard();
+
+            IDataBreachesFormatter dataBreaches = new TxtFileDataBreaches()
+            {
+                txtDataBreaches = "1234 5678 9123 4567"
+            };
+
+            List<CreditCard> expectedCreditCardList = new List<CreditCard>();
+            expectedCreditCardList.Add(aCreditCard);
+
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item2, expectedCreditCardList);
+        }
+
+        [TestMethod]
+        public void MultipleCreditCardsOfUserAppearedInTxtFileDataBreaches()
+        {
+            var aCreditCard = LoadTestCategoryToMyUserWithACreditCard();
+            var anotherCreditCard = LoadTestCategoryToMyUserWithAnotherCreditCard();
+
+            IDataBreachesFormatter dataBreaches = new TxtFileDataBreaches()
+            {
+                txtDataBreaches = "1234 5678 9123 4567\t1234 5678 9123 4222"
+            };
+
+            List<CreditCard> expectedCreditCardList = new List<CreditCard>();
+            expectedCreditCardList.Add(aCreditCard);
+            expectedCreditCardList.Add(anotherCreditCard);
+
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item2, expectedCreditCardList);
+        }
+
+        [TestMethod]
+        public void APasswordOfUserAppearedInTxtFileDataBreaches()
+        {
+            var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+            var anotherUserPasswordPair = LoadTestCategoryToMyUserWithAnotherUserPasswordPair();
+
+            IDataBreachesFormatter dataBreaches = new TxtFileDataBreaches()
+            {
+                txtDataBreaches = "thisIsAPassword"
+            };
+
+            List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
+            expectedUserPasswordPairList.Add(aUserPasswordPair);
+
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
+        }
+
+        [TestMethod]
+        public void APasswordAndACreditCardOfUserAppearedInTxtFileDataBreaches()
+        {
+            var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+            var aCreditCard = LoadTestCategoryToMyUserWithACreditCard();
+
+            IDataBreachesFormatter dataBreaches = new TxtFileDataBreaches()
+            {
+                txtDataBreaches = "thisIsAPassword\tthisIsAnotherPassword\t1234 5678 9123 4567"
+            };
+
+            List<CreditCard> expectedCreditCardList = new List<CreditCard>();
+            expectedCreditCardList.Add(aCreditCard);
+
+            List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
+            expectedUserPasswordPairList.Add(aUserPasswordPair);
+
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item2, expectedCreditCardList);
+        }
+
+        [TestMethod]
+        public void SamePasswordAppearedMoreThanOnceInTxtFileDataBreaches()
+        {
+            var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+
+            IDataBreachesFormatter dataBreaches = new TxtFileDataBreaches()
+            {
+                txtDataBreaches = "thisIsAPassword\tthisIsAPassword\t1234 5678 9123 4567"
+            };
+
+            List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
+            expectedUserPasswordPairList.Add(aUserPasswordPair);
+
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
+        }
+
+        [TestMethod]
+        public void SameCreditCardAppearedMoreThanOnceInTxtFileDataBreaches()
+        {
+            var aCreditCard = LoadTestCategoryToMyUserWithACreditCard();
+
+            IDataBreachesFormatter dataBreaches = new TxtFileDataBreaches()
+            {
+                txtDataBreaches = "thisIsAPassword\t1234 5678 9123 4567\t1234 5678 9123 4567"
+            };
+
+            List<CreditCard> expectedCreditCardList = new List<CreditCard>();
+            expectedCreditCardList.Add(aCreditCard);
+
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item2, expectedCreditCardList);
+        }
+
+        [TestMethod]
+        public void PasswordsOfUserAppearedInTxtFileDataBreaches()
+        {
+            var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+            var anotherUserPasswordPair = LoadTestCategoryToMyUserWithAnotherUserPasswordPair();
+
+            IDataBreachesFormatter dataBreaches = new TxtFileDataBreaches()
+            {
+                txtDataBreaches = "thisIsAPassword\tthisIsAnotherPassword"
+            };
+
+            List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
+            expectedUserPasswordPairList.Add(aUserPasswordPair);
+            expectedUserPasswordPairList.Add(anotherUserPasswordPair);
+
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
+        }
+
+        [TestMethod]
+        public void PasswordWithBlankSpacesAndOnlyDigitsOfUserAppearedInTxtFileDataBreaches()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "4444 555 6666 2323",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            IDataBreachesFormatter dataBreaches = new TxtFileDataBreaches()
+            {
+                txtDataBreaches = "4444 555 6666 2323"
+            };
+
+            List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
+            expectedUserPasswordPairList.Add(aUserPasswordPair);
+
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
+        }
+
+        [TestMethod]
+        public void PasswordWithBlankSpacesOfUserAppearedInTxtFileDataBreaches()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Password = "rfkg s67r sjdh liks",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+                Category = aCategory,
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            IDataBreachesFormatter dataBreaches = new TxtFileDataBreaches()
+            {
+                txtDataBreaches = "rfkg s67r sjdh liks"
+            };
+
+            List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
+            expectedUserPasswordPairList.Add(aUserPasswordPair);
+
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
+        }
+
+        [TestMethod]
+        public void MultiplePasswordsAndCreditCardsOfUserAppearedInTxtFileDataBreaches()
+        {
+            var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+            var anotherUserPasswordPair = LoadTestCategoryToMyUserWithAnotherUserPasswordPair();
+
+            var aCreditCard = LoadTestCategoryToMyUserWithACreditCard();
+            var anotherCreditCard = LoadTestCategoryToMyUserWithAnotherCreditCard();
+
+            IDataBreachesFormatter dataBreaches = new TxtFileDataBreaches()
+            {
+                txtDataBreaches = "thisIsAPassword\t1234 5678 9123 4222\tHello\tthisIsAnotherPassword\t1234 5678 9123 4567\t"
+            };
+
+            List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
+            expectedUserPasswordPairList.Add(aUserPasswordPair);
+            expectedUserPasswordPairList.Add(anotherUserPasswordPair);
+
+            List<CreditCard> expectedCreditCardList = new List<CreditCard>();
+            expectedCreditCardList.Add(aCreditCard);
+            expectedCreditCardList.Add(anotherCreditCard);
+
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item2, expectedCreditCardList);
+        }
+
+        [TestMethod]
+        public void NoPasswordsOrCreditCardsOfUserAppearedInTxtFileDataBreaches()
+        {
+            var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+            var anotherUserPasswordPair = LoadTestCategoryToMyUserWithAnotherUserPasswordPair();
+
+            var aCreditCard = LoadTestCategoryToMyUserWithACreditCard();
+            var anotherCreditCard = LoadTestCategoryToMyUserWithAnotherCreditCard();
+
+            IDataBreachesFormatter dataBreaches = new TxtFileDataBreaches()
+            {
+                txtDataBreaches = "Sof\t1234 5678 2333 4222\tHello\tthisPassword\t1235 5665 9123 4567\t"
+            };
+
+            List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
+
+            List<CreditCard> expectedCreditCardList = new List<CreditCard>();
+
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item1, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).Item2, expectedCreditCardList);
+        }
+
+        [TestMethod]
+        public void PasswordUsedInMultipleSitesOfUserAppearedInTxtFileDataBreaches()
         {
             var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
 

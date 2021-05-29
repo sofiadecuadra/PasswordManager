@@ -3,7 +3,6 @@ using System.IO;
 using System.Windows.Forms;
 using DataManagerDomain;
 
-
 namespace PasswordsManagerUserInterface.DataBreach
 {
     public partial class DataBreachesMethodSelection : UserControl
@@ -46,23 +45,26 @@ namespace PasswordsManagerUserInterface.DataBreach
         {
             if (dataBreachesOFileDialog.ShowDialog() == DialogResult.OK)
             {
-                var fileContent = string.Empty;
-                var filePath = string.Empty;
-
-                //Get the path of specified file
-                filePath = dataBreachesOFileDialog.FileName;
-
-                //Read the contents of the file into a stream
-                var fileStream = dataBreachesOFileDialog.OpenFile();
-
-                using (StreamReader reader = new StreamReader(fileStream))
+                IDataBreachesFormatter textBoxDataBreaches = new TxtFileDataBreaches()
                 {
-                    fileContent = reader.ReadToEnd();
-                }
-
-                MessageBox.Show(fileContent, "File Content at path: " + filePath, MessageBoxButtons.OK);
+                    txtDataBreaches = ReadFileContent()
+                };
+                LoadDataBreachesResult(textBoxDataBreaches);
             }
+        }
 
+        private string ReadFileContent()
+        {
+            var fileStream = dataBreachesOFileDialog.OpenFile();
+            StreamReader reader = new StreamReader(fileStream);
+            return reader.ReadToEnd();
+        }
+
+        private void LoadDataBreachesResult(IDataBreachesFormatter dataBreaches)
+        {
+            ClearControls();
+            UserControl dataBreachesResult = new DataBreachesResult(PasswordManager, PnlMainWindow, dataBreaches);
+            AddUserControl(dataBreachesResult);
         }
     }
 }
