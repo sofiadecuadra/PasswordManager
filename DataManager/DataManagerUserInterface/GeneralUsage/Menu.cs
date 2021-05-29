@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using DataManagerDomain;
+using PasswordsManagerUserInterface.DataBreach;
 
 namespace PasswordsManagerUserInterface
 {
@@ -47,7 +48,7 @@ namespace PasswordsManagerUserInterface
         private void btnCheckDataBreaches_Click(object sender, EventArgs e)
         {
             ClearControls();
-            UserControl checkDataBreaches = new CheckDataBreaches(PasswordManager, PnlMainWindow);
+            UserControl checkDataBreaches = new DataBreachesMethodSelection(PasswordManager, PnlMainWindow);
             AddUserControl(checkDataBreaches);
         }
 

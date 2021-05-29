@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DataManagerDomain;
-using System;
 
 namespace DataManagerTest
 {

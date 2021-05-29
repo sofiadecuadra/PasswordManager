@@ -57,6 +57,12 @@
     <Compile Include="CreditCard\AddCreditCard.Designer.cs">
       <DependentUpon>AddCreditCard.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataBreach\DataBreachesMethodSelection.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataBreach\DataBreachesMethodSelection.Designer.cs">
+      <DependentUpon>DataBreachesMethodSelection.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserPasswordPair\AddUserPasswordPair.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -69,11 +75,11 @@
     <Compile Include="GeneralUsage\ChangeMasterPassword.Designer.cs">
       <DependentUpon>ChangeMasterPassword.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataBreach\CheckDataBreaches.cs">
+    <Compile Include="DataBreach\CheckTextBoxDataBreaches.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DataBreach\CheckDataBreaches.Designer.cs">
-      <DependentUpon>CheckDataBreaches.cs</DependentUpon>
+    <Compile Include="DataBreach\CheckTextBoxDataBreaches.Designer.cs">
+      <DependentUpon>CheckTextBoxDataBreaches.cs</DependentUpon>
     </Compile>
     <Compile Include="DataBreach\DataBreachesResult.cs">
       <SubType>UserControl</SubType>
@@ -209,6 +215,9 @@
     <EmbeddedResource Include="Category\CategoryForm.resx">
       <DependentUpon>CategoryForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DataBreach\DataBreachesMethodSelection.resx">
+      <DependentUpon>DataBreachesMethodSelection.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GeneralUsage\ChangeMasterPassword.resx">
       <DependentUpon>ChangeMasterPassword.cs</DependentUpon>
     </EmbeddedResource>
@@ -233,8 +242,8 @@
     <EmbeddedResource Include="UserPasswordPair\AddUserPasswordPair.resx">
       <DependentUpon>AddUserPasswordPair.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DataBreach\CheckDataBreaches.resx">
-      <DependentUpon>CheckDataBreaches.cs</DependentUpon>
+    <EmbeddedResource Include="DataBreach\CheckTextBoxDataBreaches.resx">
+      <DependentUpon>CheckTextBoxDataBreaches.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataBreach\DataBreachesResult.resx">
       <DependentUpon>DataBreachesResult.cs</DependentUpon>

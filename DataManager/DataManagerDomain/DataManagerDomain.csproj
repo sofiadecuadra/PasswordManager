@@ -44,21 +44,21 @@
   <ItemGroup>
     <Compile Include="Category.cs" />
     <Compile Include="NormalCategory.cs" />
-    <Compile Include="ExceptionCategoryAlreadyExists.cs" />
-    <Compile Include="ExceptionCategoryNotExists.cs" />
-    <Compile Include="ExceptionCreditCardCodeHasNonNumericCharacters.cs" />
-    <Compile Include="ExceptionCreditCardDoesNotContainOnlyDigits.cs" />
-    <Compile Include="ExceptionCreditCardDoesNotExist.cs" />
-    <Compile Include="ExceptionCreditCardNumberAlreadyExistsInUser.cs" />
-    <Compile Include="ExceptionExistingUserPasswordPair.cs" />
-    <Compile Include="ExceptionIncorrectGenerationPasswordType.cs" />
-    <Compile Include="ExceptionIncorrectMasterPassword.cs" />
-    <Compile Include="ExceptionUserDoesNotExist.cs" />
-    <Compile Include="ExceptionUsernameContainsSpaces.cs" />
-    <Compile Include="ExceptionUserPasswordPairDoesNotExist.cs" />
-    <Compile Include="ExceptionIncorrectLength.cs" />
-    <Compile Include="ExceptionCreditCardHasExpired.cs" />
-    <Compile Include="ExceptionUserPasswordPairIsNotSharedWithAnyone.cs" />
+    <Compile Include="Exceptions\ExceptionCategoryAlreadyExists.cs" />
+    <Compile Include="Exceptions\ExceptionCategoryNotExists.cs" />
+    <Compile Include="Exceptions\ExceptionCreditCardCodeHasNonNumericCharacters.cs" />
+    <Compile Include="Exceptions\ExceptionCreditCardDoesNotContainOnlyDigits.cs" />
+    <Compile Include="Exceptions\ExceptionCreditCardDoesNotExist.cs" />
+    <Compile Include="Exceptions\ExceptionCreditCardNumberAlreadyExistsInUser.cs" />
+    <Compile Include="Exceptions\ExceptionExistingUserPasswordPair.cs" />
+    <Compile Include="Exceptions\ExceptionIncorrectGenerationPasswordType.cs" />
+    <Compile Include="Exceptions\ExceptionIncorrectMasterPassword.cs" />
+    <Compile Include="Exceptions\ExceptionUserDoesNotExist.cs" />
+    <Compile Include="Exceptions\ExceptionUsernameContainsSpaces.cs" />
+    <Compile Include="Exceptions\ExceptionUserPasswordPairDoesNotExist.cs" />
+    <Compile Include="Exceptions\ExceptionIncorrectLength.cs" />
+    <Compile Include="Exceptions\ExceptionCreditCardHasExpired.cs" />
+    <Compile Include="Exceptions\ExceptionUserPasswordPairIsNotSharedWithAnyone.cs" />
     <Compile Include="IDataBreachesFormatter.cs" />
     <Compile Include="SpecialCategory.cs" />
     <Compile Include="TextBoxDataBreaches.cs" />
@@ -67,6 +67,7 @@
     <Compile Include="DataManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CreditCard.cs" />
+    <Compile Include="TxtFileDataBreaches.cs" />
     <Compile Include="UserPasswordPair.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
