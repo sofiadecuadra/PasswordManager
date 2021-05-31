@@ -4,15 +4,14 @@ using System.Windows.Forms;
 
 namespace PasswordsManagerUserInterface
 {
-    public partial class ModifyUserPasswordPairExposedInDataBreaches : UserControl
+    public partial class ModifyUserPasswordPairFromDataBreachesHistory : UserControl
     {
         public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public UserPasswordPairForm Form { get; private set; }
         public UserPasswordPair PasswordToModify { get; private set; }
         public DataBreach DataBreach { get; private set; }
-
-        public ModifyUserPasswordPairExposedInDataBreaches(DataManager aPasswordManager, Panel panel, UserPasswordPair password, DataBreach dataBreach)
+        public ModifyUserPasswordPairFromDataBreachesHistory(DataManager aPasswordManager, Panel panel, UserPasswordPair password, DataBreach dataBreach)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
@@ -21,7 +20,6 @@ namespace PasswordsManagerUserInterface
             DataBreach = dataBreach;
             LoadUserPasswordPairForm(password);
         }
-
         private void LoadUserPasswordPairForm(UserPasswordPair PasswordToModify)
         {
             pnlModifyUserPasswordPair.Controls.Clear();
@@ -29,7 +27,7 @@ namespace PasswordsManagerUserInterface
             pnlModifyUserPasswordPair.Controls.Add(Form);
         }
 
-        private void btnAccept_Click_1(object sender, EventArgs e)
+        private void btnAccept_Click(object sender, EventArgs e)
         {
             try
             {
@@ -40,7 +38,6 @@ namespace PasswordsManagerUserInterface
                 MessageBox.Show(ex.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         public void ModifyPassword()
         {
             UserPasswordPair newPassword = CreatePassword();
@@ -69,8 +66,8 @@ namespace PasswordsManagerUserInterface
         private void GoBack()
         {
             PnlMainWindow.Controls.Clear();
-            UserControl dataBreachesResult = new DataBreachesResult(PasswordManager, PnlMainWindow, DataBreach);
-            PnlMainWindow.Controls.Add(dataBreachesResult);
+            UserControl dataBreachHistoryResult = new DataBreachHistoryResult(PasswordManager, PnlMainWindow, DataBreach);
+            PnlMainWindow.Controls.Add(dataBreachHistoryResult);
         }
 
         private void btnBack_Click(object sender, EventArgs e)

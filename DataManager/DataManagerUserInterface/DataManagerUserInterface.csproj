@@ -57,11 +57,29 @@
     <Compile Include="CreditCard\AddCreditCard.Designer.cs">
       <DependentUpon>AddCreditCard.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataBreach\DataBreachHistoryResult.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataBreach\DataBreachHistoryResult.Designer.cs">
+      <DependentUpon>DataBreachHistoryResult.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataBreach\DataBreachesHistory.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataBreach\DataBreachesHistory.Designer.cs">
+      <DependentUpon>DataBreachesHistory.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataBreach\DataBreachesMethodSelection.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="DataBreach\DataBreachesMethodSelection.Designer.cs">
       <DependentUpon>DataBreachesMethodSelection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataBreach\ModifyUserPasswordPairFromDataBreachesHistory.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataBreach\ModifyUserPasswordPairFromDataBreachesHistory.Designer.cs">
+      <DependentUpon>ModifyUserPasswordPairFromDataBreachesHistory.cs</DependentUpon>
     </Compile>
     <Compile Include="UserPasswordPair\AddUserPasswordPair.cs">
       <SubType>UserControl</SubType>
@@ -215,6 +233,12 @@
     <EmbeddedResource Include="Category\CategoryForm.resx">
       <DependentUpon>CategoryForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DataBreach\DataBreachHistoryResult.resx">
+      <DependentUpon>DataBreachHistoryResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataBreach\DataBreachesHistory.resx">
+      <DependentUpon>DataBreachesHistory.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DataBreach\DataBreachesMethodSelection.resx">
       <DependentUpon>DataBreachesMethodSelection.cs</DependentUpon>
     </EmbeddedResource>
@@ -239,6 +263,9 @@
     <Compile Include="UserPasswordPair\UserPasswordPairForm.Designer.cs">
       <DependentUpon>UserPasswordPairForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="DataBreach\ModifyUserPasswordPairFromDataBreachesHistory.resx">
+      <DependentUpon>ModifyUserPasswordPairFromDataBreachesHistory.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserPasswordPair\AddUserPasswordPair.resx">
       <DependentUpon>AddUserPasswordPair.cs</DependentUpon>
     </EmbeddedResource>

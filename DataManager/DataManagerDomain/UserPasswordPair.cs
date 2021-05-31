@@ -30,7 +30,7 @@ namespace DataManagerDomain
             set { site = value.ToLower(); }
         }
         public string Notes { get; set; }
-        public DateTime LastModifiedDate { get; private set; }
+        public DateTime LastModifiedDate { get; set; }
         public NormalCategory Category { get; set; }
         public PasswordStrengthType PasswordStrength { get; private set; }
 

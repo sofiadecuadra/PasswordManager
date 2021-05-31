@@ -3,7 +3,7 @@ using System.IO;
 using System.Windows.Forms;
 using DataManagerDomain;
 
-namespace PasswordsManagerUserInterface.DataBreach
+namespace PasswordsManagerUserInterface
 {
     public partial class DataBreachesMethodSelection : UserControl
     {
@@ -65,6 +65,13 @@ namespace PasswordsManagerUserInterface.DataBreach
             ClearControls();
             UserControl dataBreachesResult = new DataBreachesResult(PasswordManager, PnlMainWindow, dataBreaches);
             AddUserControl(dataBreachesResult);
+        }
+
+        private void btnDataBreachesHistory_Click(object sender, EventArgs e)
+        {
+            ClearControls();
+            UserControl dataBreachesHistory = new DataBreachesHistory(PasswordManager, PnlMainWindow);
+            AddUserControl(dataBreachesHistory);
         }
     }
 }

@@ -32,10 +32,10 @@ namespace PasswordsManagerUserInterface
             this.lblResult = new System.Windows.Forms.Label();
             this.lblExposedPasswords = new System.Windows.Forms.Label();
             this.lblExposedCreditCards = new System.Windows.Forms.Label();
-            this.btnBack = new System.Windows.Forms.Button();
-            this.btnMenu = new System.Windows.Forms.Button();
             this.dgvExposedPasswords = new System.Windows.Forms.DataGridView();
             this.dgvExposedCreditCards = new System.Windows.Forms.DataGridView();
+            this.btnBack = new System.Windows.Forms.Button();
+            this.btnMenu = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvExposedPasswords)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvExposedCreditCards)).BeginInit();
             this.SuspendLayout();
@@ -43,7 +43,7 @@ namespace PasswordsManagerUserInterface
             // lblResult
             // 
             this.lblResult.AutoSize = true;
-            this.lblResult.Location = new System.Drawing.Point(758, 90);
+            this.lblResult.Location = new System.Drawing.Point(758, 116);
             this.lblResult.Name = "lblResult";
             this.lblResult.Size = new System.Drawing.Size(73, 25);
             this.lblResult.TabIndex = 0;
@@ -52,7 +52,7 @@ namespace PasswordsManagerUserInterface
             // lblExposedPasswords
             // 
             this.lblExposedPasswords.AutoSize = true;
-            this.lblExposedPasswords.Location = new System.Drawing.Point(114, 152);
+            this.lblExposedPasswords.Location = new System.Drawing.Point(114, 156);
             this.lblExposedPasswords.Name = "lblExposedPasswords";
             this.lblExposedPasswords.Size = new System.Drawing.Size(443, 25);
             this.lblExposedPasswords.TabIndex = 3;
@@ -61,32 +61,11 @@ namespace PasswordsManagerUserInterface
             // lblExposedCreditCards
             // 
             this.lblExposedCreditCards.AutoSize = true;
-            this.lblExposedCreditCards.Location = new System.Drawing.Point(105, 498);
+            this.lblExposedCreditCards.Location = new System.Drawing.Point(105, 502);
             this.lblExposedCreditCards.Name = "lblExposedCreditCards";
             this.lblExposedCreditCards.Size = new System.Drawing.Size(452, 25);
             this.lblExposedCreditCards.TabIndex = 4;
             this.lblExposedCreditCards.Text = "The following credit cards have been exposed";
-            // 
-            // btnBack
-            // 
-            this.btnBack.Location = new System.Drawing.Point(1212, 44);
-            this.btnBack.Margin = new System.Windows.Forms.Padding(6);
-            this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(290, 44);
-            this.btnBack.TabIndex = 7;
-            this.btnBack.Text = "Back to Data Breaches";
-            this.btnBack.UseVisualStyleBackColor = true;
-            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
-            // 
-            // btnMenu
-            // 
-            this.btnMenu.Location = new System.Drawing.Point(110, 44);
-            this.btnMenu.Name = "btnMenu";
-            this.btnMenu.Size = new System.Drawing.Size(176, 44);
-            this.btnMenu.TabIndex = 8;
-            this.btnMenu.Text = "Back to Menu";
-            this.btnMenu.UseVisualStyleBackColor = true;
-            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
             // 
             // dgvExposedPasswords
             // 
@@ -96,7 +75,7 @@ namespace PasswordsManagerUserInterface
             this.dgvExposedPasswords.AllowUserToResizeRows = false;
             this.dgvExposedPasswords.ColumnHeadersHeight = 40;
             this.dgvExposedPasswords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvExposedPasswords.Location = new System.Drawing.Point(110, 183);
+            this.dgvExposedPasswords.Location = new System.Drawing.Point(110, 187);
             this.dgvExposedPasswords.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.dgvExposedPasswords.MultiSelect = false;
             this.dgvExposedPasswords.Name = "dgvExposedPasswords";
@@ -118,7 +97,7 @@ namespace PasswordsManagerUserInterface
             this.dgvExposedCreditCards.AllowUserToResizeRows = false;
             this.dgvExposedCreditCards.ColumnHeadersHeight = 40;
             this.dgvExposedCreditCards.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvExposedCreditCards.Location = new System.Drawing.Point(110, 529);
+            this.dgvExposedCreditCards.Location = new System.Drawing.Point(110, 533);
             this.dgvExposedCreditCards.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.dgvExposedCreditCards.MultiSelect = false;
             this.dgvExposedCreditCards.Name = "dgvExposedCreditCards";
@@ -131,14 +110,35 @@ namespace PasswordsManagerUserInterface
             this.dgvExposedCreditCards.Size = new System.Drawing.Size(1400, 274);
             this.dgvExposedCreditCards.TabIndex = 12;
             // 
+            // btnBack
+            // 
+            this.btnBack.Location = new System.Drawing.Point(1220, 39);
+            this.btnBack.Margin = new System.Windows.Forms.Padding(6);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(290, 44);
+            this.btnBack.TabIndex = 13;
+            this.btnBack.Text = "Back to Data Breaches";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click_1);
+            // 
+            // btnMenu
+            // 
+            this.btnMenu.Location = new System.Drawing.Point(110, 39);
+            this.btnMenu.Name = "btnMenu";
+            this.btnMenu.Size = new System.Drawing.Size(176, 44);
+            this.btnMenu.TabIndex = 14;
+            this.btnMenu.Text = "Back to Menu";
+            this.btnMenu.UseVisualStyleBackColor = true;
+            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click_1);
+            // 
             // DataBreachesResult
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnBack);
+            this.Controls.Add(this.btnMenu);
             this.Controls.Add(this.dgvExposedCreditCards);
             this.Controls.Add(this.dgvExposedPasswords);
-            this.Controls.Add(this.btnMenu);
-            this.Controls.Add(this.btnBack);
             this.Controls.Add(this.lblExposedCreditCards);
             this.Controls.Add(this.lblExposedPasswords);
             this.Controls.Add(this.lblResult);
@@ -156,9 +156,9 @@ namespace PasswordsManagerUserInterface
         private System.Windows.Forms.Label lblResult;
         private System.Windows.Forms.Label lblExposedPasswords;
         private System.Windows.Forms.Label lblExposedCreditCards;
-        private System.Windows.Forms.Button btnBack;
-        private System.Windows.Forms.Button btnMenu;
         private System.Windows.Forms.DataGridView dgvExposedPasswords;
         private System.Windows.Forms.DataGridView dgvExposedCreditCards;
+        private System.Windows.Forms.Button btnBack;
+        private System.Windows.Forms.Button btnMenu;
     }
 }

@@ -29,6 +29,7 @@ namespace DataManagerDomain
         private List<UserPasswordPair> yellowUserPasswordPairs;
         private List<UserPasswordPair> lightGreenUserPasswordPairs;
         private List<UserPasswordPair> darkGreenUserPasswordPairs;
+        public List <DataBreach> DataBreaches { get; private set; }
 
         public User()
         {
@@ -38,6 +39,7 @@ namespace DataManagerDomain
             yellowUserPasswordPairs = new List<UserPasswordPair>();
             lightGreenUserPasswordPairs = new List<UserPasswordPair>();
             darkGreenUserPasswordPairs = new List<UserPasswordPair>();
+            DataBreaches = new List<DataBreach>();
             sharedPasswords = new SpecialCategory()
             {
                 User = this,
@@ -98,6 +100,14 @@ namespace DataManagerDomain
             AddLightGreenPasswordsStrengthReport(listWithStrengthReport);
             AddDarkGreenPasswordsStrengthReport(listWithStrengthReport);
             return listWithStrengthReport.ToArray();
+        }
+
+        private void AddDataBreach(DataBreach aDataBreach)
+        {
+            if (aDataBreach.LeakedCreditCards.Count > 0 || aDataBreach.LeakedUserPasswordPairs.Count > 0)
+            {
+                DataBreaches.Add(aDataBreach);
+            }
         }
 
         private void AddRedPasswordsStrengthReport(List<Tuple<PasswordStrengthType, int>> listWithStrengthReport)
@@ -439,19 +449,18 @@ namespace DataManagerDomain
             return userPasswordPair != null ? userPasswordPair : throw new ExceptionUserPasswordPairDoesNotExist("The User-Password Pair does not exist");
         }
 
-        public (List<UserPasswordPair>, List<CreditCard>) CheckDataBreaches(IDataBreachesFormatter dataBreaches)
+        public DataBreach CheckDataBreaches(IDataBreachesFormatter dataBreachData)
         {
-            List<CreditCard> leakedCreditCardsOfUserList = new List<CreditCard>();
-            List<UserPasswordPair> leakedPasswordsOfUserList = new List<UserPasswordPair>();
-            string[] leakedData = dataBreaches.ConvertToArray();
+            DataBreach dataBreach = new DataBreach();
+            string[] leakedData = dataBreachData.ConvertToArray();
             foreach (string element in leakedData)
             {
                 if (ItsACreditCard(element.Trim()))
                 {
                     CreditCard aLeakedCreditCardOfUser = ReturnCreditCardThatAppeardInDataBreaches(element.Trim());
-                    if (aLeakedCreditCardOfUser != null && !leakedCreditCardsOfUserList.Contains(aLeakedCreditCardOfUser))
+                    if (aLeakedCreditCardOfUser != null && !dataBreach.LeakedCreditCards.Contains(aLeakedCreditCardOfUser))
                     {
-                        leakedCreditCardsOfUserList.Add(aLeakedCreditCardOfUser);
+                        dataBreach.AddLeakedCreditCard(aLeakedCreditCardOfUser);
                     }
                 }
                 else
@@ -459,14 +468,33 @@ namespace DataManagerDomain
                     List<UserPasswordPair> leakedPasswordsOfUser = ReturnListOfUserPasswordPairWhosePasswordAppearedInDataBreaches(element.Trim());
                     foreach (UserPasswordPair pair in leakedPasswordsOfUser)
                     {
-                        if (!leakedPasswordsOfUserList.Contains(pair))
+                        if (!dataBreach.LeakedUserPasswordPairs.Contains(pair))
                         {
-                            leakedPasswordsOfUserList.Add(pair);
+                            dataBreach.AddLeakedUserPasswordPair(pair);
                         }
                     }
                 }
             }
-            return (leakedPasswordsOfUserList, leakedCreditCardsOfUserList);
+            AddDataBreach(dataBreach);
+            return dataBreach;
+        }
+
+        public (List <UserPasswordPair>, List<UserPasswordPair>) GetModifiedAndNotModifiedLeakedPasswords(DataBreach aDataBreach)
+        {
+            List<UserPasswordPair> notModifiedPasswords = new List<UserPasswordPair>();
+            List<UserPasswordPair> modifiedPasswords = new List<UserPasswordPair>();
+                foreach(UserPasswordPair pair in aDataBreach.LeakedUserPasswordPairs)
+                {
+                    if (aDataBreach.PasswordWasModified(pair))
+                    {
+                        modifiedPasswords.Add(pair);
+                    }
+                    else
+                    {
+                        notModifiedPasswords.Add(pair);
+                    }
+                }
+            return (notModifiedPasswords, modifiedPasswords);
         }
 
         private bool ItsACreditCard(string element)
