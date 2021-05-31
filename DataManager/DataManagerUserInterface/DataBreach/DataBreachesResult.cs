@@ -24,9 +24,9 @@ namespace PasswordsManagerUserInterface
 
         private void LoadExposedPasswordsAndCreditCards()
         {
-            (List<UserPasswordPair>, List<CreditCard>) ExposedPasswordsAndCreditCards = PasswordManager.CurrentUser.CheckDataBreaches(DataBreaches);
-            LoadExposedPasswords(ExposedPasswordsAndCreditCards.Item1);
-            LoadExposedCreditCards(ExposedPasswordsAndCreditCards.Item2);
+            DataBreach aDataBreach = PasswordManager.CurrentUser.CheckDataBreaches(DataBreaches);
+            LoadExposedPasswords(aDataBreach.LeakedUserPasswordPairs);
+            LoadExposedCreditCards(aDataBreach.LeakedCreditCards);
         }
 
         private void LoadExposedPasswords(List<UserPasswordPair> exposedPasswords)

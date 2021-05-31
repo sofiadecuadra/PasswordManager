@@ -1,5 +1,5 @@
 ﻿
-namespace PasswordsManagerUserInterface.DataBreach
+namespace PasswordsManagerUserInterface
 {
     partial class DataBreachesMethodSelection
     {

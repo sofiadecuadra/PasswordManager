@@ -1,5 +1,5 @@
 ﻿using DataManagerDomain;
-using PasswordsManagerUserInterface.DataBreach;
+using PasswordsManagerUserInterface;
 using System;
 using System.Windows.Forms;
 

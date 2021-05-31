@@ -3,7 +3,7 @@ using System.IO;
 using System.Windows.Forms;
 using DataManagerDomain;
 
-namespace PasswordsManagerUserInterface.DataBreach
+namespace PasswordsManagerUserInterface
 {
     public partial class DataBreachesMethodSelection : UserControl
     {
