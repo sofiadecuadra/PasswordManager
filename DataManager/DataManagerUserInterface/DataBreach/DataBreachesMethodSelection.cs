@@ -66,5 +66,12 @@ namespace PasswordsManagerUserInterface
             UserControl dataBreachesResult = new DataBreachesResult(PasswordManager, PnlMainWindow, dataBreaches);
             AddUserControl(dataBreachesResult);
         }
+
+        private void btnDataBreachesHistory_Click(object sender, EventArgs e)
+        {
+            ClearControls();
+            UserControl dataBreachesHistory = new DataBreachesHistory(PasswordManager, PnlMainWindow);
+            AddUserControl(dataBreachesHistory);
+        }
     }
 }

@@ -176,5 +176,19 @@ namespace PasswordsManagerUserInterface
         {
             PnlMainWindow.Controls.Add(aUserControl);
         }
+
+        private void btnMenu_Click_1(object sender, EventArgs e)
+        {
+            ClearControls();
+            UserControl menu = new Menu(PasswordManager, PnlMainWindow);
+            AddUserControl(menu);
+        }
+
+        private void btnBack_Click_1(object sender, EventArgs e)
+        {
+            ClearControls();
+            UserControl checkDataBreaches = new CheckDataBreaches(PasswordManager, PnlMainWindow);
+            AddUserControl(checkDataBreaches);
+        }
     }
 }
