@@ -104,7 +104,10 @@ namespace DataManagerDomain
 
         private void AddDataBreach(DataBreach aDataBreach)
         {
-            DataBreaches.Add(aDataBreach);
+            if (aDataBreach.LeakedCreditCards.Count > 0 || aDataBreach.LeakedUserPasswordPairs.Count > 0)
+            {
+                DataBreaches.Add(aDataBreach);
+            }
         }
 
         private void AddRedPasswordsStrengthReport(List<Tuple<PasswordStrengthType, int>> listWithStrengthReport)

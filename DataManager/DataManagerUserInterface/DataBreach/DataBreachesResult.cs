@@ -10,6 +10,7 @@ namespace PasswordsManagerUserInterface
         public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public IDataBreachesFormatter DataBreaches { get; private set; }
+        public DataBreach DataBreach { get; private set; }
         private readonly DataGridViewButtonColumn modifyExposedPassword;
 
         public DataBreachesResult(DataManager aPasswordManager, Panel aPanel, IDataBreachesFormatter dataBreaches)
@@ -19,14 +20,31 @@ namespace PasswordsManagerUserInterface
             PnlMainWindow = aPanel;
             DataBreaches = dataBreaches;
             modifyExposedPassword = new DataGridViewButtonColumn();
-            LoadExposedPasswordsAndCreditCards();
+            LoadNewDataBreach();
         }
 
-        private void LoadExposedPasswordsAndCreditCards()
+        public DataBreachesResult(DataManager aPasswordManager, Panel aPanel, DataBreach dataBreach)
         {
-            DataBreach aDataBreach = PasswordManager.CurrentUser.CheckDataBreaches(DataBreaches);
-            LoadExposedPasswords(aDataBreach.LeakedUserPasswordPairs);
-            LoadExposedCreditCards(aDataBreach.LeakedCreditCards);
+            InitializeComponent();
+            PasswordManager = aPasswordManager;
+            PnlMainWindow = aPanel;
+            DataBreach = dataBreach;
+            modifyExposedPassword = new DataGridViewButtonColumn();
+            ReloadDataBreach();
+        }
+
+        private void LoadNewDataBreach()
+        {
+            DataBreach = PasswordManager.CurrentUser.CheckDataBreaches(DataBreaches);
+            LoadExposedPasswords(DataBreach.LeakedUserPasswordPairs);
+            LoadExposedCreditCards(DataBreach.LeakedCreditCards);
+        }
+
+        private void ReloadDataBreach()
+        {
+            List<UserPasswordPair> NotModifiedExposedPasswords = PasswordManager.CurrentUser.GetModifiedAndNotModifiedLeakedPasswords(DataBreach).Item1;
+            LoadExposedPasswords(NotModifiedExposedPasswords);
+            LoadExposedCreditCards(DataBreach.LeakedCreditCards);
         }
 
         private void LoadExposedPasswords(List<UserPasswordPair> exposedPasswords)
@@ -157,7 +175,7 @@ namespace PasswordsManagerUserInterface
             {
                 UserPasswordPair selected = SelectedUserPasswordPair(e.RowIndex);
                 ClearControls();
-                UserControl modifyUserPasswordPairControl = new ModifyUserPasswordPairExposedInDataBreaches(PasswordManager, PnlMainWindow, selected, DataBreaches);
+                UserControl modifyUserPasswordPairControl = new ModifyUserPasswordPairExposedInDataBreaches(PasswordManager, PnlMainWindow, selected, DataBreach);
                 AddUserControl(modifyUserPasswordPairControl);
             }
         }

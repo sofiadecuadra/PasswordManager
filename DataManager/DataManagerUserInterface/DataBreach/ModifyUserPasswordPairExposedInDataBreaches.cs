@@ -10,15 +10,15 @@ namespace PasswordsManagerUserInterface
         public Panel PnlMainWindow { get; private set; }
         public UserPasswordPairForm Form { get; private set; }
         public UserPasswordPair PasswordToModify { get; private set; }
-        public IDataBreachesFormatter DataBreaches { get; private set; }
+        public DataBreach DataBreach { get; private set; }
 
-        public ModifyUserPasswordPairExposedInDataBreaches(DataManager aPasswordManager, Panel panel, UserPasswordPair password, IDataBreachesFormatter dataBreaches)
+        public ModifyUserPasswordPairExposedInDataBreaches(DataManager aPasswordManager, Panel panel, UserPasswordPair password, DataBreach dataBreach)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
             PnlMainWindow = panel;
             PasswordToModify = password;
-            DataBreaches = dataBreaches;
+            DataBreach = dataBreach;
             LoadUserPasswordPairForm(password);
         }
 
@@ -69,7 +69,7 @@ namespace PasswordsManagerUserInterface
         private void GoBack()
         {
             PnlMainWindow.Controls.Clear();
-            UserControl dataBreachesResult = new DataBreachesResult(PasswordManager, PnlMainWindow, DataBreaches);
+            UserControl dataBreachesResult = new DataBreachesResult(PasswordManager, PnlMainWindow, DataBreach);
             PnlMainWindow.Controls.Add(dataBreachesResult);
         }
 
