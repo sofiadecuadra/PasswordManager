@@ -300,5 +300,15 @@ namespace DataManagerTest
             Assert.IsTrue(suggestionsTakenIntoAccount.Item2);
             Assert.IsTrue(suggestionsTakenIntoAccount.Item3);
         }
+
+        [TestMethod]
+        public void PasswordIsNotSecure()
+        {
+            Tuple<bool, bool, bool> suggestionsTakenIntoAccount = aUser.PasswordSuggestionsAreTakenIntoAccount("myPassword");
+            Assert.IsFalse(suggestionsTakenIntoAccount.Item1);
+            Assert.IsTrue(suggestionsTakenIntoAccount.Item2);
+            Assert.IsTrue(suggestionsTakenIntoAccount.Item3);
+        }
+
     }
 }
