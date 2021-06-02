@@ -23,44 +23,6 @@ namespace DataManagerTest
         }
 
         [TestMethod]
-        public void RemoveCreditCardNormally()
-        {
-            CreditCard aCreditCard = new CreditCard()
-            {
-                Number = "1234567891234567",
-                Type = "Visa",
-                Name = "Visa Gold",
-                Code = "234",
-                Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25),
-                Category = aCategory,
-            };
-
-            aCategory.AddCreditCard(aCreditCard);
-            Assert.IsTrue(aCategory.RemoveCreditCard(aCreditCard.Number));
-            Assert.IsFalse(aUser.CreditCardNumberExists(aCreditCard.Number));
-            Assert.AreEqual(0, aCategory.GetCreditCards().Length);
-
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ExceptionCreditCardDoesNotExist))]
-        public void RemoveCreditCardThatDoesNotExist()
-        {
-            CreditCard aCreditCard = new CreditCard()
-            {
-                Number = "1234567891234567",
-                Type = "Visa",
-                Name = "Visa Gold",
-                Code = "234",
-                Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25),
-                Category = aCategory,
-            };
-            aCategory.RemoveCreditCard(aCreditCard.Number);
-        }
-
-        [TestMethod]
         public void RemoveDarkGreenUserPasswordPair()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()

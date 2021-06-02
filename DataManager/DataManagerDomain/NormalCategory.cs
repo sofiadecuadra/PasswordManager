@@ -57,7 +57,7 @@ namespace DataManagerDomain
         {
             if (ModifiedCreditCardIsValid(oldCreditCard, newCreditCard))
             {            
-                RemoveCreditCard(oldCreditCard.Number);
+                RemoveCreditCard(oldCreditCard);
                 if (HasSameCategory(oldCreditCard.Category, newCreditCard.Category))
                 {
                     AddCreditCardToCollection(newCreditCard);
@@ -84,14 +84,18 @@ namespace DataManagerDomain
             return oldCreditCardNumber == newCreditCardNumber;
         }
 
-        public bool RemoveCreditCard(string number)
+        private bool RemoveCreditCardFromCollection(string aCreditCardNumber)
         {
-            if (!CreditCardNumberAlreadyExistsInCategory(number))
-            {
-                throw new ExceptionCreditCardDoesNotExist($"The credit card {number} does not exist in this category");
-            }
+            return creditCards.Remove(aCreditCardNumber);
+        }
 
-            creditCards.Remove(number);
+        public bool RemoveCreditCard(CreditCard aCreditCard)
+        {
+            if (!RemoveCreditCardFromCollection(aCreditCard.Number))
+            {
+                throw new ExceptionCreditCardDoesNotExist($"The credit card {aCreditCard.Number} does not exist in this category");
+            }
+            User.RemoveCreditCardFromDataBreaches(aCreditCard);
             return true;
         }
 
@@ -364,6 +368,7 @@ namespace DataManagerDomain
             }
             RemoveUserPasswordPairFromCollection(aUserPasswordPair);
             DeleteUserPasswordPairFromStrengthGroup(aUserPasswordPair);
+
             return true;
         }
 
