@@ -119,7 +119,7 @@ namespace PasswordsManagerUserInterface
         private void RemoveCreditCard()
         {
             CreditCard selected = SelectedCreditCard();
-            selected.Category.RemoveCreditCard(selected.Number);
+            selected.Category.RemoveCreditCard(selected);
             dgvCreditCards.DataSource = GetCreditCards();
         }
 

@@ -36,15 +36,15 @@ namespace PasswordsManagerUserInterface
         private void LoadNewDataBreach()
         {
             DataBreach = PasswordManager.CurrentUser.CheckDataBreaches(DataBreaches);
-            LoadExposedPasswords(DataBreach.LeakedUserPasswordPairs);
-            LoadExposedCreditCards(DataBreach.LeakedCreditCards);
+            LoadExposedPasswords(DataBreach.LeakedUserPasswordPairsOfUser);
+            LoadExposedCreditCards(DataBreach.LeakedCreditCardsOfUser);
         }
 
         private void ReloadDataBreach()
         {
             List<UserPasswordPair> NotModifiedExposedPasswords = PasswordManager.CurrentUser.GetModifiedAndNotModifiedLeakedPasswords(DataBreach).Item1;
             LoadExposedPasswords(NotModifiedExposedPasswords);
-            LoadExposedCreditCards(DataBreach.LeakedCreditCards);
+            LoadExposedCreditCards(DataBreach.LeakedCreditCardsOfUser);
         }
 
         private void LoadExposedPasswords(List<UserPasswordPair> exposedPasswords)

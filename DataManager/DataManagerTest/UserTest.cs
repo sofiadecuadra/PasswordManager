@@ -273,7 +273,7 @@ namespace DataManagerTest
             List <CreditCard> expectedCreditCardList = new List<CreditCard>();
             expectedCreditCardList.Add(aCreditCard);
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCards, expectedCreditCardList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCardsOfUser, expectedCreditCardList);
         }
 
         [TestMethod]
@@ -291,7 +291,7 @@ namespace DataManagerTest
             expectedCreditCardList.Add(aCreditCard);
             expectedCreditCardList.Add(anotherCreditCard);
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCards, expectedCreditCardList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCardsOfUser, expectedCreditCardList);
         }
 
         [TestMethod]
@@ -308,7 +308,7 @@ namespace DataManagerTest
             List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
             expectedUserPasswordPairList.Add(aUserPasswordPair);
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairs, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairsOfUser, expectedUserPasswordPairList);
         }
 
         [TestMethod]
@@ -328,8 +328,8 @@ namespace DataManagerTest
             List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
             expectedUserPasswordPairList.Add(aUserPasswordPair);
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairs, expectedUserPasswordPairList);
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCards, expectedCreditCardList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairsOfUser, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCardsOfUser, expectedCreditCardList);
         }
 
         [TestMethod]
@@ -345,7 +345,7 @@ namespace DataManagerTest
             List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
             expectedUserPasswordPairList.Add(aUserPasswordPair);
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairs, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairsOfUser, expectedUserPasswordPairList);
         }
 
         [TestMethod]
@@ -361,7 +361,7 @@ namespace DataManagerTest
             List<CreditCard> expectedCreditCardList = new List<CreditCard>();
             expectedCreditCardList.Add(aCreditCard);
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCards, expectedCreditCardList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCardsOfUser, expectedCreditCardList);
         }
 
         [TestMethod]
@@ -379,7 +379,7 @@ namespace DataManagerTest
             expectedUserPasswordPairList.Add(aUserPasswordPair);
             expectedUserPasswordPairList.Add(anotherUserPasswordPair);
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairs, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairsOfUser, expectedUserPasswordPairList);
         }
 
         [TestMethod]
@@ -404,7 +404,7 @@ namespace DataManagerTest
             List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
             expectedUserPasswordPairList.Add(aUserPasswordPair);
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairs, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairsOfUser, expectedUserPasswordPairList);
         }
 
         [TestMethod]
@@ -429,7 +429,7 @@ namespace DataManagerTest
             List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
             expectedUserPasswordPairList.Add(aUserPasswordPair);
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairs, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairsOfUser, expectedUserPasswordPairList);
         }
 
         [TestMethod]
@@ -454,8 +454,8 @@ namespace DataManagerTest
             expectedCreditCardList.Add(aCreditCard);
             expectedCreditCardList.Add(anotherCreditCard);
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairs, expectedUserPasswordPairList);
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCards, expectedCreditCardList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairsOfUser, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCardsOfUser, expectedCreditCardList);
         }
 
         [TestMethod]
@@ -476,8 +476,8 @@ namespace DataManagerTest
 
             List<CreditCard> expectedCreditCardList = new List<CreditCard>();
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairs, expectedUserPasswordPairList);
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCards, expectedCreditCardList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairsOfUser, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCardsOfUser, expectedCreditCardList);
         }
 
         [TestMethod]
@@ -505,7 +505,7 @@ namespace DataManagerTest
             expectedUserPasswordPairList.Add(aUserPasswordPair);
             expectedUserPasswordPairList.Add(anotherUserPasswordPair);
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairs, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairsOfUser, expectedUserPasswordPairList);
         }
 
         [TestMethod]
@@ -521,7 +521,7 @@ namespace DataManagerTest
             List<CreditCard> expectedCreditCardList = new List<CreditCard>();
             expectedCreditCardList.Add(aCreditCard);
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCards, expectedCreditCardList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCardsOfUser, expectedCreditCardList);
         }
 
         [TestMethod]
@@ -539,7 +539,7 @@ namespace DataManagerTest
             expectedCreditCardList.Add(aCreditCard);
             expectedCreditCardList.Add(anotherCreditCard);
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCards, expectedCreditCardList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCardsOfUser, expectedCreditCardList);
         }
 
         [TestMethod]
@@ -556,7 +556,7 @@ namespace DataManagerTest
             List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
             expectedUserPasswordPairList.Add(aUserPasswordPair);
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairs, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairsOfUser, expectedUserPasswordPairList);
         }
 
         [TestMethod]
@@ -576,8 +576,8 @@ namespace DataManagerTest
             List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
             expectedUserPasswordPairList.Add(aUserPasswordPair);
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairs, expectedUserPasswordPairList);
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCards, expectedCreditCardList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairsOfUser, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCardsOfUser, expectedCreditCardList);
         }
 
         [TestMethod]
@@ -593,7 +593,7 @@ namespace DataManagerTest
             List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
             expectedUserPasswordPairList.Add(aUserPasswordPair);
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairs, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairsOfUser, expectedUserPasswordPairList);
         }
 
         [TestMethod]
@@ -609,7 +609,7 @@ namespace DataManagerTest
             List<CreditCard> expectedCreditCardList = new List<CreditCard>();
             expectedCreditCardList.Add(aCreditCard);
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCards, expectedCreditCardList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCardsOfUser, expectedCreditCardList);
         }
 
         [TestMethod]
@@ -627,7 +627,7 @@ namespace DataManagerTest
             expectedUserPasswordPairList.Add(aUserPasswordPair);
             expectedUserPasswordPairList.Add(anotherUserPasswordPair);
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairs, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairsOfUser, expectedUserPasswordPairList);
         }
 
         [TestMethod]
@@ -652,7 +652,7 @@ namespace DataManagerTest
             List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
             expectedUserPasswordPairList.Add(aUserPasswordPair);
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairs, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairsOfUser, expectedUserPasswordPairList);
         }
 
         [TestMethod]
@@ -677,7 +677,7 @@ namespace DataManagerTest
             List<UserPasswordPair> expectedUserPasswordPairList = new List<UserPasswordPair>();
             expectedUserPasswordPairList.Add(aUserPasswordPair);
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairs, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairsOfUser, expectedUserPasswordPairList);
         }
 
         [TestMethod]
@@ -702,8 +702,8 @@ namespace DataManagerTest
             expectedCreditCardList.Add(aCreditCard);
             expectedCreditCardList.Add(anotherCreditCard);
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairs, expectedUserPasswordPairList);
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCards, expectedCreditCardList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairsOfUser, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCardsOfUser, expectedCreditCardList);
         }
 
         [TestMethod]
@@ -724,8 +724,19 @@ namespace DataManagerTest
 
             List<CreditCard> expectedCreditCardList = new List<CreditCard>();
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairs, expectedUserPasswordPairList);
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCards, expectedCreditCardList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairsOfUser, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCardsOfUser, expectedCreditCardList);
+        }
+
+        [TestMethod]
+        public void CheckEmptyDataBreach()
+        {
+            IDataBreachesFormatter dataBreaches = new TxtFileDataBreaches()
+            {
+                txtDataBreaches = "   "
+            };
+            aUser.CheckDataBreaches(dataBreaches);
+            Assert.IsTrue(aUser.DataBreaches.Count==0);
         }
 
         [TestMethod]
@@ -753,7 +764,7 @@ namespace DataManagerTest
             expectedUserPasswordPairList.Add(aUserPasswordPair);
             expectedUserPasswordPairList.Add(anotherUserPasswordPair);
 
-            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairs, expectedUserPasswordPairList);
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairsOfUser, expectedUserPasswordPairList);
         }
 
         [TestMethod]

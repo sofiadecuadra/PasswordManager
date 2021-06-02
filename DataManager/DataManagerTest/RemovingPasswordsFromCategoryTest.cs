@@ -23,44 +23,6 @@ namespace DataManagerTest
         }
 
         [TestMethod]
-        public void RemoveCreditCardNormally()
-        {
-            CreditCard aCreditCard = new CreditCard()
-            {
-                Number = "1234567891234567",
-                Type = "Visa",
-                Name = "Visa Gold",
-                Code = "234",
-                Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25),
-                Category = aCategory,
-            };
-
-            aCategory.AddCreditCard(aCreditCard);
-            Assert.IsTrue(aCategory.RemoveCreditCard(aCreditCard.Number));
-            Assert.IsFalse(aUser.CreditCardNumberExists(aCreditCard.Number));
-            Assert.AreEqual(0, aCategory.GetCreditCards().Length);
-
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ExceptionCreditCardDoesNotExist))]
-        public void RemoveCreditCardThatDoesNotExist()
-        {
-            CreditCard aCreditCard = new CreditCard()
-            {
-                Number = "1234567891234567",
-                Type = "Visa",
-                Name = "Visa Gold",
-                Code = "234",
-                Notes = "",
-                ExpirationDate = new DateTime(2023, 12, 25),
-                Category = aCategory,
-            };
-            aCategory.RemoveCreditCard(aCreditCard.Number);
-        }
-
-        [TestMethod]
         public void RemoveDarkGreenUserPasswordPair()
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
@@ -193,6 +155,29 @@ namespace DataManagerTest
             Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair.Username, aUserPasswordPair.Site));
             Assert.AreEqual(0, aCategory.User.GetYellowUserPasswordPairs().Length);
             Assert.AreEqual(0, aCategory.YellowUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void RemoveUserPasswordPairThatAppearedInADataBreach()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Category = aCategory,
+                Password = "mypassword12345",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            IDataBreachesFormatter dataBreaches = new TxtFileDataBreaches()
+            {
+                txtDataBreaches = "mypassword12345"
+            };
+            DataBreach aDataBreach = aUser.CheckDataBreaches(dataBreaches);
+            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
+            Assert.IsTrue(aDataBreach.LeakedUserPasswordPairsOfUser.Count == 0);
         }
     }
 }
