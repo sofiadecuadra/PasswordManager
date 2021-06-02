@@ -27,22 +27,22 @@ namespace DataManagerTest
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "thisIsAPassword",
                 Notes = "these are my notes",
                 Username = "myUserName",
                 Site = "mySite",
-                Category = aCategory,
             };
 
             _ = aCategory.AddUserPasswordPair(aUserPasswordPair);
 
             UserPasswordPair anotherUserPasswordPair = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "myPassword",
                 Notes = "Heello notes",
                 Username = "myUserName",
                 Site = "mySite",
-                Category = aCategory,
             };
 
             aCategory.AddUserPasswordPair(anotherUserPasswordPair);
@@ -53,22 +53,22 @@ namespace DataManagerTest
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "thisIsAPassword",
                 Notes = "these are my notes",
                 Username = "myUserName1",
                 Site = "mySite1",
-                Category = aCategory,
             };
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
 
             UserPasswordPair anotherUserPasswordPair = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "thisIsAPassword",
                 Notes = "these are my notes",
                 Username = "myUserName2",
                 Site = "mySite1",
-                Category = aCategory,
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(anotherUserPasswordPair));
@@ -95,11 +95,11 @@ namespace DataManagerTest
 
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "password",
                 Notes = aNote,
                 Username = "myUsername",
                 Site = "mySite",
-                Category = aCategory,
             };
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
@@ -111,11 +111,11 @@ namespace DataManagerTest
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "passwordHasInvalidLengthAndMustntBeUsed",
                 Notes = "these are my notes",
                 Username = "myUsername",
                 Site = "mySite",
-                Category = aCategory,
             };
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
@@ -127,11 +127,11 @@ namespace DataManagerTest
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "pass",
                 Notes = "these are my notes",
                 Username = "myUsername",
                 Site = "mySite",
-                Category = aCategory,
             };
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
@@ -143,11 +143,11 @@ namespace DataManagerTest
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "password",
                 Notes = "these are my notes",
                 Username = "myUsername",
                 Site = "This site has an invalid length, so it mustnt be used",
-                Category = aCategory,
             };
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
@@ -159,11 +159,11 @@ namespace DataManagerTest
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "password",
                 Notes = "these are my notes",
                 Username = "myUsername",
                 Site = "no",
-                Category = aCategory,
             };
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
@@ -175,11 +175,11 @@ namespace DataManagerTest
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "thisIsAPassword",
                 Notes = "these are my notes",
                 Username = "myUsernameHasInvalidLength",
                 Site = "mySite",
-                Category = aCategory,
             };
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
@@ -191,11 +191,11 @@ namespace DataManagerTest
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "thisIsAPassword",
                 Notes = "these are my notes",
                 Username = "bad",
                 Site = "mySite",
-                Category = aCategory,
             };
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
@@ -206,11 +206,11 @@ namespace DataManagerTest
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "MYpassword@#12345",
                 Notes = "these are my notes",
                 Username = "myUserName",
                 Site = "mySite",
-                Category = aCategory,
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
@@ -224,11 +224,11 @@ namespace DataManagerTest
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "MYpassword1234512",
                 Notes = "these are my notes",
                 Username = "myUserName",
                 Site = "mySite",
-                Category = aCategory,
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
@@ -242,11 +242,11 @@ namespace DataManagerTest
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "myPassword",
                 Notes = "these are my notes",
                 Username = "myUserName",
                 Site = "mySite",
-                Category = aCategory,
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
@@ -260,11 +260,11 @@ namespace DataManagerTest
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "myPass",
                 Notes = "these are my notes",
                 Username = "myUserName",
                 Site = "mySite",
-                Category = aCategory,
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));
@@ -278,11 +278,11 @@ namespace DataManagerTest
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "MYPASSWORD12345",
                 Notes = "these are my notes",
                 Username = "myUserName",
                 Site = "mySite",
-                Category = aCategory,
             };
 
             Assert.IsTrue(aCategory.AddUserPasswordPair(aUserPasswordPair));

@@ -302,11 +302,11 @@ namespace DataManagerTest
             };
             var aUserPasswordPair = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "thisIsAPassword",
                 Notes = "these are my notes",
                 Username = "myUserName",
                 Site = "mySite",
-                Category = aCategory,
             };
             myUser.AddCategory(aCategory);
 

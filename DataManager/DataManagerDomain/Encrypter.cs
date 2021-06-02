@@ -11,9 +11,9 @@ namespace DataManagerDomain
     {
         public static Tuple<string, string> GenerateKeys()
         {
-            var cryptoServiceProvider = new RSACryptoServiceProvider(2048); //2048 - Długość klucza
-            var privateKey = cryptoServiceProvider.ExportParameters(true); //Generowanie klucza prywatnego
-            var publicKey = cryptoServiceProvider.ExportParameters(false); //Generowanie klucza publiczny
+            var cryptoServiceProvider = new RSACryptoServiceProvider(2048); 
+            var privateKey = cryptoServiceProvider.ExportParameters(true); 
+            var publicKey = cryptoServiceProvider.ExportParameters(false); 
 
             return new Tuple<string, string>(GetKeyString(privateKey), GetKeyString(publicKey));
         }
@@ -27,7 +27,7 @@ namespace DataManagerDomain
             return stringWriter.ToString();
         }
 
-        public static string Encrypt(string textToEncrypt, string publicKeyString)
+        public static string Encrypt(string textToEncrypt, string publicKey)
         {
             var bytesToEncrypt = Encoding.UTF8.GetBytes(textToEncrypt);
 
@@ -35,7 +35,7 @@ namespace DataManagerDomain
             {
                 try
                 {
-                    rsa.FromXmlString(publicKeyString.ToString());
+                    rsa.FromXmlString(publicKey.ToString());
                     var encryptedData = rsa.Encrypt(bytesToEncrypt, true);
                     var base64Encrypted = Convert.ToBase64String(encryptedData);
                     return base64Encrypted;
@@ -47,17 +47,15 @@ namespace DataManagerDomain
             }
         }
 
-        public static string Decrypt(string textToDecrypt, string privateKeyString)
+        public static string Decrypt(string textToDecrypt, string privateKey)
         {
-            var bytesToDescrypt = Encoding.UTF8.GetBytes(textToDecrypt);
-
             using (var rsa = new RSACryptoServiceProvider(2048))
             {
                 try
                 {
 
                     // server decrypting data with private key                    
-                    rsa.FromXmlString(privateKeyString);
+                    rsa.FromXmlString(privateKey);
 
                     var resultBytes = Convert.FromBase64String(textToDecrypt);
                     var decryptedBytes = rsa.Decrypt(resultBytes, true);

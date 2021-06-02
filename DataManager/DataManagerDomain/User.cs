@@ -30,6 +30,8 @@ namespace DataManagerDomain
         private List<UserPasswordPair> lightGreenUserPasswordPairs;
         private List<UserPasswordPair> darkGreenUserPasswordPairs;
         public List <DataBreach> DataBreaches { get; private set; }
+        public string PublicKey { get; private set; }
+        public string PrivateKey { get; private set; }
 
         public User()
         {
@@ -44,6 +46,9 @@ namespace DataManagerDomain
             {
                 User = this,
             };
+            var keys = Encrypter.GenerateKeys();
+            PublicKey = keys.Item2;
+            PrivateKey = keys.Item1;
         }
 
         private static string ValidMasterPassword(string password)

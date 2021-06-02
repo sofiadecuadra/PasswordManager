@@ -26,43 +26,43 @@ namespace DataManagerTest
         {
             UserPasswordPair aUserPasswordPair1 = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "MYPASSWORD12345",
                 Notes = "these are my notes",
                 Username = "myUserName1",
                 Site = "mySite",
-                Category = aCategory,
             };
             UserPasswordPair aUserPasswordPair2 = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "myPass",
                 Notes = "these are my notes",
                 Username = "myUserName2",
                 Site = "mySite",
-                Category = aCategory,
             };
             UserPasswordPair aUserPasswordPair3 = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "myPassword",
                 Notes = "these are my notes",
                 Username = "myUserName3",
                 Site = "mySite",
-                Category = aCategory,
             };
             UserPasswordPair aUserPasswordPair4 = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "MYpassword1234512",
                 Notes = "these are my notes",
                 Username = "myUserName4",
                 Site = "mySite",
-                Category = aCategory,
             };
             UserPasswordPair aUserPasswordPair5 = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "MYpassword@#12345",
                 Notes = "these are my notes",
                 Username = "myUserName5",
                 Site = "mySite",
-                Category = aCategory,
             };
             aCategory.AddUserPasswordPair(aUserPasswordPair1);
             aCategory.AddUserPasswordPair(aUserPasswordPair2);
