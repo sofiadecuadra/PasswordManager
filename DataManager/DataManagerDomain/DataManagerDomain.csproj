@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Category.cs" />
     <Compile Include="DataBreach.cs" />
+    <Compile Include="Encrypter.cs" />
     <Compile Include="NormalCategory.cs" />
     <Compile Include="Exceptions\ExceptionCategoryAlreadyExists.cs" />
     <Compile Include="Exceptions\ExceptionCategoryNotExists.cs" />

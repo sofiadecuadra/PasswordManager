@@ -10,12 +10,18 @@ namespace DataManagerDomain
         private string masterPassword;
         public string MasterPassword
         {
-            get { return masterPassword; }
+            get { return DecryptMasterPassword(); }
             set
             {
-                masterPassword = ValidMasterPassword(value);
+                masterPassword = ValidateAndEncryptMasterPassword(value);
             }
         }
+
+        private string DecryptMasterPassword()
+        {
+            return Encrypter.Decrypt(masterPassword, PrivateKey);
+        }
+
         private string name;
         public string Name
         {
@@ -30,6 +36,8 @@ namespace DataManagerDomain
         private List<UserPasswordPair> lightGreenUserPasswordPairs;
         private List<UserPasswordPair> darkGreenUserPasswordPairs;
         public List <DataBreach> DataBreaches { get; private set; }
+        public string PublicKey { get; private set; }
+        public string PrivateKey { get; private set; }
 
         public User()
         {
@@ -44,16 +52,19 @@ namespace DataManagerDomain
             {
                 User = this,
             };
+            var keys = Encrypter.GenerateKeys();
+            PublicKey = keys.Item2;
+            PrivateKey = keys.Item1;
         }
 
-        private static string ValidMasterPassword(string password)
+        private string ValidateAndEncryptMasterPassword(string password)
         {
             if (!IsBetween5And25Characters(password))
             {
                 string errorMessage = $"The password should be between 5 and 25 characters but is: {password.Length} charachterslong";
                 throw new ExceptionIncorrectLength(errorMessage);
             }
-            return password;
+            return Encrypter.Encrypt(password, PublicKey);
         }
 
         private static bool IsBetween5And25Characters(string value)
