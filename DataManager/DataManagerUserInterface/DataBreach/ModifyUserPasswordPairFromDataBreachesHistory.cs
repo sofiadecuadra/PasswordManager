@@ -44,7 +44,6 @@ namespace PasswordsManagerUserInterface
             PasswordToModify.Category.ModifyUserPasswordPair(PasswordToModify, newPassword);
             GoBack();
         }
-
         private UserPasswordPair CreatePassword()
         {
             NormalCategory category = Form.GetCategory();

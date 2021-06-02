@@ -89,6 +89,7 @@ namespace DataManagerDomain
         {
             CheckSiteLength();
             CheckUsernameLength();
+            CheckPasswordLength();
             CheckNotesLength();
             return true;
         }
@@ -111,6 +112,14 @@ namespace DataManagerDomain
             if (!LengthBetween5And25(Username))
             {
                 throw new ExceptionIncorrectLength($"The username's length must be between 5 and 25, but it's current length is: {Username.Length}");
+            }
+        }
+
+        private void CheckPasswordLength()
+        {
+            if (!LengthBetween5And25(Password))
+            {
+                throw new ExceptionIncorrectLength($"The password's length must be between 5 and 25, but it's current length is: {Password.Length}");
             }
         }
 

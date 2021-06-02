@@ -12,10 +12,6 @@ namespace DataManagerDomain
 
         public static PasswordStrengthType PasswordStrength(String passwordToCheck)
         {
-            if (PasswordSizeOutSideBoundaries(passwordToCheck))
-            {
-                throw new ExceptionIncorrectLength($"The password's length must be between 5 and 25, but it's current length is: {passwordToCheck.Length}");
-            }
             if (ContainsLessThan8Characters(passwordToCheck))
             {
                 return PasswordStrengthType.Red;
@@ -36,11 +32,6 @@ namespace DataManagerDomain
                 return PasswordStrengthType.LightGreen;
             }
             return PasswordStrengthType.Yellow;
-        }
-
-        private static bool PasswordSizeOutSideBoundaries(string passwordToCheck)
-        {
-            return passwordToCheck.Length < MIN_PASSWORD_SIZE || passwordToCheck.Length > MAX_PASSWORD_SIZE;
         }
 
         private static bool ContainsJustNumbersSymbolsAndUpperOrLowerCase(string passwordToCheck)

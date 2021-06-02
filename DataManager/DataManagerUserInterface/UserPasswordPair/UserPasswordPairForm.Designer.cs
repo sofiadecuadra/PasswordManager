@@ -48,35 +48,36 @@ namespace PasswordsManagerUserInterface
             this.lblCategory = new System.Windows.Forms.Label();
             this.lblPassword2 = new System.Windows.Forms.Label();
             this.checkBoxShow = new System.Windows.Forms.CheckBox();
+            this.lblPasswordStrength = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLength)).BeginInit();
             this.SuspendLayout();
             // 
             // txtNotes
             // 
-            this.txtNotes.Location = new System.Drawing.Point(84, 305);
-            this.txtNotes.Margin = new System.Windows.Forms.Padding(2);
+            this.txtNotes.Location = new System.Drawing.Point(168, 587);
+            this.txtNotes.Margin = new System.Windows.Forms.Padding(4);
             this.txtNotes.MaxLength = 250;
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
-            this.txtNotes.Size = new System.Drawing.Size(194, 66);
+            this.txtNotes.Size = new System.Drawing.Size(384, 123);
             this.txtNotes.TabIndex = 38;
             // 
             // lblNotes
             // 
             this.lblNotes.AutoSize = true;
-            this.lblNotes.Location = new System.Drawing.Point(40, 314);
-            this.lblNotes.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblNotes.Location = new System.Drawing.Point(80, 604);
+            this.lblNotes.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNotes.Name = "lblNotes";
-            this.lblNotes.Size = new System.Drawing.Size(35, 13);
+            this.lblNotes.Size = new System.Drawing.Size(68, 25);
             this.lblNotes.TabIndex = 37;
             this.lblNotes.Text = "Notes";
             // 
             // btnGenerate
             // 
-            this.btnGenerate.Location = new System.Drawing.Point(207, 265);
-            this.btnGenerate.Margin = new System.Windows.Forms.Padding(2);
+            this.btnGenerate.Location = new System.Drawing.Point(414, 510);
+            this.btnGenerate.Margin = new System.Windows.Forms.Padding(4);
             this.btnGenerate.Name = "btnGenerate";
-            this.btnGenerate.Size = new System.Drawing.Size(71, 21);
+            this.btnGenerate.Size = new System.Drawing.Size(142, 40);
             this.btnGenerate.TabIndex = 36;
             this.btnGenerate.Text = "Generate";
             this.btnGenerate.UseVisualStyleBackColor = true;
@@ -85,10 +86,10 @@ namespace PasswordsManagerUserInterface
             // checkBoxSymbols
             // 
             this.checkBoxSymbols.AutoSize = true;
-            this.checkBoxSymbols.Location = new System.Drawing.Point(166, 244);
-            this.checkBoxSymbols.Margin = new System.Windows.Forms.Padding(2);
+            this.checkBoxSymbols.Location = new System.Drawing.Point(332, 469);
+            this.checkBoxSymbols.Margin = new System.Windows.Forms.Padding(4);
             this.checkBoxSymbols.Name = "checkBoxSymbols";
-            this.checkBoxSymbols.Size = new System.Drawing.Size(65, 17);
+            this.checkBoxSymbols.Size = new System.Drawing.Size(126, 29);
             this.checkBoxSymbols.TabIndex = 35;
             this.checkBoxSymbols.Text = "Symbols";
             this.checkBoxSymbols.UseVisualStyleBackColor = true;
@@ -96,10 +97,10 @@ namespace PasswordsManagerUserInterface
             // checkBoxDigits
             // 
             this.checkBoxDigits.AutoSize = true;
-            this.checkBoxDigits.Location = new System.Drawing.Point(166, 223);
-            this.checkBoxDigits.Margin = new System.Windows.Forms.Padding(2);
+            this.checkBoxDigits.Location = new System.Drawing.Point(332, 429);
+            this.checkBoxDigits.Margin = new System.Windows.Forms.Padding(4);
             this.checkBoxDigits.Name = "checkBoxDigits";
-            this.checkBoxDigits.Size = new System.Drawing.Size(52, 17);
+            this.checkBoxDigits.Size = new System.Drawing.Size(98, 29);
             this.checkBoxDigits.TabIndex = 34;
             this.checkBoxDigits.Text = "Digits";
             this.checkBoxDigits.UseVisualStyleBackColor = true;
@@ -107,10 +108,10 @@ namespace PasswordsManagerUserInterface
             // checkBoxLowerCase
             // 
             this.checkBoxLowerCase.AutoSize = true;
-            this.checkBoxLowerCase.Location = new System.Drawing.Point(166, 202);
-            this.checkBoxLowerCase.Margin = new System.Windows.Forms.Padding(2);
+            this.checkBoxLowerCase.Location = new System.Drawing.Point(332, 388);
+            this.checkBoxLowerCase.Margin = new System.Windows.Forms.Padding(4);
             this.checkBoxLowerCase.Name = "checkBoxLowerCase";
-            this.checkBoxLowerCase.Size = new System.Drawing.Size(82, 17);
+            this.checkBoxLowerCase.Size = new System.Drawing.Size(158, 29);
             this.checkBoxLowerCase.TabIndex = 33;
             this.checkBoxLowerCase.Text = "Lower Case";
             this.checkBoxLowerCase.UseVisualStyleBackColor = true;
@@ -118,18 +119,18 @@ namespace PasswordsManagerUserInterface
             // checkBoxUpperCase
             // 
             this.checkBoxUpperCase.AutoSize = true;
-            this.checkBoxUpperCase.Location = new System.Drawing.Point(166, 181);
-            this.checkBoxUpperCase.Margin = new System.Windows.Forms.Padding(2);
+            this.checkBoxUpperCase.Location = new System.Drawing.Point(332, 348);
+            this.checkBoxUpperCase.Margin = new System.Windows.Forms.Padding(4);
             this.checkBoxUpperCase.Name = "checkBoxUpperCase";
-            this.checkBoxUpperCase.Size = new System.Drawing.Size(82, 17);
+            this.checkBoxUpperCase.Size = new System.Drawing.Size(158, 29);
             this.checkBoxUpperCase.TabIndex = 32;
             this.checkBoxUpperCase.Text = "Upper Case";
             this.checkBoxUpperCase.UseVisualStyleBackColor = true;
             // 
             // numericUpDownLength
             // 
-            this.numericUpDownLength.Location = new System.Drawing.Point(218, 152);
-            this.numericUpDownLength.Margin = new System.Windows.Forms.Padding(2);
+            this.numericUpDownLength.Location = new System.Drawing.Point(436, 292);
+            this.numericUpDownLength.Margin = new System.Windows.Forms.Padding(4);
             this.numericUpDownLength.Maximum = new decimal(new int[] {
             25,
             0,
@@ -142,7 +143,7 @@ namespace PasswordsManagerUserInterface
             0});
             this.numericUpDownLength.Name = "numericUpDownLength";
             this.numericUpDownLength.ReadOnly = true;
-            this.numericUpDownLength.Size = new System.Drawing.Size(60, 20);
+            this.numericUpDownLength.Size = new System.Drawing.Size(120, 31);
             this.numericUpDownLength.TabIndex = 31;
             this.numericUpDownLength.Value = new decimal(new int[] {
             5,
@@ -153,68 +154,69 @@ namespace PasswordsManagerUserInterface
             // lblLength
             // 
             this.lblLength.AutoSize = true;
-            this.lblLength.Location = new System.Drawing.Point(174, 154);
-            this.lblLength.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblLength.Location = new System.Drawing.Point(348, 296);
+            this.lblLength.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblLength.Name = "lblLength";
-            this.lblLength.Size = new System.Drawing.Size(40, 13);
+            this.lblLength.Size = new System.Drawing.Size(78, 25);
             this.lblLength.TabIndex = 30;
             this.lblLength.Text = "Length";
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(84, 125);
-            this.txtPassword.Margin = new System.Windows.Forms.Padding(2);
+            this.txtPassword.Location = new System.Drawing.Point(168, 240);
+            this.txtPassword.Margin = new System.Windows.Forms.Padding(4);
             this.txtPassword.MaxLength = 25;
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(194, 20);
+            this.txtPassword.Size = new System.Drawing.Size(384, 31);
             this.txtPassword.TabIndex = 29;
+            this.txtPassword.TextChanged += new System.EventHandler(this.txtPassword_TextChanged);
             // 
             // lblPassword
             // 
             this.lblPassword.AutoSize = true;
-            this.lblPassword.Location = new System.Drawing.Point(20, 127);
-            this.lblPassword.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblPassword.Location = new System.Drawing.Point(40, 244);
+            this.lblPassword.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(53, 13);
+            this.lblPassword.Size = new System.Drawing.Size(106, 25);
             this.lblPassword.TabIndex = 28;
             this.lblPassword.Text = "Password";
             // 
             // txtUser
             // 
-            this.txtUser.Location = new System.Drawing.Point(84, 99);
-            this.txtUser.Margin = new System.Windows.Forms.Padding(2);
+            this.txtUser.Location = new System.Drawing.Point(168, 190);
+            this.txtUser.Margin = new System.Windows.Forms.Padding(4);
             this.txtUser.MaxLength = 25;
             this.txtUser.Name = "txtUser";
-            this.txtUser.Size = new System.Drawing.Size(194, 20);
+            this.txtUser.Size = new System.Drawing.Size(384, 31);
             this.txtUser.TabIndex = 27;
             // 
             // lblUser
             // 
             this.lblUser.AutoSize = true;
-            this.lblUser.Location = new System.Drawing.Point(18, 99);
-            this.lblUser.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblUser.Location = new System.Drawing.Point(36, 190);
+            this.lblUser.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUser.Name = "lblUser";
-            this.lblUser.Size = new System.Drawing.Size(55, 13);
+            this.lblUser.Size = new System.Drawing.Size(110, 25);
             this.lblUser.TabIndex = 26;
             this.lblUser.Text = "Username";
             // 
             // txtSite
             // 
-            this.txtSite.Location = new System.Drawing.Point(84, 74);
-            this.txtSite.Margin = new System.Windows.Forms.Padding(2);
+            this.txtSite.Location = new System.Drawing.Point(168, 142);
+            this.txtSite.Margin = new System.Windows.Forms.Padding(4);
             this.txtSite.MaxLength = 25;
             this.txtSite.Name = "txtSite";
-            this.txtSite.Size = new System.Drawing.Size(194, 20);
+            this.txtSite.Size = new System.Drawing.Size(384, 31);
             this.txtSite.TabIndex = 25;
             // 
             // lblSite
             // 
             this.lblSite.AutoSize = true;
-            this.lblSite.Location = new System.Drawing.Point(38, 74);
-            this.lblSite.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblSite.Location = new System.Drawing.Point(76, 142);
+            this.lblSite.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSite.Name = "lblSite";
-            this.lblSite.Size = new System.Drawing.Size(25, 13);
+            this.lblSite.Size = new System.Drawing.Size(49, 25);
             this.lblSite.TabIndex = 24;
             this.lblSite.Text = "Site";
             // 
@@ -222,47 +224,58 @@ namespace PasswordsManagerUserInterface
             // 
             this.comboCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboCategory.FormattingEnabled = true;
-            this.comboCategory.Location = new System.Drawing.Point(84, 49);
-            this.comboCategory.Margin = new System.Windows.Forms.Padding(2);
+            this.comboCategory.Location = new System.Drawing.Point(168, 94);
+            this.comboCategory.Margin = new System.Windows.Forms.Padding(4);
             this.comboCategory.Name = "comboCategory";
-            this.comboCategory.Size = new System.Drawing.Size(194, 21);
+            this.comboCategory.Size = new System.Drawing.Size(384, 33);
             this.comboCategory.TabIndex = 23;
             // 
             // lblCategory
             // 
             this.lblCategory.AutoSize = true;
-            this.lblCategory.Location = new System.Drawing.Point(24, 53);
-            this.lblCategory.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblCategory.Location = new System.Drawing.Point(48, 102);
+            this.lblCategory.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCategory.Name = "lblCategory";
-            this.lblCategory.Size = new System.Drawing.Size(49, 13);
+            this.lblCategory.Size = new System.Drawing.Size(99, 25);
             this.lblCategory.TabIndex = 22;
             this.lblCategory.Text = "Category";
             // 
             // lblPassword2
             // 
             this.lblPassword2.AutoSize = true;
-            this.lblPassword2.Location = new System.Drawing.Point(121, 22);
-            this.lblPassword2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblPassword2.Location = new System.Drawing.Point(242, 42);
+            this.lblPassword2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPassword2.Name = "lblPassword2";
-            this.lblPassword2.Size = new System.Drawing.Size(53, 13);
+            this.lblPassword2.Size = new System.Drawing.Size(106, 25);
             this.lblPassword2.TabIndex = 21;
             this.lblPassword2.Text = "Password";
             // 
             // checkBoxShow
             // 
             this.checkBoxShow.AutoSize = true;
-            this.checkBoxShow.Location = new System.Drawing.Point(300, 127);
+            this.checkBoxShow.Location = new System.Drawing.Point(600, 244);
+            this.checkBoxShow.Margin = new System.Windows.Forms.Padding(6);
             this.checkBoxShow.Name = "checkBoxShow";
-            this.checkBoxShow.Size = new System.Drawing.Size(53, 17);
+            this.checkBoxShow.Size = new System.Drawing.Size(97, 29);
             this.checkBoxShow.TabIndex = 39;
             this.checkBoxShow.Text = "Show";
             this.checkBoxShow.UseVisualStyleBackColor = true;
             this.checkBoxShow.CheckedChanged += new System.EventHandler(this.checkBoxShow_CheckedChanged);
             // 
+            // lblPasswordStrength
+            // 
+            this.lblPasswordStrength.AutoSize = true;
+            this.lblPasswordStrength.Location = new System.Drawing.Point(600, 279);
+            this.lblPasswordStrength.Name = "lblPasswordStrength";
+            this.lblPasswordStrength.Size = new System.Drawing.Size(36, 25);
+            this.lblPasswordStrength.TabIndex = 41;
+            this.lblPasswordStrength.Text = "    ";
+            // 
             // UserPasswordPairForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblPasswordStrength);
             this.Controls.Add(this.checkBoxShow);
             this.Controls.Add(this.txtNotes);
             this.Controls.Add(this.lblNotes);
@@ -282,9 +295,9 @@ namespace PasswordsManagerUserInterface
             this.Controls.Add(this.comboCategory);
             this.Controls.Add(this.lblCategory);
             this.Controls.Add(this.lblPassword2);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "UserPasswordPairForm";
-            this.Size = new System.Drawing.Size(368, 389);
+            this.Size = new System.Drawing.Size(804, 748);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLength)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -311,5 +324,6 @@ namespace PasswordsManagerUserInterface
         private System.Windows.Forms.Label lblCategory;
         private System.Windows.Forms.Label lblPassword2;
         private System.Windows.Forms.CheckBox checkBoxShow;
+        private System.Windows.Forms.Label lblPasswordStrength;
     }
 }

@@ -31,24 +31,63 @@ namespace PasswordsManagerUserInterface
             {
                 AddPassword();
             }
-            catch (Exception ex) when (ex is ExceptionExistingUserPasswordPair || ex is ExceptionIncorrectLength)
+            catch (Exception ex) when (
+            ex is ExceptionExistingUserPasswordPair
+            || ex is ExceptionIncorrectLength)
             {
                 MessageBox.Show(ex.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         public void AddPassword()
         {
             if (Form.GetCategory() != null)
             {
                 UserPasswordPair newPassword = CreatePassword();
-                newPassword.Category.AddUserPasswordPair(newPassword);
-                GoBack();
+                if (!GoBackToModifyPasswordAfterReadingSuggestions(newPassword.Password))
+                {
+                    newPassword.Category.AddUserPasswordPair(newPassword);
+                    GoBack();
+                }
             }
             else
             {
                 MessageBox.Show("The category cannot be null \n To add a category go to Menu -> Categories -> Add", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        public bool GoBackToModifyPasswordAfterReadingSuggestions(string aPassword)
+        {
+            bool goBackToModifyPassword = false;
+            Tuple<bool, bool, bool> suggestionsAreTakenIntoAccount = PasswordManager.CurrentUser.PasswordImprovementSuggestionsAreTakenIntoAccount(aPassword);
+            bool passwordIsStrong = suggestionsAreTakenIntoAccount.Item1;
+            bool passwordIsNotDuplicated = suggestionsAreTakenIntoAccount.Item2;
+            bool passwordHasNotAppearedInDataBreaches = suggestionsAreTakenIntoAccount.Item3;
+
+            if (!passwordIsStrong || !passwordIsNotDuplicated || !passwordHasNotAppearedInDataBreaches)
+            {
+                string suggestionsMessage = "Password Improvement Suggestions:\n";
+                if (!passwordIsStrong)
+                {
+                    suggestionsMessage += "\n - Improve its strength";
+                }
+                if (!passwordIsNotDuplicated)
+                {
+                    suggestionsMessage += "\n - Try another one, reusing a password is not recommended";
+                }
+                if (!passwordHasNotAppearedInDataBreaches)
+                {
+                    suggestionsMessage += "\n - Try another one, the one provided has appeared in a data breach";
+                }
+                suggestionsMessage += "\n\nWould you like to go back and change the password provided?";
+
+                DialogResult goBack = MessageBox.Show(suggestionsMessage, "Suggestions", MessageBoxButtons.YesNo);
+
+                if (goBack == DialogResult.Yes)
+                {
+                    goBackToModifyPassword = true;
+                }
+            }
+            return goBackToModifyPassword;
         }
 
         private UserPasswordPair CreatePassword()

@@ -534,12 +534,12 @@ namespace DataManagerDomain
         {
             string passwordTrimed = aPassword.Trim();
             bool passwordIsStrong = PasswordIsStrong(passwordTrimed);
-            bool passwordIsDuplicated = PasswordIsDuplicated(passwordTrimed);
-            bool passwordAppearedInDataBreaches = PasswordAppearedInADataBreach(passwordTrimed);
-            return new Tuple<bool, bool, bool>(passwordIsStrong, !passwordIsDuplicated, !passwordAppearedInDataBreaches);
+            bool passwordIsNotDuplicated = PasswordIsNotDuplicated(passwordTrimed);
+            bool passwordHasNotAppearedInDataBreaches = PasswordHasNotAppearedInADataBreach(passwordTrimed);
+            return new Tuple<bool, bool, bool>(passwordIsStrong, passwordIsNotDuplicated, passwordHasNotAppearedInDataBreaches);
         }
 
-        private bool PasswordIsStrong(string aPassword)
+        public bool PasswordIsStrong(string aPassword)
         {
             bool passwordIsStrong = false;
             PasswordStrengthType passwordStrengthType = PasswordHandler.PasswordStrength(aPassword);
@@ -554,30 +554,30 @@ namespace DataManagerDomain
             return passwordIsStrong;
         }
 
-        private bool PasswordIsDuplicated(string aPassword)
+        private bool PasswordIsNotDuplicated(string aPassword)
         {
-            bool passwordIsDuplicated = false;
+            bool passwordIsNotDuplicated = true;
             foreach (UserPasswordPair aPair in GetUserPasswordPairs())
             {
                 if (aPair.Password.Equals(aPassword))
                 {
-                    passwordIsDuplicated = true;
+                    passwordIsNotDuplicated = false;
                 }
             }
-            return passwordIsDuplicated;
+            return passwordIsNotDuplicated;
         }
 
-        private bool PasswordAppearedInADataBreach(string aPassword)
+        private bool PasswordHasNotAppearedInADataBreach(string aPassword)
         {
-            bool passwordAppearedInADataBreach = false;
+            bool passwordHasNotAppearedInADataBreach = true;
             foreach (DataBreach aDataBreach in DataBreaches)
             {
                 if (aDataBreach.PasswordAppearedInDataBreach(aPassword))
                 {
-                    passwordAppearedInADataBreach = true;
+                    passwordHasNotAppearedInADataBreach = false;
                 }
             }
-            return passwordAppearedInADataBreach;
+            return passwordHasNotAppearedInADataBreach;
         }
 
         private bool ItsACreditCard(string element)
