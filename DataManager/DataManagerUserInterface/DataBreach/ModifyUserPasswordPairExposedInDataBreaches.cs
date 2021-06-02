@@ -43,55 +43,26 @@ namespace PasswordsManagerUserInterface
 
         public void ModifyPassword()
         {
-            UserPasswordPair newPassword = CreatePassword();
-            if (!NormalCategory.PasswordsAreEqual(PasswordToModify.Password, newPassword.Password))
+            UserPasswordPair newUserPasswordPair = CreatePassword();
+            if (PasswordHasBeenUpdated(newUserPasswordPair.Password))
             {
-                if (!GoBackToModifyPasswordAfterReadingSuggestions(newPassword.Password))
+                Tuple<bool, bool, bool> suggestionsAreTakenIntoAccount = PasswordManager.CurrentUser.PasswordImprovementSuggestionsAreTakenIntoAccount(newUserPasswordPair.Password);
+                if (!HelperClass.LaunchSuggestionBox(suggestionsAreTakenIntoAccount))
                 {
-                    PasswordToModify.Category.ModifyUserPasswordPair(PasswordToModify, newPassword);
+                    PasswordToModify.Category.ModifyUserPasswordPair(PasswordToModify, newUserPasswordPair);
                     GoBack();
                 }
             }
             else
             {
-                PasswordToModify.Category.ModifyUserPasswordPair(PasswordToModify, newPassword);
+                PasswordToModify.Category.ModifyUserPasswordPair(PasswordToModify, newUserPasswordPair);
                 GoBack();
             }
         }
 
-        public bool GoBackToModifyPasswordAfterReadingSuggestions(string aPassword)
+        private bool PasswordHasBeenUpdated(string newPassword)
         {
-            bool goBackToModifyPassword = false;
-            Tuple<bool, bool, bool> suggestionsAreTakenIntoAccount = PasswordManager.CurrentUser.PasswordImprovementSuggestionsAreTakenIntoAccount(aPassword);
-            bool passwordIsStrong = suggestionsAreTakenIntoAccount.Item1;
-            bool passwordIsNotDuplicated = suggestionsAreTakenIntoAccount.Item2;
-            bool passwordHasNotAppearedInDataBreaches = suggestionsAreTakenIntoAccount.Item3;
-
-            if (!passwordIsStrong || !passwordIsNotDuplicated || !passwordHasNotAppearedInDataBreaches)
-            {
-                string suggestionsMessage = "Password Improvement Suggestions:\n";
-                if (!passwordIsStrong)
-                {
-                    suggestionsMessage += "\n - Improve it's strength";
-                }
-                if (!passwordIsNotDuplicated)
-                {
-                    suggestionsMessage += "\n - Try another one, reusing a password is not recommended";
-                }
-                if (!passwordHasNotAppearedInDataBreaches)
-                {
-                    suggestionsMessage += "\n - Try another one, the one provided has appeared in a data breach";
-                }
-                suggestionsMessage += "\n\nWould you like to go back and change the password provided?";
-
-                DialogResult goBack = MessageBox.Show(suggestionsMessage, "Suggestions", MessageBoxButtons.YesNo);
-
-                if (goBack == DialogResult.Yes)
-                {
-                    goBackToModifyPassword = true;
-                }
-            }
-            return goBackToModifyPassword;
+            return !NormalCategory.PasswordsAreEqual(PasswordToModify.Password, newPassword);
         }
 
         private UserPasswordPair CreatePassword()
