@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DataManagerDomain;
+using System;
 
 namespace DataManagerTest
 {
@@ -289,6 +290,15 @@ namespace DataManagerTest
             Assert.AreEqual(1, aCategory.GetUserPasswordsPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetYellowUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.YellowUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void AllPasswordsSuggestionsAreTakenIntoAccount()
+        {
+            Tuple<bool, bool, bool> suggestionsTakenIntoAccount = aUser.PasswordSuggestionsAreTakenIntoAccount("MYpassword1234512");
+            Assert.IsTrue(suggestionsTakenIntoAccount.Item1);
+            Assert.IsTrue(suggestionsTakenIntoAccount.Item2);
+            Assert.IsTrue(suggestionsTakenIntoAccount.Item3);
         }
     }
 }

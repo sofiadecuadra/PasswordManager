@@ -45,6 +45,11 @@ namespace DataManagerDomain
             return aLeakedUserPasswordPair.LastModifiedDate > this.DateTime;
         }
 
+        public bool PasswordAppearedInDataBreach(string aPassword)
+        {
+            return LeakedUserPasswordPairs.Contains(aPassword);
+        }
+
         public void RemoveCreditCard(CreditCard aLeakedCreditCard)
         {
             LeakedCreditCardsOfUser.Remove(aLeakedCreditCard);

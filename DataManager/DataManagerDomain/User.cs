@@ -530,6 +530,56 @@ namespace DataManagerDomain
             }
         }
 
+        public Tuple <bool, bool, bool> PasswordSuggestionsAreTakenIntoAccount(string aPassword)
+        {
+            string passwordTrimed = aPassword.Trim();
+            bool passwordIsSecure = PasswordIsSecure(passwordTrimed);
+            bool passwordIsDuplicated = PasswordIsDuplicated(passwordTrimed);
+            bool passwordAppearedInDataBreaches = PasswordAppearedInADataBreach(passwordTrimed);
+            return new Tuple<bool, bool, bool>(passwordIsSecure, !passwordIsDuplicated, !passwordAppearedInDataBreaches);
+        }
+
+        private bool PasswordIsSecure(string aPassword)
+        {
+            bool passwordIsSecure = false;
+            PasswordStrengthType passwordStrengthType = PasswordHandler.PasswordStrength(aPassword);
+            if (passwordStrengthType.Equals(PasswordStrengthType.LightGreen))
+            {
+                passwordIsSecure = true;
+            }
+            if (passwordStrengthType.Equals(PasswordStrengthType.DarkGreen))
+            {
+                passwordIsSecure = true;
+            }
+            return passwordIsSecure;
+        }
+
+        private bool PasswordIsDuplicated(string aPassword)
+        {
+            bool passwordIsDuplicated = false;
+            foreach (UserPasswordPair aPair in GetUserPasswordPairs())
+            {
+                if (aPair.Password.Equals(aPassword))
+                {
+                    passwordIsDuplicated = true;
+                }
+            }
+            return passwordIsDuplicated;
+        }
+
+        private bool PasswordAppearedInADataBreach(string aPassword)
+        {
+            bool passwordAppearedInADataBreach = false;
+            foreach (DataBreach aDataBreach in DataBreaches)
+            {
+                if (aDataBreach.PasswordAppearedInDataBreach(aPassword))
+                {
+                    passwordAppearedInADataBreach = true;
+                }
+            }
+            return passwordAppearedInADataBreach;
+        }
+
         private bool ItsACreditCard(string element)
         {
             bool itsACreditCard = true;
