@@ -1,5 +1,6 @@
 ﻿using DataManagerDomain;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace PasswordsManagerUserInterface
@@ -118,6 +119,34 @@ namespace PasswordsManagerUserInterface
             {
                 txtPassword.PasswordChar = '*';
             }         
+        }
+        
+        private bool PasswordIsStrong(string aPassword)
+        {
+            return PasswordManager.CurrentUser.PasswordIsStrong(aPassword.Trim());
+        }
+
+        private void txtPassword_TextChanged(object sender, EventArgs e)
+        {
+            string passwordTrimed = txtPassword.Text.Trim();
+            if(passwordTrimed.Length >= 5)
+            {
+                if (PasswordIsStrong(passwordTrimed))
+                {
+                    lblPasswordStrength.Text = "Strong password";
+                    lblPasswordStrength.ForeColor = Color.Green;
+                }
+                else
+                {
+                    lblPasswordStrength.Text = "Weak password";
+                    lblPasswordStrength.ForeColor = Color.Red;
+                }
+            }
+            else
+            {
+                lblPasswordStrength.Text = "Invalid Length";
+                lblPasswordStrength.ForeColor = Color.DarkGray;
+            }
         }
     }
 }

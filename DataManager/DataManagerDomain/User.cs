@@ -530,6 +530,56 @@ namespace DataManagerDomain
             }
         }
 
+        public Tuple <bool, bool, bool> PasswordImprovementSuggestionsAreTakenIntoAccount(string aPassword)
+        {
+            string passwordTrimed = aPassword.Trim();
+            bool passwordIsStrong = PasswordIsStrong(passwordTrimed);
+            bool passwordIsNotDuplicated = PasswordIsNotDuplicated(passwordTrimed);
+            bool passwordHasNotAppearedInDataBreaches = PasswordHasNotAppearedInADataBreach(passwordTrimed);
+            return new Tuple<bool, bool, bool>(passwordIsStrong, passwordIsNotDuplicated, passwordHasNotAppearedInDataBreaches);
+        }
+
+        public bool PasswordIsStrong(string aPassword)
+        {
+            bool passwordIsStrong = false;
+            PasswordStrengthType passwordStrengthType = PasswordHandler.PasswordStrength(aPassword);
+            if (passwordStrengthType.Equals(PasswordStrengthType.LightGreen))
+            {
+                passwordIsStrong = true;
+            }
+            if (passwordStrengthType.Equals(PasswordStrengthType.DarkGreen))
+            {
+                passwordIsStrong = true;
+            }
+            return passwordIsStrong;
+        }
+
+        private bool PasswordIsNotDuplicated(string aPassword)
+        {
+            bool passwordIsNotDuplicated = true;
+            foreach (UserPasswordPair aPair in GetUserPasswordPairs())
+            {
+                if (aPair.Password.Equals(aPassword))
+                {
+                    passwordIsNotDuplicated = false;
+                }
+            }
+            return passwordIsNotDuplicated;
+        }
+
+        private bool PasswordHasNotAppearedInADataBreach(string aPassword)
+        {
+            bool passwordHasNotAppearedInADataBreach = true;
+            foreach (DataBreach aDataBreach in DataBreaches)
+            {
+                if (aDataBreach.PasswordAppearedInDataBreach(aPassword))
+                {
+                    passwordHasNotAppearedInADataBreach = false;
+                }
+            }
+            return passwordHasNotAppearedInADataBreach;
+        }
+
         private bool ItsACreditCard(string element)
         {
             bool itsACreditCard = true;

@@ -81,6 +81,7 @@
     <Compile Include="DataBreach\ModifyUserPasswordPairFromDataBreachesHistory.Designer.cs">
       <DependentUpon>ModifyUserPasswordPairFromDataBreachesHistory.cs</DependentUpon>
     </Compile>
+    <Compile Include="HelperClass.cs" />
     <Compile Include="UserPasswordPair\AddUserPasswordPair.cs">
       <SubType>UserControl</SubType>
     </Compile>

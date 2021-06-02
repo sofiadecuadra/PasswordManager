@@ -38,11 +38,29 @@ namespace PasswordsManagerUserInterface
                 MessageBox.Show(ex.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         public void ModifyPassword()
         {
-            UserPasswordPair newPassword = CreatePassword();
-            PasswordToModify.Category.ModifyUserPasswordPair(PasswordToModify, newPassword);
-            GoBack();
+            UserPasswordPair newUserPasswordPair = CreatePassword();
+            if (PasswordHasBeenUpdated(newUserPasswordPair.Password))
+            {
+                Tuple<bool, bool, bool> suggestionsAreTakenIntoAccount = PasswordManager.CurrentUser.PasswordImprovementSuggestionsAreTakenIntoAccount(newUserPasswordPair.Password);
+                if (!HelperClass.LaunchSuggestionBox(suggestionsAreTakenIntoAccount))
+                {
+                    PasswordToModify.Category.ModifyUserPasswordPair(PasswordToModify, newUserPasswordPair);
+                    GoBack();
+                }
+            }
+            else
+            {
+                PasswordToModify.Category.ModifyUserPasswordPair(PasswordToModify, newUserPasswordPair);
+                GoBack();
+            }
+        }
+
+        private bool PasswordHasBeenUpdated(string newPassword)
+        {
+            return !NormalCategory.PasswordsAreEqual(PasswordToModify.Password, newPassword);
         }
 
         private UserPasswordPair CreatePassword()

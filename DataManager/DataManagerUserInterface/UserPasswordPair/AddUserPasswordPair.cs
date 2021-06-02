@@ -31,7 +31,9 @@ namespace PasswordsManagerUserInterface
             {
                 AddPassword();
             }
-            catch (Exception ex) when (ex is ExceptionExistingUserPasswordPair || ex is ExceptionIncorrectLength)
+            catch (Exception ex) when (
+            ex is ExceptionExistingUserPasswordPair
+            || ex is ExceptionIncorrectLength)
             {
                 MessageBox.Show(ex.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -42,8 +44,12 @@ namespace PasswordsManagerUserInterface
             if (Form.GetCategory() != null)
             {
                 UserPasswordPair newPassword = CreatePassword();
-                newPassword.Category.AddUserPasswordPair(newPassword);
-                GoBack();
+                Tuple<bool, bool, bool> suggestionsAreTakenIntoAccount = PasswordManager.CurrentUser.PasswordImprovementSuggestionsAreTakenIntoAccount(newPassword.Password);
+                if (!HelperClass.LaunchSuggestionBox(suggestionsAreTakenIntoAccount))
+                {
+                    newPassword.Category.AddUserPasswordPair(newPassword);
+                    GoBack();
+                }
             }
             else
             {

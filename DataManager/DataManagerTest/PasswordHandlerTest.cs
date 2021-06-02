@@ -116,14 +116,6 @@ namespace DataManagerTest
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionIncorrectLength))]
-        public void PasswordWithLengthOver25() => PasswordHandler.PasswordStrength("012345678901234567890123456");
-
-        [TestMethod]
-        [ExpectedException(typeof(ExceptionIncorrectLength))]
-        public void PasswordWithLengthUnder5() => PasswordHandler.PasswordStrength("0123");
-
-        [TestMethod]
-        [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void GeneratePasswordWithLengthLessThan5()
         {
             PasswordGenerationConditions conditions = new PasswordGenerationConditions()

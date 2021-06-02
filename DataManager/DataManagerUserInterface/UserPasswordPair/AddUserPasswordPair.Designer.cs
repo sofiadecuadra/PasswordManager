@@ -37,9 +37,10 @@ namespace PasswordsManagerUserInterface
             // btnBack
             // 
             this.btnBack.AutoSize = true;
-            this.btnBack.Location = new System.Drawing.Point(698, 15);
+            this.btnBack.Location = new System.Drawing.Point(1396, 29);
+            this.btnBack.Margin = new System.Windows.Forms.Padding(6);
             this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(75, 23);
+            this.btnBack.Size = new System.Drawing.Size(150, 44);
             this.btnBack.TabIndex = 18;
             this.btnBack.Text = "Back";
             this.btnBack.UseVisualStyleBackColor = true;
@@ -47,18 +48,18 @@ namespace PasswordsManagerUserInterface
             // 
             // pnlAddUserPasswordPair
             // 
-            this.pnlAddUserPasswordPair.Location = new System.Drawing.Point(228, 15);
-            this.pnlAddUserPasswordPair.Margin = new System.Windows.Forms.Padding(2);
+            this.pnlAddUserPasswordPair.Location = new System.Drawing.Point(456, 29);
+            this.pnlAddUserPasswordPair.Margin = new System.Windows.Forms.Padding(4);
             this.pnlAddUserPasswordPair.Name = "pnlAddUserPasswordPair";
-            this.pnlAddUserPasswordPair.Size = new System.Drawing.Size(368, 389);
+            this.pnlAddUserPasswordPair.Size = new System.Drawing.Size(804, 748);
             this.pnlAddUserPasswordPair.TabIndex = 20;
             // 
             // btnAccept
             // 
-            this.btnAccept.Location = new System.Drawing.Point(381, 419);
-            this.btnAccept.Margin = new System.Windows.Forms.Padding(2);
+            this.btnAccept.Location = new System.Drawing.Point(762, 806);
+            this.btnAccept.Margin = new System.Windows.Forms.Padding(4);
             this.btnAccept.Name = "btnAccept";
-            this.btnAccept.Size = new System.Drawing.Size(74, 20);
+            this.btnAccept.Size = new System.Drawing.Size(148, 38);
             this.btnAccept.TabIndex = 40;
             this.btnAccept.Text = "Accept";
             this.btnAccept.UseVisualStyleBackColor = true;
@@ -66,14 +67,14 @@ namespace PasswordsManagerUserInterface
             // 
             // AddUserPasswordPair
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.btnAccept);
             this.Controls.Add(this.pnlAddUserPasswordPair);
             this.Controls.Add(this.btnBack);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AddUserPasswordPair";
-            this.Size = new System.Drawing.Size(804, 451);
+            this.Size = new System.Drawing.Size(1608, 867);
             this.ResumeLayout(false);
             this.PerformLayout();
 

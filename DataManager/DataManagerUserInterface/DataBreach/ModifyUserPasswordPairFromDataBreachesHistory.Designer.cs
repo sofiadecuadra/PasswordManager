@@ -50,7 +50,7 @@ namespace PasswordsManagerUserInterface
             this.pnlModifyUserPasswordPair.Location = new System.Drawing.Point(412, 28);
             this.pnlModifyUserPasswordPair.Margin = new System.Windows.Forms.Padding(4);
             this.pnlModifyUserPasswordPair.Name = "pnlModifyUserPasswordPair";
-            this.pnlModifyUserPasswordPair.Size = new System.Drawing.Size(736, 748);
+            this.pnlModifyUserPasswordPair.Size = new System.Drawing.Size(804, 748);
             this.pnlModifyUserPasswordPair.TabIndex = 50;
             // 
             // btnBack

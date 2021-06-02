@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DataManagerDomain;
+using System;
 
 namespace DataManagerTest
 {
@@ -289,6 +290,56 @@ namespace DataManagerTest
             Assert.AreEqual(1, aCategory.GetUserPasswordsPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetYellowUserPasswordPairs().Length);
             Assert.AreEqual(1, aCategory.YellowUserPasswordPairsQuantity);
+        }
+
+        [TestMethod]
+        public void AllPasswordImprovementSuggestionsAreTakenIntoAccount()
+        {
+            Tuple<bool, bool, bool> suggestionsTakenIntoAccount = aUser.PasswordImprovementSuggestionsAreTakenIntoAccount("MYpassword1234512");
+            Assert.IsTrue(suggestionsTakenIntoAccount.Item1);
+            Assert.IsTrue(suggestionsTakenIntoAccount.Item2);
+            Assert.IsTrue(suggestionsTakenIntoAccount.Item3);
+        }
+
+        [TestMethod]
+        public void PasswordIsNotSecure()
+        {
+            Tuple<bool, bool, bool> suggestionsTakenIntoAccount = aUser.PasswordImprovementSuggestionsAreTakenIntoAccount("myPassword");
+            Assert.IsFalse(suggestionsTakenIntoAccount.Item1);
+            Assert.IsTrue(suggestionsTakenIntoAccount.Item2);
+            Assert.IsTrue(suggestionsTakenIntoAccount.Item3);
+        }
+
+        [TestMethod]
+        public void PasswordIsDuplicated()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Category = aCategory,
+                Password = "MYpassword1234512",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+            };
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+            Tuple<bool, bool, bool> suggestionsTakenIntoAccount = aUser.PasswordImprovementSuggestionsAreTakenIntoAccount("MYpassword1234512");
+            Assert.IsTrue(suggestionsTakenIntoAccount.Item1);
+            Assert.IsFalse(suggestionsTakenIntoAccount.Item2);
+            Assert.IsTrue(suggestionsTakenIntoAccount.Item3);
+        }
+
+        [TestMethod]
+        public void PasswordAppearedInADataBreach()
+        {
+            IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
+            {
+                txtDataBreaches = "MYpassword@#12345"
+            };
+            aUser.CheckDataBreaches(dataBreaches);
+            Tuple<bool, bool, bool> suggestionsTakenIntoAccount = aUser.PasswordImprovementSuggestionsAreTakenIntoAccount("MYpassword@#12345");
+            Assert.IsTrue(suggestionsTakenIntoAccount.Item1);
+            Assert.IsTrue(suggestionsTakenIntoAccount.Item2);
+            Assert.IsFalse(suggestionsTakenIntoAccount.Item3);
         }
     }
 }

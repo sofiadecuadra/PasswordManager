@@ -9,7 +9,7 @@ namespace PasswordsManagerUserInterface
         public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public UserPasswordPairForm Form { get; private set; }
-        public UserPasswordPair PasswordToModified { get; private set; }
+        public UserPasswordPair PasswordToModify { get; private set; }
         public PasswordStrengthType passwordColor;
 
         public ModifyReportedUserPasswordPair(DataManager aPasswordManager, Panel panel, UserPasswordPair password, PasswordStrengthType color)
@@ -17,7 +17,7 @@ namespace PasswordsManagerUserInterface
             InitializeComponent();
             PasswordManager = aPasswordManager;
             PnlMainWindow = panel;
-            PasswordToModified = password;
+            PasswordToModify = password;
             passwordColor = color;
             LoadUserPasswordPairForm(password);
         }
@@ -43,9 +43,26 @@ namespace PasswordsManagerUserInterface
 
         public void ModifyPassword()
         {
-            UserPasswordPair newPassword = CreatePassword();
-            PasswordToModified.Category.ModifyUserPasswordPair(PasswordToModified, newPassword);
-            GoBack();
+            UserPasswordPair newUserPasswordPair = CreatePassword();
+            if (PasswordHasBeenUpdated(newUserPasswordPair.Password))
+            {
+                Tuple<bool, bool, bool> suggestionsAreTakenIntoAccount = PasswordManager.CurrentUser.PasswordImprovementSuggestionsAreTakenIntoAccount(newUserPasswordPair.Password);
+                if (!HelperClass.LaunchSuggestionBox(suggestionsAreTakenIntoAccount))
+                {
+                    PasswordToModify.Category.ModifyUserPasswordPair(PasswordToModify, newUserPasswordPair);
+                    GoBack();
+                }
+            }
+            else
+            {
+                PasswordToModify.Category.ModifyUserPasswordPair(PasswordToModify, newUserPasswordPair);
+                GoBack();
+            }
+        }
+
+        private bool PasswordHasBeenUpdated(string newPassword)
+        {
+            return !NormalCategory.PasswordsAreEqual(PasswordToModify.Password, newPassword);
         }
 
         private UserPasswordPair CreatePassword()

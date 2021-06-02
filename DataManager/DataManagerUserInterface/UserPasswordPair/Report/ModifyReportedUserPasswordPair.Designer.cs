@@ -36,16 +36,18 @@ namespace PasswordsManagerUserInterface
             // 
             // pnlModifyPassword
             // 
-            this.pnlModifyPassword.Location = new System.Drawing.Point(228, 15);
+            this.pnlModifyPassword.Location = new System.Drawing.Point(456, 29);
+            this.pnlModifyPassword.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.pnlModifyPassword.Name = "pnlModifyPassword";
-            this.pnlModifyPassword.Size = new System.Drawing.Size(368, 389);
+            this.pnlModifyPassword.Size = new System.Drawing.Size(804, 748);
             this.pnlModifyPassword.TabIndex = 0;
             // 
             // btnAccept
             // 
-            this.btnAccept.Location = new System.Drawing.Point(381, 419);
+            this.btnAccept.Location = new System.Drawing.Point(762, 806);
+            this.btnAccept.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btnAccept.Name = "btnAccept";
-            this.btnAccept.Size = new System.Drawing.Size(75, 23);
+            this.btnAccept.Size = new System.Drawing.Size(150, 44);
             this.btnAccept.TabIndex = 1;
             this.btnAccept.Text = "Accept";
             this.btnAccept.UseVisualStyleBackColor = true;
@@ -53,9 +55,10 @@ namespace PasswordsManagerUserInterface
             // 
             // btnBack
             // 
-            this.btnBack.Location = new System.Drawing.Point(701, 26);
+            this.btnBack.Location = new System.Drawing.Point(1402, 50);
+            this.btnBack.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(75, 23);
+            this.btnBack.Size = new System.Drawing.Size(150, 44);
             this.btnBack.TabIndex = 2;
             this.btnBack.Text = "Back";
             this.btnBack.UseVisualStyleBackColor = true;
@@ -63,13 +66,14 @@ namespace PasswordsManagerUserInterface
             // 
             // ModifyReportedUserPasswordPair
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.btnAccept);
             this.Controls.Add(this.pnlModifyPassword);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "ModifyReportedUserPasswordPair";
-            this.Size = new System.Drawing.Size(804, 451);
+            this.Size = new System.Drawing.Size(1608, 867);
             this.ResumeLayout(false);
 
         }
