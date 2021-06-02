@@ -41,9 +41,56 @@ namespace PasswordsManagerUserInterface
         public void ModifyPassword()
         {
             UserPasswordPair newPassword = CreatePassword();
-            PasswordToModify.Category.ModifyUserPasswordPair(PasswordToModify, newPassword);
-            GoBack();
+            if (!NormalCategory.PasswordsAreEqual(PasswordToModify.Password, newPassword.Password))
+            {
+                if (!GoBackToModifyPasswordAfterReadingSuggestions(newPassword.Password))
+                {
+                    PasswordToModify.Category.ModifyUserPasswordPair(PasswordToModify, newPassword);
+                    GoBack();
+                }
+            }
+            else
+            {
+                PasswordToModify.Category.ModifyUserPasswordPair(PasswordToModify, newPassword);
+                GoBack();
+            }
         }
+
+        public bool GoBackToModifyPasswordAfterReadingSuggestions(string aPassword)
+        {
+            bool goBackToModifyPassword = false;
+            Tuple<bool, bool, bool> suggestionsAreTakenIntoAccount = PasswordManager.CurrentUser.PasswordImprovementSuggestionsAreTakenIntoAccount(aPassword);
+            bool passwordIsStrong = suggestionsAreTakenIntoAccount.Item1;
+            bool passwordIsNotDuplicated = suggestionsAreTakenIntoAccount.Item2;
+            bool passwordHasNotAppearedInDataBreaches = suggestionsAreTakenIntoAccount.Item3;
+
+            if (!passwordIsStrong || !passwordIsNotDuplicated || !passwordHasNotAppearedInDataBreaches)
+            {
+                string suggestionsMessage = "Password Improvement Suggestions:\n";
+                if (!passwordIsStrong)
+                {
+                    suggestionsMessage += "\n - Improve it's strength";
+                }
+                if (!passwordIsNotDuplicated)
+                {
+                    suggestionsMessage += "\n - Try another one, reusing a password is not recommended";
+                }
+                if (!passwordHasNotAppearedInDataBreaches)
+                {
+                    suggestionsMessage += "\n - Try another one, the one provided has appeared in a data breach";
+                }
+                suggestionsMessage += "\n\nWould you like to go back and change the password provided?";
+
+                DialogResult goBack = MessageBox.Show(suggestionsMessage, "Suggestions", MessageBoxButtons.YesNo);
+
+                if (goBack == DialogResult.Yes)
+                {
+                    goBackToModifyPassword = true;
+                }
+            }
+            return goBackToModifyPassword;
+        }
+
         private UserPasswordPair CreatePassword()
         {
             NormalCategory category = Form.GetCategory();

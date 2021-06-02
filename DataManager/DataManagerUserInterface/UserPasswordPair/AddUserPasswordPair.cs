@@ -68,7 +68,7 @@ namespace PasswordsManagerUserInterface
                 string suggestionsMessage = "Password Improvement Suggestions:\n";
                 if (!passwordIsStrong)
                 {
-                    suggestionsMessage += "\n - Improve its strength";
+                    suggestionsMessage += "\n - Improve it's strength";
                 }
                 if (!passwordIsNotDuplicated)
                 {

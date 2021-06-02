@@ -284,7 +284,7 @@ namespace DataManagerDomain
             return aCategory.Name == otherCategory.Name;
         }
 
-        public bool PasswordsAreEqual(String aPassword, String otherPassword)
+        public static bool PasswordsAreEqual(String aPassword, String otherPassword)
         {
             return aPassword == otherPassword;
         }
