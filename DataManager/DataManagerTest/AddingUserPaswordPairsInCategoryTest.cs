@@ -328,5 +328,18 @@ namespace DataManagerTest
             Assert.IsTrue(suggestionsTakenIntoAccount.Item3);
         }
 
+        [TestMethod]
+        public void PasswordAppearedInADataBreach()
+        {
+            IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
+            {
+                txtDataBreaches = "MYpassword@#12345"
+            };
+            aUser.CheckDataBreaches(dataBreaches);
+            Tuple<bool, bool, bool> suggestionsTakenIntoAccount = aUser.PasswordSuggestionsAreTakenIntoAccount("MYpassword@#12345");
+            Assert.IsTrue(suggestionsTakenIntoAccount.Item1);
+            Assert.IsTrue(suggestionsTakenIntoAccount.Item2);
+            Assert.IsFalse(suggestionsTakenIntoAccount.Item3);
+        }
     }
 }
