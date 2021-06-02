@@ -8,14 +8,29 @@ namespace DataManagerDomain
         private string password;
         public string Password
         {
-            get { return password; }
+            get { return DecryptPassword(password); }
             set
             {
                 LastModifiedDate = DateTime.Now;
                 PasswordStrength = PasswordHandler.PasswordStrength(value);
-                password = value;
+                password = EncryptPassword(value);
             }
         }
+
+        private string DecryptPassword(string aPassword)
+        {
+            var user = Category.User;
+            var privateKey = user.PrivateKey;
+            return Encrypter.Decrypt(aPassword, privateKey);
+        }
+
+        private string EncryptPassword(string aPassword)
+        {
+            var user = Category.User;
+            var publicKey = user.PublicKey;
+            return Encrypter.Encrypt(aPassword, publicKey);
+        }
+
         public Hashtable UsersWithAccess { get; private set; }
         private string username;
         public string Username

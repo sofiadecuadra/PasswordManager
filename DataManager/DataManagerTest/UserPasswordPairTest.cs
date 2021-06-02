@@ -27,11 +27,11 @@ namespace DataManagerTest
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "myPassword",
                 Notes = "these are my notes",
                 Username = "myUserName",
                 Site = "mySite",
-                Category = aCategory,
             };
             Assert.AreEqual(aUserPasswordPair.ToString(), "[category] [mysite] [myusername]");
         }
@@ -41,14 +41,15 @@ namespace DataManagerTest
         {
             UserPasswordPair aUserPasswordPair = new UserPasswordPair()
             {
+                Category = aCategory,
                 Password = "myPassword",
                 Notes = "these are my notes",
                 Username = "myUserName",
                 Site = "mySite",
-                Category = aCategory,
             };
 
-            Assert.AreEqual(DateTime.Now, aUserPasswordPair.LastModifiedDate);
+            Assert.AreEqual(DateTime.Now.ToString("yyyyMMddhhmmss"), 
+                aUserPasswordPair.LastModifiedDate.ToString("yyyyMMddhhmmss"));
         }
     }
 }

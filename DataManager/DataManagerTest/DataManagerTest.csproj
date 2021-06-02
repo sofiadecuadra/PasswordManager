@@ -139,6 +139,7 @@
     <Compile Include="AddingUserPaswordPairsInCategoryTest.cs" />
     <Compile Include="CategoryModifyingPasswordColorsTest.cs" />
     <Compile Include="CategoryToStringTest.cs" />
+    <Compile Include="EncrypterTest.cs" />
     <Compile Include="ModifingValidityOfUserPaswordPairArgumentInCategoryTest.cs" />
     <Compile Include="PasswordHandlerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
