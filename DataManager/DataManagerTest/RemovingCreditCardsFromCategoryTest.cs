@@ -24,13 +24,13 @@ namespace DataManagerTest
 
             aCreditCard = new CreditCard()
             {
+                Category = aCategory,
                 Number = "1234567891234567",
                 Type = "Visa",
                 Name = "Visa Gold",
                 Code = "234",
                 Notes = "",
                 ExpirationDate = new DateTime(2023, 12, 25),
-                Category = aCategory,
             };
         }
 
@@ -51,7 +51,7 @@ namespace DataManagerTest
         }
 
         [TestMethod]
-        public void RemoveCreditThatAppeardInADataBreach()
+        public void RemoveCreditThatAppearedInADataBreach()
         {
             aCategory.AddCreditCard(aCreditCard);
 

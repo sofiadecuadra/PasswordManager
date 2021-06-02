@@ -32,10 +32,16 @@ namespace DataManagerDomain
             return aLeakedUserPasswordPair.LastModifiedDate > this.DateTime;
         }
 
-        public bool RemoveCreditCard(CreditCard aLeakedCreditCard)
+        public void RemoveCreditCard(CreditCard aLeakedCreditCard)
         {
-            return LeakedCreditCardsOfUser.Remove(aLeakedCreditCard);
+            LeakedCreditCardsOfUser.Remove(aLeakedCreditCard);
         }
+
+        public void RemoveUserPasswordPair(UserPasswordPair aLeakedUserPasswordPair)
+        {
+            LeakedUserPasswordPairsOfUser.Remove(aLeakedUserPasswordPair);
+        }
+
 
     }
 }

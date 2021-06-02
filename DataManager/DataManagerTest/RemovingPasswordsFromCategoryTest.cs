@@ -156,5 +156,28 @@ namespace DataManagerTest
             Assert.AreEqual(0, aCategory.User.GetYellowUserPasswordPairs().Length);
             Assert.AreEqual(0, aCategory.YellowUserPasswordPairsQuantity);
         }
+
+        [TestMethod]
+        public void RemoveUserPasswordPairThatAppearedInADataBreach()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Category = aCategory,
+                Password = "mypassword12345",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            IDataBreachesFormatter dataBreaches = new TxtFileDataBreaches()
+            {
+                txtDataBreaches = "mypassword12345"
+            };
+            DataBreach aDataBreach = aUser.CheckDataBreaches(dataBreaches);
+            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
+            Assert.IsTrue(aDataBreach.LeakedUserPasswordPairsOfUser.Count == 0);
+        }
     }
 }

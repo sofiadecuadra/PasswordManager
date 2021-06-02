@@ -508,6 +508,14 @@ namespace DataManagerDomain
             }
         }
 
+        public void RemoveUserPasswordPairFromDataBreaches(UserPasswordPair aUserPasswordPair)
+        {
+            foreach (DataBreach element in DataBreaches)
+            {
+                element.RemoveUserPasswordPair(aUserPasswordPair);
+            }
+        }
+
         private bool ItsACreditCard(string element)
         {
             bool itsACreditCard = true;

@@ -362,13 +362,12 @@ namespace DataManagerDomain
 
         public override bool RemoveUserPasswordPair(UserPasswordPair aUserPasswordPair)
         {
-            if (!UserPasswordPairAlredyExistsInCategory(aUserPasswordPair.Username, aUserPasswordPair.Site))
+            if (!RemoveUserPasswordPairFromCollection(aUserPasswordPair))
             {
                 throw new ExceptionUserPasswordPairDoesNotExist($"The user-password pair ({aUserPasswordPair.Username}-{aUserPasswordPair.Site}) does not exist in {this.Name}");
             }
-            RemoveUserPasswordPairFromCollection(aUserPasswordPair);
             DeleteUserPasswordPairFromStrengthGroup(aUserPasswordPair);
-
+            User.RemoveUserPasswordPairFromDataBreaches(aUserPasswordPair);
             return true;
         }
 

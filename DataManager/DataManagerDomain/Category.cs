@@ -35,9 +35,9 @@ namespace DataManagerDomain
             userPasswordPairs.Add(aUserPasswordPair.Site + aUserPasswordPair.Username, aUserPasswordPair);
         }
 
-        protected void RemoveUserPasswordPairFromCollection(UserPasswordPair aUserPasswordPair)
+        protected bool RemoveUserPasswordPairFromCollection(UserPasswordPair aUserPasswordPair)
         {
-            userPasswordPairs.Remove($"{aUserPasswordPair.Site}{ aUserPasswordPair.Username}");
+            return userPasswordPairs.Remove($"{aUserPasswordPair.Site}{ aUserPasswordPair.Username}");
         }
 
         public bool UserPasswordPairAlredyExistsInCategory(string username, string site)
