@@ -8,23 +8,36 @@ namespace DataManagerDomain
         public DateTime DateTime { get; private set; }
         public List<UserPasswordPair> LeakedUserPasswordPairsOfUser { get; set; }
         public List<CreditCard> LeakedCreditCardsOfUser { get; set; }
-        public string[] LeakedData { get; set; }
+        public List<String> LeakedCreditCards { get; set; }
+        public List<String> LeakedUserPasswordPairs { get; set; }
 
         public DataBreach()
         {
             DateTime = DateTime.Now;
             LeakedUserPasswordPairsOfUser = new List<UserPasswordPair>();
             LeakedCreditCardsOfUser = new List<CreditCard>();
+            LeakedUserPasswordPairs = new List<String>();
+            LeakedCreditCards = new List <String>();
         }
 
-        public void AddLeakedUserPasswordPair(UserPasswordPair aLeakedUserPasswordPair)
+        public void AddLeakedUserPasswordPairOfUser(UserPasswordPair aLeakedUserPasswordPair)
         {
             this.LeakedUserPasswordPairsOfUser.Add(aLeakedUserPasswordPair);
         }
 
-        public void AddLeakedCreditCard(CreditCard aLeakedCreditCard)
+        public void AddLeakedCreditCardOfUser(CreditCard aLeakedCreditCard)
         {
             this.LeakedCreditCardsOfUser.Add(aLeakedCreditCard);
+        }
+
+        public void AddLeakedUserPasswordPair(String aLeakedUserPasswordPair)
+        {
+            this.LeakedUserPasswordPairs.Add(aLeakedUserPasswordPair);
+        }
+
+        public void AddLeakedCreditCard(String aLeakedCreditCard)
+        {
+            this.LeakedCreditCards.Add(aLeakedCreditCard);
         }
 
         public bool PasswordWasModified(UserPasswordPair aLeakedUserPasswordPair)
@@ -41,7 +54,5 @@ namespace DataManagerDomain
         {
             LeakedUserPasswordPairsOfUser.Remove(aLeakedUserPasswordPair);
         }
-
-
     }
 }

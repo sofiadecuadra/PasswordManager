@@ -729,6 +729,17 @@ namespace DataManagerTest
         }
 
         [TestMethod]
+        public void CheckEmptyDataBreach()
+        {
+            IDataBreachesFormatter dataBreaches = new TxtFileDataBreaches()
+            {
+                txtDataBreaches = "   "
+            };
+            aUser.CheckDataBreaches(dataBreaches);
+            Assert.IsTrue(aUser.DataBreaches.Count==0);
+        }
+
+        [TestMethod]
         public void PasswordUsedInMultipleSitesOfUserAppearedInTxtFileDataBreaches()
         {
             var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();

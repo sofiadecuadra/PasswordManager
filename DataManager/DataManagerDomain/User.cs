@@ -115,7 +115,7 @@ namespace DataManagerDomain
 
         private void AddDataBreach(DataBreach aDataBreach)
         {
-            if (aDataBreach.LeakedData[0]!="")
+            if (aDataBreach.LeakedCreditCards.Count > 0 || aDataBreach.LeakedUserPasswordPairs.Count > 0)
             {
                 DataBreaches.Add(aDataBreach);
             }
@@ -463,28 +463,31 @@ namespace DataManagerDomain
         public DataBreach CheckDataBreaches(IDataBreachesFormatter dataBreachInput)
         {
             string[] leakedData = dataBreachInput.ConvertToArray();
-            DataBreach dataBreach = new DataBreach()
-            {
-                LeakedData = leakedData
-            };
+            DataBreach dataBreach = new DataBreach();
             foreach (string element in leakedData)
             {
-                if (ItsACreditCard(element.Trim()))
+                string dataToCheck = element.Trim();
+                if (dataToCheck != "")
                 {
-                    CreditCard aLeakedCreditCardOfUser = ReturnCreditCardThatAppeardInDataBreaches(element.Trim());
-                    if (aLeakedCreditCardOfUser != null && !dataBreach.LeakedCreditCardsOfUser.Contains(aLeakedCreditCardOfUser))
+                    if (ItsACreditCard(dataToCheck))
                     {
-                        dataBreach.AddLeakedCreditCard(aLeakedCreditCardOfUser);
-                    }
-                }
-                else
-                {
-                    List<UserPasswordPair> leakedPasswordsOfUser = ReturnListOfUserPasswordPairWhosePasswordAppearedInDataBreaches(element.Trim());
-                    foreach (UserPasswordPair pair in leakedPasswordsOfUser)
-                    {
-                        if (!dataBreach.LeakedUserPasswordPairsOfUser.Contains(pair))
+                        dataBreach.AddLeakedCreditCard(dataToCheck);
+                        CreditCard aLeakedCreditCardOfUser = ReturnCreditCardThatAppeardInDataBreaches(dataToCheck);
+                        if (aLeakedCreditCardOfUser != null && !dataBreach.LeakedCreditCardsOfUser.Contains(aLeakedCreditCardOfUser))
                         {
-                            dataBreach.AddLeakedUserPasswordPair(pair);
+                            dataBreach.AddLeakedCreditCardOfUser(aLeakedCreditCardOfUser);
+                        }
+                    }
+                    else
+                    {
+                        dataBreach.AddLeakedUserPasswordPair(dataToCheck);
+                        List<UserPasswordPair> leakedPasswordsOfUser = ReturnListOfUserPasswordPairWhosePasswordAppearedInDataBreaches(dataToCheck);
+                        foreach (UserPasswordPair pair in leakedPasswordsOfUser)
+                        {
+                            if (!dataBreach.LeakedUserPasswordPairsOfUser.Contains(pair))
+                            {
+                                dataBreach.AddLeakedUserPasswordPairOfUser(pair);
+                            }
                         }
                     }
                 }
