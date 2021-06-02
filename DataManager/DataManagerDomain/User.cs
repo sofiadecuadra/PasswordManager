@@ -530,28 +530,28 @@ namespace DataManagerDomain
             }
         }
 
-        public Tuple <bool, bool, bool> PasswordSuggestionsAreTakenIntoAccount(string aPassword)
+        public Tuple <bool, bool, bool> PasswordImprovementSuggestionsAreTakenIntoAccount(string aPassword)
         {
             string passwordTrimed = aPassword.Trim();
-            bool passwordIsSecure = PasswordIsSecure(passwordTrimed);
+            bool passwordIsStrong = PasswordIsStrong(passwordTrimed);
             bool passwordIsDuplicated = PasswordIsDuplicated(passwordTrimed);
             bool passwordAppearedInDataBreaches = PasswordAppearedInADataBreach(passwordTrimed);
-            return new Tuple<bool, bool, bool>(passwordIsSecure, !passwordIsDuplicated, !passwordAppearedInDataBreaches);
+            return new Tuple<bool, bool, bool>(passwordIsStrong, !passwordIsDuplicated, !passwordAppearedInDataBreaches);
         }
 
-        private bool PasswordIsSecure(string aPassword)
+        private bool PasswordIsStrong(string aPassword)
         {
-            bool passwordIsSecure = false;
+            bool passwordIsStrong = false;
             PasswordStrengthType passwordStrengthType = PasswordHandler.PasswordStrength(aPassword);
             if (passwordStrengthType.Equals(PasswordStrengthType.LightGreen))
             {
-                passwordIsSecure = true;
+                passwordIsStrong = true;
             }
             if (passwordStrengthType.Equals(PasswordStrengthType.DarkGreen))
             {
-                passwordIsSecure = true;
+                passwordIsStrong = true;
             }
-            return passwordIsSecure;
+            return passwordIsStrong;
         }
 
         private bool PasswordIsDuplicated(string aPassword)

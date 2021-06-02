@@ -293,9 +293,9 @@ namespace DataManagerTest
         }
 
         [TestMethod]
-        public void AllPasswordsSuggestionsAreTakenIntoAccount()
+        public void AllPasswordImprovementSuggestionsAreTakenIntoAccount()
         {
-            Tuple<bool, bool, bool> suggestionsTakenIntoAccount = aUser.PasswordSuggestionsAreTakenIntoAccount("MYpassword1234512");
+            Tuple<bool, bool, bool> suggestionsTakenIntoAccount = aUser.PasswordImprovementSuggestionsAreTakenIntoAccount("MYpassword1234512");
             Assert.IsTrue(suggestionsTakenIntoAccount.Item1);
             Assert.IsTrue(suggestionsTakenIntoAccount.Item2);
             Assert.IsTrue(suggestionsTakenIntoAccount.Item3);
@@ -304,7 +304,7 @@ namespace DataManagerTest
         [TestMethod]
         public void PasswordIsNotSecure()
         {
-            Tuple<bool, bool, bool> suggestionsTakenIntoAccount = aUser.PasswordSuggestionsAreTakenIntoAccount("myPassword");
+            Tuple<bool, bool, bool> suggestionsTakenIntoAccount = aUser.PasswordImprovementSuggestionsAreTakenIntoAccount("myPassword");
             Assert.IsFalse(suggestionsTakenIntoAccount.Item1);
             Assert.IsTrue(suggestionsTakenIntoAccount.Item2);
             Assert.IsTrue(suggestionsTakenIntoAccount.Item3);
@@ -322,7 +322,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
             aCategory.AddUserPasswordPair(aUserPasswordPair);
-            Tuple<bool, bool, bool> suggestionsTakenIntoAccount = aUser.PasswordSuggestionsAreTakenIntoAccount("MYpassword1234512");
+            Tuple<bool, bool, bool> suggestionsTakenIntoAccount = aUser.PasswordImprovementSuggestionsAreTakenIntoAccount("MYpassword1234512");
             Assert.IsTrue(suggestionsTakenIntoAccount.Item1);
             Assert.IsFalse(suggestionsTakenIntoAccount.Item2);
             Assert.IsTrue(suggestionsTakenIntoAccount.Item3);
@@ -336,7 +336,7 @@ namespace DataManagerTest
                 txtDataBreaches = "MYpassword@#12345"
             };
             aUser.CheckDataBreaches(dataBreaches);
-            Tuple<bool, bool, bool> suggestionsTakenIntoAccount = aUser.PasswordSuggestionsAreTakenIntoAccount("MYpassword@#12345");
+            Tuple<bool, bool, bool> suggestionsTakenIntoAccount = aUser.PasswordImprovementSuggestionsAreTakenIntoAccount("MYpassword@#12345");
             Assert.IsTrue(suggestionsTakenIntoAccount.Item1);
             Assert.IsTrue(suggestionsTakenIntoAccount.Item2);
             Assert.IsFalse(suggestionsTakenIntoAccount.Item3);
