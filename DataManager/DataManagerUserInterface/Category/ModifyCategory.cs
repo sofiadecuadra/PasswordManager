@@ -10,9 +10,9 @@ namespace PasswordsManagerUserInterface
         public DataManager PasswordManager { get; private set; }
         public Panel PnlMainWindow { get; private set; }
         public CategoryForm Form { get; private set; }
-        public NormalCategory CategoryToModify { get; private set; }
+        public Category CategoryToModify { get; private set; }
 
-        public ModifyCategory(DataManager aPasswordManager, Panel aPanel, NormalCategory aCategory)
+        public ModifyCategory(DataManager aPasswordManager, Panel aPanel, Category aCategory)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
@@ -21,7 +21,7 @@ namespace PasswordsManagerUserInterface
             LoadCategoryForm(aCategory);
         }
 
-        private void LoadCategoryForm(NormalCategory categoryToModify)
+        private void LoadCategoryForm(Category categoryToModify)
         {
             pnlAddCategory.Controls.Clear();
             Form = new CategoryForm(categoryToModify);

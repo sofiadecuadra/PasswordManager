@@ -7,14 +7,14 @@ namespace DataManagerTest
     [TestClass]
     public class ModifingValidityOfUserPaswordPairArgumentInCategoryTest
     {
-        private NormalCategory aCategory;
+        private Category aCategory;
         private User aUser;
 
         [TestInitialize]
         public void Initialize()
         {
             aUser = new User();
-            aCategory = new NormalCategory()
+            aCategory = new Category()
             {
                 User = aUser,
                 Name = "Category"
@@ -75,7 +75,7 @@ namespace DataManagerTest
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
 
-            NormalCategory otherCategory = new NormalCategory()
+            Category otherCategory = new Category()
             {
                 User = aUser,
                 Name = "otherCategory"
@@ -101,7 +101,7 @@ namespace DataManagerTest
         [TestMethod]
         public void ModifyPasswordOfUserPasswordPairToAValidOneChangingCategoryAndNotThePassword()
         {
-            NormalCategory anotherCategory = new NormalCategory()
+            Category anotherCategory = new Category()
             {
                 User = aUser,
                 Name = "anotherCategory"

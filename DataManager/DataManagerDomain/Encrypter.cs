@@ -20,7 +20,6 @@ namespace DataManagerDomain
 
         public static string GetKeyString(RSAParameters publicKey)
         {
-
             var stringWriter = new System.IO.StringWriter();
             var xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(RSAParameters));
             xmlSerializer.Serialize(stringWriter, publicKey);
@@ -30,7 +29,6 @@ namespace DataManagerDomain
         public static string Encrypt(string textToEncrypt, string publicKey)
         {
             var bytesToEncrypt = Encoding.UTF8.GetBytes(textToEncrypt);
-
             using (var rsa = new RSACryptoServiceProvider(2048))
             {
                 try
@@ -53,7 +51,6 @@ namespace DataManagerDomain
             {
                 try
                 {
-
                     // server decrypting data with private key                    
                     rsa.FromXmlString(privateKey);
 

@@ -26,15 +26,15 @@ namespace PasswordsManagerUserInterface
 
         private void LoadCategories()
         {
-            NormalCategory[] categories = PasswordManager.CurrentUser.GetCategories();
-            foreach (NormalCategory category in categories)
+            Category[] categories = PasswordManager.CurrentUser.GetCategories();
+            foreach (Category category in categories)
             {
                 comboCategory.Items.Add(category);
             }
             SetDefaultCategory(categories);
         }
 
-        private void SetDefaultCategory(NormalCategory[] categories)
+        private void SetDefaultCategory(Category[] categories)
         {
             if (categories.Length > 0)
             {
@@ -51,9 +51,9 @@ namespace PasswordsManagerUserInterface
             txtNotes.Text = passwordToModify.Notes;
         }
 
-        public NormalCategory GetCategory()
+        public Category GetCategory()
         {
-            NormalCategory category = (NormalCategory)comboCategory.SelectedItem;
+            Category category = (Category)comboCategory.SelectedItem;
             return category;
         }
 

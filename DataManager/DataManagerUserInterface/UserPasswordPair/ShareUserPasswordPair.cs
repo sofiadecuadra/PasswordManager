@@ -68,7 +68,7 @@ namespace PasswordsManagerUserInterface
 
         private void Share()
         {
-            string userToShareWith = comboUsers.Text;
+            User userToShareWith = comboUsers.SelectedItem as User;
             PasswordManager.SharePassword(PasswordToShare, userToShareWith);
             GoBackToPasswordView();
         }

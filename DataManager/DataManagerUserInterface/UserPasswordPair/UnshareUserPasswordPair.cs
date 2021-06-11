@@ -51,7 +51,7 @@ namespace PasswordsManagerUserInterface
 
         private void Unshare()
         {
-            string userToUnshare = comboUsers.Text;
+            User userToUnshare = comboUsers.SelectedItem as User;
             PasswordManager.UnsharePassword(PasswordToUnshare, userToUnshare);
             GoBackToPasswordView();
         }
