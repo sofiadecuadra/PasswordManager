@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
+using DataManagerDomain.Exceptions;
 
 namespace DataManagerDomain
 {
@@ -26,21 +28,25 @@ namespace DataManagerDomain
             }
         }
 
-        private User ReturnUserIfItExists(User aUser)
+        private User ReturnUserIfItExists(User value)
         {
-            return HasUser(aUser.Name) ? aUser : throw new ExceptionUserDoesNotExist("The user does not exist");
+            return HasUser(value.Username) ? value : throw new ExceptionUserDoesNotExist("The user does not exist");
         }
 
         public bool HasUser(string name)
         {
             using (var dbContext = new DataManagerContext())
             {
-                return dbContext.Users.ToList().Exists(user => user.Name == name);
+                return dbContext.Users.ToList().Exists(user => user.Username == name.ToLower());
             }
         }
 
         public void AddUser(User myUser)
         {
+            if (HasUser(myUser.Username))
+            {
+                throw new ExceptionUserAlreadyExists("The user already exists");
+            }
             using (var dbContext = new DataManagerContext())
             {
                 dbContext.Users.Add(myUser);
@@ -50,9 +56,10 @@ namespace DataManagerDomain
 
         public void LogIn(string username, string masterPassword)
         {
+            username = username.Trim();
             if (ValidateUser(username, masterPassword))
             {
-                CurrentUser = FindUser(username.Trim());
+                CurrentUser = FindUser(username);
             }
             else
             {
@@ -66,7 +73,6 @@ namespace DataManagerDomain
             {
                 throw new ExceptionUserDoesNotExist($"The user {username} does not exist");
             }
-
             return FindUser(username)
                     .MasterPassword.Equals(masterPassword);
         }
@@ -75,28 +81,26 @@ namespace DataManagerDomain
         {
             using (var dbContext = new DataManagerContext())
             {
-                return dbContext.Users.ToList().Find(user => user.Name == name);
+                return dbContext.Users.Include(user => user.Categories).FirstOrDefault(user => user.Username == name.ToLower());
             }
         }
 
         public void SharePassword(UserPasswordPair passwordToShare, User userToRecivePassword)
         {
-            if (!HasUser(userToRecivePassword.Name))
+            if (!HasUser(userToRecivePassword.Username))
             {
                 throw new ExceptionUserDoesNotExist($"The user {userToRecivePassword} does not exist");
             }
             passwordToShare.IncludeInUsersWithAccess(userToRecivePassword);
-            userToRecivePassword.AddSharedUserPasswordPair(passwordToShare);
         }
 
         public void UnsharePassword(UserPasswordPair passwordToStopSharing, User userToRevokeSharedPassword)
         {
-            if (!HasUser(userToRevokeSharedPassword.Name))
+            if (!HasUser(userToRevokeSharedPassword.Username))
             {
                 throw new ExceptionUserDoesNotExist($"The user {userToRevokeSharedPassword} does not exist");
             }
             passwordToStopSharing.RemoveFromUsersWithAccess(userToRevokeSharedPassword);
-            userToRevokeSharedPassword.UnshareUserPasswordPair(passwordToStopSharing);
         }
     }
 }

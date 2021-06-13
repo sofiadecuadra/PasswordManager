@@ -29,13 +29,13 @@ namespace PasswordsManagerUserInterface
 
         private void LoadTableData()
         {
-            //SetColumnsQuantity();
-            //SetCategoryColumn();
-            //SetSiteColumn();
-            //SetUsernameColumn();
-            //SetLastModifiedColumn();
-            //SetFullViewColumn();
-            //dgvPasswordsOfColor.DataSource = PasswordManager.CurrentUser.GetUserPasswordPairsOfASpecificColor(color);
+            SetColumnsQuantity();
+            SetCategoryColumn();
+            SetSiteColumn();
+            SetUsernameColumn();
+            SetLastModifiedColumn();
+            SetFullViewColumn();
+            dgvPasswordsOfColor.DataSource = PasswordManager.CurrentUser.GetUserPasswordPairsOfASpecificColor(color);
         }
 
         private void SetColumnsQuantity()

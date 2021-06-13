@@ -8,11 +8,6 @@ namespace DataManagerDomain
     public class Category 
     {
         public int Id { get; set; }
-        public int RedUserPasswordPairsQuantity { get; set; }
-        public int OrangeUserPasswordPairsQuantity { get; set; }
-        public int YellowUserPasswordPairsQuantity { get; set; }
-        public int LightGreenUserPasswordPairsQuantity { get; set; }
-        public int DarkGreenUserPasswordPairsQuantity { get; set; }
         public User User { get; set; }
         private string name { get; set; }
         public string Name
@@ -29,41 +24,17 @@ namespace DataManagerDomain
             creditCards = new List<CreditCard>();
         }
 
+        public override string ToString()
+        {
+            return Name;
+        }
+
         public CreditCard[] GetCreditCards()
         {
-            return creditCards.ToArray();
-        }
-
-        public User GetUser()
-        {
-            return User;
-        }
-
-        protected void AddUserPasswordPairToCollection(UserPasswordPair aUserPasswordPair)
-        {
             using (var dbContext = new DataManagerContext())
             {
-                dbContext.UserPasswordPairs.Add(aUserPasswordPair);
-                dbContext.SaveChanges();
-            }
-        }
-
-        protected bool RemoveUserPasswordPairFromCollection(UserPasswordPair aUserPasswordPair)
-        {
-            using (var dbContext = new DataManagerContext())
-            {
-                dbContext.UserPasswordPairs.Remove(aUserPasswordPair);
-                dbContext.SaveChanges();
-                return true;
-            }
-        }
-
-        public bool UserPasswordPairAlredyExistsInCategory(UserPasswordPair aUserPasswordPair)
-        {
-            using (var dbContext = new DataManagerContext())
-            {
-                var passwords = dbContext.UserPasswordPairs.Where(userPasswordPair => userPasswordPair.Category.Id == Id).ToList();
-                return passwords.Exists(password => password.Id == aUserPasswordPair.Id);
+                var creditCards = dbContext.CreditCards.Where(creditCard => creditCard.Category.Id == Id);
+                return creditCards.ToArray();
             }
         }
 
@@ -71,7 +42,8 @@ namespace DataManagerDomain
         {
             using (var dbContext = new DataManagerContext())
             {
-                return dbContext.UserPasswordPairs.Where(userPasswordPair => userPasswordPair.Category.Id == Id).ToArray();
+                var passwords = dbContext.UserPasswordPairs.Where(userPasswordPair => userPasswordPair.Category.Id == Id);
+                return passwords.ToArray();
             }
         }
 
@@ -88,22 +60,29 @@ namespace DataManagerDomain
 
         private bool CreditCardIsValid(CreditCard aCreditCard)
         {
-            if (CreditCardNumberAlreadyExistsInUser(aCreditCard.Number))
+            if (CreditCardNumberAlreadyExistsInUser(aCreditCard))
             {
                 throw new ExceptionCreditCardNumberAlreadyExistsInUser("The credit card number already exists in user");
             }
             return aCreditCard.CreditCardDataIsValid();
         }
 
-        private bool CreditCardNumberAlreadyExistsInUser(string creditCardNumber)
+        private bool CreditCardNumberAlreadyExistsInUser(CreditCard aCreditCard)
         {
-            return User.CreditCardNumberExists(creditCardNumber);
+            using (var dbContext = new DataManagerContext())
+            {
+                var userSelected = dbContext.Users
+                    .FirstOrDefault(user => user.Username == aCreditCard.Category.User.Username);
+                return userSelected
+                    .CreditCardNumberExists(aCreditCard.Number);
+            }
         }
 
         protected void AddCreditCardToCollection(CreditCard aCreditCard)
         {
             using (var dbContext = new DataManagerContext())
             {
+                dbContext.Categories.Attach(aCreditCard.Category);
                 dbContext.CreditCards.Add(aCreditCard);
                 dbContext.SaveChanges();
             }
@@ -112,27 +91,40 @@ namespace DataManagerDomain
         public bool ModifyCreditCard(CreditCard oldCreditCard, CreditCard newCreditCard)
         {
             if (ModifiedCreditCardIsValid(oldCreditCard, newCreditCard))
-            {            
-                RemoveCreditCard(oldCreditCard);
-                if (HasSameCategory(oldCreditCard.Category, newCreditCard.Category))
-                {
-                    AddCreditCardToCollection(newCreditCard);
-                }
-                else
-                {
-                    newCreditCard.Category.AddCreditCardToCollection(newCreditCard);
-                }
+            {
+                UpdateCreditCardData(oldCreditCard, newCreditCard);
             }
             return true;
         }
 
         private bool ModifiedCreditCardIsValid(CreditCard oldCreditCard, CreditCard newCreditCard)
         {
-            if (!CreditCardNumbersAreEqual(oldCreditCard.Number, newCreditCard.Number) && CreditCardNumberAlreadyExistsInUser(newCreditCard.Number))
+            if (!CreditCardNumbersAreEqual(oldCreditCard.Number, newCreditCard.Number) && CreditCardNumberAlreadyExistsInUser(newCreditCard))
             {
                 throw new ExceptionCreditCardNumberAlreadyExistsInUser("The credit card number already exists in user");
             }
             return newCreditCard.CreditCardDataIsValid();
+        }
+
+        private void UpdateCreditCardData(CreditCard oldCreditCard, CreditCard newCreditCard)
+        {
+            using (var dbContext = new DataManagerContext())
+            {
+                var creditCardToModify = dbContext.CreditCards
+                    .FirstOrDefault(creditCard => creditCard.Id == oldCreditCard.Id);
+                var newCategory = dbContext.Categories
+                    .FirstOrDefault(category => category.Id == newCreditCard.Category.Id);
+                creditCardToModify.Category = newCategory;
+                creditCardToModify.Number = newCreditCard.Number;
+                creditCardToModify.Notes = newCreditCard.Notes;
+                creditCardToModify.ExpirationDate = newCreditCard.ExpirationDate;
+                creditCardToModify.Code = newCreditCard.Code;
+                creditCardToModify.Name = newCreditCard.Name;
+                creditCardToModify.Type = newCreditCard.Type;
+                dbContext.Entry(creditCardToModify).State = EntityState.Modified;
+                dbContext.Entry(newCategory).State = EntityState.Modified;
+                dbContext.SaveChanges();
+            }
         }
 
         private bool CreditCardNumbersAreEqual(string oldCreditCardNumber, string newCreditCardNumber)
@@ -140,24 +132,24 @@ namespace DataManagerDomain
             return oldCreditCardNumber == newCreditCardNumber;
         }
 
-        private bool RemoveCreditCardFromCollection(CreditCard aCreditCard)
+        public void RemoveCreditCard(CreditCard aCreditCard)
         {
-            using (var dbContext = new DataManagerContext())
-            {
-                dbContext.CreditCards.Remove(aCreditCard);
-                dbContext.SaveChanges();
-                return true;
-            }
-        }
-
-        public bool RemoveCreditCard(CreditCard aCreditCard)
-        {
-            if (!RemoveCreditCardFromCollection(aCreditCard))
+            if (!CreditCardNumberAlreadyExistsInCategory(aCreditCard.Number))
             {
                 throw new ExceptionCreditCardDoesNotExist($"The credit card {aCreditCard.Number} does not exist in this category");
             }
-            User.RemoveCreditCardFromDataBreaches(aCreditCard);
-            return true;
+            RemoveCreditCardFromCollection(aCreditCard);
+            //User.RemoveCreditCardFromDataBreaches(aCreditCard);
+        }
+
+        private void RemoveCreditCardFromCollection(CreditCard aCreditCard)
+        {
+            using (var dbContext = new DataManagerContext())
+            {
+                dbContext.CreditCards.Attach(aCreditCard);
+                dbContext.CreditCards.Remove(aCreditCard);
+                dbContext.SaveChanges();
+            }
         }
 
         public bool CreditCardNumberAlreadyExistsInCategory(string aCreditCardNumber)
@@ -173,7 +165,10 @@ namespace DataManagerDomain
         {
             if (CreditCardNumberAlreadyExistsInCategory(aCreditCardNumber))
             {
-                return creditCards.Find(creditCard => creditCard.Number == aCreditCardNumber);
+                using (var dbContext = new DataManagerContext())
+                {
+                    return dbContext.CreditCards.FirstOrDefault(creditCard => creditCard.Number == aCreditCardNumber && creditCard.Category.Id == Id);
+                }
             }
             return null;
         }
@@ -184,7 +179,6 @@ namespace DataManagerDomain
             if (UserPasswordPairIsValid(aUserPasswordPair))
             {
                 AddUserPasswordPairToCollection(aUserPasswordPair);
-                //AddUserPasswordPairToStrengthGroup(aUserPasswordPair);
                 userPasswordPairAdded = true;
             }
             return userPasswordPairAdded;
@@ -192,71 +186,40 @@ namespace DataManagerDomain
 
         private bool UserPasswordPairIsValid(UserPasswordPair aUserPasswordPair)
         {
-            if (UserPasswordPairAlredyExistsInUser(aUserPasswordPair))
+            if (UserPasswordPairAlreadyExistsInUser(aUserPasswordPair))
             {
                 throw new ExceptionExistingUserPasswordPair("The userPassword pair already exists in user");
             }
             return aUserPasswordPair.UserPasswordPairDataIsValid();
         }
 
-        private bool UserPasswordPairAlredyExistsInUser(UserPasswordPair aUserPasswordPair)
+        private bool UserPasswordPairAlreadyExistsInUser(UserPasswordPair aUserPasswordPair)
         {
-            return User.UserPasswordPairExists(aUserPasswordPair);
+            using (var dbContext = new DataManagerContext())
+            {
+                var userSelected = dbContext.Users.FirstOrDefault(user => user.Username == aUserPasswordPair.Category.User.Username);
+                return userSelected.UserPasswordPairExists(aUserPasswordPair);
+            }
         }
 
-        //private void AddUserPasswordPairToStrengthGroup(UserPasswordPair aUserPasswordPair)
-        //{
-        //    if (aUserPasswordPair.IsARedPassword())
-        //    {
-        //        AddToRedGroup(aUserPasswordPair);
-        //    }
-        //    if (aUserPasswordPair.IsAnOrangePassword())
-        //    {
-        //        AddToOrangeGroup(aUserPasswordPair);
-        //    }
-        //    if (aUserPasswordPair.IsAYellowPassword())
-        //    {
-        //        AddToYellowGroup(aUserPasswordPair);
-        //    }
-        //    if (aUserPasswordPair.IsALightGreenPassword())
-        //    {
-        //        AddToLightGreenGroup(aUserPasswordPair);
-        //    }
-        //    if (aUserPasswordPair.IsADarkGreenPassword())
-        //    {
-        //        AddToDarkGreenGroup(aUserPasswordPair);
-        //    }
-        //}
+        protected void AddUserPasswordPairToCollection(UserPasswordPair aUserPasswordPair)
+        {
+            using (var dbContext = new DataManagerContext())
+            {
+                dbContext.Categories.Attach(aUserPasswordPair.Category);
+                dbContext.UserPasswordPairs.Add(aUserPasswordPair);
+                dbContext.SaveChanges();
+            }
+        }
 
-        //private void AddToRedGroup(UserPasswordPair aUserPasswordPair)
-        //{
-        //    aUserPasswordPair.Category.RedUserPasswordPairsQuantity++;
-        //    User.AddRedUserPasswordPair(aUserPasswordPair);
-        //}
-
-        //private void AddToOrangeGroup(UserPasswordPair aUserPasswordPair)
-        //{
-        //    aUserPasswordPair.Category.OrangeUserPasswordPairsQuantity++;
-        //    User.AddOrangeUserPasswordPair(aUserPasswordPair);
-        //}
-
-        //private void AddToYellowGroup(UserPasswordPair aUserPasswordPair)
-        //{
-        //    aUserPasswordPair.Category.YellowUserPasswordPairsQuantity++;
-        //    User.AddYellowUserPasswordPair(aUserPasswordPair);
-        //}
-
-        //private void AddToLightGreenGroup(UserPasswordPair aUserPasswordPair)
-        //{
-        //    aUserPasswordPair.Category.LightGreenUserPasswordPairsQuantity++;
-        //    User.AddLightGreenUserPasswordPair(aUserPasswordPair);
-        //}
-
-        //private void AddToDarkGreenGroup(UserPasswordPair aUserPasswordPair)
-        //{
-        //    aUserPasswordPair.Category.DarkGreenUserPasswordPairsQuantity++;
-        //    User.AddDarkGreenUserPasswordPair(aUserPasswordPair);
-        //}
+        public bool UserPasswordPairAlredyExistsInCategory(UserPasswordPair aUserPasswordPair)
+        {
+            using (var dbContext = new DataManagerContext())
+            {
+                var passwords = dbContext.UserPasswordPairs.Where(userPasswordPair => userPasswordPair.Category.Id == Id).ToList();
+                return passwords.Exists(password => password.Id == aUserPasswordPair.Id);
+            }
+        }
 
         public bool ModifyUserPasswordPair(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
         {
@@ -276,7 +239,7 @@ namespace DataManagerDomain
         {
             if(!UsernamesAreEqual(oldUserPasswordPair.Username, newUserPasswordPair.Username) || !SitesAreEqual(oldUserPasswordPair.Site, newUserPasswordPair.Site))
             {
-                if (UserPasswordPairAlredyExistsInUser(newUserPasswordPair))
+                if (UserPasswordPairAlreadyExistsInUser(newUserPasswordPair))
                 {
                     throw new ExceptionExistingUserPasswordPair("The userPassword pair already exists in user");
                 }
@@ -295,58 +258,43 @@ namespace DataManagerDomain
 
         private void ChangeUserPasswordPairData(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
         {
-            bool hasSameCategory = HasSameCategory(oldUserPasswordPair.Category, newUserPasswordPair.Category);
             bool passwordsAreEqual = PasswordsAreEqual(oldUserPasswordPair.Password, newUserPasswordPair.Password);
-            if (hasSameCategory && !passwordsAreEqual)
+            if (passwordsAreEqual)
             {
-                UpdateAllPropertiesExceptCategory(oldUserPasswordPair, newUserPasswordPair);
+                UpdateAllPropertiesOfUserPasswordPairExceptForPassword(oldUserPasswordPair, newUserPasswordPair);
             }
-            if (hasSameCategory && passwordsAreEqual)
+            else
             {
-                UpdateUsernameSiteAndNotes(oldUserPasswordPair, newUserPasswordPair);
-            }
-            if (!hasSameCategory && passwordsAreEqual)
-            {
-                UpdateAllPropertiesExceptPassword(oldUserPasswordPair, newUserPasswordPair);
-            }
-            if (!hasSameCategory && !passwordsAreEqual)
-            {
-                UpdateAllProperties(oldUserPasswordPair, newUserPasswordPair);
+                UpdateAllPropertiesOfUserPasswordPair(oldUserPasswordPair, newUserPasswordPair);
             }
         }
 
-        public void UpdateAllPropertiesExceptCategory(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
+        private static void UpdateAllPropertiesOfUserPasswordPair(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
         {
-            //DeleteUserPasswordPairFromStrengthGroup(oldUserPasswordPair);
-            UpdateUsernameSiteAndNotes(oldUserPasswordPair, newUserPasswordPair);
-            oldUserPasswordPair.Password = newUserPasswordPair.Password;
-            //AddUserPasswordPairToStrengthGroup(oldUserPasswordPair);
+            UpdateAllPropertiesOfUserPasswordPairExceptForPassword(oldUserPasswordPair, newUserPasswordPair);
+            using (var dbContext = new DataManagerContext())
+            {
+                var passwordToModify = dbContext.UserPasswordPairs.FirstOrDefault(userPasswordPair => userPasswordPair.Id == oldUserPasswordPair.Id);
+                passwordToModify.Password = newUserPasswordPair.Password;
+                dbContext.Entry(passwordToModify).State = EntityState.Modified;
+                dbContext.SaveChanges();
+            }
         }
 
-        public void UpdateAllPropertiesExceptPassword(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
+        private static void UpdateAllPropertiesOfUserPasswordPairExceptForPassword(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
         {
-            //DeleteUserPasswordPairFromStrengthGroup(oldUserPasswordPair);
-            UpdateUsernameSiteAndNotes(oldUserPasswordPair, newUserPasswordPair);
-            RemoveUserPasswordPairFromCollection(oldUserPasswordPair);
-            oldUserPasswordPair.Category = newUserPasswordPair.Category;
-            oldUserPasswordPair.Category.AddUserPasswordPairToCollection(oldUserPasswordPair);
-            //AddUserPasswordPairToStrengthGroup(oldUserPasswordPair);
-        }
-
-        public void UpdateAllProperties(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
-        {
-            //DeleteUserPasswordPairFromStrengthGroup(oldUserPasswordPair);
-            UpdateUsernameSiteAndNotes(oldUserPasswordPair, newUserPasswordPair);
-            oldUserPasswordPair.Password = newUserPasswordPair.Password;
-            RemoveUserPasswordPairFromCollection(oldUserPasswordPair);
-            oldUserPasswordPair.Category = newUserPasswordPair.Category;
-            oldUserPasswordPair.Category.AddUserPasswordPairToCollection(oldUserPasswordPair);
-            //AddUserPasswordPairToStrengthGroup(oldUserPasswordPair);
-        }
-
-        public bool HasSameCategory(Category aCategory, Category otherCategory)
-        {
-            return aCategory.Name == otherCategory.Name;
+            using (var dbContext = new DataManagerContext())
+            {
+                var passwordToModify = dbContext.UserPasswordPairs.FirstOrDefault(userPasswordPair => userPasswordPair.Id == oldUserPasswordPair.Id);
+                var newCategory = dbContext.Categories.FirstOrDefault(category => category.Id == newUserPasswordPair.Category.Id);
+                passwordToModify.Category = newCategory;
+                passwordToModify.Site = newUserPasswordPair.Site;
+                passwordToModify.Notes = newUserPasswordPair.Notes;
+                passwordToModify.Username = newUserPasswordPair.Username;
+                dbContext.Entry(passwordToModify).State = EntityState.Modified;
+                dbContext.Entry(newCategory).State = EntityState.Modified;
+                dbContext.SaveChanges();
+            }
         }
 
         public static bool PasswordsAreEqual(string aPassword, string otherPassword)
@@ -354,86 +302,25 @@ namespace DataManagerDomain
             return aPassword == otherPassword;
         }
 
-        //private void DeleteUserPasswordPairFromStrengthGroup(UserPasswordPair aUserPasswordPair)
-        //{
-        //    if (aUserPasswordPair.IsARedPassword())
-        //    {
-        //        RemoveFromRedGroup(aUserPasswordPair);
-        //    }
-        //    if (aUserPasswordPair.IsAnOrangePassword())
-        //    {
-        //        RemoveFromOrangeGroup(aUserPasswordPair);
-        //    }
-        //    if (aUserPasswordPair.IsAYellowPassword())
-        //    {
-        //        RemoveFromYellowGroup(aUserPasswordPair);
-        //    }
-        //    if (aUserPasswordPair.IsALightGreenPassword())
-        //    {
-        //        RemoveFromLightGreenGroup(aUserPasswordPair);
-        //    }
-        //    if (aUserPasswordPair.IsADarkGreenPassword())
-        //    {
-        //        RemoveFromDarkGreenGroup(aUserPasswordPair);
-        //    }
-        //}
-
-        //private void RemoveFromRedGroup(UserPasswordPair aUserPasswordPair)
-        //{
-        //    RedUserPasswordPairsQuantity--;
-        //    User.DeleteRedUserPasswordPair(aUserPasswordPair);
-        //}
-
-        //private void RemoveFromOrangeGroup(UserPasswordPair aUserPasswordPair)
-        //{
-        //    OrangeUserPasswordPairsQuantity--;
-        //    User.DeleteOrangeUserPasswordPair(aUserPasswordPair);
-        //}
-
-        //private void RemoveFromYellowGroup(UserPasswordPair aUserPasswordPair)
-        //{
-        //    YellowUserPasswordPairsQuantity--;
-        //    User.DeleteYellowUserPasswordPair(aUserPasswordPair);
-        //}
-
-        //private void RemoveFromLightGreenGroup(UserPasswordPair aUserPasswordPair)
-        //{
-        //    LightGreenUserPasswordPairsQuantity--;
-        //    User.DeleteLightGreenUserPasswordPair(aUserPasswordPair);
-        //}
-
-        //private void RemoveFromDarkGreenGroup(UserPasswordPair aUserPasswordPair)
-        //{
-        //    DarkGreenUserPasswordPairsQuantity--;
-        //    User.DeleteDarkGreenUserPasswordPair(aUserPasswordPair);
-        //}
-
-        private void UpdateUsernameSiteAndNotes(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
-        {
-            if (!HasSameSiteAndUsername(oldUserPasswordPair, newUserPasswordPair))
-            {
-                RemoveUserPasswordPairFromCollection(oldUserPasswordPair);
-                oldUserPasswordPair.Username = newUserPasswordPair.Username;
-                oldUserPasswordPair.Site = newUserPasswordPair.Site;
-                oldUserPasswordPair.Category.AddUserPasswordPairToCollection(oldUserPasswordPair);
-            }
-            oldUserPasswordPair.Notes = newUserPasswordPair.Notes;
-        }
-
-        public static bool HasSameSiteAndUsername(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
-        {
-            return oldUserPasswordPair.Username == newUserPasswordPair.Username && oldUserPasswordPair.Site == newUserPasswordPair.Site;
-        }
-
         public bool RemoveUserPasswordPair(UserPasswordPair aUserPasswordPair)
         {
             if (!RemoveUserPasswordPairFromCollection(aUserPasswordPair))
             {
-                throw new ExceptionUserPasswordPairDoesNotExist($"The user-password pair ({aUserPasswordPair.Username}-{aUserPasswordPair.Site}) does not exist in {this.Name}");
+                throw new ExceptionUserPasswordPairDoesNotExist($"The user-password pair ({aUserPasswordPair.Username}-{aUserPasswordPair.Site}) does not exist in {name}");
             }
-            //DeleteUserPasswordPairFromStrengthGroup(aUserPasswordPair);
-            User.RemoveUserPasswordPairFromDataBreaches(aUserPasswordPair);
+            //User.RemoveUserPasswordPairFromDataBreaches(aUserPasswordPair);
             return true;
+        }
+
+        protected bool RemoveUserPasswordPairFromCollection(UserPasswordPair aUserPasswordPair)
+        {
+            using (var dbContext = new DataManagerContext())
+            {
+                dbContext.UserPasswordPairs.Attach(aUserPasswordPair);
+                dbContext.UserPasswordPairs.Remove(aUserPasswordPair);
+                dbContext.SaveChanges();
+                return true;
+            }
         }
 
         public List <UserPasswordPair> ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches (string aPassword)
@@ -449,9 +336,13 @@ namespace DataManagerDomain
             return pairsList;
         }
 
-        internal UserPasswordPair FindUserPasswordPair(UserPasswordPair aUserPasswordPair)
+        public int GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType strengthType)
         {
-            return UserPasswordPairs.First(userPasswordPair => userPasswordPair.Id == aUserPasswordPair.Id);
+            using (var dbContext = new DataManagerContext())
+            {
+                int count = dbContext.UserPasswordPairs.Include(userPasswordPair => userPasswordPair.Category).Where(userPasswordPair => userPasswordPair.Category.Id == Id && userPasswordPair.PasswordStrength == strengthType).Count();
+                return count;
+            }
         }
     }
 }

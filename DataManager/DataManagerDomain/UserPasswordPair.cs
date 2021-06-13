@@ -11,12 +11,15 @@ namespace DataManagerDomain
         private string password { get; set; }
         public string Password
         {
-            get { return DecryptPassword(password); }
+            //get;set;
+            //get { return DecryptPassword(password); }
+            get { return password; }
             set
             {
                 LastModifiedDate = DateTime.Now;
                 PasswordStrength = PasswordHandler.PasswordStrength(value);
-                password = EncryptPassword(value);
+                password = value;
+                //password = EncryptPassword(value);
             }
         }
         public List<User> UsersWithAccess { get; private set; }
@@ -42,6 +45,11 @@ namespace DataManagerDomain
             UsersWithAccess = new List<User>();
         }
 
+        public override string ToString()
+        {
+            return $"[{Category.Name}] [{Site}] [{Username}]";
+        }
+
         private string DecryptPassword(string aPassword)
         {
             var user = Category.User;
@@ -60,41 +68,48 @@ namespace DataManagerDomain
         {
             using (var dbContext = new DataManagerContext())
             {
-                var userPasswordPairSelected = dbContext.UserPasswordPairs.Include(userPasswordPair => userPasswordPair.UsersWithAccess).First(userPasswordPair => userPasswordPair.Id == Id);
-                return userPasswordPairSelected.UsersWithAccess.Exists(user => user.Name == name);
+                var userPasswordPairSelected = dbContext.UserPasswordPairs
+                    .Include(userPasswordPair => userPasswordPair.UsersWithAccess)
+                    .FirstOrDefault(userPasswordPair => userPasswordPair.Id == Id);
+                return userPasswordPairSelected.UsersWithAccess.Exists(user => user.Username == name);
             }
         }
 
-        internal void IncludeInUsersWithAccess(User userToRecivePassword)
+        internal void IncludeInUsersWithAccess(User aUser)
         {
             using (var dbContext = new DataManagerContext())
             {
-                var userPasswordPairSelected = dbContext.UserPasswordPairs.Include(userPasswordPair => userPasswordPair.UsersWithAccess).First(userPasswordPair => userPasswordPair.Id == Id);
-                userPasswordPairSelected.UsersWithAccess.Add(userToRecivePassword);
+                var userPasswordPairSelected = dbContext.UserPasswordPairs
+                    .Include(userPasswordPair => userPasswordPair.UsersWithAccess)
+                    .FirstOrDefault(userPasswordPair => userPasswordPair.Id == Id);
+                var userToShare = dbContext.Users
+                    .FirstOrDefault(user => user.Username == aUser.Username);
+                userPasswordPairSelected.UsersWithAccess.Add(userToShare);
                 dbContext.SaveChanges();
             }
         }
 
-        internal void RemoveFromUsersWithAccess(User userToRevokeSharedPassword)
+        internal void RemoveFromUsersWithAccess(User aUser)
         {
             using (var dbContext = new DataManagerContext())
             {
-                var userPasswordPairSelected = dbContext.UserPasswordPairs.Include(userPasswordPair => userPasswordPair.UsersWithAccess).First(userPasswordPair => userPasswordPair.Id == Id);
-                userPasswordPairSelected.UsersWithAccess.Remove(userToRevokeSharedPassword);
+                var userPasswordPairSelected = dbContext.UserPasswordPairs
+                    .Include(userPasswordPair => userPasswordPair.UsersWithAccess)
+                    .FirstOrDefault(userPasswordPair => userPasswordPair.Id == Id);
+                var userToUnshare = dbContext.Users
+                    .FirstOrDefault(user => user.Username == aUser.Username);
+                userPasswordPairSelected.UsersWithAccess.Remove(userToUnshare);
                 dbContext.SaveChanges();
             }
-        }
-
-        public override string ToString()
-        {
-            return $"[{Category.Name}] [{Site}] [{Username}]";
         }
 
         public User[] GetUsersWithAccessArray()
         {
             using (var dbContext = new DataManagerContext())
             {
-                var userPasswordPairSelected = dbContext.UserPasswordPairs.Include(userPasswordPair => userPasswordPair.UsersWithAccess).First(userPasswordPair => userPasswordPair.Id == Id);
+                var userPasswordPairSelected = dbContext.UserPasswordPairs
+                    .Include(userPasswordPair => userPasswordPair.UsersWithAccess)
+                    .FirstOrDefault(userPasswordPair => userPasswordPair.Id == Id);
                 if (userPasswordPairSelected.UsersWithAccess.Count == 0)
                 {
                     throw new ExceptionUserPasswordPairIsNotSharedWithAnyone("This password has not been shared with anyone");
@@ -157,56 +172,6 @@ namespace DataManagerDomain
         private bool NotesHaveValidLength()
         {
             return Notes.Length <= 250;
-        }
-
-        public bool IsARedPassword()
-        {
-            return PasswordStrength == PasswordStrengthType.Red;
-            //using (var dbContext = new DataManagerContext())
-            //{
-            //    var userPasswordPairSelected = dbContext.UserPasswordPairs.First(userPasswordPair => userPasswordPair.Id == Id);
-            //    return userPasswordPairSelected.PasswordStrength == PasswordStrengthType.Red;
-            //}
-        }
-
-        public bool IsAnOrangePassword()
-        {
-            return PasswordStrength == PasswordStrengthType.Orange;
-            //using (var dbContext = new DataManagerContext())
-            //{
-            //    var userPasswordPairSelected = dbContext.UserPasswordPairs.First(userPasswordPair => userPasswordPair.Id == Id);
-            //    return userPasswordPairSelected.PasswordStrength == PasswordStrengthType.Orange;
-            //}
-        }
-
-        public bool IsAYellowPassword()
-        {
-            return PasswordStrength == PasswordStrengthType.Yellow;
-            //using (var dbContext = new DataManagerContext())
-            //{
-            //    var userPasswordPairSelected = dbContext.UserPasswordPairs.First(userPasswordPair => userPasswordPair.Id == Id);
-            //    return userPasswordPairSelected.PasswordStrength == PasswordStrengthType.Yellow;
-            //}
-        }
-
-        public bool IsALightGreenPassword()
-        {
-            return PasswordStrength == PasswordStrengthType.LightGreen;
-            //using (var dbContext = new DataManagerContext())
-            //{
-            //    var userPasswordPairSelected = dbContext.UserPasswordPairs.First(userPasswordPair => userPasswordPair.Id == Id);
-            //    return userPasswordPairSelected.PasswordStrength == PasswordStrengthType.LightGreen;
-            //}
-        }
-
-        public bool IsADarkGreenPassword()
-        {
-            return PasswordStrength == PasswordStrengthType.DarkGreen;
-            //using (var dbContext = new DataManagerContext())
-            //{
-            //    var userPasswordPairSelected = dbContext.UserPasswordPairs.First(userPasswordPair => userPasswordPair.Id == Id);
-            //    return userPasswordPairSelected.PasswordStrength == PasswordStrengthType.DarkGreen;
-            //}
         }
     }
 }

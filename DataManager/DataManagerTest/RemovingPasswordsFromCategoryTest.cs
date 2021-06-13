@@ -1,183 +1,201 @@
-﻿//using Microsoft.VisualStudio.TestTools.UnitTesting;
-//using DataManagerDomain;
-//using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using DataManagerDomain;
+using System;
 
-//namespace DataManagerTest
-//{
-//    [TestClass]
-//    public class RemovingPasswordsFromCategoryTest
-//    {
-//        private NormalCategory aCategory;
-//        private User aUser;
+namespace DataManagerTest
+{
+    [TestClass]
+    public class RemovingPasswordsFromCategoryTest
+    {
+        private DataManager DataManager;
+        private Category aCategory;
+        private User aUser;
 
-//        [TestInitialize]
-//        public void Initialize()
-//        {
-//            aUser = new User();
-//            aCategory = new NormalCategory()
-//            {
-//                User = aUser,
-//                Name = "Category"
-//            };
-//            aUser.AddCategory(aCategory);
-//        }
+        [TestInitialize]
+        public void Initialize()
+        {
+            DataManager = new DataManager();
+            aUser = new User()
+            {
+                Username = "Fernanda",
+                MasterPassword = "password",
+            };
+            DataManager.AddUser(aUser);
+            aCategory = new Category()
+            {
+                User = aUser,
+                Name = "Category"
+            };
+            aUser.AddCategory(aCategory);
+        }
 
-//        [TestMethod]
-//        public void RemoveDarkGreenUserPasswordPair()
-//        {
-//            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
-//            {
-//                Category = aCategory,
-//                Password = "myPassword12345@$%",
-//                Notes = "these are my notes",
-//                Username = "myUserName",
-//                Site = "mySite",
-//            };
+        [TestMethod]
+        public void RemoveDarkGreenUserPasswordPair()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Category = aCategory,
+                Password = "myPassword12345@$%",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+            };
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
 
-//            aCategory.AddUserPasswordPair(aUserPasswordPair);
+            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
+            Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.DarkGreen).Length);
+            Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.DarkGreen));
+        }
 
-//            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
-//            Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair.Username, aUserPasswordPair.Site));
-//            Assert.AreEqual(0, aCategory.User.GetDarkGreenUserPasswordPairs().Length);
-//            Assert.AreEqual(0, aCategory.DarkGreenUserPasswordPairsQuantity);
-//        }
+        [TestMethod]
+        public void RemoveExistingUserPasswordPair()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Category = aCategory,
+                Password = "thisIsAPassword",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+            };
 
-//        [TestMethod]
-//        public void RemoveExistingUserPasswordPair()
-//        {
-//            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
-//            {
-//                Category = aCategory,
-//                Password = "thisIsAPassword",
-//                Notes = "these are my notes",
-//                Username = "myUserName",
-//                Site = "mySite",
-//            };
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
 
-//            aCategory.AddUserPasswordPair(aUserPasswordPair);
+            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
+            Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair));
+            Assert.AreEqual(0, aCategory.GetUserPasswordsPairs().Length);
+        }
 
-//            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
-//            Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair.Username, aUserPasswordPair.Site));
-//            Assert.AreEqual(0, aCategory.GetUserPasswordsPairs().Length);
-//        }
+        [TestMethod]
+        public void RemoveLightGreenUserPasswordPair()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Category = aCategory,
+                Password = "myPassword12345",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+            };
 
-//        [TestMethod]
-//        public void RemoveLightGreenUserPasswordPair()
-//        {
-//            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
-//            {
-//                Category = aCategory,
-//                Password = "myPassword12345",
-//                Notes = "these are my notes",
-//                Username = "myUserName",
-//                Site = "mySite",
-//            };
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
 
-//            aCategory.AddUserPasswordPair(aUserPasswordPair);
+            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
+            Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.LightGreen).Length);
+            Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.LightGreen));
+        }
 
-//            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
-//            Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair.Username, aUserPasswordPair.Site));
-//            Assert.AreEqual(0, aCategory.User.GetLightGreenUserPasswordPairs().Length);
-//            Assert.AreEqual(0, aCategory.LightGreenUserPasswordPairsQuantity);
-//        }
+        [TestMethod]
+        public void RemoveOrangeUserPasswordPair()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Category = aCategory,
+                Password = "mypassword",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+            };
 
-//        [TestMethod]
-//        public void RemoveOrangeUserPasswordPair()
-//        {
-//            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
-//            {
-//                Category = aCategory,
-//                Password = "mypassword",
-//                Notes = "these are my notes",
-//                Username = "myUserName",
-//                Site = "mySite",
-//            };
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
 
-//            aCategory.AddUserPasswordPair(aUserPasswordPair);
+            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
+            Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Orange).Length);
+            Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Orange));
+        }
 
-//            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
-//            Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair.Username, aUserPasswordPair.Site));
-//            Assert.AreEqual(0, aCategory.User.GetOrangeUserPasswordPairs().Length);
-//            Assert.AreEqual(0, aCategory.OrangeUserPasswordPairsQuantity);
-//        }
+        [TestMethod]
+        public void RemoveRedUserPasswordPair()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Category = aCategory,
+                Password = "mypass",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+            };
 
-//        [TestMethod]
-//        public void RemoveRedUserPasswordPair()
-//        {
-//            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
-//            {
-//                Category = aCategory,
-//                Password = "mypass",
-//                Notes = "these are my notes",
-//                Username = "myUserName",
-//                Site = "mySite",
-//            };
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
 
-//            aCategory.AddUserPasswordPair(aUserPasswordPair);
+            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
+            Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Red).Length);
+            Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Red));
+        }
 
-//            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
-//            Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair.Username, aUserPasswordPair.Site));
-//            Assert.AreEqual(0, aCategory.User.GetRedUserPasswordPairs().Length);
-//            Assert.AreEqual(0, aCategory.RedUserPasswordPairsQuantity);
-//        }
+        //[TestMethod]
+        //[ExpectedException(typeof(ExceptionUserPasswordPairDoesNotExist))]
+        //public void RemoveUserPasswordPairThatDoesNotExist()
+        //{
+        //    UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+        //    {
+        //        Category = aCategory,
+        //        Password = "thisIsAPassword",
+        //        Notes = "these are my notes",
+        //        Username = "myUserName",
+        //        Site = "mySite",
+        //    };
 
-//        [TestMethod]
-//        [ExpectedException(typeof(ExceptionUserPasswordPairDoesNotExist))]
-//        public void RemoveUserPasswordPairThatDoesNotExist()
-//        {
-//            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
-//            {
-//                Category = aCategory,
-//                Password = "thisIsAPassword",
-//                Notes = "these are my notes",
-//                Username = "myUserName",
-//                Site = "mySite",
-//            };
+        //    aCategory.RemoveUserPasswordPair(aUserPasswordPair);
+        //}
 
-//            aCategory.RemoveUserPasswordPair(aUserPasswordPair);
-//        }
+        [TestMethod]
+        public void RemoveYellowUserPasswordPair()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Category = aCategory,
+                Password = "mypassword12345",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+            };
 
-//        [TestMethod]
-//        public void RemoveYellowUserPasswordPair()
-//        {
-//            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
-//            {
-//                Category = aCategory,
-//                Password = "mypassword12345",
-//                Notes = "these are my notes",
-//                Username = "myUserName",
-//                Site = "mySite",
-//            };
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
 
-//            aCategory.AddUserPasswordPair(aUserPasswordPair);
+            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
+            Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair));
+            Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Yellow).Length);
+            Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Yellow));
+        }
 
-//            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
-//            Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair.Username, aUserPasswordPair.Site));
-//            Assert.AreEqual(0, aCategory.User.GetYellowUserPasswordPairs().Length);
-//            Assert.AreEqual(0, aCategory.YellowUserPasswordPairsQuantity);
-//        }
+        [TestMethod]
+        public void RemoveUserPasswordPairThatAppearedInADataBreach()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Category = aCategory,
+                Password = "mypassword12345",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+            };
 
-//        [TestMethod]
-//        public void RemoveUserPasswordPairThatAppearedInADataBreach()
-//        {
-//            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
-//            {
-//                Category = aCategory,
-//                Password = "mypassword12345",
-//                Notes = "these are my notes",
-//                Username = "myUserName",
-//                Site = "mySite",
-//            };
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
 
-//            aCategory.AddUserPasswordPair(aUserPasswordPair);
+            IDataBreachesFormatter dataBreaches = new TxtFileDataBreaches()
+            {
+                txtDataBreaches = "mypassword12345"
+            };
+            DataBreach aDataBreach = aUser.CheckDataBreaches(dataBreaches);
+            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
+            Assert.IsTrue(aDataBreach.LeakedUserPasswordPairsOfUser.Count == 0);
+        }
 
-//            IDataBreachesFormatter dataBreaches = new TxtFileDataBreaches()
-//            {
-//                txtDataBreaches = "mypassword12345"
-//            };
-//            DataBreach aDataBreach = aUser.CheckDataBreaches(dataBreaches);
-//            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
-//            Assert.IsTrue(aDataBreach.LeakedUserPasswordPairsOfUser.Count == 0);
-//        }
-//    }
-//}
+        [TestCleanup]
+        public void Cleanup()
+        {
+            using (var dbContext = new DataManagerContext())
+            {
+                dbContext.Users.RemoveRange(dbContext.Users);
+                dbContext.Categories.RemoveRange(dbContext.Categories);
+                dbContext.UserPasswordPairs.RemoveRange(dbContext.UserPasswordPairs);
+                dbContext.SaveChanges();
+            }
+        }
+    }
+}

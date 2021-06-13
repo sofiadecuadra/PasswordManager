@@ -11,7 +11,6 @@ namespace DataManagerDomain
             set 
             {
                 length = value;
-                CalulateNumberOfConditions();
             }
         }
         private bool hasUpperCase;
@@ -21,7 +20,6 @@ namespace DataManagerDomain
             set
             {
                 hasUpperCase = value;
-                CalulateNumberOfConditions();
             }
         }
         private bool hasLowerCase;
@@ -31,7 +29,6 @@ namespace DataManagerDomain
             set
             {
                 hasLowerCase = value;
-                CalulateNumberOfConditions();
             }
         }
         private bool hasDigits;
@@ -41,7 +38,6 @@ namespace DataManagerDomain
             set
             {
                 hasDigits = value;
-                CalulateNumberOfConditions();
             }
         }
         private bool hasSymbols;
@@ -51,14 +47,15 @@ namespace DataManagerDomain
             set
             {
                 hasSymbols = value;
-                CalulateNumberOfConditions();
             }
         }
-        public int NumberOfConditions { get; private set; }
+        public int NumberOfConditions { 
+            get { return CalulateNumberOfConditions(); }
+        }
 
-        private void CalulateNumberOfConditions()
+        private int CalulateNumberOfConditions()
         {
-            NumberOfConditions = Convert.ToInt32(HasLowerCase) + Convert.ToInt32(HasUpperCase) + Convert.ToInt32(HasDigits) + Convert.ToInt32(HasSymbols);
+            return Convert.ToInt32(HasLowerCase) + Convert.ToInt32(HasUpperCase) + Convert.ToInt32(HasDigits) + Convert.ToInt32(HasSymbols);
         }
     }
 

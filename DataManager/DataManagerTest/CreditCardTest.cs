@@ -7,8 +7,8 @@ namespace DataManagerTest
     [TestClass]
     public class CreditCardTest
     {
-        private Category aCategory;
         private User aUser;
+        private Category aCategory;
         private CreditCard aCreditCard;
 
         [TestInitialize]
@@ -16,8 +16,8 @@ namespace DataManagerTest
         {
             aUser = new User()
             {
+                Username = "Fernanda",
                 MasterPassword = "password",
-                Name = "UserName"
             };
             aCategory = new Category()
             {
@@ -34,8 +34,6 @@ namespace DataManagerTest
                 ExpirationDate = new DateTime(2023, 12, 25),
                 Category = aCategory
             };
-
-            aUser.AddCategory(aCategory);
         }
 
         [TestMethod]

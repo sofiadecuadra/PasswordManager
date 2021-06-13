@@ -24,7 +24,7 @@ namespace PasswordsManagerUserInterface
             var users = PasswordToUnshare.GetUsersWithAccessArray();
             foreach (var user in users)
             {
-                comboUsers.Items.Add(user.Name);
+                comboUsers.Items.Add(user);
             }
             SetDefaultUser(users);
         }

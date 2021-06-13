@@ -65,11 +65,11 @@ namespace PasswordsManagerUserInterface
 
         private void InsertDataInTable()
         {
-            //passwordsReportData = PasswordManager.CurrentUser.GetPasswordsStrengthReport();
-            //foreach (Tuple<PasswordStrengthType, int> colorReport in passwordsReportData)
-            //{
-            //    dgvPasswordsReport.Rows.Add(colorReport.Item1, colorReport.Item2);
-            //}
+            passwordsReportData = PasswordManager.CurrentUser.GetPasswordsStrengthReport();
+            foreach (Tuple<PasswordStrengthType, int> colorReport in passwordsReportData)
+            {
+                dgvPasswordsReport.Rows.Add(colorReport.Item1, colorReport.Item2);
+            }
         }
 
         private void btnBack_Click(object sender, EventArgs e)
