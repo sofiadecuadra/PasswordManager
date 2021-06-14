@@ -7,19 +7,15 @@ namespace DataManagerDomain
 {
     public class User
     {
-        private string masterPassword;
+        private string masterPassword { get; set; }
         public string MasterPassword
         {
-            get { return DecryptMasterPassword(); }
-            set
-            {
-                masterPassword = ValidateAndEncryptMasterPassword(value);
-            }
-        }
-
-        private string DecryptMasterPassword()
-        {
-            return Encrypter.Decrypt(masterPassword, PrivateKey);
+            //get { return DecryptMasterPassword(); }
+            get; set;
+            //set
+            //{
+            //    masterPassword = ValidateAndEncryptMasterPassword(value);
+            //}
         }
         private string username { get; set; }
         public string Username
@@ -27,14 +23,9 @@ namespace DataManagerDomain
             get { return username; }
             set { username = ValidUserName(value.Trim()); }
         }
-        private Category sharedPasswords;
-        private SortedList<string, Category> categories;
-        private List<UserPasswordPair> redUserPasswordPairs;
-        private List<UserPasswordPair> orangeUserPasswordPairs;
-        private List<UserPasswordPair> yellowUserPasswordPairs;
-        private List<UserPasswordPair> lightGreenUserPasswordPairs;
-        private List<UserPasswordPair> darkGreenUserPasswordPairs;
-        public List <DataBreach> DataBreaches { get; private set; }
+        public List<UserPasswordPair> SharedPasswords { get; private set; }
+        public List<Category> Categories { get; set; }
+        public List<DataBreach> DataBreaches { get; private set; }
         public string PublicKey { get; private set; }
         public string PrivateKey { get; private set; }
 
@@ -432,9 +423,16 @@ namespace DataManagerDomain
             sharedPasswords.RemoveUserPasswordPair(passwordToStopSharing);
         }
 
-        public bool HasSharedPasswordOf(string username, string site)
+        public bool HasSharedPasswordOf(UserPasswordPair aUserPasswordPair)
         {
-            return sharedPasswords.UserPasswordPairAlredyExistsInCategory(username, site);
+            using (var dbContext = new DataManagerContext())
+            {
+                var userSelected = dbContext.Users
+                    .Include(user => user.SharedPasswords)
+                    .FirstOrDefault(user => user.Username == Username);
+                return userSelected.SharedPasswords
+                    .Exists(password => password.Password == aUserPasswordPair.Password);
+            }
         }
 
         public UserPasswordPair FindUserPasswordPair(string username, string site)
