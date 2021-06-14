@@ -7,14 +7,21 @@ namespace DataManagerTest
     [TestClass]
     public class ModifingValidityOfUserPaswordPairArgumentInCategoryTest
     {
-        private NormalCategory aCategory;
+        private DataManager DataManager;
+        private Category aCategory;
         private User aUser;
 
         [TestInitialize]
         public void Initialize()
         {
-            aUser = new User();
-            aCategory = new NormalCategory()
+            DataManager = new DataManager();
+            aUser = new User()
+            {
+                Username = "Fernanda",
+                MasterPassword = "password",
+            };
+            DataManager.AddUser(aUser);
+            aCategory = new Category()
             {
                 User = aUser,
                 Name = "Category"
@@ -75,7 +82,7 @@ namespace DataManagerTest
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
 
-            NormalCategory otherCategory = new NormalCategory()
+            Category otherCategory = new Category()
             {
                 User = aUser,
                 Name = "otherCategory"
@@ -101,7 +108,7 @@ namespace DataManagerTest
         [TestMethod]
         public void ModifyPasswordOfUserPasswordPairToAValidOneChangingCategoryAndNotThePassword()
         {
-            NormalCategory anotherCategory = new NormalCategory()
+            Category anotherCategory = new Category()
             {
                 User = aUser,
                 Name = "anotherCategory"
@@ -327,6 +334,18 @@ namespace DataManagerTest
             aCategory.AddUserPasswordPair(anotherUserPasswordPair);
 
             _ = aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            using (var dbContext = new DataManagerContext())
+            {
+                dbContext.Users.RemoveRange(dbContext.Users);
+                dbContext.Categories.RemoveRange(dbContext.Categories);
+                dbContext.UserPasswordPairs.RemoveRange(dbContext.UserPasswordPairs);
+                dbContext.SaveChanges();
+            }
         }
     }
 }

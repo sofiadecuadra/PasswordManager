@@ -1,20 +1,53 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Data.Entity;
 
 namespace DataManagerDomain
 {
     public class UserPasswordPair
     {
-        private string password;
+        public int Id { get; set; }
+        private string password { get; set; }
         public string Password
         {
-            get { return DecryptPassword(password); }
+            //get;set;
+            //get { return DecryptPassword(password); }
+            get { return password; }
             set
             {
                 LastModifiedDate = DateTime.Now;
                 PasswordStrength = PasswordHandler.PasswordStrength(value);
-                password = EncryptPassword(value);
+                password = value;
+                //password = EncryptPassword(value);
             }
+        }
+        public List<User> UsersWithAccess { get; private set; }
+        private string username;
+        public string Username
+        {
+            get { return username; }
+            set { username = value.ToLower(); }
+        }
+        private string site;
+        public string Site
+        {
+            get { return site; }
+            set { site = value.ToLower(); }
+        }
+        public string Notes { get; set; }
+        public DateTime LastModifiedDate { get; set; }
+        public Category Category { get; set; }
+        public PasswordStrengthType PasswordStrength { get; private set; }
+
+        public UserPasswordPair()
+        {
+            UsersWithAccess = new List<User>();
+        }
+
+        public override string ToString()
+        {
+            return $"[{Category.Name}] [{Site}] [{Username}]";
         }
 
         private string DecryptPassword(string aPassword)
@@ -31,58 +64,58 @@ namespace DataManagerDomain
             return Encrypter.Encrypt(aPassword, publicKey);
         }
 
-        public Hashtable UsersWithAccess { get; private set; }
-        private string username;
-        public string Username
-        {
-            get { return username; }
-            set { username = value.ToLower(); }
-        }
-        private string site;
-        public string Site
-        {
-            get { return site; }
-            set { site = value.ToLower(); }
-        }
-        public string Notes { get; set; }
-        public DateTime LastModifiedDate { get; set; }
-        public NormalCategory Category { get; set; }
-        public PasswordStrengthType PasswordStrength { get; private set; }
-
-        public UserPasswordPair()
-        {
-            UsersWithAccess = new Hashtable();
-        }
-
         public bool HasAccess(string name)
         {
-            return UsersWithAccess.ContainsKey(name.ToLower());
+            using (var dbContext = new DataManagerContext())
+            {
+                var userPasswordPairSelected = dbContext.UserPasswordPairs
+                    .Include(userPasswordPair => userPasswordPair.UsersWithAccess)
+                    .FirstOrDefault(userPasswordPair => userPasswordPair.Id == Id);
+                return userPasswordPairSelected.UsersWithAccess.Exists(user => user.Username == name);
+            }
         }
 
-        internal void IncludeInUsersWithAccess(User userToRecivePassword)
+        internal void IncludeInUsersWithAccess(User aUser)
         {
-            UsersWithAccess.Add(userToRecivePassword.Name, userToRecivePassword);
+            using (var dbContext = new DataManagerContext())
+            {
+                var userPasswordPairSelected = dbContext.UserPasswordPairs
+                    .Include(userPasswordPair => userPasswordPair.UsersWithAccess)
+                    .FirstOrDefault(userPasswordPair => userPasswordPair.Id == Id);
+                var userToShare = dbContext.Users
+                    .FirstOrDefault(user => user.Username == aUser.Username);
+                userPasswordPairSelected.UsersWithAccess.Add(userToShare);
+                dbContext.SaveChanges();
+            }
         }
 
-        internal void RemoveFromUsersWithAccess(User userToRevokeSharedPassword)
+        internal void RemoveFromUsersWithAccess(User aUser)
         {
-            UsersWithAccess.Remove(userToRevokeSharedPassword.Name);
-        }
-
-        public override string ToString()
-        {
-            return $"[{Category.Name}] [{Site}] [{Username}]";
+            using (var dbContext = new DataManagerContext())
+            {
+                var userPasswordPairSelected = dbContext.UserPasswordPairs
+                    .Include(userPasswordPair => userPasswordPair.UsersWithAccess)
+                    .FirstOrDefault(userPasswordPair => userPasswordPair.Id == Id);
+                var userToUnshare = dbContext.Users
+                    .FirstOrDefault(user => user.Username == aUser.Username);
+                userPasswordPairSelected.UsersWithAccess.Remove(userToUnshare);
+                dbContext.SaveChanges();
+            }
         }
 
         public User[] GetUsersWithAccessArray()
         {
-            if (UsersWithAccess.Count == 0)
+            using (var dbContext = new DataManagerContext())
             {
-                throw new ExceptionUserPasswordPairIsNotSharedWithAnyone("This password has not been shared with anyone");
+                var userPasswordPairSelected = dbContext.UserPasswordPairs
+                    .Include(userPasswordPair => userPasswordPair.UsersWithAccess)
+                    .FirstOrDefault(userPasswordPair => userPasswordPair.Id == Id);
+                if (userPasswordPairSelected.UsersWithAccess.Count == 0)
+                {
+                    throw new ExceptionUserPasswordPairIsNotSharedWithAnyone("This password has not been shared with anyone");
+                }
+                return userPasswordPairSelected.UsersWithAccess.ToArray();
             }
-            User[] usersToReturn = new User[UsersWithAccess.Count];
-            UsersWithAccess.Values.CopyTo(usersToReturn, 0);
-            return usersToReturn;
         }
 
         public bool UserPasswordPairDataIsValid()
@@ -139,31 +172,6 @@ namespace DataManagerDomain
         private bool NotesHaveValidLength()
         {
             return Notes.Length <= 250;
-        }
-
-        public bool IsARedPassword()
-        {
-            return PasswordStrength == PasswordStrengthType.Red;
-        }
-
-        public bool IsAnOrangePassword()
-        {
-            return PasswordStrength == PasswordStrengthType.Orange;
-        }
-
-        public bool IsAYellowPassword()
-        {
-            return PasswordStrength == PasswordStrengthType.Yellow;
-        }
-
-        public bool IsALightGreenPassword()
-        {
-            return PasswordStrength == PasswordStrengthType.LightGreen;
-        }
-
-        public bool IsADarkGreenPassword()
-        {
-            return PasswordStrength == PasswordStrengthType.DarkGreen;
         }
     }
 }

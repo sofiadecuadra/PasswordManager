@@ -56,7 +56,7 @@ namespace PasswordsManagerUserInterface
             string masterPassword = txtPassword.Text;
             User newUser = new User()
             {
-                Name = username,
+                Username = username,
                 MasterPassword = masterPassword,
             };
             return newUser;

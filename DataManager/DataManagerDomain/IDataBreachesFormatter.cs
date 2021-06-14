@@ -2,6 +2,6 @@
 {
     public interface IDataBreachesFormatter
     {
-        string [] ConvertToArray();
+        string[] ConvertToArray();
     }
 }

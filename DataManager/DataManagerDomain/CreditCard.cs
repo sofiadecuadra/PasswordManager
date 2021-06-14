@@ -16,6 +16,7 @@ namespace DataManagerDomain
         private const int POSTITION_TO_INSERT_SECOND_BLANK_SPACE = 9;
         private const int POSTITION_TO_INSERT_THIRD_BLANK_SPACE = 14;
 
+        public int Id { get; set; }
         private string number;
         public string Number
         {
@@ -45,7 +46,7 @@ namespace DataManagerDomain
                 expirationDate = new DateTime(value.Year, value.Month, lastDayOfMonth);
             }
         }
-        public NormalCategory Category { get; set; }
+        public Category Category { get; set; }
 
         public override string ToString()
         {

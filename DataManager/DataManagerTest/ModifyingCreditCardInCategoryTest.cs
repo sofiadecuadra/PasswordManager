@@ -7,14 +7,21 @@ namespace DataManagerTest
     [TestClass]
     public class ModifyingCreditCardInCategoryTest
     {
-        private NormalCategory aCategory;
+        private DataManager DataManager;
+        private Category aCategory;
         private User aUser;
 
         [TestInitialize]
         public void Initialize()
         {
-            aUser = new User();
-            aCategory = new NormalCategory()
+            DataManager = new DataManager();
+            aUser = new User()
+            {
+                Username = "Fernanda",
+                MasterPassword = "password",
+            };
+            DataManager.AddUser(aUser);
+            aCategory = new Category()
             {
                 User = aUser,
                 Name = "Category"
@@ -298,14 +305,14 @@ namespace DataManagerTest
                 ExpirationDate = new DateTime(2023, 12, 25),
                 Category = aCategory,
             };
-
             aCategory.AddCreditCard(aCreditCard);
 
-            NormalCategory otherCategory = new NormalCategory()
+            Category otherCategory = new Category()
             {
                 User = aUser,
                 Name = "otherCategory"
             };
+            aUser.AddCategory(otherCategory);
 
             CreditCard newCreditCard = new CreditCard()
             {
@@ -518,6 +525,18 @@ namespace DataManagerTest
             };
 
             _ = aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            using (var dbContext = new DataManagerContext())
+            {
+                dbContext.Users.RemoveRange(dbContext.Users);
+                dbContext.Categories.RemoveRange(dbContext.Categories);
+                dbContext.CreditCards.RemoveRange(dbContext.CreditCards);
+                dbContext.SaveChanges();
+            }
         }
     }
 }

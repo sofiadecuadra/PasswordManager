@@ -5,44 +5,44 @@ namespace DataManagerDomain
 {
     public class DataBreach
     {
-        public DateTime DateTime { get; private set; }
+        public DateTime DateTime { get; set; }
         public List<UserPasswordPair> LeakedUserPasswordPairsOfUser { get; set; }
         public List<CreditCard> LeakedCreditCardsOfUser { get; set; }
-        public List<String> LeakedCreditCards { get; set; }
-        public List<String> LeakedUserPasswordPairs { get; set; }
+        public List<string> LeakedCreditCards { get; set; }
+        public List<string> LeakedUserPasswordPairs { get; set; }
 
         public DataBreach()
         {
             DateTime = DateTime.Now;
             LeakedUserPasswordPairsOfUser = new List<UserPasswordPair>();
             LeakedCreditCardsOfUser = new List<CreditCard>();
-            LeakedUserPasswordPairs = new List<String>();
-            LeakedCreditCards = new List <String>();
+            LeakedUserPasswordPairs = new List<string>();
+            LeakedCreditCards = new List<string>();
         }
 
         public void AddLeakedUserPasswordPairOfUser(UserPasswordPair aLeakedUserPasswordPair)
         {
-            this.LeakedUserPasswordPairsOfUser.Add(aLeakedUserPasswordPair);
+            LeakedUserPasswordPairsOfUser.Add(aLeakedUserPasswordPair);
         }
 
         public void AddLeakedCreditCardOfUser(CreditCard aLeakedCreditCard)
         {
-            this.LeakedCreditCardsOfUser.Add(aLeakedCreditCard);
+            LeakedCreditCardsOfUser.Add(aLeakedCreditCard);
         }
 
-        public void AddLeakedUserPasswordPair(String aLeakedUserPasswordPair)
+        public void AddLeakedUserPasswordPair(string aLeakedUserPasswordPair)
         {
-            this.LeakedUserPasswordPairs.Add(aLeakedUserPasswordPair);
+            LeakedUserPasswordPairs.Add(aLeakedUserPasswordPair);
         }
 
-        public void AddLeakedCreditCard(String aLeakedCreditCard)
+        public void AddLeakedCreditCard(string aLeakedCreditCard)
         {
-            this.LeakedCreditCards.Add(aLeakedCreditCard);
+            LeakedCreditCards.Add(aLeakedCreditCard);
         }
 
         public bool PasswordWasModified(UserPasswordPair aLeakedUserPasswordPair)
         {
-            return aLeakedUserPasswordPair.LastModifiedDate > this.DateTime;
+            return aLeakedUserPasswordPair.LastModifiedDate > DateTime;
         }
 
         public bool PasswordAppearedInDataBreach(string aPassword)

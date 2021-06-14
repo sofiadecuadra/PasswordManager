@@ -5,13 +5,12 @@ namespace DataManagerDomain
     public class PasswordGenerationConditions
     {
         private int length;
-        public int Length 
+        public int Length
         {
             get { return length; }
-            set 
+            set
             {
                 length = value;
-                CalulateNumberOfConditions();
             }
         }
         private bool hasUpperCase;
@@ -21,7 +20,6 @@ namespace DataManagerDomain
             set
             {
                 hasUpperCase = value;
-                CalulateNumberOfConditions();
             }
         }
         private bool hasLowerCase;
@@ -31,7 +29,6 @@ namespace DataManagerDomain
             set
             {
                 hasLowerCase = value;
-                CalulateNumberOfConditions();
             }
         }
         private bool hasDigits;
@@ -41,7 +38,6 @@ namespace DataManagerDomain
             set
             {
                 hasDigits = value;
-                CalulateNumberOfConditions();
             }
         }
         private bool hasSymbols;
@@ -51,14 +47,16 @@ namespace DataManagerDomain
             set
             {
                 hasSymbols = value;
-                CalulateNumberOfConditions();
             }
         }
-        public int NumberOfConditions { get; private set; }
-
-        private void CalulateNumberOfConditions()
+        public int NumberOfConditions
         {
-            NumberOfConditions = Convert.ToInt32(HasLowerCase) + Convert.ToInt32(HasUpperCase) + Convert.ToInt32(HasDigits) + Convert.ToInt32(HasSymbols);
+            get { return CalulateNumberOfConditions(); }
+        }
+
+        private int CalulateNumberOfConditions()
+        {
+            return Convert.ToInt32(HasLowerCase) + Convert.ToInt32(HasUpperCase) + Convert.ToInt32(HasDigits) + Convert.ToInt32(HasSymbols);
         }
     }
 

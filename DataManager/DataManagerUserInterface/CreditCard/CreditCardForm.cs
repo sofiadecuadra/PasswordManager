@@ -46,14 +46,14 @@ namespace PasswordsManagerUserInterface
             dtpExpirationDate.MinDate = DateTime.Now;
         }
 
-        private Category [] GetCategories()
+        private Category[] GetCategories()
         {
             return PasswordManager.CurrentUser.GetCategories();
         }
 
-        public NormalCategory GetCategory()
+        public Category GetCategory()
         {
-            NormalCategory selectedCategory = cbCategory.SelectedItem as NormalCategory;
+            Category selectedCategory = cbCategory.SelectedItem as Category;
             return selectedCategory;
         }
 

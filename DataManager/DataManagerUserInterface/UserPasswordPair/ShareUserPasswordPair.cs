@@ -33,7 +33,7 @@ namespace PasswordsManagerUserInterface
         {
             if (NotTheCurrentUser(user))
             {
-                comboUsers.Items.Add(user.Name);
+                comboUsers.Items.Add(user);
             }
         }
 
@@ -47,7 +47,7 @@ namespace PasswordsManagerUserInterface
 
         private bool NotTheCurrentUser(User user)
         {
-            return !user.Name.Equals(PasswordManager.CurrentUser.Name);
+            return !user.Username.Equals(PasswordManager.CurrentUser.Username);
         }
 
         private void btnShare_Click(object sender, EventArgs e)
@@ -68,7 +68,7 @@ namespace PasswordsManagerUserInterface
 
         private void Share()
         {
-            string userToShareWith = comboUsers.Text;
+            User userToShareWith = comboUsers.SelectedItem as User;
             PasswordManager.SharePassword(PasswordToShare, userToShareWith);
             GoBackToPasswordView();
         }

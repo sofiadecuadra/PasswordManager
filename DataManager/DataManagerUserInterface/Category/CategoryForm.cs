@@ -10,7 +10,7 @@ namespace PasswordsManagerUserInterface
             InitializeComponent();
         }
 
-        public CategoryForm(NormalCategory categoryToModified)
+        public CategoryForm(Category categoryToModified)
         {
             InitializeComponent();
             txtName.Text = categoryToModified.Name;

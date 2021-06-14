@@ -21,7 +21,7 @@ namespace PasswordsManagerUserInterface
             LoadExposedPasswordsAndCreditCards();
         }
 
-         private void LoadNotModifiedExposedPasswords(List<UserPasswordPair> exposedPasswords)
+        private void LoadNotModifiedExposedPasswords(List<UserPasswordPair> exposedPasswords)
         {
             SetPasswordsColumnQuantity(dgvNotModifiedPasswords, 4);
             SetPasswordsCategoryColumn(dgvNotModifiedPasswords);

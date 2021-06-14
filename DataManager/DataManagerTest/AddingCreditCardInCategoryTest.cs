@@ -7,14 +7,21 @@ namespace DataManagerTest
     [TestClass]
     public class AddingCreditCardInCategoryTest
     {
-        private NormalCategory aCategory;
+        private Category aCategory;
         private User aUser;
+        private DataManager DataManager;
 
         [TestInitialize]
         public void Initialize()
         {
-            aUser = new User();
-            aCategory = new NormalCategory()
+            DataManager = new DataManager();
+            aUser = new User()
+            {
+                Username = "Fernanda",
+                MasterPassword = "password",
+            };
+            DataManager.AddUser(aUser);
+            aCategory = new Category()
             {
                 User = aUser,
                 Name = "Category"
@@ -276,6 +283,18 @@ namespace DataManagerTest
             };
             Assert.IsTrue(aCategory.AddCreditCard(aCreditCard));
             Assert.AreEqual(1, aCategory.GetCreditCards().Length);
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            using (var dbContext = new DataManagerContext())
+            {
+                dbContext.Users.RemoveRange(dbContext.Users);
+                dbContext.Categories.RemoveRange(dbContext.Categories);
+                dbContext.CreditCards.RemoveRange(dbContext.CreditCards);
+                dbContext.SaveChanges();
+            }
         }
     }
 }

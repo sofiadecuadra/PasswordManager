@@ -6,19 +6,19 @@ namespace DataManagerTest
     [TestClass]
     public class SystemTest
     {
-        DataManager _PasswordManager;
+        DataManager DataManager;
         User myUser;
 
         [TestInitialize]
         public void Initialize()
         {
-            _PasswordManager = new DataManager();
+            DataManager = new DataManager();
             myUser = new User()
             {
                 MasterPassword = "myMasterPassword123$",
-                Name = "JuanP"
+                Username = "JuanP"
             };
-            _PasswordManager.AddUser(myUser);
+            DataManager.AddUser(myUser);
         }
 
         [TestMethod]
@@ -27,10 +27,10 @@ namespace DataManagerTest
             User aUser = new User()
             {
                 MasterPassword = "myMasterPassword123$",
-                Name = "JuanPa"
+                Username = "JuanPa"
             };
-            Assert.IsTrue(_PasswordManager.AddUser(aUser));
-            Assert.IsTrue(_PasswordManager.HasUser(aUser.Name));
+            DataManager.AddUser(aUser);
+            Assert.IsTrue(DataManager.HasUser(aUser.Username));
         }
 
         [TestMethod]
@@ -40,9 +40,9 @@ namespace DataManagerTest
             User aUser = new User()
             {
                 MasterPassword = "myMasterPassword123$",
-                Name = "Juan"
+                Username = "Juan"
             };
-            _PasswordManager.AddUser(aUser);
+            DataManager.AddUser(aUser);
         }
 
         [TestMethod]
@@ -52,9 +52,9 @@ namespace DataManagerTest
             User aUser = new User()
             {
                 MasterPassword = "myMasterPassword123$",
-                Name = "Juan1234567890123456789012"
+                Username = "Juan1234567890123456789012"
             };
-            _PasswordManager.AddUser(aUser);
+            DataManager.AddUser(aUser);
         }
 
         [TestMethod]
@@ -64,9 +64,9 @@ namespace DataManagerTest
             User aUser = new User()
             {
                 MasterPassword = "myMasterPassword123$",
-                Name = "Juan 12345 6789"
+                Username = "Juan 12345 6789"
             };
-            _PasswordManager.AddUser(aUser);
+            DataManager.AddUser(aUser);
         }
 
 
@@ -76,10 +76,10 @@ namespace DataManagerTest
             User aUser = new User()
             {
                 MasterPassword = "myMasterPassword123$",
-                Name = "      Juan123456789"
+                Username = "      Juan123456789"
             };
-            Assert.IsTrue(_PasswordManager.AddUser(aUser));
-            Assert.IsTrue(_PasswordManager.HasUser("Juan123456789"));
+            DataManager.AddUser(aUser);
+            Assert.IsTrue(DataManager.HasUser("juan123456789"));
         }
 
         [TestMethod]
@@ -88,10 +88,10 @@ namespace DataManagerTest
             User aUser = new User()
             {
                 MasterPassword = "myMasterPassword123$",
-                Name = "                                                                   Juan123456789"
+                Username = "                                                                   Juan123456789"
             };
-            Assert.IsTrue(_PasswordManager.AddUser(aUser));
-            Assert.IsTrue(_PasswordManager.HasUser("Juan123456789"));
+            DataManager.AddUser(aUser);
+            Assert.IsTrue(DataManager.HasUser("juan123456789"));
         }
 
         [TestMethod]
@@ -100,42 +100,42 @@ namespace DataManagerTest
             User aUser = new User()
             {
                 MasterPassword = "myMasterPassword123$",
-                Name = "Juan123456789      "
+                Username = "Juan123456789      "
             };
-            Assert.IsTrue(_PasswordManager.AddUser(aUser));
-            Assert.IsTrue(_PasswordManager.HasUser("Juan123456789"));
+            DataManager.AddUser(aUser);
+            Assert.IsTrue(DataManager.HasUser("juan123456789"));
         }
 
         [TestMethod]
         public void ValidateUserCorrectly()
         {
-            Assert.IsTrue(_PasswordManager.ValidateUser("juanp", "myMasterPassword123$"));
+            Assert.IsTrue(DataManager.ValidateUser("juanp", "myMasterPassword123$"));
         }
 
         [TestMethod]
         public void ValidateUserNotInLowerCorrectly()
         {
-            Assert.IsTrue(_PasswordManager.ValidateUser("JuanP", "myMasterPassword123$"));
+            Assert.IsTrue(DataManager.ValidateUser("JuanP", "myMasterPassword123$"));
         }
 
         [TestMethod]
         public void ValidateUserWithIncorrectPassword()
         {
-            Assert.IsFalse(_PasswordManager.ValidateUser("juanp", "NotThePassword"));
+            Assert.IsFalse(DataManager.ValidateUser("juanp", "NotThePassword"));
         }
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionUserDoesNotExist))]
         public void ValidateNonExistingUser()
         {
-            _PasswordManager.ValidateUser("NotTheUser", "myMasterPassword123$");
+            DataManager.ValidateUser("NotTheUser", "myMasterPassword123$");
         }
 
         [TestMethod]
         public void SetCurrentUserCorrectly()
         {
-            _PasswordManager.CurrentUser = myUser;
-            Assert.AreEqual(myUser.Name, _PasswordManager.CurrentUser.Name);
+            DataManager.CurrentUser = myUser;
+            Assert.AreEqual(myUser.Username, DataManager.CurrentUser.Username);
         }
 
         [TestMethod]
@@ -145,119 +145,125 @@ namespace DataManagerTest
             User aUser = new User()
             {
                 MasterPassword = "myMasterPassword123$",
-                Name = "JuanPa"
+                Username = "JuanPa"
             };
 
-            _PasswordManager.CurrentUser = aUser;
+            DataManager.CurrentUser = aUser;
         }
 
         [TestMethod]
         public void ValidateAndSetCurrentUserCorrectly()
         {
-            _PasswordManager.LogIn(myUser.Name, myUser.MasterPassword);
-            Assert.AreEqual(myUser.Name, _PasswordManager.CurrentUser.Name);
+            DataManager.LogIn(myUser.Username, myUser.MasterPassword);
+            Assert.AreEqual(myUser.Username, DataManager.CurrentUser.Username);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionIncorrectMasterPassword))]
         public void ValidateAndSetCurrentUserWithWrongPassword()
         {
-            _PasswordManager.LogIn(myUser.Name, "NotThePasswordSir");
+            DataManager.LogIn(myUser.Username, "NotThePasswordSir");
         }
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionUserDoesNotExist))]
         public void ValidateAndSetCurrentUserWithWrongName()
         {
-            _PasswordManager.LogIn("ThisIsNotTheName", myUser.MasterPassword);
+            DataManager.LogIn("ThisIsNotTheName", myUser.MasterPassword);
         }
 
         [TestMethod]
         public void ValidateAndSetCurrentUserWithUsernameContainingBlankSpacesAtTheStart()
         {
-            _PasswordManager.LogIn("    JuanP", myUser.MasterPassword);
-            Assert.AreEqual(myUser.Name, _PasswordManager.CurrentUser.Name);
+            DataManager.LogIn("    JuanP", myUser.MasterPassword);
+            Assert.AreEqual(myUser.Username, DataManager.CurrentUser.Username);
         }
 
         [TestMethod]
         public void ValidateAndSetCurrentUserWithUsernameContainingBlankSpacesAtTheEnd()
         {
-            _PasswordManager.LogIn("JuanP     ", myUser.MasterPassword);
-            Assert.AreEqual(myUser.Name, _PasswordManager.CurrentUser.Name);
+            DataManager.LogIn("JuanP     ", myUser.MasterPassword);
+            Assert.AreEqual(myUser.Username, DataManager.CurrentUser.Username);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionUserDoesNotExist))]
         public void ValidateAndSetCurrentUserWithUsernameWronglyContainingBlankSpacesBetweenCharacters()
         {
-            _PasswordManager.LogIn("Ju a nP", myUser.MasterPassword);
+            DataManager.LogIn("Ju a nP", myUser.MasterPassword);
         }
 
         [TestMethod]
         public void ShareValidPassword()
         {
+            DataManager.CurrentUser = myUser;
             var aUser = new User()
             {
                 MasterPassword = "myMasterPassword123$",
-                Name = "JuanPa"
+                Username = "JuanPa"
             };
-            _PasswordManager.CurrentUser = myUser;
-            _PasswordManager.AddUser(aUser);
+            DataManager.AddUser(aUser);
             UserPasswordPair aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
 
-            _PasswordManager.SharePassword(aUserPasswordPair, aUser.Name);
-            Assert.IsTrue(_PasswordManager.FindUser(aUser.Name).HasSharedPasswordOf(aUserPasswordPair.Username, aUserPasswordPair.Site));
-            Assert.IsTrue(aUserPasswordPair.HasAccess(aUser.Name));
+            DataManager.SharePassword(aUserPasswordPair, aUser);
+            Assert.IsTrue(DataManager.FindUser(aUser.Username).HasSharedPasswordOf(aUserPasswordPair));
+            Assert.IsTrue(aUserPasswordPair.HasAccess(aUser.Username));
         }
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionUserDoesNotExist))]
         public void ShareValidPasswordToUserThatDoesNotExist()
         {
-            _PasswordManager.CurrentUser = myUser;
+            DataManager.CurrentUser = myUser;
             UserPasswordPair aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
-
-            _PasswordManager.SharePassword(aUserPasswordPair, "JuanPa");
+            User aUser = new User()
+            {
+                MasterPassword = "myMasterPassword123$",
+                Username = "JuanPa"
+            };
+            DataManager.SharePassword(aUserPasswordPair, aUser);
         }
 
         [TestMethod]
-        public void AUserInUsersWithAccessArray()
+        public void AddUserInUsersWithAccessArray()
         {
             var aUser = new User()
             {
                 MasterPassword = "myMasterPassword123$",
-                Name = "JuanPa"
+                Username = "JuanPa"
             };
-            _PasswordManager.CurrentUser = myUser;
-            _PasswordManager.AddUser(aUser);
+            DataManager.CurrentUser = myUser;
+            DataManager.AddUser(aUser);
             UserPasswordPair aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
 
-            _PasswordManager.SharePassword(aUserPasswordPair, aUser.Name);
-            Assert.AreEqual(aUser, aUserPasswordPair.GetUsersWithAccessArray()[0]);
+            DataManager.SharePassword(aUserPasswordPair, aUser);
+            Assert.AreEqual(aUser.Username, aUserPasswordPair.GetUsersWithAccessArray()[0].Username);
         }
 
         [TestMethod]
-        public void AUserPasswordPairInSharedPasswordsArray()
+        public void AddUserPasswordPairInSharedPasswordsArray()
         {
+            DataManager.CurrentUser = myUser;
             var aUser = new User()
             {
                 MasterPassword = "myMasterPassword123$",
-                Name = "JuanPa"
+                Username = "JuanPa"
             };
-            _PasswordManager.CurrentUser = myUser;
-            _PasswordManager.AddUser(aUser);
+            DataManager.AddUser(aUser);
             UserPasswordPair aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
 
-            _PasswordManager.SharePassword(aUserPasswordPair, aUser.Name);
+            DataManager.SharePassword(aUserPasswordPair, aUser);
             Assert.AreEqual(1, aUser.GetSharedUserPasswordPairs().Length);
-            Assert.AreEqual(aUserPasswordPair, aUser.GetSharedUserPasswordPairs()[0]);
+            Assert.AreEqual(aUserPasswordPair.Password, aUser.GetSharedUserPasswordPairs()[0].Password);
+            Assert.AreEqual(aUserPasswordPair.Site, aUser.GetSharedUserPasswordPairs()[0].Site);
+            Assert.AreEqual(aUserPasswordPair.Username, aUser.GetSharedUserPasswordPairs()[0].Username);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionUserPasswordPairIsNotSharedWithAnyone))]
         public void UserPasswordPairHasNotBeenShared()
         {
-            _PasswordManager.CurrentUser = myUser;
+            DataManager.CurrentUser = myUser;
             UserPasswordPair aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
 
             aUserPasswordPair.GetUsersWithAccessArray();
@@ -269,33 +275,37 @@ namespace DataManagerTest
             var aUser = new User()
             {
                 MasterPassword = "myMasterPassword123$",
-                Name = "JuanPa"
+                Username = "JuanPa"
             };
-            _PasswordManager.CurrentUser = myUser;
-            _PasswordManager.AddUser(aUser);
+            DataManager.CurrentUser = myUser;
+            DataManager.AddUser(aUser);
             UserPasswordPair aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
 
-            _PasswordManager.SharePassword(aUserPasswordPair, aUser.Name);
+            DataManager.SharePassword(aUserPasswordPair, aUser);
 
-            _PasswordManager.UnsharePassword(aUserPasswordPair, aUser.Name);
+            DataManager.UnsharePassword(aUserPasswordPair, aUser);
 
-            Assert.IsFalse(_PasswordManager.FindUser(aUser.Name).HasSharedPasswordOf(aUserPasswordPair.Username, aUserPasswordPair.Site));
-            Assert.IsFalse(aUserPasswordPair.HasAccess(aUser.Name));
+            Assert.IsFalse(DataManager.FindUser(aUser.Username).HasSharedPasswordOf(aUserPasswordPair));
+            Assert.IsFalse(aUserPasswordPair.HasAccess(aUser.Username));
         }
 
         [TestMethod]
         [ExpectedException(typeof(ExceptionUserDoesNotExist))]
         public void UnsharePasswordToUserThatDoesNotExist()
         {
-            _PasswordManager.CurrentUser = myUser;
+            DataManager.CurrentUser = myUser;
             UserPasswordPair aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
-
-            _PasswordManager.UnsharePassword(aUserPasswordPair, "JuanPa");
+            User aUser = new User()
+            {
+                MasterPassword = "myMasterPassword123$",
+                Username = "JuanPa"
+            };
+            DataManager.UnsharePassword(aUserPasswordPair, aUser);
         }
 
         private UserPasswordPair LoadTestCategoryToMyUserWithAUserPasswordPair()
         {
-            var aCategory = new NormalCategory()
+            var aCategory = new Category()
             {
                 Name = "aCategory",
                 User = myUser
@@ -315,11 +325,11 @@ namespace DataManagerTest
         }
 
         [TestMethod]
-        public void GettingAllUsersWhitJustOne()
+        public void GettingAllUsersWithJustOne()
         {
-            var allUsers = _PasswordManager.GetUsers();
+            var allUsers = DataManager.GetUsers();
             Assert.AreEqual(1, allUsers.Length);
-            Assert.AreEqual(myUser, allUsers[0]);
+            Assert.AreEqual(myUser.Username, allUsers[0].Username);
         }
 
         [TestMethod]
@@ -327,20 +337,32 @@ namespace DataManagerTest
         {
             var aUser = new User()
             {
-                Name = "User2",
+                Username = "User2",
                 MasterPassword = "AMasterPassword123$"
             };
             var anotherUser = new User()
             {
-                Name = "User3",
+                Username = "User3",
                 MasterPassword = "AMasterPassword123$"
             };
 
-            _PasswordManager.AddUser(aUser);
-            _PasswordManager.AddUser(anotherUser);
+            DataManager.AddUser(aUser);
+            DataManager.AddUser(anotherUser);
 
-            var allUsers = _PasswordManager.GetUsers();
+            var allUsers = DataManager.GetUsers();
             Assert.AreEqual(3, allUsers.Length);
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            using (var dbContext = new DataManagerContext())
+            {
+                dbContext.Users.RemoveRange(dbContext.Users);
+                dbContext.Categories.RemoveRange(dbContext.Categories);
+                dbContext.UserPasswordPairs.RemoveRange(dbContext.UserPasswordPairs);
+                dbContext.SaveChanges();
+            }
         }
     }
 }

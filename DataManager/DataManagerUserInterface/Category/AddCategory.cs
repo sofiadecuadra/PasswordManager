@@ -23,12 +23,12 @@ namespace PasswordsManagerUserInterface
         {
             ClearControls(pnlAddCategory);
             Form = new CategoryForm();
-            AddUserControl(pnlAddCategory,Form);
+            AddUserControl(pnlAddCategory, Form);
         }
 
         private void btnAccept_Click(object sender, EventArgs e)
         {
-           try
+            try
             {
                 AddCategory_();
             }
@@ -44,15 +44,15 @@ namespace PasswordsManagerUserInterface
 
         private void AddCategory_()
         {
-            NormalCategory newCategory = CreateCategory();
+            Category newCategory = CreateCategory();
             CurrentUser().AddCategory(newCategory);
             GoBack();
         }
 
-        private NormalCategory CreateCategory()
+        private Category CreateCategory()
         {
             string name = Form.GetName();
-            NormalCategory newCategory = new NormalCategory()
+            Category newCategory = new Category()
             {
                 Name = name,
                 User = CurrentUser()
