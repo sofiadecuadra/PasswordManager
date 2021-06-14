@@ -254,7 +254,14 @@ namespace DataManagerTest
 
             DataManager.SharePassword(aUserPasswordPair, aUser);
             Assert.AreEqual(1, aUser.GetSharedUserPasswordPairs().Length);
-            Assert.AreEqual(aUserPasswordPair.Password, aUser.GetSharedUserPasswordPairs()[0].Password);
+            using (var dbContext = new DataManagerContext())
+            {
+                var user = aUser.GetSharedUserPasswordPairs()[0];
+                dbContext.UserPasswordPairs.Attach(user);
+                dbContext.Entry(user).Reference(upp => upp.Category).Load();
+                dbContext.Entry(user.Category).Reference(category => category.User).Load();
+                Assert.AreEqual(aUserPasswordPair.Password, user.Password);
+            }
             Assert.AreEqual(aUserPasswordPair.Site, aUser.GetSharedUserPasswordPairs()[0].Site);
             Assert.AreEqual(aUserPasswordPair.Username, aUser.GetSharedUserPasswordPairs()[0].Username);
         }
