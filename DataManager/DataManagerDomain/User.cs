@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -31,16 +32,17 @@ namespace DataManagerDomain
 
         public User()
         {
-            categories = new SortedList<string, Category>();
-            redUserPasswordPairs = new List<UserPasswordPair>();
-            orangeUserPasswordPairs = new List<UserPasswordPair>();
-            yellowUserPasswordPairs = new List<UserPasswordPair>();
-            lightGreenUserPasswordPairs = new List<UserPasswordPair>();
-            darkGreenUserPasswordPairs = new List<UserPasswordPair>();
+            Categories = new List<Category>();
             DataBreaches = new List<DataBreach>();
+            SharedPasswords = new List<UserPasswordPair>();
             var keys = Encrypter.GenerateKeys();
             PublicKey = keys.Item2;
             PrivateKey = keys.Item1;
+        }
+
+        private string DecryptMasterPassword()
+        {
+            return Encrypter.Decrypt(masterPassword, PrivateKey);
         }
 
         private string ValidateAndEncryptMasterPassword(string password)
@@ -51,6 +53,11 @@ namespace DataManagerDomain
                 throw new ExceptionIncorrectLength(errorMessage);
             }
             return Encrypter.Encrypt(password, PublicKey);
+        }
+
+        public override string ToString()
+        {
+            return Username;
         }
 
         private static bool IsBetween5And25Characters(string value)
@@ -91,156 +98,44 @@ namespace DataManagerDomain
         public Tuple<PasswordStrengthType, int>[] GetPasswordsStrengthReport()
         {
             List<Tuple<PasswordStrengthType, int>> listWithStrengthReport = new List<Tuple<PasswordStrengthType, int>>();
-            AddRedPasswordsStrengthReport(listWithStrengthReport);
-            AddOrangePasswordsStrengthReport(listWithStrengthReport);
-            AddYellowPasswordsStrengthReport(listWithStrengthReport);
-            AddLightGreenPasswordsStrengthReport(listWithStrengthReport);
-            AddDarkGreenPasswordsStrengthReport(listWithStrengthReport);
+            AddStrengthReportOfASpecificColor(listWithStrengthReport, PasswordStrengthType.Red);
+            AddStrengthReportOfASpecificColor(listWithStrengthReport, PasswordStrengthType.Orange);
+            AddStrengthReportOfASpecificColor(listWithStrengthReport, PasswordStrengthType.Yellow);
+            AddStrengthReportOfASpecificColor(listWithStrengthReport, PasswordStrengthType.LightGreen);
+            AddStrengthReportOfASpecificColor(listWithStrengthReport, PasswordStrengthType.DarkGreen);
             return listWithStrengthReport.ToArray();
+        }
+
+        private void AddStrengthReportOfASpecificColor(List<Tuple<PasswordStrengthType, int>> listWithStrengthReport, PasswordStrengthType strengthType)
+        {
+            using (var dbContext = new DataManagerContext())
+            {
+                int count = dbContext.UserPasswordPairs.Where(userPasswordPair => userPasswordPair.PasswordStrength == strengthType && userPasswordPair.Category.User.Username == Username).Count();
+                listWithStrengthReport.Add(new Tuple<PasswordStrengthType, int>(strengthType, count));
+            }
         }
 
         private void AddDataBreach(DataBreach aDataBreach)
         {
             if (aDataBreach.LeakedCreditCards.Count > 0 || aDataBreach.LeakedUserPasswordPairs.Count > 0)
             {
-                DataBreaches.Add(aDataBreach);
+                using (var dbContext = new DataManagerContext())
+                {
+                    dbContext.DataBreaches.Add(aDataBreach);
+                    dbContext.SaveChanges();
+                }
             }
-        }
-
-        private void AddRedPasswordsStrengthReport(List<Tuple<PasswordStrengthType, int>> listWithStrengthReport)
-        {
-            listWithStrengthReport.Add(new Tuple<PasswordStrengthType, int>(PasswordStrengthType.Red, redUserPasswordPairs.Count));
-        }
-
-        private void AddOrangePasswordsStrengthReport(List<Tuple<PasswordStrengthType, int>> listWithStrengthReport)
-        {
-            listWithStrengthReport.Add(new Tuple<PasswordStrengthType, int>(PasswordStrengthType.Orange, orangeUserPasswordPairs.Count));
-        }
-
-        private void AddYellowPasswordsStrengthReport(List<Tuple<PasswordStrengthType, int>> listWithStrengthReport)
-        {
-            listWithStrengthReport.Add(new Tuple<PasswordStrengthType, int>(PasswordStrengthType.Yellow, yellowUserPasswordPairs.Count));
-        }
-
-        private void AddLightGreenPasswordsStrengthReport(List<Tuple<PasswordStrengthType, int>> listWithStrengthReport)
-        {
-            listWithStrengthReport.Add(new Tuple<PasswordStrengthType, int>(PasswordStrengthType.LightGreen, lightGreenUserPasswordPairs.Count));
-        }
-
-        private void AddDarkGreenPasswordsStrengthReport(List<Tuple<PasswordStrengthType, int>> listWithStrengthReport)
-        {
-            listWithStrengthReport.Add(new Tuple<PasswordStrengthType, int>(PasswordStrengthType.DarkGreen, darkGreenUserPasswordPairs.Count));
         }
 
         public UserPasswordPair[] GetUserPasswordPairsOfASpecificColor(PasswordStrengthType aColorGroup)
         {
-            UserPasswordPair[] arrayToReturn = new UserPasswordPair[1];
-            if (aColorGroup == PasswordStrengthType.Red)
+            using (var dbContext = new DataManagerContext())
             {
-                arrayToReturn = GetRedUserPasswordPairs();
+                var passwords = dbContext.UserPasswordPairs
+                    .Where(userPasswordPair => userPasswordPair.PasswordStrength == aColorGroup && userPasswordPair.Category.User.Username == Username)
+                    .Include(userPasswordPair => userPasswordPair.Category);
+                return passwords.ToArray();
             }
-            if (aColorGroup == PasswordStrengthType.Orange)
-            {
-                arrayToReturn = GetOrangeUserPasswordPairs();
-            }
-            if (aColorGroup == PasswordStrengthType.Yellow)
-            {
-                arrayToReturn = GetYellowUserPasswordPairs();
-            }
-            if (aColorGroup == PasswordStrengthType.LightGreen)
-            {
-                arrayToReturn = GetLightGreenUserPasswordPairs();
-            }
-            if (aColorGroup == PasswordStrengthType.DarkGreen)
-            {
-                arrayToReturn = GetDarkGreenUserPasswordPairs();
-            }
-            return arrayToReturn;
-        }
-
-        public UserPasswordPair[] GetRedUserPasswordPairs()
-        {
-            UserPasswordPair[] redUserPasswordPairsArray = new UserPasswordPair[redUserPasswordPairs.Count];
-            redUserPasswordPairs.CopyTo(redUserPasswordPairsArray);
-            return redUserPasswordPairsArray;
-        }
-
-        public UserPasswordPair[] GetOrangeUserPasswordPairs()
-        {
-            UserPasswordPair[] orangeUserPasswordPairsArray = new UserPasswordPair[orangeUserPasswordPairs.Count];
-            orangeUserPasswordPairs.CopyTo(orangeUserPasswordPairsArray);
-            return orangeUserPasswordPairsArray;
-        }
-
-        public UserPasswordPair[] GetYellowUserPasswordPairs()
-        {
-            UserPasswordPair[] yellowUserPasswordPairsArray = new UserPasswordPair[yellowUserPasswordPairs.Count];
-            yellowUserPasswordPairs.CopyTo(yellowUserPasswordPairsArray);
-            return yellowUserPasswordPairsArray;
-        }
-
-        public UserPasswordPair[] GetLightGreenUserPasswordPairs()
-        {
-            UserPasswordPair[] lightGreenUserPasswordPairsArray = new UserPasswordPair[lightGreenUserPasswordPairs.Count];
-            lightGreenUserPasswordPairs.CopyTo(lightGreenUserPasswordPairsArray);
-            return lightGreenUserPasswordPairsArray;
-        }
-
-        public UserPasswordPair[] GetDarkGreenUserPasswordPairs()
-        {
-            UserPasswordPair[] darkGreenUserPasswordPairsArray = new UserPasswordPair[darkGreenUserPasswordPairs.Count];
-            darkGreenUserPasswordPairs.CopyTo(darkGreenUserPasswordPairsArray);
-            return darkGreenUserPasswordPairsArray;
-        }
-
-        public void AddRedUserPasswordPair(UserPasswordPair aRedUserPasswordPair)
-        {
-            redUserPasswordPairs.Add(aRedUserPasswordPair);
-        }
-
-        public void AddOrangeUserPasswordPair(UserPasswordPair anOrangeUserPasswordPair)
-        {
-            orangeUserPasswordPairs.Add(anOrangeUserPasswordPair);
-        }
-
-        public void AddYellowUserPasswordPair(UserPasswordPair aYellowUserPasswordPair)
-        {
-            yellowUserPasswordPairs.Add(aYellowUserPasswordPair);
-        }
-
-        public void AddLightGreenUserPasswordPair(UserPasswordPair aLightGreenUserPasswordPair)
-        {
-            lightGreenUserPasswordPairs.Add(aLightGreenUserPasswordPair);
-        }
-
-        public void AddDarkGreenUserPasswordPair(UserPasswordPair aDarkGreenUserPasswordPair)
-        {
-            darkGreenUserPasswordPairs.Add(aDarkGreenUserPasswordPair);
-        }
-
-        public void DeleteRedUserPasswordPair(UserPasswordPair aRedUserPasswordPair)
-        {
-            redUserPasswordPairs.Remove(aRedUserPasswordPair);
-        }
-
-        public void DeleteOrangeUserPasswordPair(UserPasswordPair anOrangeUserPasswordPair)
-        {
-            orangeUserPasswordPairs.Remove(anOrangeUserPasswordPair);
-        }
-
-        public void DeleteYellowUserPasswordPair(UserPasswordPair aYellowUserPasswordPair)
-        {
-            yellowUserPasswordPairs.Remove(aYellowUserPasswordPair);
-        }
-
-        public void DeleteLightGreenUserPasswordPair(UserPasswordPair aYellowUserPasswordPair)
-        {
-            lightGreenUserPasswordPairs.Remove(aYellowUserPasswordPair);
-        }
-
-        public void DeleteDarkGreenUserPasswordPair(UserPasswordPair aDarkGreenUserPasswordPair)
-        {
-            darkGreenUserPasswordPairs.Remove(aDarkGreenUserPasswordPair);
         }
 
         public bool ChangeMasterPassword(string currentPassword, string newPassword)
@@ -249,7 +144,12 @@ namespace DataManagerDomain
             {
                 throw new ExceptionIncorrectMasterPassword("The password entered by the user did not match the master password");
             }
-            MasterPassword = newPassword;
+            using (var dbContext = new DataManagerContext())
+            {
+                MasterPassword = newPassword;
+                dbContext.Entry(this).State = EntityState.Modified;
+                dbContext.SaveChanges();
+            }
             return true;
         }
 
@@ -260,8 +160,11 @@ namespace DataManagerDomain
 
         public Category[] GetCategories()
         {
-            IList<Category> allCategories = categories.Values;
-            return allCategories.ToArray();
+            using (var dbContext = new DataManagerContext())
+            {
+                var passwords = dbContext.Categories.Where(category => category.User.Username == Username).Include(category => category.User);
+                return passwords.ToArray();
+            }
         }
 
         public bool AddCategory(Category aCategory)
@@ -275,11 +178,15 @@ namespace DataManagerDomain
             return categoryAdded;
         }
 
-        private static bool CategoryIsValid(string categoryName)
+        private bool CategoryIsValid(string categoryName)
         {
             if (!CategoryNameHasValidLength(categoryName))
             {
                 throw new ExceptionIncorrectLength("The category length must be between 3 and 15, but it's current length is " + categoryName.Length);
+            }
+            if (CategoryExists(categoryName))
+            {
+                throw new ExceptionCategoryAlreadyExists("The category " + categoryName + " already exists");
             }
             return true;
         }
@@ -291,7 +198,12 @@ namespace DataManagerDomain
 
         private void AddCategoryToCollection(Category aCategory)
         {
-            categories.Add(aCategory.Name, aCategory);
+            using (var dbContext = new DataManagerContext())
+            {
+                dbContext.Users.Attach(aCategory.User);
+                dbContext.Categories.Add(aCategory);
+                dbContext.SaveChanges();
+            }
         }
 
         public bool ModifyCategory(Category aCategory, string newName)
@@ -326,9 +238,15 @@ namespace DataManagerDomain
             }
         }
 
-        private bool CategoryExists(string aCategoryName)
+        private bool CategoryExists(string newName)
         {
-            return categories.ContainsKey(aCategoryName);
+            using (var dbContext = new DataManagerContext())
+            {
+                Category categorySelected = dbContext.Categories
+                    .Where(category => category.User.Username == Username && category.Name == newName)
+                    .FirstOrDefault();
+                return categorySelected != null;
+            }
         }
 
         private void CheckIfNewNameAlreadyExists(string newName)
@@ -346,52 +264,41 @@ namespace DataManagerDomain
 
         private void UpdateCategory(Category aCategory, string newName)
         {
-            RemoveCategoryFromCategoriesCollection(aCategory);
-            aCategory.Name = newName;
-            AddCategoryToCollection(aCategory);
-        }
-
-        private void RemoveCategoryFromCategoriesCollection(Category aCategory)
-        {
-            categories.Remove(aCategory.Name);
+            using (var dbContext = new DataManagerContext())
+            {
+                aCategory.Name = newName;
+                dbContext.Entry(aCategory).State = EntityState.Modified;
+                dbContext.SaveChanges();
+            }
         }
 
         public CreditCard[] GetCreditCards()
         {
-            List<CreditCard> allCreditCards = new List<CreditCard>();
-            foreach (Category category in this.GetCategories())
+            using (var dbContext = new DataManagerContext())
             {
-                allCreditCards.AddRange(category.GetCreditCards());
+                var categories = dbContext.CreditCards.Where(creditCard => creditCard.Category.User.Username == Username)
+                    .Include(creditCard => creditCard.Category)
+                    .OrderBy(creditCard => creditCard.Category.Name);
+                return categories.ToArray();
             }
-            return allCreditCards.ToArray();
         }
 
         public bool CreditCardNumberExists(string creditCardNumber)
         {
-            bool creditCardExists = false;
-            foreach (KeyValuePair<string, Category> pair in categories)
+            using (var dbContext = new DataManagerContext())
             {
-                if (CreditCardExistsInCategory(pair.Value, creditCardNumber))
-                {
-                    creditCardExists = true;
-                }
+                var category = dbContext.CreditCards.FirstOrDefault(creditCard => creditCard.Category.User.Username == Username && creditCard.Number == creditCardNumber);
+                return category != null;
             }
-            return creditCardExists;
-        }
-
-        private static bool CreditCardExistsInCategory(Category aCategory, string creditCardNumber)
-        {
-            return aCategory.CreditCardNumberAlreadyExistsInCategory(creditCardNumber);
         }
 
         public UserPasswordPair[] GetUserPasswordPairs()
         {
-            List<UserPasswordPair> allUserPasswordPairs = new List<UserPasswordPair>();
-            foreach (var category in GetCategories())
+            using (var dbContext = new DataManagerContext())
             {
-                allUserPasswordPairs.AddRange(category.GetUserPasswordsPairs());
+                var passwords = dbContext.UserPasswordPairs.Where(password => password.Category.User.Username == Username).Include(userPasswordPair => userPasswordPair.Category).OrderBy(userPasswordPair => userPasswordPair.Category.Name);
+                return passwords.ToArray();
             }
-            return allUserPasswordPairs.ToArray();
         }
 
         public bool UserPasswordPairExists(UserPasswordPair aUserPasswordPair)
@@ -410,17 +317,38 @@ namespace DataManagerDomain
 
         public UserPasswordPair[] GetSharedUserPasswordPairs()
         {
-            return sharedPasswords.GetUserPasswordsPairs();
+            using (var dbContext = new DataManagerContext())
+            {
+                var userSelected = dbContext.Users
+                    .Include(user => user.SharedPasswords).
+                    FirstOrDefault(user => user.Username == Username);
+                return userSelected.SharedPasswords.ToArray();
+            }
         }
 
         internal void AddSharedUserPasswordPair(UserPasswordPair passwordToShare)
         {
-            sharedPasswords.AddUserPasswordPair(passwordToShare);
+            using (var dbContext = new DataManagerContext())
+            {
+                var userSelected = dbContext.Users
+                    .Include(user => user.SharedPasswords)
+                    .FirstOrDefault(user => user.Username == Username);
+                userSelected.SharedPasswords.Add(passwordToShare);
+                dbContext.SaveChanges();
+            }
         }
 
         internal void UnshareUserPasswordPair(UserPasswordPair passwordToStopSharing)
         {
-            sharedPasswords.RemoveUserPasswordPair(passwordToStopSharing);
+            using (var dbContext = new DataManagerContext())
+            {
+                var userSelected = dbContext.Users
+                    .Include(user => user.SharedPasswords)
+                    .FirstOrDefault(user => user.Username == Username);
+                userSelected.SharedPasswords.Remove(passwordToStopSharing);
+                //dbContext.Entry(passwordToStopSharing).State = EntityState.Deleted;
+                dbContext.SaveChanges();
+            }
         }
 
         public bool HasSharedPasswordOf(UserPasswordPair aUserPasswordPair)
@@ -433,20 +361,6 @@ namespace DataManagerDomain
                 return userSelected.SharedPasswords
                     .Exists(password => password.Password == aUserPasswordPair.Password);
             }
-        }
-
-        public UserPasswordPair FindUserPasswordPair(string username, string site)
-        {
-            UserPasswordPair userPasswordPair = null;
-            foreach (KeyValuePair<string, Category> pair in categories)
-            {
-                if (UserPasswordPairExistsInCategory(pair.Value, username, site))
-                {
-                    userPasswordPair = pair.Value.FindUserPasswordPair(username, site);
-                    break;
-                }
-            }
-            return userPasswordPair != null ? userPasswordPair : throw new ExceptionUserPasswordPairDoesNotExist("The User-Password Pair does not exist");
         }
 
         public DataBreach CheckDataBreaches(IDataBreachesFormatter dataBreachInput)
@@ -485,11 +399,11 @@ namespace DataManagerDomain
             return dataBreach;
         }
 
-        public (List <UserPasswordPair>, List<UserPasswordPair>) GetModifiedAndNotModifiedLeakedPasswords(DataBreach aDataBreach)
+        public (List<UserPasswordPair>, List<UserPasswordPair>) GetModifiedAndNotModifiedLeakedPasswords(DataBreach aDataBreach)
         {
             List<UserPasswordPair> notModifiedPasswords = new List<UserPasswordPair>();
             List<UserPasswordPair> modifiedPasswords = new List<UserPasswordPair>();
-            foreach(UserPasswordPair pair in aDataBreach.LeakedUserPasswordPairsOfUser)
+            foreach (UserPasswordPair pair in aDataBreach.LeakedUserPasswordPairsOfUser)
             {
                 if (aDataBreach.PasswordWasModified(pair))
                 {
@@ -519,7 +433,7 @@ namespace DataManagerDomain
             }
         }
 
-        public Tuple <bool, bool, bool> PasswordImprovementSuggestionsAreTakenIntoAccount(string aPassword)
+        public Tuple<bool, bool, bool> PasswordImprovementSuggestionsAreTakenIntoAccount(string aPassword)
         {
             string passwordTrimed = aPassword.Trim();
             bool passwordIsStrong = PasswordIsStrong(passwordTrimed);
@@ -604,10 +518,10 @@ namespace DataManagerDomain
         private CreditCard ReturnCreditCardThatAppeardInDataBreaches(string creditCardNumber)
         {
             CreditCard creditCard = null;
-            foreach (KeyValuePair<string, Category> pair in categories)
+            foreach (Category category in Categories)
             {
                 string creditCardNumberWithoutBlankSpace = creditCardNumber.Replace(" ", string.Empty);
-                creditCard = ReturnCreditCardInCategoryThatAppeardInDataBreaches(pair.Value, creditCardNumberWithoutBlankSpace);
+                creditCard = ReturnCreditCardInCategoryThatAppeardInDataBreaches(category, creditCardNumberWithoutBlankSpace);
                 if (creditCard != null)
                 {
                     break;
@@ -624,9 +538,9 @@ namespace DataManagerDomain
         private List<UserPasswordPair> ReturnListOfUserPasswordPairWhosePasswordAppearedInDataBreaches(string aPassword)
         {
             List<UserPasswordPair> userPasswordPairList = new List<UserPasswordPair>();
-            foreach (KeyValuePair<string, Category> pair in categories)
+            foreach (Category category in Categories)
             {
-                List<UserPasswordPair> userPasswordPairListInCategory = ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(pair.Value, aPassword);
+                List<UserPasswordPair> userPasswordPairListInCategory = ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(category, aPassword);
                 foreach (UserPasswordPair element in userPasswordPairListInCategory)
                 {
                     userPasswordPairList.Add(element);
