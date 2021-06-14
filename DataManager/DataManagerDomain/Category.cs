@@ -42,7 +42,7 @@ namespace DataManagerDomain
         {
             using (var dbContext = new DataManagerContext())
             {
-                var passwords = dbContext.UserPasswordPairs.Where(userPasswordPair => userPasswordPair.Category.Id == Id);
+                var passwords = dbContext.UserPasswordPairs.Where(userPasswordPair => userPasswordPair.Category.Id == Id).Include(password => password.Category).Include(password => password.Category.User);
                 return passwords.ToArray();
             }
         }

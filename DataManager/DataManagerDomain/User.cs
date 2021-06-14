@@ -8,15 +8,17 @@ namespace DataManagerDomain
 {
     public class User
     {
-        private string masterPassword { get; set; }
+        public string EncryptedMasterPassword { get; set; }
+
+        private string masterPassword;
         public string MasterPassword
         {
-            //get { return DecryptMasterPassword(); }
-            get; set;
-            //set
-            //{
-            //    masterPassword = ValidateAndEncryptMasterPassword(value);
-            //}
+            get { return DecryptMasterPassword(); }
+            set
+            {
+                masterPassword = ValidateAndEncryptMasterPassword(value);
+                EncryptedMasterPassword = masterPassword;
+            }
         }
         private string username { get; set; }
         public string Username
@@ -42,7 +44,7 @@ namespace DataManagerDomain
 
         private string DecryptMasterPassword()
         {
-            return Encrypter.Decrypt(masterPassword, PrivateKey);
+            return Encrypter.Decrypt(EncryptedMasterPassword, PrivateKey);
         }
 
         private string ValidateAndEncryptMasterPassword(string password)
@@ -296,7 +298,7 @@ namespace DataManagerDomain
         {
             using (var dbContext = new DataManagerContext())
             {
-                var passwords = dbContext.UserPasswordPairs.Where(password => password.Category.User.Username == Username).Include(userPasswordPair => userPasswordPair.Category).OrderBy(userPasswordPair => userPasswordPair.Category.Name);
+                var passwords = dbContext.UserPasswordPairs.Where(password => password.Category.User.Username == Username).Include(userPasswordPair => userPasswordPair.Category).Include(userPasswordPair => userPasswordPair.Category.User).OrderBy(userPasswordPair => userPasswordPair.Category.Name);
                 return passwords.ToArray();
             }
         }

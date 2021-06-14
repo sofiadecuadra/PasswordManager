@@ -18,6 +18,7 @@ namespace DataManagerDomain
                 .HasKey(user => user.Username)
                 .Ignore(user => user.MasterPassword); 
             modelBuilder.Entity<UserPasswordPair>()
+                .Ignore(userPassPair => userPassPair.Password)
                 .Property(f => f.LastModifiedDate)
                 .HasColumnType("datetime2");
         }
