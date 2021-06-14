@@ -119,13 +119,31 @@ namespace DataManagerDomain
 
         private void AddDataBreach(DataBreach aDataBreach)
         {
-            if (aDataBreach.LeakedCreditCards.Count > 0 || aDataBreach.LeakedUserPasswordPairs.Count > 0)
+            if (aDataBreach.LeakedCreditCards.Count > 0 || aDataBreach.LeakedPasswords.Count > 0)
             {
                 using (var dbContext = new DataManagerContext())
                 {
+                    aDataBreach.User = dbContext
+                        .Users
+                        .First(user => user.Username == Username);
                     dbContext.DataBreaches.Add(aDataBreach);
                     dbContext.SaveChanges();
                 }
+            }
+        }
+        
+        public List<DataBreach> DataBreachesForUser()
+        {
+            using (var dbContext = new DataManagerContext())
+            {
+                var dataBreaches = dbContext.DataBreaches
+                    .Where(dataBreach => dataBreach.User.Username == Username)
+                    .Include(dataBreach => dataBreach.LeakedUserPasswordPairsOfUser)
+                    .Include(dataBreach => dataBreach.LeakedCreditCardsOfUser)
+                    .Include(dataBreach => dataBreach.LeakedPasswords)
+                    .Include(dataBreach => dataBreach.LeakedCreditCards)
+                    .ToList();
+                return dataBreaches;
             }
         }
 
@@ -365,6 +383,8 @@ namespace DataManagerDomain
             }
         }
 
+
+
         public DataBreach CheckDataBreaches(IDataBreachesFormatter dataBreachInput)
         {
             string[] leakedData = dataBreachInput.ConvertToArray();
@@ -376,22 +396,41 @@ namespace DataManagerDomain
                 {
                     if (ItsACreditCard(dataToCheck))
                     {
-                        dataBreach.AddLeakedCreditCard(dataToCheck);
-                        CreditCard aLeakedCreditCardOfUser = ReturnCreditCardThatAppeardInDataBreaches(dataToCheck);
+                        LeakedCreditCard aLeakedCreditCard = new LeakedCreditCard()
+                        {
+                            Number = dataToCheck
+                        };
+                        dataBreach.AddLeakedCreditCard(aLeakedCreditCard);
+
+                        CreditCard aLeakedCreditCardOfUser = CreditCardThatAppeardInDataBreaches(dataToCheck);
                         if (aLeakedCreditCardOfUser != null && !dataBreach.LeakedCreditCardsOfUser.Contains(aLeakedCreditCardOfUser))
                         {
-                            dataBreach.AddLeakedCreditCardOfUser(aLeakedCreditCardOfUser);
+                            using (var dbContext = new DataManagerContext())
+                            {
+                                dbContext.CreditCards.Attach(aLeakedCreditCardOfUser);
+                                dataBreach.AddLeakedCreditCardOfUser(aLeakedCreditCardOfUser);
+                                dbContext.SaveChanges();
+                            }
                         }
                     }
                     else
                     {
-                        dataBreach.AddLeakedUserPasswordPair(dataToCheck);
+                        LeakedPassword aLeakedPassword = new LeakedPassword()
+                        {
+                            Password = dataToCheck
+                        };
+                        dataBreach.AddLeakedUserPasswordPair(aLeakedPassword);
                         List<UserPasswordPair> leakedPasswordsOfUser = ReturnListOfUserPasswordPairWhosePasswordAppearedInDataBreaches(dataToCheck);
                         foreach (UserPasswordPair pair in leakedPasswordsOfUser)
                         {
                             if (!dataBreach.LeakedUserPasswordPairsOfUser.Contains(pair))
                             {
-                                dataBreach.AddLeakedUserPasswordPairOfUser(pair);
+                                using (var dbContext = new DataManagerContext())
+                                {
+                                    dbContext.UserPasswordPairs.Attach(pair);
+                                    dataBreach.AddLeakedUserPasswordPairOfUser(pair);
+                                    dbContext.SaveChanges();
+                                }
                             }
                         }
                     }
@@ -517,7 +556,7 @@ namespace DataManagerDomain
             return element.Length == 4;
         }
 
-        private CreditCard ReturnCreditCardThatAppeardInDataBreaches(string creditCardNumber)
+        private CreditCard CreditCardThatAppeardInDataBreaches(string creditCardNumber)
         {
             CreditCard creditCard = null;
             foreach (Category category in Categories)
@@ -534,7 +573,7 @@ namespace DataManagerDomain
 
         private CreditCard ReturnCreditCardInCategoryThatAppeardInDataBreaches(Category aCategory, string creditCardNumber)
         {
-            return aCategory.ReturnCreditCardInCategoryThatAppearedInDataBreaches(creditCardNumber);
+            return aCategory.CreditCardInCategoryThatAppearedInDataBreaches(creditCardNumber);
         }
 
         private List<UserPasswordPair> ReturnListOfUserPasswordPairWhosePasswordAppearedInDataBreaches(string aPassword)
@@ -553,7 +592,7 @@ namespace DataManagerDomain
 
         private List<UserPasswordPair> ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(Category aCategory, string aPassword)
         {
-            return aCategory.ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(aPassword);
+            return aCategory.ListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(aPassword);
         }
     }
 }

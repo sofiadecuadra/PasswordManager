@@ -39,10 +39,12 @@ namespace DataManagerDomain
         public DateTime LastModifiedDate { get; set; }
         public Category Category { get; set; }
         public PasswordStrengthType PasswordStrength { get; private set; }
+        public List<DataBreach> DataBreaches { get; set; }
 
         public UserPasswordPair()
         {
             UsersWithAccess = new List<User>();
+            DataBreaches = new List<DataBreach>();
         }
 
         public override string ToString()

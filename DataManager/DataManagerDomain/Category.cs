@@ -15,7 +15,7 @@ namespace DataManagerDomain
             get { return name; }
             set { name = value.Trim().ToLower(); }
         }
-        public List<UserPasswordPair> UserPasswordPairs;
+        public List<UserPasswordPair> UserPasswordPairs { get; set; }
         private List<CreditCard> creditCards;
 
         public Category()
@@ -161,13 +161,16 @@ namespace DataManagerDomain
             }
         }
 
-        public CreditCard ReturnCreditCardInCategoryThatAppearedInDataBreaches(string aCreditCardNumber)
+        public CreditCard CreditCardInCategoryThatAppearedInDataBreaches(string aCreditCardNumber)
         {
             if (CreditCardNumberAlreadyExistsInCategory(aCreditCardNumber))
             {
                 using (var dbContext = new DataManagerContext())
                 {
-                    return dbContext.CreditCards.FirstOrDefault(creditCard => creditCard.Number == aCreditCardNumber && creditCard.Category.Id == Id);
+                    var creditCardOfUser = dbContext.CreditCards
+                        .Include(creditCard => creditCard.Category)
+                        .FirstOrDefault(creditCard => creditCard.Number == aCreditCardNumber && creditCard.Category.Id == Id);
+                    return creditCardOfUser;
                 }
             }
             return null;
@@ -323,8 +326,17 @@ namespace DataManagerDomain
             }
         }
 
-        public List<UserPasswordPair> ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(string aPassword)
+        public List<UserPasswordPair> ListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(string aPassword)
         {
+            using (var dbContext = new DataManagerContext())
+            {
+                var userPasswordPairs = dbContext.UserPasswordPairs
+                    .Where(userPasswordPair => userPasswordPair.Category.Id == Id && userPasswordPair.Password == aPassword)
+                    .Include(userPasswordPair => userPasswordPair.Category)
+                    .ToList();
+                return userPasswordPairs;
+            }
+            /*
             List<UserPasswordPair> pairsList = new List<UserPasswordPair>();
             foreach (UserPasswordPair userPasswordPair in UserPasswordPairs)
             {
@@ -333,7 +345,7 @@ namespace DataManagerDomain
                     pairsList.Add(userPasswordPair);
                 }
             }
-            return pairsList;
+            return pairsList;*/
         }
 
         public int GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType strengthType)

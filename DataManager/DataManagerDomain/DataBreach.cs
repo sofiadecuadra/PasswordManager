@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DataManagerDomain
 {
     public class DataBreach
     {
+        public User User { get; set; }
         public DateTime DateTime { get; set; }
-        public List<UserPasswordPair> LeakedUserPasswordPairsOfUser { get; set; }
-        public List<CreditCard> LeakedCreditCardsOfUser { get; set; }
-        public List<string> LeakedCreditCards { get; set; }
-        public List<string> LeakedUserPasswordPairs { get; set; }
+        public virtual List<UserPasswordPair> LeakedUserPasswordPairsOfUser { get; set; }
+        public virtual List<CreditCard> LeakedCreditCardsOfUser { get; set; }
+        public List<LeakedPassword> LeakedPasswords { get; set; }
+        public List<LeakedCreditCard> LeakedCreditCards { get; set; }
 
         public DataBreach()
         {
             DateTime = DateTime.Now;
             LeakedUserPasswordPairsOfUser = new List<UserPasswordPair>();
             LeakedCreditCardsOfUser = new List<CreditCard>();
-            LeakedUserPasswordPairs = new List<string>();
-            LeakedCreditCards = new List<string>();
+            LeakedPasswords = new List<LeakedPassword>();
+            LeakedCreditCards = new List<LeakedCreditCard>();
         }
 
         public void AddLeakedUserPasswordPairOfUser(UserPasswordPair aLeakedUserPasswordPair)
@@ -30,12 +32,12 @@ namespace DataManagerDomain
             LeakedCreditCardsOfUser.Add(aLeakedCreditCard);
         }
 
-        public void AddLeakedUserPasswordPair(string aLeakedUserPasswordPair)
+        public void AddLeakedUserPasswordPair(LeakedPassword aLeakedUserPasswordPair)
         {
-            LeakedUserPasswordPairs.Add(aLeakedUserPasswordPair);
+            LeakedPasswords.Add(aLeakedUserPasswordPair);
         }
 
-        public void AddLeakedCreditCard(string aLeakedCreditCard)
+        public void AddLeakedCreditCard(LeakedCreditCard aLeakedCreditCard)
         {
             LeakedCreditCards.Add(aLeakedCreditCard);
         }
@@ -47,7 +49,14 @@ namespace DataManagerDomain
 
         public bool PasswordAppearedInDataBreach(string aPassword)
         {
-            return LeakedUserPasswordPairs.Contains(aPassword);
+            foreach (LeakedPassword leakedPassword in LeakedPasswords)
+            {
+                if (leakedPassword.Password == aPassword)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void RemoveCreditCard(CreditCard aLeakedCreditCard)

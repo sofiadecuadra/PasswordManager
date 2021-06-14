@@ -239,21 +239,21 @@ namespace DataManagerTest
             Assert.AreEqual(1, aUser.GetCreditCards().Length);
         }
 
-        //[TestMethod]
-        //public void ACreditCardOfUserAppearedInTextBoxDataBreaches()
-        //{
-        //    var aCreditCard = LoadTestCategoryToMyUserWithACreditCard();
+        [TestMethod]
+        public void ACreditCardOfUserAppearedInTextBoxDataBreaches()
+        {
+            var aCreditCard = LoadTestCategoryToMyUserWithACreditCard();
 
-        //    IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
-        //    {
-        //        txtDataBreaches = "1234 5678 9123 4567"
-        //    };
+            IDataBreachesFormatter dataBreaches = new TextBoxDataBreaches()
+            {
+                txtDataBreaches = "1234 5678 9123 4567"
+            };
 
-        //    List<CreditCard> expectedCreditCardList = new List<CreditCard>();
-        //    expectedCreditCardList.Add(aCreditCard);
+            List<CreditCard> expectedCreditCardList = new List<CreditCard>();
+            expectedCreditCardList.Add(aCreditCard);
 
-        //    CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCardsOfUser, expectedCreditCardList);
-        //}
+            CollectionAssert.AreEquivalent(aUser.CheckDataBreaches(dataBreaches).LeakedCreditCardsOfUser, expectedCreditCardList);
+        }
 
         //[TestMethod]
         //public void MultipleCreditCardsOfUserAppearedInTextBoxDataBreaches()
@@ -860,6 +860,7 @@ namespace DataManagerTest
                 dbContext.Categories.RemoveRange(dbContext.Categories);
                 dbContext.UserPasswordPairs.RemoveRange(dbContext.UserPasswordPairs);
                 dbContext.CreditCards.RemoveRange(dbContext.CreditCards);
+                dbContext.DataBreaches.RemoveRange(dbContext.DataBreaches);
                 dbContext.SaveChanges();
             }
         }
