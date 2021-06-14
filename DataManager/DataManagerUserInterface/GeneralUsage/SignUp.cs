@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using DataManagerDomain;
+using DataManagerDomain.Exceptions;
 
 namespace PasswordsManagerUserInterface
 {
@@ -22,13 +23,9 @@ namespace PasswordsManagerUserInterface
             {
                 UserSignUp();
             }
-            catch (ArgumentException)
+            catch (Exception ex) when (ex is ExceptionUserAlreadyExists || ex is ExceptionIncorrectLength)
             {
-                MessageBox.Show("The user already exists", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (ExceptionIncorrectLength exception)
-            {
-                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
