@@ -16,9 +16,7 @@ namespace DataManagerDomain
             {
                 LastModifiedDate = DateTime.Now;
                 PasswordStrength = PasswordHandler.PasswordStrength(value);
-                password = value;
-                password = EncryptPassword(value);
-                EncryptedPassword = password;
+                EncryptedPassword = EncryptPassword(value);
             }
         }
         public List<User> UsersWithAccess { get; private set; }
