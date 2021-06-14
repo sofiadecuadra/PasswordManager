@@ -21,7 +21,7 @@ namespace PasswordsManagerUserInterface
 
         private void LoadDataBreachesHistory()
         {
-            List<DataBreach> dataBreaches = PasswordManager.CurrentUser.DataBreaches;
+            DataBreach[] dataBreaches = PasswordManager.CurrentUser.GetDataBreaches();
             SetDataBreachesColumnQuantity();
             SetDataBreachesDateColumn();
             SetDataBreachesViewColumn();

@@ -12,8 +12,6 @@ namespace DataManagerDomain
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<DataBreach>()
-                .HasKey(dataBreach => dataBreach.DateTime);
             modelBuilder.Entity<User>()
                 .HasKey(user => user.Username)
                 .Ignore(user => user.MasterPassword); 

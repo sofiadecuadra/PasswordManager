@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace DataManagerDomain
@@ -47,6 +48,12 @@ namespace DataManagerDomain
             }
         }
         public Category Category { get; set; }
+        public List<DataBreach> DataBreaches { get; set; }
+
+        public CreditCard()
+        {
+            DataBreaches = new List<DataBreach>();
+        }
 
         public override string ToString()
         {

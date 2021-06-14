@@ -117,18 +117,6 @@ namespace DataManagerDomain
             }
         }
 
-        private void AddDataBreach(DataBreach aDataBreach)
-        {
-            if (aDataBreach.LeakedCreditCards.Count > 0 || aDataBreach.LeakedUserPasswordPairs.Count > 0)
-            {
-                using (var dbContext = new DataManagerContext())
-                {
-                    dbContext.DataBreaches.Add(aDataBreach);
-                    dbContext.SaveChanges();
-                }
-            }
-        }
-
         public UserPasswordPair[] GetUserPasswordPairsOfASpecificColor(PasswordStrengthType aColorGroup)
         {
             using (var dbContext = new DataManagerContext())
@@ -348,7 +336,6 @@ namespace DataManagerDomain
                     .Include(user => user.SharedPasswords)
                     .FirstOrDefault(user => user.Username == Username);
                 userSelected.SharedPasswords.Remove(passwordToStopSharing);
-                //dbContext.Entry(passwordToStopSharing).State = EntityState.Deleted;
                 dbContext.SaveChanges();
             }
         }
@@ -369,40 +356,83 @@ namespace DataManagerDomain
             }
         }
 
+        private void AddDataBreach(DataBreach aDataBreach)
+        {
+            using (var dbContext = new DataManagerContext())
+            {
+                dbContext.Users.Attach(aDataBreach.User);
+                dbContext.DataBreaches.Add(aDataBreach);
+                dbContext.SaveChanges();
+            }   
+        }
+
+        public DataBreach[] GetDataBreaches()
+        {
+            using (var dbContext = new DataManagerContext())
+            {
+                return dbContext.DataBreaches
+                    .Where(dataBreach => dataBreach.User.Username == Username)
+                    .Include(dataBreach => dataBreach.LeakedUserPasswordPairsOfUser)
+                    .Include(dataBreach => dataBreach.LeakedCreditCardsOfUser)
+                    .Include(dataBreach => dataBreach.LeakedPasswords)
+                    .Include(dataBreach => dataBreach.LeakedCreditCards)
+                    .ToArray();
+            }
+        }
+
         public DataBreach CheckDataBreaches(IDataBreachesFormatter dataBreachInput)
         {
             string[] leakedData = dataBreachInput.ConvertToArray();
-            DataBreach dataBreach = new DataBreach();
-            foreach (string element in leakedData)
+            DataBreach dataBreach = new DataBreach()
             {
-                string dataToCheck = element.Trim();
-                if (dataToCheck != "")
+                User = this
+            };
+            if (leakedData.Length == 0)
+            {
+                return dataBreach;
+            }
+            else
+            {
+                AddDataBreach(dataBreach);
+                foreach (string element in leakedData)
                 {
-                    if (ItsACreditCard(dataToCheck))
+                    string dataToCheck = element.Trim();
+                    if (dataToCheck != "")
                     {
-                        dataBreach.AddLeakedCreditCard(dataToCheck);
-                        CreditCard aLeakedCreditCardOfUser = ReturnCreditCardThatAppeardInDataBreaches(dataToCheck);
-                        if (aLeakedCreditCardOfUser != null && !dataBreach.LeakedCreditCardsOfUser.Contains(aLeakedCreditCardOfUser))
+                        if (ItsACreditCard(dataToCheck))
                         {
-                            dataBreach.AddLeakedCreditCardOfUser(aLeakedCreditCardOfUser);
-                        }
-                    }
-                    else
-                    {
-                        dataBreach.AddLeakedUserPasswordPair(dataToCheck);
-                        List<UserPasswordPair> leakedPasswordsOfUser = ReturnListOfUserPasswordPairWhosePasswordAppearedInDataBreaches(dataToCheck);
-                        foreach (UserPasswordPair pair in leakedPasswordsOfUser)
-                        {
-                            if (!dataBreach.LeakedUserPasswordPairsOfUser.Contains(pair))
+                            LeakedCreditCard aLeakedCreditCard = new LeakedCreditCard()
                             {
-                                dataBreach.AddLeakedUserPasswordPairOfUser(pair);
+                                Number = dataToCheck
+                            };
+                            dataBreach.AddLeakedCreditCard(aLeakedCreditCard);
+
+                            CreditCard aLeakedCreditCardOfUser = CreditCardThatAppeardInDataBreaches(dataToCheck);
+                            if (aLeakedCreditCardOfUser != null && !dataBreach.LeakedCreditCardsOfUser.Contains(aLeakedCreditCardOfUser))
+                            {
+                                dataBreach.AddLeakedCreditCardOfUser(aLeakedCreditCardOfUser);
+                            }
+                        }
+                        else
+                        {
+                            LeakedPassword aLeakedPassword = new LeakedPassword()
+                            {
+                                Password = dataToCheck
+                            };
+                            dataBreach.AddLeakedUserPasswordPair(aLeakedPassword);
+                            List<UserPasswordPair> leakedPasswordsOfUser = ReturnListOfUserPasswordPairWhosePasswordAppearedInDataBreaches(dataToCheck);
+                            foreach (UserPasswordPair pair in leakedPasswordsOfUser)
+                            {
+                                if (!dataBreach.LeakedUserPasswordPairsOfUser.Contains(pair))
+                                {
+                                    dataBreach.AddLeakedUserPasswordPairOfUser(pair);
+                                }
                             }
                         }
                     }
                 }
+                return dataBreach;
             }
-            AddDataBreach(dataBreach);
-            return dataBreach;
         }
 
         public (List<UserPasswordPair>, List<UserPasswordPair>) GetModifiedAndNotModifiedLeakedPasswords(DataBreach aDataBreach)
@@ -437,6 +467,45 @@ namespace DataManagerDomain
             {
                 element.RemoveUserPasswordPair(aUserPasswordPair);
             }
+        }
+
+        private CreditCard CreditCardThatAppeardInDataBreaches(string creditCardNumber)
+        {
+            CreditCard creditCard = null;
+            foreach (Category category in Categories)
+            {
+                string creditCardNumberWithoutBlankSpace = creditCardNumber.Replace(" ", string.Empty);
+                creditCard = ReturnCreditCardInCategoryThatAppeardInDataBreaches(category, creditCardNumberWithoutBlankSpace);
+                if (creditCard != null)
+                {
+                    break;
+                }
+            }
+            return creditCard;
+        }
+
+        private CreditCard ReturnCreditCardInCategoryThatAppeardInDataBreaches(Category aCategory, string creditCardNumber)
+        {
+            return aCategory.CreditCardInCategoryThatAppearedInDataBreaches(creditCardNumber);
+        }
+
+        private List<UserPasswordPair> ReturnListOfUserPasswordPairWhosePasswordAppearedInDataBreaches(string aPassword)
+        {
+            List<UserPasswordPair> userPasswordPairList = new List<UserPasswordPair>();
+            foreach (Category category in Categories)
+            {
+                UserPasswordPair[] userPasswordPairListInCategory = ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(category, aPassword);
+                foreach (UserPasswordPair element in userPasswordPairListInCategory)
+                {
+                    userPasswordPairList.Add(element);
+                }
+            }
+            return userPasswordPairList;
+        }
+
+        private UserPasswordPair[] ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(Category aCategory, string aPassword)
+        {
+            return aCategory.ListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(aPassword);
         }
 
         public Tuple<bool, bool, bool> PasswordImprovementSuggestionsAreTakenIntoAccount(string aPassword)
@@ -519,45 +588,6 @@ namespace DataManagerDomain
         private bool LengthIsFour(string element)
         {
             return element.Length == 4;
-        }
-
-        private CreditCard ReturnCreditCardThatAppeardInDataBreaches(string creditCardNumber)
-        {
-            CreditCard creditCard = null;
-            foreach (Category category in Categories)
-            {
-                string creditCardNumberWithoutBlankSpace = creditCardNumber.Replace(" ", string.Empty);
-                creditCard = ReturnCreditCardInCategoryThatAppeardInDataBreaches(category, creditCardNumberWithoutBlankSpace);
-                if (creditCard != null)
-                {
-                    break;
-                }
-            }
-            return creditCard;
-        }
-
-        private CreditCard ReturnCreditCardInCategoryThatAppeardInDataBreaches(Category aCategory, string creditCardNumber)
-        {
-            return aCategory.ReturnCreditCardInCategoryThatAppearedInDataBreaches(creditCardNumber);
-        }
-
-        private List<UserPasswordPair> ReturnListOfUserPasswordPairWhosePasswordAppearedInDataBreaches(string aPassword)
-        {
-            List<UserPasswordPair> userPasswordPairList = new List<UserPasswordPair>();
-            foreach (Category category in Categories)
-            {
-                List<UserPasswordPair> userPasswordPairListInCategory = ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(category, aPassword);
-                foreach (UserPasswordPair element in userPasswordPairListInCategory)
-                {
-                    userPasswordPairList.Add(element);
-                }
-            }
-            return userPasswordPairList;
-        }
-
-        private List<UserPasswordPair> ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(Category aCategory, string aPassword)
-        {
-            return aCategory.ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(aPassword);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace DataManagerDomain
             get { return name; }
             set { name = value.Trim().ToLower(); }
         }
-        public List<UserPasswordPair> UserPasswordPairs;
+        public List<UserPasswordPair> UserPasswordPairs { get; set; }
         private List<CreditCard> creditCards;
 
         public Category()
@@ -161,13 +161,16 @@ namespace DataManagerDomain
             }
         }
 
-        public CreditCard ReturnCreditCardInCategoryThatAppearedInDataBreaches(string aCreditCardNumber)
+        public CreditCard CreditCardInCategoryThatAppearedInDataBreaches(string aCreditCardNumber)
         {
             if (CreditCardNumberAlreadyExistsInCategory(aCreditCardNumber))
             {
                 using (var dbContext = new DataManagerContext())
                 {
-                    return dbContext.CreditCards.FirstOrDefault(creditCard => creditCard.Number == aCreditCardNumber && creditCard.Category.Id == Id);
+                    var creditCardOfUser = dbContext.CreditCards
+                        .Include(creditCard => creditCard.Category)
+                        .FirstOrDefault(creditCard => creditCard.Number == aCreditCardNumber && creditCard.Category.Id == Id);
+                    return creditCardOfUser;
                 }
             }
             return null;
@@ -218,6 +221,15 @@ namespace DataManagerDomain
             {
                 var passwords = dbContext.UserPasswordPairs.Where(userPasswordPair => userPasswordPair.Category.Id == Id).ToList();
                 return passwords.Exists(password => password.Id == aUserPasswordPair.Id);
+            }
+        }
+
+        public int GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType strengthType)
+        {
+            using (var dbContext = new DataManagerContext())
+            {
+                int count = dbContext.UserPasswordPairs.Include(userPasswordPair => userPasswordPair.Category).Where(userPasswordPair => userPasswordPair.Category.Id == Id && userPasswordPair.PasswordStrength == strengthType).Count();
+                return count;
             }
         }
 
@@ -323,25 +335,14 @@ namespace DataManagerDomain
             }
         }
 
-        public List<UserPasswordPair> ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(string aPassword)
-        {
-            List<UserPasswordPair> pairsList = new List<UserPasswordPair>();
-            foreach (UserPasswordPair userPasswordPair in UserPasswordPairs)
-            {
-                if (PasswordsAreEqual(userPasswordPair.Password, aPassword))
-                {
-                    pairsList.Add(userPasswordPair);
-                }
-            }
-            return pairsList;
-        }
-
-        public int GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType strengthType)
+        public UserPasswordPair[] ListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(string aPassword)
         {
             using (var dbContext = new DataManagerContext())
             {
-                int count = dbContext.UserPasswordPairs.Include(userPasswordPair => userPasswordPair.Category).Where(userPasswordPair => userPasswordPair.Category.Id == Id && userPasswordPair.PasswordStrength == strengthType).Count();
-                return count;
+                return dbContext.UserPasswordPairs
+                    .Where(userPasswordPair => userPasswordPair.Category.Id == Id && userPasswordPair.Password == aPassword)
+                    .Include(userPasswordPair => userPasswordPair.Category)
+                    .ToArray();
             }
         }
     }
