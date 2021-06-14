@@ -9,7 +9,6 @@ namespace DataManagerDomain
     {
         public int Id { get; set; }
         public string EncryptedPassword { get; set; }
-        private string password;
         public string Password
         {
             get { return DecryptPassword(); }
@@ -17,9 +16,7 @@ namespace DataManagerDomain
             {
                 LastModifiedDate = DateTime.Now;
                 PasswordStrength = PasswordHandler.PasswordStrength(value);
-                password = value;
-                password = EncryptPassword(value);
-                EncryptedPassword = password;
+                EncryptedPassword = EncryptPassword(value);
             }
         }
         public List<User> UsersWithAccess { get; private set; }
