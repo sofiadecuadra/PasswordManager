@@ -32,13 +32,9 @@ namespace PasswordsManagerUserInterface
             {
                 AddCategory_();
             }
-            catch (ExceptionIncorrectLength exception)
+            catch (Exception exception) when (exception is ExceptionIncorrectLength || exception is ExceptionCategoryAlreadyExists)
             {
                 ShowMessageBox(exception);
-            }
-            catch (ArgumentException)
-            {
-                MessageBox.Show("The category already exists", ERROR_MESSAGE, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
