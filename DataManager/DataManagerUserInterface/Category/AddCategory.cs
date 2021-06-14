@@ -23,12 +23,12 @@ namespace PasswordsManagerUserInterface
         {
             ClearControls(pnlAddCategory);
             Form = new CategoryForm();
-            AddUserControl(pnlAddCategory,Form);
+            AddUserControl(pnlAddCategory, Form);
         }
 
         private void btnAccept_Click(object sender, EventArgs e)
         {
-           try
+            try
             {
                 AddCategory_();
             }

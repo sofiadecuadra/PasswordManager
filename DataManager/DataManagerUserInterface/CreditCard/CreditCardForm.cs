@@ -46,7 +46,7 @@ namespace PasswordsManagerUserInterface
             dtpExpirationDate.MinDate = DateTime.Now;
         }
 
-        private Category [] GetCategories()
+        private Category[] GetCategories()
         {
             return PasswordManager.CurrentUser.GetCategories();
         }

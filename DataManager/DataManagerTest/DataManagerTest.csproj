@@ -155,7 +155,6 @@
     <Compile Include="RemovingPasswordsFromCategoryTest.cs" />
     <Compile Include="SystemTest.cs" />
     <Compile Include="CreditCardTest.cs" />
-    <Compile Include="GetPasswordsOfCertainColorTest.cs" />
     <Compile Include="RemovingCreditCardsFromCategoryTest.cs" />
     <Compile Include="UserPasswordPairTest.cs" />
     <Compile Include="UserTest.cs" />

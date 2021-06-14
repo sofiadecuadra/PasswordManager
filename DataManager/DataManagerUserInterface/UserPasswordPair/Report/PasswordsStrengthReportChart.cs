@@ -32,27 +32,27 @@ namespace PasswordsManagerUserInterface
 
         private void LoadRedPasswordsQuantityToChart(Category category)
         {
-            chartPasswordsReport.Series["Red"].Points.AddXY(category.Name, category.RedUserPasswordPairsQuantity);
+            chartPasswordsReport.Series["Red"].Points.AddXY(category.Name, category.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Red));
         }
 
         private void LoadOrangePasswordsQuantityToChart(Category category)
         {
-            chartPasswordsReport.Series["Orange"].Points.AddXY(category.Name, category.OrangeUserPasswordPairsQuantity);
+            chartPasswordsReport.Series["Orange"].Points.AddXY(category.Name, category.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Orange));
         }
 
         private void LoadYellowPasswordsQuantityToChart(Category category)
         {
-            chartPasswordsReport.Series["Yellow"].Points.AddXY(category.Name, category.YellowUserPasswordPairsQuantity);
+            chartPasswordsReport.Series["Yellow"].Points.AddXY(category.Name, category.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Yellow));
         }
 
         private void LoadLightGreenPasswordsQuantityToChart(Category category)
         {
-            chartPasswordsReport.Series["Light Green"].Points.AddXY(category.Name, category.LightGreenUserPasswordPairsQuantity);
+            chartPasswordsReport.Series["Light Green"].Points.AddXY(category.Name, category.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.LightGreen));
         }
 
         private void LoadDarkGreenPasswordsQuantityToChart(Category category)
         {
-            chartPasswordsReport.Series["Dark Green"].Points.AddXY(category.Name, category.DarkGreenUserPasswordPairsQuantity);
+            chartPasswordsReport.Series["Dark Green"].Points.AddXY(category.Name, category.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.DarkGreen));
         }
 
         private void btnBack_Click(object sender, EventArgs e)

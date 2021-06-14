@@ -16,7 +16,7 @@ namespace PasswordsManagerUserInterface
             LoadCategories();
         }
 
-        public UserPasswordPairForm (DataManager aPasswordManager, UserPasswordPair passwordToModify)
+        public UserPasswordPairForm(DataManager aPasswordManager, UserPasswordPair passwordToModify)
         {
             InitializeComponent();
             PasswordManager = aPasswordManager;
@@ -118,9 +118,9 @@ namespace PasswordsManagerUserInterface
             else
             {
                 txtPassword.PasswordChar = '*';
-            }         
+            }
         }
-        
+
         private bool PasswordIsStrong(string aPassword)
         {
             return PasswordManager.CurrentUser.PasswordIsStrong(aPassword.Trim());
@@ -129,7 +129,7 @@ namespace PasswordsManagerUserInterface
         private void txtPassword_TextChanged(object sender, EventArgs e)
         {
             string passwordTrimed = txtPassword.Text.Trim();
-            if(passwordTrimed.Length >= 5)
+            if (passwordTrimed.Length >= 5)
             {
                 if (PasswordIsStrong(passwordTrimed))
                 {

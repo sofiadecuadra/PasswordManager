@@ -39,7 +39,7 @@ namespace PasswordsManagerUserInterface
             dgvCategories.Columns[0].Width = 215;
         }
 
-        private Category [] GetCategories()
+        private Category[] GetCategories()
         {
             return PasswordManager.CurrentUser.GetCategories();
         }
