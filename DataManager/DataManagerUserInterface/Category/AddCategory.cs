@@ -44,15 +44,15 @@ namespace PasswordsManagerUserInterface
 
         private void AddCategory_()
         {
-            NormalCategory newCategory = CreateCategory();
+            Category newCategory = CreateCategory();
             CurrentUser().AddCategory(newCategory);
             GoBack();
         }
 
-        private NormalCategory CreateCategory()
+        private Category CreateCategory()
         {
             string name = Form.GetName();
-            NormalCategory newCategory = new NormalCategory()
+            Category newCategory = new Category()
             {
                 Name = name,
                 User = CurrentUser()

@@ -21,15 +21,14 @@ namespace DataManagerDomain
         {
             return Encrypter.Decrypt(masterPassword, PrivateKey);
         }
-
-        private string name;
-        public string Name
+        private string username { get; set; }
+        public string Username
         {
-            get { return name; }
-            set { name = ValidUserName(value.Trim()); }
+            get { return username; }
+            set { username = ValidUserName(value.Trim()); }
         }
-        private SpecialCategory sharedPasswords;
-        private SortedList<string, NormalCategory> categories;
+        private Category sharedPasswords;
+        private SortedList<string, Category> categories;
         private List<UserPasswordPair> redUserPasswordPairs;
         private List<UserPasswordPair> orangeUserPasswordPairs;
         private List<UserPasswordPair> yellowUserPasswordPairs;
@@ -41,17 +40,13 @@ namespace DataManagerDomain
 
         public User()
         {
-            categories = new SortedList<string, NormalCategory>();
+            categories = new SortedList<string, Category>();
             redUserPasswordPairs = new List<UserPasswordPair>();
             orangeUserPasswordPairs = new List<UserPasswordPair>();
             yellowUserPasswordPairs = new List<UserPasswordPair>();
             lightGreenUserPasswordPairs = new List<UserPasswordPair>();
             darkGreenUserPasswordPairs = new List<UserPasswordPair>();
             DataBreaches = new List<DataBreach>();
-            sharedPasswords = new SpecialCategory()
-            {
-                User = this,
-            };
             var keys = Encrypter.GenerateKeys();
             PublicKey = keys.Item2;
             PrivateKey = keys.Item1;
@@ -272,13 +267,13 @@ namespace DataManagerDomain
             return currentPassword == masterPassword;
         }
 
-        public NormalCategory[] GetCategories()
+        public Category[] GetCategories()
         {
-            IList<NormalCategory> allCategories = categories.Values;
+            IList<Category> allCategories = categories.Values;
             return allCategories.ToArray();
         }
 
-        public bool AddCategory(NormalCategory aCategory)
+        public bool AddCategory(Category aCategory)
         {
             bool categoryAdded = false;
             if (CategoryIsValid(aCategory.Name))
@@ -303,12 +298,12 @@ namespace DataManagerDomain
             return categoryName.Length >= 3 && categoryName.Length <= 15;
         }
 
-        private void AddCategoryToCollection(NormalCategory aCategory)
+        private void AddCategoryToCollection(Category aCategory)
         {
             categories.Add(aCategory.Name, aCategory);
         }
 
-        public bool ModifyCategory(NormalCategory aCategory, string newName)
+        public bool ModifyCategory(Category aCategory, string newName)
         {
             bool categoryModified = false;
             newName = newName.Trim().ToLower();
@@ -320,7 +315,7 @@ namespace DataManagerDomain
             return categoryModified;
         }
 
-        private bool CategoryCouldBeModified(NormalCategory aCategory, string newName)
+        private bool CategoryCouldBeModified(Category aCategory, string newName)
         {
             CheckIfOldCategoryExists(aCategory);
             bool couldBeModified = false;
@@ -332,7 +327,7 @@ namespace DataManagerDomain
             return couldBeModified;
         }
 
-        private void CheckIfOldCategoryExists(NormalCategory aCategory)
+        private void CheckIfOldCategoryExists(Category aCategory)
         {
             if (!CategoryExists(aCategory.Name))
             {
@@ -353,19 +348,19 @@ namespace DataManagerDomain
             }
         }
 
-        private static bool NewNameIsDifferentFromOldName(NormalCategory aCategory, string newName)
+        private static bool NewNameIsDifferentFromOldName(Category aCategory, string newName)
         {
             return aCategory.Name != newName;
         }
 
-        private void UpdateCategory(NormalCategory aCategory, string newName)
+        private void UpdateCategory(Category aCategory, string newName)
         {
             RemoveCategoryFromCategoriesCollection(aCategory);
             aCategory.Name = newName;
             AddCategoryToCollection(aCategory);
         }
 
-        private void RemoveCategoryFromCategoriesCollection(NormalCategory aCategory)
+        private void RemoveCategoryFromCategoriesCollection(Category aCategory)
         {
             categories.Remove(aCategory.Name);
         }
@@ -373,7 +368,7 @@ namespace DataManagerDomain
         public CreditCard[] GetCreditCards()
         {
             List<CreditCard> allCreditCards = new List<CreditCard>();
-            foreach (NormalCategory category in this.GetCategories())
+            foreach (Category category in this.GetCategories())
             {
                 allCreditCards.AddRange(category.GetCreditCards());
             }
@@ -383,7 +378,7 @@ namespace DataManagerDomain
         public bool CreditCardNumberExists(string creditCardNumber)
         {
             bool creditCardExists = false;
-            foreach (KeyValuePair<string, NormalCategory> pair in categories)
+            foreach (KeyValuePair<string, Category> pair in categories)
             {
                 if (CreditCardExistsInCategory(pair.Value, creditCardNumber))
                 {
@@ -393,7 +388,7 @@ namespace DataManagerDomain
             return creditCardExists;
         }
 
-        private static bool CreditCardExistsInCategory(NormalCategory aCategory, string creditCardNumber)
+        private static bool CreditCardExistsInCategory(Category aCategory, string creditCardNumber)
         {
             return aCategory.CreditCardNumberAlreadyExistsInCategory(creditCardNumber);
         }
@@ -411,7 +406,7 @@ namespace DataManagerDomain
         public bool UserPasswordPairExists(string username, string site)
         {
             bool pairExists = false;
-            foreach (KeyValuePair<string, NormalCategory> pair in categories)
+            foreach (KeyValuePair<string, Category> pair in categories)
             {
                 if (UserPasswordPairExistsInCategory(pair.Value, username, site))
                 {
@@ -421,7 +416,7 @@ namespace DataManagerDomain
             return pairExists;
         }
 
-        private static bool UserPasswordPairExistsInCategory(NormalCategory aCategory, string username, string site)
+        private static bool UserPasswordPairExistsInCategory(Category aCategory, string username, string site)
         {
             return aCategory.UserPasswordPairAlredyExistsInCategory(username, site);
         }
@@ -449,7 +444,7 @@ namespace DataManagerDomain
         public UserPasswordPair FindUserPasswordPair(string username, string site)
         {
             UserPasswordPair userPasswordPair = null;
-            foreach (KeyValuePair<string, NormalCategory> pair in categories)
+            foreach (KeyValuePair<string, Category> pair in categories)
             {
                 if (UserPasswordPairExistsInCategory(pair.Value, username, site))
                 {
@@ -615,7 +610,7 @@ namespace DataManagerDomain
         private CreditCard ReturnCreditCardThatAppeardInDataBreaches(string creditCardNumber)
         {
             CreditCard creditCard = null;
-            foreach (KeyValuePair<string, NormalCategory> pair in categories)
+            foreach (KeyValuePair<string, Category> pair in categories)
             {
                 string creditCardNumberWithoutBlankSpace = creditCardNumber.Replace(" ", string.Empty);
                 creditCard = ReturnCreditCardInCategoryThatAppeardInDataBreaches(pair.Value, creditCardNumberWithoutBlankSpace);
@@ -627,7 +622,7 @@ namespace DataManagerDomain
             return creditCard;
         }
 
-        private CreditCard ReturnCreditCardInCategoryThatAppeardInDataBreaches(NormalCategory aCategory, string creditCardNumber)
+        private CreditCard ReturnCreditCardInCategoryThatAppeardInDataBreaches(Category aCategory, string creditCardNumber)
         {
             return aCategory.ReturnCreditCardInCategoryThatAppearedInDataBreaches(creditCardNumber);
         }
@@ -635,7 +630,7 @@ namespace DataManagerDomain
         private List<UserPasswordPair> ReturnListOfUserPasswordPairWhosePasswordAppearedInDataBreaches(string aPassword)
         {
             List<UserPasswordPair> userPasswordPairList = new List<UserPasswordPair>();
-            foreach (KeyValuePair<string, NormalCategory> pair in categories)
+            foreach (KeyValuePair<string, Category> pair in categories)
             {
                 List<UserPasswordPair> userPasswordPairListInCategory = ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(pair.Value, aPassword);
                 foreach (UserPasswordPair element in userPasswordPairListInCategory)
@@ -646,7 +641,7 @@ namespace DataManagerDomain
             return userPasswordPairList;
         }
 
-        private List<UserPasswordPair> ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(NormalCategory aCategory, string aPassword)
+        private List<UserPasswordPair> ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(Category aCategory, string aPassword)
         {
             return aCategory.ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(aPassword);
         }

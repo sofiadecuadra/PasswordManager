@@ -39,7 +39,7 @@ namespace PasswordsManagerUserInterface
             dgvCategories.Columns[0].Width = 215;
         }
 
-        private NormalCategory [] GetCategories()
+        private Category [] GetCategories()
         {
             return PasswordManager.CurrentUser.GetCategories();
         }
@@ -65,15 +65,15 @@ namespace PasswordsManagerUserInterface
 
         private void LoadModifyCategoryForm()
         {
-            NormalCategory selected = SelectedCategory();
+            Category selected = SelectedCategory();
             ClearControls();
             UserControl modifyCategory = new ModifyCategory(PasswordManager, PnlMainWindow, selected);
             AddUserControl(modifyCategory);
         }
 
-        private NormalCategory SelectedCategory()
+        private Category SelectedCategory()
         {
-            return dgvCategories.SelectedRows[0].DataBoundItem as NormalCategory;
+            return dgvCategories.SelectedRows[0].DataBoundItem as Category;
         }
 
         private void btnBack_Click(object sender, EventArgs e)

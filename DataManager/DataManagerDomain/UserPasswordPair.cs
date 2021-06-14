@@ -46,7 +46,7 @@ namespace DataManagerDomain
         }
         public string Notes { get; set; }
         public DateTime LastModifiedDate { get; set; }
-        public NormalCategory Category { get; set; }
+        public Category Category { get; set; }
         public PasswordStrengthType PasswordStrength { get; private set; }
 
         public UserPasswordPair()

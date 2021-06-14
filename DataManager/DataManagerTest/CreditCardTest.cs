@@ -7,7 +7,7 @@ namespace DataManagerTest
     [TestClass]
     public class CreditCardTest
     {
-        private NormalCategory aCategory;
+        private Category aCategory;
         private User aUser;
         private CreditCard aCreditCard;
 
@@ -19,7 +19,7 @@ namespace DataManagerTest
                 MasterPassword = "password",
                 Name = "UserName"
             };
-            aCategory = new NormalCategory()
+            aCategory = new Category()
             {
                 User = aUser,
                 Name = "Category"

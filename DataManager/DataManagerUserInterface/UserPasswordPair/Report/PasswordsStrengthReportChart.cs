@@ -19,8 +19,8 @@ namespace PasswordsManagerUserInterface
 
         private void LoadChartData()
         {
-            NormalCategory[] categories = PasswordManager.CurrentUser.GetCategories();
-            foreach (NormalCategory category in categories)
+            Category[] categories = PasswordManager.CurrentUser.GetCategories();
+            foreach (Category category in categories)
             {
                 LoadRedPasswordsQuantityToChart(category);
                 LoadOrangePasswordsQuantityToChart(category);
@@ -30,27 +30,27 @@ namespace PasswordsManagerUserInterface
             }
         }
 
-        private void LoadRedPasswordsQuantityToChart(NormalCategory category)
+        private void LoadRedPasswordsQuantityToChart(Category category)
         {
             chartPasswordsReport.Series["Red"].Points.AddXY(category.Name, category.RedUserPasswordPairsQuantity);
         }
 
-        private void LoadOrangePasswordsQuantityToChart(NormalCategory category)
+        private void LoadOrangePasswordsQuantityToChart(Category category)
         {
             chartPasswordsReport.Series["Orange"].Points.AddXY(category.Name, category.OrangeUserPasswordPairsQuantity);
         }
 
-        private void LoadYellowPasswordsQuantityToChart(NormalCategory category)
+        private void LoadYellowPasswordsQuantityToChart(Category category)
         {
             chartPasswordsReport.Series["Yellow"].Points.AddXY(category.Name, category.YellowUserPasswordPairsQuantity);
         }
 
-        private void LoadLightGreenPasswordsQuantityToChart(NormalCategory category)
+        private void LoadLightGreenPasswordsQuantityToChart(Category category)
         {
             chartPasswordsReport.Series["Light Green"].Points.AddXY(category.Name, category.LightGreenUserPasswordPairsQuantity);
         }
 
-        private void LoadDarkGreenPasswordsQuantityToChart(NormalCategory category)
+        private void LoadDarkGreenPasswordsQuantityToChart(Category category)
         {
             chartPasswordsReport.Series["Dark Green"].Points.AddXY(category.Name, category.DarkGreenUserPasswordPairsQuantity);
         }

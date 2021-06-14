@@ -7,7 +7,7 @@ namespace DataManagerTest
     [TestClass]
     public class RemovingCreditCardsFromCategoryTest
     {
-        private NormalCategory aCategory;
+        private Category aCategory;
         private User aUser;
         private CreditCard aCreditCard;
 
@@ -15,7 +15,7 @@ namespace DataManagerTest
         public void Initialize()
         {
             aUser = new User();
-            aCategory = new NormalCategory()
+            aCategory = new Category()
             {
                 User = aUser,
                 Name = "Category"

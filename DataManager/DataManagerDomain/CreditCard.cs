@@ -45,7 +45,7 @@ namespace DataManagerDomain
                 expirationDate = new DateTime(value.Year, value.Month, lastDayOfMonth);
             }
         }
-        public NormalCategory Category { get; set; }
+        public Category Category { get; set; }
 
         public override string ToString()
         {

@@ -62,12 +62,12 @@ namespace PasswordsManagerUserInterface
 
         private bool PasswordHasBeenUpdated(string newPassword)
         {
-            return !NormalCategory.PasswordsAreEqual(PasswordToModify.Password, newPassword);
+            return !Category.PasswordsAreEqual(PasswordToModify.Password, newPassword);
         }
 
         private UserPasswordPair CreatePassword()
         {
-            NormalCategory category = Form.GetCategory();
+            Category category = Form.GetCategory();
             string site = Form.GetSite();
             string username = Form.GetUsername();
             string password = Form.GetPassword();
