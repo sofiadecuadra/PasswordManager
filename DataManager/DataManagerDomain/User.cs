@@ -322,8 +322,8 @@ namespace DataManagerDomain
             using (var dbContext = new DataManagerContext())
             {
                 var userSelected = dbContext.Users
-                    .Include(user => user.SharedPasswords).
-                    FirstOrDefault(user => user.Username == Username);
+                    .Include(user => user.SharedPasswords)
+                    .FirstOrDefault(user => user.Username == Username);
                 return userSelected.SharedPasswords.ToArray();
             }
         }
@@ -361,7 +361,11 @@ namespace DataManagerDomain
                     .Include(user => user.SharedPasswords)
                     .FirstOrDefault(user => user.Username == Username);
                 return userSelected.SharedPasswords
-                    .Exists(password => password.Password == aUserPasswordPair.Password);
+                    .Exists(password => {
+                        dbContext.Entry(password).Reference(pass => pass.Category).Load();
+                        dbContext.Entry(password.Category).Reference(category => category.User).Load();
+                        return password.Password == aUserPasswordPair.Password;
+                    });
             }
         }
 
