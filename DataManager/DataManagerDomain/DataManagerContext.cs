@@ -15,8 +15,10 @@ namespace DataManagerDomain
             modelBuilder.Entity<DataBreach>()
                 .HasKey(dataBreach => dataBreach.DateTime);
             modelBuilder.Entity<User>()
-                .HasKey(user => user.Username);
+                .HasKey(user => user.Username)
+                .Ignore(user => user.MasterPassword); 
             modelBuilder.Entity<UserPasswordPair>()
+                .Ignore(userPassPair => userPassPair.Password)
                 .Property(f => f.LastModifiedDate)
                 .HasColumnType("datetime2");
         }

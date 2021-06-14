@@ -8,18 +8,18 @@ namespace DataManagerDomain
     public class UserPasswordPair
     {
         public int Id { get; set; }
-        private string password { get; set; }
+        public string EncryptedPassword { get; set; }
+        private string password;
         public string Password
         {
-            //get;set;
-            //get { return DecryptPassword(password); }
-            get { return password; }
+            get { return DecryptPassword(); }
             set
             {
                 LastModifiedDate = DateTime.Now;
                 PasswordStrength = PasswordHandler.PasswordStrength(value);
                 password = value;
-                //password = EncryptPassword(value);
+                password = EncryptPassword(value);
+                EncryptedPassword = password;
             }
         }
         public List<User> UsersWithAccess { get; private set; }
@@ -50,11 +50,11 @@ namespace DataManagerDomain
             return $"[{Category.Name}] [{Site}] [{Username}]";
         }
 
-        private string DecryptPassword(string aPassword)
+        private string DecryptPassword()
         {
             var user = Category.User;
             var privateKey = user.PrivateKey;
-            return Encrypter.Decrypt(aPassword, privateKey);
+            return Encrypter.Decrypt(EncryptedPassword, privateKey);
         }
 
         private string EncryptPassword(string aPassword)
