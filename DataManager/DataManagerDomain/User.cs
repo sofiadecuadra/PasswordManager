@@ -403,22 +403,18 @@ namespace DataManagerDomain
             return allUserPasswordPairs.ToArray();
         }
 
-        public bool UserPasswordPairExists(string username, string site)
+        public bool UserPasswordPairExists(UserPasswordPair aUserPasswordPair)
         {
-            bool pairExists = false;
-            foreach (KeyValuePair<string, Category> pair in categories)
+            using (var dbContext = new DataManagerContext())
             {
-                if (UserPasswordPairExistsInCategory(pair.Value, username, site))
-                {
-                    pairExists = true;
-                }
+                var password = dbContext.UserPasswordPairs.FirstOrDefault(userPasswordPair => userPasswordPair.Category.User.Username == Username && userPasswordPair.Username == aUserPasswordPair.Username && userPasswordPair.Site == aUserPasswordPair.Site);
+                return password != null;
             }
-            return pairExists;
         }
 
-        private static bool UserPasswordPairExistsInCategory(Category aCategory, string username, string site)
+        private static bool UserPasswordPairExistsInCategory(Category aCategory, UserPasswordPair aUserPasswordPair)
         {
-            return aCategory.UserPasswordPairAlredyExistsInCategory(username, site);
+            return aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair);
         }
 
         public UserPasswordPair[] GetSharedUserPasswordPairs()
