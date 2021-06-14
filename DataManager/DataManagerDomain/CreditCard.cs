@@ -16,6 +16,7 @@ namespace DataManagerDomain
         private const int POSTITION_TO_INSERT_SECOND_BLANK_SPACE = 9;
         private const int POSTITION_TO_INSERT_THIRD_BLANK_SPACE = 14;
 
+        public int Id { get; set; }
         private string number;
         public string Number
         {

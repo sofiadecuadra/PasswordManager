@@ -55,7 +55,6 @@
     <Compile Include="DataBreach.cs" />
     <Compile Include="DataManagerContext.cs" />
     <Compile Include="Encrypter.cs" />
-    <Compile Include="NormalCategory.cs" />
     <Compile Include="Exceptions\ExceptionCategoryAlreadyExists.cs" />
     <Compile Include="Exceptions\ExceptionCategoryNotExists.cs" />
     <Compile Include="Exceptions\ExceptionCreditCardCodeHasNonNumericCharacters.cs" />
@@ -72,7 +71,6 @@
     <Compile Include="Exceptions\ExceptionCreditCardHasExpired.cs" />
     <Compile Include="Exceptions\ExceptionUserPasswordPairIsNotSharedWithAnyone.cs" />
     <Compile Include="IDataBreachesFormatter.cs" />
-    <Compile Include="SpecialCategory.cs" />
     <Compile Include="TextBoxDataBreaches.cs" />
     <Compile Include="PasswordGenerationConditions.cs" />
     <Compile Include="PasswordHandler.cs" />

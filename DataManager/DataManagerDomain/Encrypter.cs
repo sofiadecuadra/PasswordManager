@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Security.Cryptography;
 
 namespace DataManagerDomain
@@ -11,16 +8,14 @@ namespace DataManagerDomain
     {
         public static Tuple<string, string> GenerateKeys()
         {
-            var cryptoServiceProvider = new RSACryptoServiceProvider(2048); 
-            var privateKey = cryptoServiceProvider.ExportParameters(true); 
-            var publicKey = cryptoServiceProvider.ExportParameters(false); 
-
+            var cryptoServiceProvider = new RSACryptoServiceProvider(2048);
+            var privateKey = cryptoServiceProvider.ExportParameters(true);
+            var publicKey = cryptoServiceProvider.ExportParameters(false);
             return new Tuple<string, string>(GetKeyString(privateKey), GetKeyString(publicKey));
         }
 
         public static string GetKeyString(RSAParameters publicKey)
         {
-
             var stringWriter = new System.IO.StringWriter();
             var xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(RSAParameters));
             xmlSerializer.Serialize(stringWriter, publicKey);
@@ -30,7 +25,6 @@ namespace DataManagerDomain
         public static string Encrypt(string textToEncrypt, string publicKey)
         {
             var bytesToEncrypt = Encoding.UTF8.GetBytes(textToEncrypt);
-
             using (var rsa = new RSACryptoServiceProvider(2048))
             {
                 try
@@ -53,7 +47,6 @@ namespace DataManagerDomain
             {
                 try
                 {
-
                     // server decrypting data with private key                    
                     rsa.FromXmlString(privateKey);
 
