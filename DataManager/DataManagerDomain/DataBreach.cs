@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 
 namespace DataManagerDomain
 {
     public class DataBreach
     {
+        public int Id { get; set; }
         public User User { get; set; }
         public DateTime DateTime { get; set; }
         public virtual List<UserPasswordPair> LeakedUserPasswordPairsOfUser { get; set; }
@@ -24,22 +26,74 @@ namespace DataManagerDomain
 
         public void AddLeakedUserPasswordPairOfUser(UserPasswordPair aLeakedUserPasswordPair)
         {
-            LeakedUserPasswordPairsOfUser.Add(aLeakedUserPasswordPair);
+            using (var dbContext = new DataManagerContext())
+            {
+                dbContext.UserPasswordPairs.Attach(aLeakedUserPasswordPair);
+                var dataBreach = dbContext.DataBreaches
+                    .FirstOrDefault(element => element.Id == Id);
+                dataBreach.LeakedUserPasswordPairsOfUser.Add(aLeakedUserPasswordPair);
+                dbContext.SaveChanges();
+            }
         }
 
         public void AddLeakedCreditCardOfUser(CreditCard aLeakedCreditCard)
         {
-            LeakedCreditCardsOfUser.Add(aLeakedCreditCard);
+            using (var dbContext = new DataManagerContext())
+            {
+                dbContext.CreditCards.Attach(aLeakedCreditCard);
+                var dataBreach = dbContext.DataBreaches
+                    .FirstOrDefault(element => element.Id == Id);
+                dataBreach.LeakedCreditCardsOfUser.Add(aLeakedCreditCard);
+                dbContext.SaveChanges();
+            }
         }
 
         public void AddLeakedUserPasswordPair(LeakedPassword aLeakedUserPasswordPair)
         {
-            LeakedPasswords.Add(aLeakedUserPasswordPair);
+            using (var dbContext = new DataManagerContext())
+            {
+                var dataBreach = dbContext.DataBreaches
+                    .Include(element => element.LeakedPasswords)
+                    .FirstOrDefault(element => element.Id == Id);
+                dataBreach.LeakedPasswords.Add(aLeakedUserPasswordPair);
+                dbContext.SaveChanges();
+            }
         }
 
         public void AddLeakedCreditCard(LeakedCreditCard aLeakedCreditCard)
         {
-            LeakedCreditCards.Add(aLeakedCreditCard);
+            using (var dbContext = new DataManagerContext())
+            {
+                var dataBreach = dbContext.DataBreaches
+                    .Include(element => element.LeakedCreditCards)
+                    .FirstOrDefault(element => element.Id == Id);
+                dataBreach.LeakedCreditCards.Add(aLeakedCreditCard);
+                dbContext.SaveChanges();
+            }
+        }
+
+        public void RemoveCreditCard(CreditCard aLeakedCreditCard)
+        {
+            using (var dbContext = new DataManagerContext())
+            {
+                dbContext.CreditCards.Attach(aLeakedCreditCard);
+                var dataBreach = dbContext.DataBreaches
+                    .FirstOrDefault(element => element.Id == Id);
+                dataBreach.LeakedCreditCardsOfUser.Remove(aLeakedCreditCard);
+                dbContext.SaveChanges();
+            }
+        }
+
+        public void RemoveUserPasswordPair(UserPasswordPair aLeakedUserPasswordPair)
+        {
+            using (var dbContext = new DataManagerContext())
+            {
+                dbContext.UserPasswordPairs.Attach(aLeakedUserPasswordPair);
+                var dataBreach = dbContext.DataBreaches
+                    .FirstOrDefault(element => element.Id == Id);
+                dataBreach.LeakedUserPasswordPairsOfUser.Remove(aLeakedUserPasswordPair);
+                dbContext.SaveChanges();
+            }
         }
 
         public bool PasswordWasModified(UserPasswordPair aLeakedUserPasswordPair)
@@ -49,24 +103,13 @@ namespace DataManagerDomain
 
         public bool PasswordAppearedInDataBreach(string aPassword)
         {
-            foreach (LeakedPassword leakedPassword in LeakedPasswords)
+            using (var dbContext = new DataManagerContext())
             {
-                if (leakedPassword.Password == aPassword)
-                {
-                    return true;
-                }
+                var dataBreach = dbContext.DataBreaches
+                    .Include(element => element.LeakedPasswords)
+                    .FirstOrDefault(element => element.Id == Id);
+                return dataBreach.LeakedPasswords.Exists(leakedPassword => leakedPassword.Password == aPassword);
             }
-            return false;
-        }
-
-        public void RemoveCreditCard(CreditCard aLeakedCreditCard)
-        {
-            LeakedCreditCardsOfUser.Remove(aLeakedCreditCard);
-        }
-
-        public void RemoveUserPasswordPair(UserPasswordPair aLeakedUserPasswordPair)
-        {
-            LeakedUserPasswordPairsOfUser.Remove(aLeakedUserPasswordPair);
         }
     }
 }

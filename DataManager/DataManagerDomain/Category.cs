@@ -224,6 +224,15 @@ namespace DataManagerDomain
             }
         }
 
+        public int GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType strengthType)
+        {
+            using (var dbContext = new DataManagerContext())
+            {
+                int count = dbContext.UserPasswordPairs.Include(userPasswordPair => userPasswordPair.Category).Where(userPasswordPair => userPasswordPair.Category.Id == Id && userPasswordPair.PasswordStrength == strengthType).Count();
+                return count;
+            }
+        }
+
         public bool ModifyUserPasswordPair(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
         {
             bool modified = false;
@@ -326,34 +335,14 @@ namespace DataManagerDomain
             }
         }
 
-        public List<UserPasswordPair> ListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(string aPassword)
+        public UserPasswordPair[] ListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(string aPassword)
         {
             using (var dbContext = new DataManagerContext())
             {
-                var userPasswordPairs = dbContext.UserPasswordPairs
+                return dbContext.UserPasswordPairs
                     .Where(userPasswordPair => userPasswordPair.Category.Id == Id && userPasswordPair.Password == aPassword)
                     .Include(userPasswordPair => userPasswordPair.Category)
-                    .ToList();
-                return userPasswordPairs;
-            }
-            /*
-            List<UserPasswordPair> pairsList = new List<UserPasswordPair>();
-            foreach (UserPasswordPair userPasswordPair in UserPasswordPairs)
-            {
-                if (PasswordsAreEqual(userPasswordPair.Password, aPassword))
-                {
-                    pairsList.Add(userPasswordPair);
-                }
-            }
-            return pairsList;*/
-        }
-
-        public int GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType strengthType)
-        {
-            using (var dbContext = new DataManagerContext())
-            {
-                int count = dbContext.UserPasswordPairs.Include(userPasswordPair => userPasswordPair.Category).Where(userPasswordPair => userPasswordPair.Category.Id == Id && userPasswordPair.PasswordStrength == strengthType).Count();
-                return count;
+                    .ToArray();
             }
         }
     }
