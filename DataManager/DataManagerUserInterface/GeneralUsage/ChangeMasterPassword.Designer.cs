@@ -41,6 +41,7 @@ namespace PasswordsManagerUserInterface
             // 
             this.txtOldPassword.Location = new System.Drawing.Point(338, 185);
             this.txtOldPassword.Name = "txtOldPassword";
+            this.txtOldPassword.PasswordChar = '*';
             this.txtOldPassword.Size = new System.Drawing.Size(231, 20);
             this.txtOldPassword.TabIndex = 0;
             // 
@@ -48,6 +49,7 @@ namespace PasswordsManagerUserInterface
             // 
             this.txtNewPassword.Location = new System.Drawing.Point(338, 241);
             this.txtNewPassword.Name = "txtNewPassword";
+            this.txtNewPassword.PasswordChar = '*';
             this.txtNewPassword.Size = new System.Drawing.Size(231, 20);
             this.txtNewPassword.TabIndex = 1;
             // 
