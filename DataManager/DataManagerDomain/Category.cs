@@ -274,7 +274,7 @@ namespace DataManagerDomain
             UpdateAllPropertiesOfUserPasswordPairExceptForPassword(oldUserPasswordPair, newUserPasswordPair);
             using (var dbContext = new DataManagerContext())
             {
-                var passwordToModify = dbContext.UserPasswordPairs.FirstOrDefault(userPasswordPair => userPasswordPair.Id == oldUserPasswordPair.Id);
+                var passwordToModify = dbContext.UserPasswordPairs.Include(userPasswordPair => userPasswordPair.Category).Include(userPasswordPair => userPasswordPair.Category.User).FirstOrDefault(userPasswordPair => userPasswordPair.Id == oldUserPasswordPair.Id);
                 passwordToModify.Password = newUserPasswordPair.Password;
                 dbContext.Entry(passwordToModify).State = EntityState.Modified;
                 dbContext.SaveChanges();

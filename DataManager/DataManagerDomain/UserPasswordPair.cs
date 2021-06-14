@@ -9,7 +9,6 @@ namespace DataManagerDomain
     {
         public int Id { get; set; }
         public string EncryptedPassword { get; set; }
-        private string password;
         public string Password
         {
             get { return DecryptPassword(); }
