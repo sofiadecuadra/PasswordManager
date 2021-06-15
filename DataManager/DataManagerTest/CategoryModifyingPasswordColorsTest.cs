@@ -51,7 +51,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.DarkGreen).Length);
             Assert.AreEqual(1, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.DarkGreen));
         }
@@ -79,7 +79,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.DarkGreen).Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.LightGreen).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.DarkGreen));
@@ -109,7 +109,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.DarkGreen).Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Orange).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.DarkGreen));
@@ -139,7 +139,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.DarkGreen).Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Red).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.DarkGreen));
@@ -170,7 +170,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.DarkGreen).Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Yellow).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.DarkGreen));
@@ -200,7 +200,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.LightGreen).Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.DarkGreen).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.LightGreen));
@@ -230,7 +230,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.LightGreen).Length);
             Assert.AreEqual(1, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.LightGreen));
         }
@@ -258,7 +258,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.LightGreen).Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Orange).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.LightGreen));
@@ -288,7 +288,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.LightGreen).Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Red).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.LightGreen));
@@ -318,7 +318,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.LightGreen).Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Yellow).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.LightGreen));
@@ -348,7 +348,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Orange).Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.DarkGreen).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Orange));
@@ -378,7 +378,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Orange).Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.LightGreen).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Orange));
@@ -408,7 +408,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Orange).Length);
             Assert.AreEqual(1, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Orange));
         }
@@ -436,7 +436,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Orange).Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Red).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Orange));
@@ -466,7 +466,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Orange).Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Yellow).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Orange));
@@ -496,7 +496,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Red).Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.DarkGreen).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Red));
@@ -526,7 +526,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Red).Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.LightGreen).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Red));
@@ -556,7 +556,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Red).Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Orange).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Red));
@@ -586,7 +586,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Red).Length);
             Assert.AreEqual(1, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Red));
         }
@@ -614,7 +614,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Red).Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Yellow).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Red));
@@ -644,7 +644,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Yellow).Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.DarkGreen).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Yellow));
@@ -675,7 +675,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Yellow).Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.LightGreen).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Yellow));
@@ -705,7 +705,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Yellow).Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Orange).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Yellow));
@@ -735,7 +735,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Yellow).Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Red).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Yellow));
@@ -765,7 +765,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Yellow).Length);
             Assert.AreEqual(1, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Yellow));
         }

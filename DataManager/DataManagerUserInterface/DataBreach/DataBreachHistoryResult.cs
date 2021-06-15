@@ -105,7 +105,7 @@ namespace PasswordsManagerUserInterface
             (List<UserPasswordPair>, List<UserPasswordPair>) getModifiedAndNotModifiedPasswords = (PasswordManager.CurrentUser.GetModifiedAndNotModifiedLeakedPasswords(DataBreachToView));
             LoadModifiedExposedPasswords(getModifiedAndNotModifiedPasswords.Item2);
             LoadNotModifiedExposedPasswords(getModifiedAndNotModifiedPasswords.Item1);
-            LoadExposedCreditCards(DataBreachToView.LeakedCreditCardsOfUser);
+            LoadExposedCreditCards(PasswordManager.CurrentUser.GetLeakedCreditCards(DataBreachToView));
         }
 
         private void SetCreditCardColumnsQuantity()

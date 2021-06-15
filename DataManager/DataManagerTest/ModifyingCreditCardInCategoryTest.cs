@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DataManagerDomain;
 using System;
+using System.Linq;
+using System.Data.Entity;
 
 namespace DataManagerTest
 {
@@ -57,7 +59,7 @@ namespace DataManagerTest
                 Category = aCategory,
             };
 
-            _ = aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
+            aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
         }
 
         [TestMethod]
@@ -87,7 +89,7 @@ namespace DataManagerTest
                 Category = aCategory,
             };
 
-            Assert.IsTrue(aCategory.ModifyCreditCard(aCreditCard, newCreditCard));
+            aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
         }
 
 
@@ -119,7 +121,7 @@ namespace DataManagerTest
                 Category = aCategory,
             };
 
-            _ = aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
+            aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
         }
 
         [TestMethod]
@@ -150,7 +152,7 @@ namespace DataManagerTest
                 Category = aCategory,
             };
 
-            _ = aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
+            aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
         }
 
         [TestMethod]
@@ -181,7 +183,7 @@ namespace DataManagerTest
                 Category = aCategory,
             };
 
-            _ = aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
+            aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
         }
 
         [TestMethod]
@@ -212,9 +214,7 @@ namespace DataManagerTest
                 Category = aCategory,
             };
 
-
-
-            _ = aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
+            aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
         }
 
         [TestMethod]
@@ -231,9 +231,7 @@ namespace DataManagerTest
                 ExpirationDate = new DateTime(2023, 12, 25),
                 Category = aCategory,
             };
-
             aCategory.AddCreditCard(aCreditCard);
-
 
             CreditCard newCreditCard = new CreditCard()
             {
@@ -245,7 +243,7 @@ namespace DataManagerTest
                 ExpirationDate = new DateTime(2023, 12, 25),
                 Category = aCategory,
             };
-            _ = aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
+            aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
         }
 
         [TestMethod]
@@ -277,7 +275,7 @@ namespace DataManagerTest
                 Category = aCategory,
             };
 
-            _ = aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
+            aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
         }
 
         private static string GenerateNoteText()
@@ -325,9 +323,16 @@ namespace DataManagerTest
                 Category = otherCategory,
             };
 
-            Assert.IsTrue(aCategory.ModifyCreditCard(aCreditCard, newCreditCard));
+            aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
             Assert.AreEqual(0, aCategory.GetCreditCards().Length);
             Assert.AreEqual(1, otherCategory.GetCreditCards().Length);
+            using (var dbContext = new DataManagerContext())
+            {
+                var creditCardSelected = dbContext.CreditCards
+                    .Include(creditCard => creditCard.Category)
+                    .FirstOrDefault(creditCard => creditCard.Id == aCreditCard.Id);
+                Assert.AreEqual("othercategory", creditCardSelected.Category.Name);
+            }
         }
 
         [TestMethod]
@@ -372,7 +377,7 @@ namespace DataManagerTest
                 Category = aCategory,
             };
 
-            _ = aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
+            aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
         }
 
         [TestMethod]
@@ -402,7 +407,13 @@ namespace DataManagerTest
                 Category = aCategory,
             };
 
-            Assert.IsTrue(aCategory.ModifyCreditCard(aCreditCard, newCreditCard));
+            aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
+            using (var dbContext = new DataManagerContext())
+            {
+                var creditCardSelected = dbContext.CreditCards
+                       .FirstOrDefault(creditCard => creditCard.Id == aCreditCard.Id);
+                Assert.AreEqual("1234567891234111", creditCardSelected.Number);
+            }
         }
 
         [TestMethod]
@@ -432,7 +443,13 @@ namespace DataManagerTest
                 Category = aCategory,
             };
 
-            Assert.IsTrue(aCategory.ModifyCreditCard(aCreditCard, newCreditCard));
+            aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
+            using (var dbContext = new DataManagerContext())
+            {
+                var creditCardSelected = dbContext.CreditCards
+                       .FirstOrDefault(creditCard => creditCard.Id == aCreditCard.Id);
+                Assert.AreEqual("Itau", creditCardSelected.Type);
+            }
         }
 
 
@@ -463,7 +480,13 @@ namespace DataManagerTest
                 Category = aCategory,
             };
 
-            Assert.IsTrue(aCategory.ModifyCreditCard(aCreditCard, newCreditCard));
+            aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
+            using (var dbContext = new DataManagerContext())
+            {
+                var creditCardSelected = dbContext.CreditCards
+                       .FirstOrDefault(creditCard => creditCard.Id == aCreditCard.Id);
+                Assert.AreEqual("Visa Black", creditCardSelected.Name);
+            }
         }
 
         [TestMethod]
@@ -493,7 +516,13 @@ namespace DataManagerTest
                 Category = aCategory,
             };
 
-            Assert.IsTrue(aCategory.ModifyCreditCard(aCreditCard, newCreditCard));
+            aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
+            using (var dbContext = new DataManagerContext())
+            {
+                var creditCardSelected = dbContext.CreditCards
+                       .FirstOrDefault(creditCard => creditCard.Id == aCreditCard.Id);
+                Assert.AreEqual("aNote", creditCardSelected.Notes);
+            }
         }
 
         [TestMethod]
@@ -524,7 +553,7 @@ namespace DataManagerTest
                 Category = aCategory,
             };
 
-            _ = aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
+            aCategory.ModifyCreditCard(aCreditCard, newCreditCard);
         }
 
         [TestCleanup]
