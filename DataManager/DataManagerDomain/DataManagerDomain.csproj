@@ -72,8 +72,11 @@
     <Compile Include="Exceptions\ExceptionCreditCardHasExpired.cs" />
     <Compile Include="Exceptions\ExceptionUserPasswordPairIsNotSharedWithAnyone.cs" />
     <Compile Include="IDataBreachesFormatter.cs" />
+    <Compile Include="IEncryptionParameters.cs" />
+    <Compile Include="IEncryptionServiceProvider.cs" />
     <Compile Include="LeakedCreditCard.cs" />
     <Compile Include="LeakedPassword.cs" />
+    <Compile Include="RSAEncrypter.cs" />
     <Compile Include="TextBoxDataBreaches.cs" />
     <Compile Include="PasswordGenerationConditions.cs" />
     <Compile Include="PasswordHandler.cs" />

@@ -8,10 +8,15 @@ namespace DataManagerDomain
     {
         public static Tuple<string, string> GenerateKeys()
         {
-            var cryptoServiceProvider = new RSACryptoServiceProvider(2048);
-            var privateKey = cryptoServiceProvider.ExportParameters(true);
-            var publicKey = cryptoServiceProvider.ExportParameters(false);
+            IEncryptionParameters cryptoServiceProvider = Provider();
+            var privateKey = cryptoServiceProvider.ExportRSAParameters(true);
+            var publicKey = cryptoServiceProvider.ExportRSAParameters(false);
             return new Tuple<string, string>(GetKeyString(privateKey), GetKeyString(publicKey));
+        }
+
+        private static RSAEncrypter Provider()
+        {
+            return new RSAEncrypter();
         }
 
         public static string GetKeyString(RSAParameters publicKey)
@@ -25,30 +30,30 @@ namespace DataManagerDomain
         public static string Encrypt(string textToEncrypt, string publicKey)
         {
             var bytesToEncrypt = Encoding.UTF8.GetBytes(textToEncrypt);
-            using (var rsa = new RSACryptoServiceProvider(2048))
+            using (var rsa = Provider())
             {
                 try
                 {
-                    rsa.FromXmlString(publicKey.ToString());
+                    rsa.FromXMLString(publicKey.ToString());
                     var encryptedData = rsa.Encrypt(bytesToEncrypt, true);
                     var base64Encrypted = Convert.ToBase64String(encryptedData);
                     return base64Encrypted;
                 }
                 finally
                 {
-                    rsa.PersistKeyInCsp = false;
+                    rsa.PersistKeyInCsp(false);
                 }
             }
         }
 
         public static string Decrypt(string textToDecrypt, string privateKey)
         {
-            using (var rsa = new RSACryptoServiceProvider(2048))
+            using (var rsa = Provider())
             {
                 try
                 {
                     // server decrypting data with private key                    
-                    rsa.FromXmlString(privateKey);
+                    rsa.FromXMLString(privateKey);
 
                     var resultBytes = Convert.FromBase64String(textToDecrypt);
                     var decryptedBytes = rsa.Decrypt(resultBytes, true);
@@ -57,7 +62,7 @@ namespace DataManagerDomain
                 }
                 finally
                 {
-                    rsa.PersistKeyInCsp = false;
+                    rsa.PersistKeyInCsp(false);
                 }
             }
         }
