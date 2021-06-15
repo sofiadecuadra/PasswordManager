@@ -168,7 +168,7 @@ namespace DataManagerTest
                 ExpirationDate = new DateTime(2023, 12, 25),
                 Category = aCategory,
             };
-            Assert.IsTrue(aCategory.AddCreditCard(aCreditCard));
+            aCategory.AddCreditCard(aCreditCard);
             Assert.AreEqual(1, aCategory.GetCreditCards().Length);
         }
 
@@ -281,7 +281,7 @@ namespace DataManagerTest
                 ExpirationDate = new DateTime(2023, 12, 25),
                 Category = aCategory,
             };
-            Assert.IsTrue(aCategory.AddCreditCard(aCreditCard));
+            aCategory.AddCreditCard(aCreditCard);
             Assert.AreEqual(1, aCategory.GetCreditCards().Length);
         }
 
