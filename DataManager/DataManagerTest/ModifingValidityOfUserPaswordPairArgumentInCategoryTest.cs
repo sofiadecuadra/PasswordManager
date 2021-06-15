@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DataManagerDomain;
+using System.Linq;
 
 namespace DataManagerTest
 {
@@ -64,7 +65,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(1, aCategory.GetUserPasswordsPairs().Length);
         }
 
@@ -99,7 +100,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(0, aCategory.GetUserPasswordsPairs().Length);
             Assert.AreEqual(1, otherCategory.GetUserPasswordsPairs().Length);
 
@@ -134,7 +135,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
             Assert.AreEqual(0, aCategory.GetUserPasswordsPairs().Length);
             Assert.AreEqual(1, anotherCategory.GetUserPasswordsPairs().Length);
         }
@@ -162,7 +163,13 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
+            using (var dbContext = new DataManagerContext())
+            {
+                var userPasswordPairSelected = dbContext.UserPasswordPairs
+                    .FirstOrDefault(userPasswordPair => userPasswordPair.Id == aUserPasswordPair.Id);
+                Assert.AreEqual("newusername", userPasswordPairSelected.Username);
+            }
         }
 
         [TestMethod]
@@ -189,7 +196,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            _ = aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
         }
 
         [TestMethod]
@@ -215,7 +222,13 @@ namespace DataManagerTest
                 Site = "newSite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
+            using (var dbContext = new DataManagerContext())
+            {
+                var userPasswordPairSelected = dbContext.UserPasswordPairs
+                    .FirstOrDefault(userPasswordPair => userPasswordPair.Id == aUserPasswordPair.Id);
+                Assert.AreEqual("newsite", userPasswordPairSelected.Site);
+            }
         }
 
         [TestMethod]
@@ -242,7 +255,7 @@ namespace DataManagerTest
                 Site = "n",
             };
 
-            _ = aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
         }
 
         [TestMethod]
@@ -268,7 +281,13 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            Assert.IsTrue(aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair));
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
+            using (var dbContext = new DataManagerContext())
+            {
+                var userPasswordPairSelected = dbContext.UserPasswordPairs
+                    .FirstOrDefault(userPasswordPair => userPasswordPair.Id == aUserPasswordPair.Id);
+                Assert.AreEqual("newNotes", userPasswordPairSelected.Notes);
+            }
         }
 
         [TestMethod]
@@ -297,7 +316,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
 
-            _ = aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
         }
 
         [TestMethod]
@@ -333,7 +352,7 @@ namespace DataManagerTest
             };
             aCategory.AddUserPasswordPair(anotherUserPasswordPair);
 
-            _ = aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
+            aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
         }
 
         [TestCleanup]

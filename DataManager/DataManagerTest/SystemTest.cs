@@ -34,6 +34,25 @@ namespace DataManagerTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ExceptionUserAlreadyExists))]
+        public void AddExistingUserToSystem()
+        {
+            User aUser = new User()
+            {
+                MasterPassword = "myMasterPassword123$",
+                Username = "JuanPa"
+            };
+            DataManager.AddUser(aUser);
+
+            User otherUser = new User()
+            {
+                MasterPassword = "aMasterPassword123$",
+                Username = "JuanPa"
+            };
+            DataManager.AddUser(otherUser);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ExceptionIncorrectLength))]
         public void AddUserWithNameTooShort()
         {

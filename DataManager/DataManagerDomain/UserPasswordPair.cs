@@ -51,14 +51,36 @@ namespace DataManagerDomain
 
         private string DecryptPassword()
         {
-            var user = Category.User;
+            var user = Category?.User;
+            if (user == null)
+            {
+                using (var dbContext = new DataManagerContext())
+                {
+                    user = dbContext.UserPasswordPairs
+                        .Include(userPasswordPair => userPasswordPair.Category)
+                        .Include(userPasswordPair => userPasswordPair.Category.User)
+                        .FirstOrDefault(userPasswordPair => userPasswordPair.Id == Id)
+                        .Category.User;
+                }
+            }
             var privateKey = user.PrivateKey;
             return Encrypter.Decrypt(EncryptedPassword, privateKey);
         }
 
         private string EncryptPassword(string aPassword)
         {
-            var user = Category.User;
+            var user = Category?.User;
+            if (user == null)
+            {
+                using (var dbContext = new DataManagerContext())
+                {
+                    user = dbContext.UserPasswordPairs
+                        .Include(userPasswordPair => userPasswordPair.Category)
+                        .Include(userPasswordPair => userPasswordPair.Category.User)
+                        .FirstOrDefault(userPasswordPair => userPasswordPair.Id == Id)
+                        .Category.User;
+                }
+            }
             var publicKey = user.PublicKey;
             return Encrypter.Encrypt(aPassword, publicKey);
         }

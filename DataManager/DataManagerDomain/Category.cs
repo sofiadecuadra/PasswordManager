@@ -15,14 +15,6 @@ namespace DataManagerDomain
             get { return name; }
             set { name = value.Trim().ToLower(); }
         }
-        public List<UserPasswordPair> UserPasswordPairs { get; set; }
-        private List<CreditCard> creditCards;
-
-        public Category()
-        {
-            UserPasswordPairs = new List<UserPasswordPair>();
-            creditCards = new List<CreditCard>();
-        }
 
         public override string ToString()
         {
@@ -42,20 +34,20 @@ namespace DataManagerDomain
         {
             using (var dbContext = new DataManagerContext())
             {
-                var passwords = dbContext.UserPasswordPairs.Where(userPasswordPair => userPasswordPair.Category.Id == Id).Include(password => password.Category).Include(password => password.Category.User);
+                var passwords = dbContext.UserPasswordPairs
+                    .Where(userPasswordPair => userPasswordPair.Category.Id == Id)
+                    .Include(password => password.Category)
+                    .Include(password => password.Category.User);
                 return passwords.ToArray();
             }
         }
 
-        public bool AddCreditCard(CreditCard aCreditCard)
+        public void AddCreditCard(CreditCard aCreditCard)
         {
-            bool creditCardAdded = false;
             if (CreditCardIsValid(aCreditCard))
             {
                 AddCreditCardToCollection(aCreditCard);
-                creditCardAdded = true;
             }
-            return creditCardAdded;
         }
 
         private bool CreditCardIsValid(CreditCard aCreditCard)
@@ -88,13 +80,12 @@ namespace DataManagerDomain
             }
         }
 
-        public bool ModifyCreditCard(CreditCard oldCreditCard, CreditCard newCreditCard)
+        public void ModifyCreditCard(CreditCard oldCreditCard, CreditCard newCreditCard)
         {
             if (ModifiedCreditCardIsValid(oldCreditCard, newCreditCard))
             {
                 UpdateCreditCardData(oldCreditCard, newCreditCard);
             }
-            return true;
         }
 
         private bool ModifiedCreditCardIsValid(CreditCard oldCreditCard, CreditCard newCreditCard)
@@ -139,7 +130,6 @@ namespace DataManagerDomain
                 throw new ExceptionCreditCardDoesNotExist($"The credit card {aCreditCard.Number} does not exist in this category");
             }
             RemoveCreditCardFromCollection(aCreditCard);
-            //User.RemoveCreditCardFromDataBreaches(aCreditCard);
         }
 
         private void RemoveCreditCardFromCollection(CreditCard aCreditCard)
@@ -176,15 +166,12 @@ namespace DataManagerDomain
             return null;
         }
 
-        public bool AddUserPasswordPair(UserPasswordPair aUserPasswordPair)
+        public void AddUserPasswordPair(UserPasswordPair aUserPasswordPair)
         {
-            bool userPasswordPairAdded = false;
             if (UserPasswordPairIsValid(aUserPasswordPair))
             {
                 AddUserPasswordPairToCollection(aUserPasswordPair);
-                userPasswordPairAdded = true;
             }
-            return userPasswordPairAdded;
         }
 
         private bool UserPasswordPairIsValid(UserPasswordPair aUserPasswordPair)
@@ -233,18 +220,15 @@ namespace DataManagerDomain
             }
         }
 
-        public bool ModifyUserPasswordPair(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
+        public void ModifyUserPasswordPair(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
         {
-            bool modified = false;
             if (newUserPasswordPair.UserPasswordPairDataIsValid())
             {
                 if (!NewUserPasswordPairAlreadyExistsInUser(oldUserPasswordPair, newUserPasswordPair))
                 {
                     ChangeUserPasswordPairData(oldUserPasswordPair, newUserPasswordPair);
-                    modified = true;
                 }
             }
-            return modified;
         }
 
         private bool NewUserPasswordPairAlreadyExistsInUser(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
@@ -314,34 +298,36 @@ namespace DataManagerDomain
             return aPassword == otherPassword;
         }
 
-        public bool RemoveUserPasswordPair(UserPasswordPair aUserPasswordPair)
+        public void RemoveUserPasswordPair(UserPasswordPair aUserPasswordPair)
         {
-            if (!RemoveUserPasswordPairFromCollection(aUserPasswordPair))
+            if (!UserPasswordPairAlredyExistsInCategory(aUserPasswordPair))
             {
                 throw new ExceptionUserPasswordPairDoesNotExist($"The user-password pair ({aUserPasswordPair.Username}-{aUserPasswordPair.Site}) does not exist in {name}");
             }
-            //User.RemoveUserPasswordPairFromDataBreaches(aUserPasswordPair);
-            return true;
+            RemoveUserPasswordPairFromCollection(aUserPasswordPair);
         }
 
-        protected bool RemoveUserPasswordPairFromCollection(UserPasswordPair aUserPasswordPair)
+        protected void RemoveUserPasswordPairFromCollection(UserPasswordPair aUserPasswordPair)
         {
             using (var dbContext = new DataManagerContext())
             {
                 dbContext.UserPasswordPairs.Attach(aUserPasswordPair);
                 dbContext.UserPasswordPairs.Remove(aUserPasswordPair);
                 dbContext.SaveChanges();
-                return true;
             }
         }
 
-        public UserPasswordPair[] ListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(string aPassword)
+        public UserPasswordPair[] GetUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(string aPassword)
         {
             using (var dbContext = new DataManagerContext())
             {
+                var categorySelected = dbContext.Categories
+                    .Include(category => category.User)
+                    .FirstOrDefault(category => category.Id == Id);
                 return dbContext.UserPasswordPairs
-                    .Where(userPasswordPair => userPasswordPair.Category.Id == Id && userPasswordPair.Password == aPassword)
                     .Include(userPasswordPair => userPasswordPair.Category)
+                    .ToList()
+                    .Where(userPasswordPair => userPasswordPair.Category.Id == Id && Encrypter.Decrypt(userPasswordPair.EncryptedPassword, categorySelected.User.PrivateKey) == aPassword)
                     .ToArray();
             }
         }

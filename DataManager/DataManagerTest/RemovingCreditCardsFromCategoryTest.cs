@@ -1,6 +1,8 @@
 ﻿using DataManagerDomain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Data.Entity;
+using System.Linq;
 
 namespace DataManagerTest
 {
@@ -56,19 +58,26 @@ namespace DataManagerTest
             aCategory.RemoveCreditCard(aCreditCard);
         }
 
-        //[TestMethod]
-        //public void RemoveCreditThatAppearedInADataBreach()
-        //{
-        //    aCategory.AddCreditCard(aCreditCard);
+        [TestMethod]
+        public void RemoveCreditThatAppearedInADataBreach()
+        {
+            aCategory.AddCreditCard(aCreditCard);
 
-        //    IDataBreachesFormatter dataBreaches = new TxtFileDataBreaches()
-        //    {
-        //        txtDataBreaches = "1234 5678 9123 4567"
-        //    };
-        //    DataBreach aDataBreach = aUser.CheckDataBreaches(dataBreaches);
-        //    Assert.IsTrue(aCategory.RemoveCreditCard(aCreditCard));
-        //    Assert.IsTrue(aDataBreach.LeakedCreditCardsOfUser.Count == 0);
-        //}
+            IDataBreachesFormatter dataBreaches = new TxtFileDataBreaches()
+            {
+                txtDataBreaches = "1234 5678 9123 4567"
+            };
+            DataBreach aDataBreach = aUser.CheckDataBreaches(dataBreaches);
+
+            aCategory.RemoveCreditCard(aCreditCard);
+            using (var dbContext = new DataManagerContext())
+            {
+                var dataBreachSelected = dbContext.DataBreaches
+                    .Include(dataBreach => dataBreach.LeakedCreditCardsOfUser)
+                    .FirstOrDefault(dataBreach => dataBreach.Id == aDataBreach.Id);
+                Assert.AreEqual(0, dataBreachSelected.LeakedCreditCardsOfUser.Count);
+            }
+        }
 
         [TestCleanup]
         public void Cleanup()
@@ -78,6 +87,8 @@ namespace DataManagerTest
                 dbContext.Users.RemoveRange(dbContext.Users);
                 dbContext.Categories.RemoveRange(dbContext.Categories);
                 dbContext.CreditCards.RemoveRange(dbContext.CreditCards);
+                dbContext.DataBreaches.RemoveRange(dbContext.DataBreaches);
+                dbContext.LeakedCreditCards.RemoveRange(dbContext.LeakedCreditCards);
                 dbContext.SaveChanges();
             }
         }

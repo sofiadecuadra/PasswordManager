@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DataManagerDomain.Exceptions
+namespace DataManagerDomain
 {
     public class ExceptionUserAlreadyExists : Exception
     {

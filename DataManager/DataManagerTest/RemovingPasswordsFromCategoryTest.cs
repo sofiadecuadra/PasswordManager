@@ -42,7 +42,7 @@ namespace DataManagerTest
             };
             aCategory.AddUserPasswordPair(aUserPasswordPair);
 
-            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
+            aCategory.RemoveUserPasswordPair(aUserPasswordPair);
             Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.DarkGreen).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.DarkGreen));
@@ -62,7 +62,7 @@ namespace DataManagerTest
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
 
-            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
+            aCategory.RemoveUserPasswordPair(aUserPasswordPair);
             Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair));
             Assert.AreEqual(0, aCategory.GetUserPasswordsPairs().Length);
         }
@@ -81,7 +81,7 @@ namespace DataManagerTest
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
 
-            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
+            aCategory.RemoveUserPasswordPair(aUserPasswordPair);
             Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.LightGreen).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.LightGreen));
@@ -101,7 +101,7 @@ namespace DataManagerTest
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
 
-            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
+            aCategory.RemoveUserPasswordPair(aUserPasswordPair);
             Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Orange).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Orange));
@@ -121,27 +121,27 @@ namespace DataManagerTest
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
 
-            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
+            aCategory.RemoveUserPasswordPair(aUserPasswordPair);
             Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Red).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Red));
         }
 
-        //[TestMethod]
-        //[ExpectedException(typeof(ExceptionUserPasswordPairDoesNotExist))]
-        //public void RemoveUserPasswordPairThatDoesNotExist()
-        //{
-        //    UserPasswordPair aUserPasswordPair = new UserPasswordPair()
-        //    {
-        //        Category = aCategory,
-        //        Password = "thisIsAPassword",
-        //        Notes = "these are my notes",
-        //        Username = "myUserName",
-        //        Site = "mySite",
-        //    };
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionUserPasswordPairDoesNotExist))]
+        public void RemoveUserPasswordPairThatDoesNotExist()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Category = aCategory,
+                Password = "thisIsAPassword",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+            };
 
-        //    aCategory.RemoveUserPasswordPair(aUserPasswordPair);
-        //}
+            aCategory.RemoveUserPasswordPair(aUserPasswordPair);
+        }
 
         [TestMethod]
         public void RemoveYellowUserPasswordPair()
@@ -157,33 +157,10 @@ namespace DataManagerTest
 
             aCategory.AddUserPasswordPair(aUserPasswordPair);
 
-            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
+            aCategory.RemoveUserPasswordPair(aUserPasswordPair);
             Assert.IsFalse(aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair));
             Assert.AreEqual(0, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Yellow).Length);
             Assert.AreEqual(0, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Yellow));
-        }
-
-        [TestMethod]
-        public void RemoveUserPasswordPairThatAppearedInADataBreach()
-        {
-            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
-            {
-                Category = aCategory,
-                Password = "mypassword12345",
-                Notes = "these are my notes",
-                Username = "myUserName",
-                Site = "mySite",
-            };
-
-            aCategory.AddUserPasswordPair(aUserPasswordPair);
-
-            IDataBreachesFormatter dataBreaches = new TxtFileDataBreaches()
-            {
-                txtDataBreaches = "mypassword12345"
-            };
-            DataBreach aDataBreach = aUser.CheckDataBreaches(dataBreaches);
-            Assert.IsTrue(aCategory.RemoveUserPasswordPair(aUserPasswordPair));
-            Assert.IsTrue(aDataBreach.LeakedUserPasswordPairsOfUser.Count == 0);
         }
 
         [TestCleanup]

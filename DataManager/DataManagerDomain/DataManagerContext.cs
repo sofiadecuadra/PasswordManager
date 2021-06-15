@@ -9,6 +9,9 @@ namespace DataManagerDomain
         public DbSet<UserPasswordPair> UserPasswordPairs { get; set; }
         public DbSet<DataBreach> DataBreaches { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<LeakedCreditCard> LeakedCreditCards { get; set; }
+        public DbSet<LeakedPassword> LeakedPasswords { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

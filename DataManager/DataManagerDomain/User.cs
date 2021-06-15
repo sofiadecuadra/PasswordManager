@@ -128,7 +128,7 @@ namespace DataManagerDomain
             }
         }
 
-        public bool ChangeMasterPassword(string currentPassword, string newPassword)
+        public void ChangeMasterPassword(string currentPassword, string newPassword)
         {
             if (!PasswordsMatch(currentPassword, MasterPassword))
             {
@@ -140,7 +140,6 @@ namespace DataManagerDomain
                 dbContext.Entry(this).State = EntityState.Modified;
                 dbContext.SaveChanges();
             }
-            return true;
         }
 
         public bool PasswordsMatch(string currentPassword, string masterPassword)
@@ -157,15 +156,12 @@ namespace DataManagerDomain
             }
         }
 
-        public bool AddCategory(Category aCategory)
+        public void AddCategory(Category aCategory)
         {
-            bool categoryAdded = false;
             if (CategoryIsValid(aCategory.Name))
             {
                 AddCategoryToCollection(aCategory);
-                categoryAdded = true;
             }
-            return categoryAdded;
         }
 
         private bool CategoryIsValid(string categoryName)
@@ -196,16 +192,13 @@ namespace DataManagerDomain
             }
         }
 
-        public bool ModifyCategory(Category aCategory, string newName)
+        public void ModifyCategory(Category aCategory, string newName)
         {
-            bool categoryModified = false;
             newName = newName.Trim().ToLower();
             if (CategoryCouldBeModified(aCategory, newName))
             {
                 UpdateCategory(aCategory, newName);
-                categoryModified = true;
             }
-            return categoryModified;
         }
 
         private bool CategoryCouldBeModified(Category aCategory, string newName)
@@ -300,11 +293,6 @@ namespace DataManagerDomain
             }
         }
 
-        private static bool UserPasswordPairExistsInCategory(Category aCategory, UserPasswordPair aUserPasswordPair)
-        {
-            return aCategory.UserPasswordPairAlredyExistsInCategory(aUserPasswordPair);
-        }
-
         public UserPasswordPair[] GetSharedUserPasswordPairs()
         {
             using (var dbContext = new DataManagerContext())
@@ -387,7 +375,7 @@ namespace DataManagerDomain
             {
                 User = this
             };
-            if (leakedData.Length == 0)
+            if (leakedData.Length == 0 || (leakedData.Length == 1 && leakedData[0].Trim() == ""))
             {
                 return dataBreach;
             }
@@ -420,7 +408,8 @@ namespace DataManagerDomain
                                 Password = dataToCheck
                             };
                             dataBreach.AddLeakedUserPasswordPair(aLeakedPassword);
-                            List<UserPasswordPair> leakedPasswordsOfUser = ReturnListOfUserPasswordPairWhosePasswordAppearedInDataBreaches(dataToCheck);
+
+                            List<UserPasswordPair> leakedPasswordsOfUser = GetUserPasswordPairWhosePasswordAppearedInDataBreaches(dataToCheck);
                             foreach (UserPasswordPair pair in leakedPasswordsOfUser)
                             {
                                 if (!dataBreach.LeakedUserPasswordPairsOfUser.Contains(pair))
@@ -431,7 +420,22 @@ namespace DataManagerDomain
                         }
                     }
                 }
-                return dataBreach;
+
+                return FindDataBreach(dataBreach);
+            }
+        }
+
+        public DataBreach FindDataBreach(DataBreach aDataBreach)
+        {
+            using (var dbContext = new DataManagerContext())
+            {
+                var dataBreachSelected = dbContext.DataBreaches
+                    .Include(dataBreach => dataBreach.LeakedUserPasswordPairsOfUser)
+                    .Include(dataBreach => dataBreach.LeakedCreditCardsOfUser)
+                    .Include(dataBreach => dataBreach.LeakedUserPasswordPairsOfUser.Select(leakedUserPasswordPair => leakedUserPasswordPair.Category))
+                    .Include(dataBreach => dataBreach.LeakedCreditCardsOfUser.Select(leakedCreditCard => leakedCreditCard.Category))
+                    .FirstOrDefault(dataBreach => dataBreach.Id == aDataBreach.Id); 
+                return dataBreachSelected;
             }
         }
 
@@ -439,33 +443,37 @@ namespace DataManagerDomain
         {
             List<UserPasswordPair> notModifiedPasswords = new List<UserPasswordPair>();
             List<UserPasswordPair> modifiedPasswords = new List<UserPasswordPair>();
-            foreach (UserPasswordPair pair in aDataBreach.LeakedUserPasswordPairsOfUser)
+            using (var dbContext = new DataManagerContext())
             {
-                if (aDataBreach.PasswordWasModified(pair))
+                var dataBreachSelected = dbContext.DataBreaches
+                    .Include(dataBreach => dataBreach.LeakedUserPasswordPairsOfUser)
+                    .Include(dataBreach => dataBreach.LeakedUserPasswordPairsOfUser.Select(leakedUserPasswordPair => leakedUserPasswordPair.Category))
+                    .FirstOrDefault(dataBreach => dataBreach.Id == aDataBreach.Id);
+                foreach (UserPasswordPair pair in dataBreachSelected.LeakedUserPasswordPairsOfUser)
                 {
-                    modifiedPasswords.Add(pair);
+                    if (dataBreachSelected.PasswordWasModified(pair))
+                    {
+                        modifiedPasswords.Add(pair);
+                    }
+                    else
+                    {
+                        notModifiedPasswords.Add(pair);
+                    }
                 }
-                else
-                {
-                    notModifiedPasswords.Add(pair);
-                }
+                return (notModifiedPasswords, modifiedPasswords);
             }
-            return (notModifiedPasswords, modifiedPasswords);
         }
 
-        public void RemoveCreditCardFromDataBreaches(CreditCard aCreditCard)
+        public List<CreditCard> GetLeakedCreditCards(DataBreach aDataBreach)
         {
-            foreach (DataBreach element in DataBreaches)
+            List<UserPasswordPair> leakedCredit = new List<UserPasswordPair>();
+            using (var dbContext = new DataManagerContext())
             {
-                element.RemoveCreditCard(aCreditCard);
-            }
-        }
-
-        public void RemoveUserPasswordPairFromDataBreaches(UserPasswordPair aUserPasswordPair)
-        {
-            foreach (DataBreach element in DataBreaches)
-            {
-                element.RemoveUserPasswordPair(aUserPasswordPair);
+                var dataBreachSelected = dbContext.DataBreaches
+                    .Include(dataBreach => dataBreach.LeakedCreditCardsOfUser)
+                    .Include(dataBreach => dataBreach.LeakedCreditCardsOfUser.Select(leakedCreditCard => leakedCreditCard.Category))
+                    .FirstOrDefault(dataBreach => dataBreach.Id == aDataBreach.Id);
+                return dataBreachSelected.LeakedCreditCardsOfUser;
             }
         }
 
@@ -489,12 +497,12 @@ namespace DataManagerDomain
             return aCategory.CreditCardInCategoryThatAppearedInDataBreaches(creditCardNumber);
         }
 
-        private List<UserPasswordPair> ReturnListOfUserPasswordPairWhosePasswordAppearedInDataBreaches(string aPassword)
+        private List<UserPasswordPair> GetUserPasswordPairWhosePasswordAppearedInDataBreaches(string aPassword)
         {
             List<UserPasswordPair> userPasswordPairList = new List<UserPasswordPair>();
             foreach (Category category in Categories)
             {
-                UserPasswordPair[] userPasswordPairListInCategory = ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(category, aPassword);
+                UserPasswordPair[] userPasswordPairListInCategory = GetUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(category, aPassword);
                 foreach (UserPasswordPair element in userPasswordPairListInCategory)
                 {
                     userPasswordPairList.Add(element);
@@ -503,17 +511,17 @@ namespace DataManagerDomain
             return userPasswordPairList;
         }
 
-        private UserPasswordPair[] ReturnListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(Category aCategory, string aPassword)
+        private UserPasswordPair[] GetUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(Category aCategory, string aPassword)
         {
-            return aCategory.ListOfUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(aPassword);
+            return aCategory.GetUserPasswordPairInCategoryWhosePasswordAppearedInDataBreaches(aPassword);
         }
 
         public Tuple<bool, bool, bool> PasswordImprovementSuggestionsAreTakenIntoAccount(string aPassword)
         {
             string passwordTrimed = aPassword.Trim();
             bool passwordIsStrong = PasswordIsStrong(passwordTrimed);
-            bool passwordIsNotDuplicated = PasswordIsNotDuplicated(passwordTrimed);
-            bool passwordHasNotAppearedInDataBreaches = PasswordHasNotAppearedInADataBreach(passwordTrimed);
+            bool passwordIsNotDuplicated = !PasswordIsDuplicated(passwordTrimed);
+            bool passwordHasNotAppearedInDataBreaches = !PasswordHasAppearedInADataBreach(passwordTrimed);
             return new Tuple<bool, bool, bool>(passwordIsStrong, passwordIsNotDuplicated, passwordHasNotAppearedInDataBreaches);
         }
 
@@ -521,41 +529,48 @@ namespace DataManagerDomain
         {
             bool passwordIsStrong = false;
             PasswordStrengthType passwordStrengthType = PasswordHandler.PasswordStrength(aPassword);
-            if (passwordStrengthType.Equals(PasswordStrengthType.LightGreen))
-            {
-                passwordIsStrong = true;
-            }
-            if (passwordStrengthType.Equals(PasswordStrengthType.DarkGreen))
+            if (PasswordIsLightOrDarkGreen(passwordStrengthType))
             {
                 passwordIsStrong = true;
             }
             return passwordIsStrong;
         }
 
-        private bool PasswordIsNotDuplicated(string aPassword)
+        private static bool PasswordIsLightOrDarkGreen(PasswordStrengthType passwordStrengthType)
         {
-            bool passwordIsNotDuplicated = true;
+            return passwordStrengthType.Equals(PasswordStrengthType.LightGreen) || passwordStrengthType.Equals(PasswordStrengthType.DarkGreen);
+        }
+
+        private bool PasswordIsDuplicated(string aPassword)
+        {
+            bool passwordIsDuplicated = false;
             foreach (UserPasswordPair aPair in GetUserPasswordPairs())
             {
                 if (aPair.Password.Equals(aPassword))
                 {
-                    passwordIsNotDuplicated = false;
+                    passwordIsDuplicated = true;
                 }
             }
-            return passwordIsNotDuplicated;
+            return passwordIsDuplicated;
         }
 
-        private bool PasswordHasNotAppearedInADataBreach(string aPassword)
+        private bool PasswordHasAppearedInADataBreach(string aPassword)
         {
-            bool passwordHasNotAppearedInADataBreach = true;
-            foreach (DataBreach aDataBreach in DataBreaches)
+            bool passwordHasAppearedInADataBreach = false;
+            using (var dbContext = new DataManagerContext())
             {
-                if (aDataBreach.PasswordAppearedInDataBreach(aPassword))
+                var userSelected = dbContext.Users
+                    .Include(user => user.DataBreaches)
+                    .FirstOrDefault(user => user.Username == Username);
+                foreach (DataBreach aDataBreach in userSelected.DataBreaches)
                 {
-                    passwordHasNotAppearedInADataBreach = false;
+                    if (aDataBreach.PasswordAppearedInDataBreach(aPassword))
+                    {
+                        passwordHasAppearedInADataBreach = true;
+                    }
                 }
+                return passwordHasAppearedInADataBreach;
             }
-            return passwordHasNotAppearedInADataBreach;
         }
 
         private bool ItsACreditCard(string element)
