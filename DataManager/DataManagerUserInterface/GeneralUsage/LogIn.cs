@@ -22,7 +22,7 @@ namespace PasswordsManagerUserInterface
             {
                 UserLogIn();
             }
-            catch (Exception ex) when (ex is ExceptionUserDoesNotExist || ex is ExceptionIncorrectMasterPassword)
+            catch (ExceptionUser ex)
             {
                 MessageBox.Show(ex.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

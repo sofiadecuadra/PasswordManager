@@ -56,13 +56,9 @@ namespace PasswordsManagerUserInterface
             {
                 Share();
             }
-            catch (ExceptionUserDoesNotExist anException)
+            catch (ExceptionUser exception)
             {
-                MessageBox.Show(anException.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (ArgumentException)
-            {
-                MessageBox.Show("The password has already been shared with the selected user", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

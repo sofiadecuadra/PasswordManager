@@ -92,6 +92,12 @@
       <DependentUpon>ModifyUserPasswordPairFromDataBreachesHistory.cs</DependentUpon>
     </Compile>
     <Compile Include="HelperClass.cs" />
+    <Compile Include="UserPasswordPair\SharedPasswordsList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserPasswordPair\SharedPasswordsList.Designer.cs">
+      <DependentUpon>SharedPasswordsList.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserPasswordPair\AddUserPasswordPair.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -276,6 +282,9 @@
     </Compile>
     <EmbeddedResource Include="DataBreach\ModifyUserPasswordPairFromDataBreachesHistory.resx">
       <DependentUpon>ModifyUserPasswordPairFromDataBreachesHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserPasswordPair\SharedPasswordsList.resx">
+      <DependentUpon>SharedPasswordsList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserPasswordPair\AddUserPasswordPair.resx">
       <DependentUpon>AddUserPasswordPair.cs</DependentUpon>

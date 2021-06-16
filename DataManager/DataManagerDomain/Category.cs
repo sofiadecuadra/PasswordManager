@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 
 namespace DataManagerDomain
@@ -25,20 +23,9 @@ namespace DataManagerDomain
         {
             using (var dbContext = new DataManagerContext())
             {
-                var creditCards = dbContext.CreditCards.Where(creditCard => creditCard.Category.Id == Id);
+                var creditCards = dbContext.CreditCards
+                    .Where(creditCard => creditCard.Category.Id == Id);
                 return creditCards.ToArray();
-            }
-        }
-
-        public UserPasswordPair[] GetUserPasswordsPairs()
-        {
-            using (var dbContext = new DataManagerContext())
-            {
-                var passwords = dbContext.UserPasswordPairs
-                    .Where(userPasswordPair => userPasswordPair.Category.Id == Id)
-                    .Include(password => password.Category)
-                    .Include(password => password.Category.User);
-                return passwords.ToArray();
             }
         }
 
@@ -97,6 +84,11 @@ namespace DataManagerDomain
             return newCreditCard.CreditCardDataIsValid();
         }
 
+        private bool CreditCardNumbersAreEqual(string oldCreditCardNumber, string newCreditCardNumber)
+        {
+            return oldCreditCardNumber == newCreditCardNumber;
+        }
+
         private void UpdateCreditCardData(CreditCard oldCreditCard, CreditCard newCreditCard)
         {
             using (var dbContext = new DataManagerContext())
@@ -118,11 +110,6 @@ namespace DataManagerDomain
             }
         }
 
-        private bool CreditCardNumbersAreEqual(string oldCreditCardNumber, string newCreditCardNumber)
-        {
-            return oldCreditCardNumber == newCreditCardNumber;
-        }
-
         public void RemoveCreditCard(CreditCard aCreditCard)
         {
             if (!CreditCardNumberAlreadyExistsInCategory(aCreditCard.Number))
@@ -132,6 +119,16 @@ namespace DataManagerDomain
             RemoveCreditCardFromCollection(aCreditCard);
         }
 
+        public bool CreditCardNumberAlreadyExistsInCategory(string aCreditCardNumber)
+        {
+            using (var dbContext = new DataManagerContext())
+            {
+                var creditCards = dbContext.CreditCards
+                    .Where(creditCard => creditCard.Category.Id == Id).ToList();
+                return creditCards.Exists(creditCard => creditCard.Number == aCreditCardNumber);
+            }
+        }
+
         private void RemoveCreditCardFromCollection(CreditCard aCreditCard)
         {
             using (var dbContext = new DataManagerContext())
@@ -139,15 +136,6 @@ namespace DataManagerDomain
                 dbContext.CreditCards.Attach(aCreditCard);
                 dbContext.CreditCards.Remove(aCreditCard);
                 dbContext.SaveChanges();
-            }
-        }
-
-        public bool CreditCardNumberAlreadyExistsInCategory(string aCreditCardNumber)
-        {
-            using (var dbContext = new DataManagerContext())
-            {
-                var creditCards = dbContext.CreditCards.Where(creditCard => creditCard.Category.Id == Id).ToList();
-                return creditCards.Exists(creditCard => creditCard.Number == aCreditCardNumber);
             }
         }
 
@@ -164,6 +152,18 @@ namespace DataManagerDomain
                 }
             }
             return null;
+        }
+
+        public UserPasswordPair[] GetUserPasswordsPairs()
+        {
+            using (var dbContext = new DataManagerContext())
+            {
+                var passwords = dbContext.UserPasswordPairs
+                    .Where(userPasswordPair => userPasswordPair.Category.Id == Id)
+                    .Include(password => password.Category)
+                    .Include(password => password.Category.User);
+                return passwords.ToArray();
+            }
         }
 
         public void AddUserPasswordPair(UserPasswordPair aUserPasswordPair)
@@ -187,7 +187,8 @@ namespace DataManagerDomain
         {
             using (var dbContext = new DataManagerContext())
             {
-                var userSelected = dbContext.Users.FirstOrDefault(user => user.Username == aUserPasswordPair.Category.User.Username);
+                var userSelected = dbContext.Users
+                    .FirstOrDefault(user => user.Username == aUserPasswordPair.Category.User.Username);
                 return userSelected.UserPasswordPairExists(aUserPasswordPair);
             }
         }
@@ -206,7 +207,9 @@ namespace DataManagerDomain
         {
             using (var dbContext = new DataManagerContext())
             {
-                var passwords = dbContext.UserPasswordPairs.Where(userPasswordPair => userPasswordPair.Category.Id == Id).ToList();
+                var passwords = dbContext.UserPasswordPairs
+                    .Where(userPasswordPair => userPasswordPair.Category.Id == Id)
+                    .ToList();
                 return passwords.Exists(password => password.Id == aUserPasswordPair.Id);
             }
         }
@@ -215,7 +218,10 @@ namespace DataManagerDomain
         {
             using (var dbContext = new DataManagerContext())
             {
-                int count = dbContext.UserPasswordPairs.Include(userPasswordPair => userPasswordPair.Category).Where(userPasswordPair => userPasswordPair.Category.Id == Id && userPasswordPair.PasswordStrength == strengthType).Count();
+                int count = dbContext.UserPasswordPairs
+                    .Include(userPasswordPair => userPasswordPair.Category)
+                    .Where(userPasswordPair => userPasswordPair.Category.Id == Id && userPasswordPair.PasswordStrength == strengthType)
+                    .Count();
                 return count;
             }
         }
@@ -265,12 +271,20 @@ namespace DataManagerDomain
             }
         }
 
+        public static bool PasswordsAreEqual(string aPassword, string otherPassword)
+        {
+            return aPassword == otherPassword;
+        }
+
         private static void UpdateAllPropertiesOfUserPasswordPair(UserPasswordPair oldUserPasswordPair, UserPasswordPair newUserPasswordPair)
         {
             UpdateAllPropertiesOfUserPasswordPairExceptForPassword(oldUserPasswordPair, newUserPasswordPair);
             using (var dbContext = new DataManagerContext())
             {
-                var passwordToModify = dbContext.UserPasswordPairs.Include(userPasswordPair => userPasswordPair.Category).Include(userPasswordPair => userPasswordPair.Category.User).FirstOrDefault(userPasswordPair => userPasswordPair.Id == oldUserPasswordPair.Id);
+                var passwordToModify = dbContext.UserPasswordPairs
+                    .Include(userPasswordPair => userPasswordPair.Category)
+                    .Include(userPasswordPair => userPasswordPair.Category.User)
+                    .FirstOrDefault(userPasswordPair => userPasswordPair.Id == oldUserPasswordPair.Id);
                 passwordToModify.Password = newUserPasswordPair.Password;
                 dbContext.Entry(passwordToModify).State = EntityState.Modified;
                 dbContext.SaveChanges();
@@ -281,8 +295,10 @@ namespace DataManagerDomain
         {
             using (var dbContext = new DataManagerContext())
             {
-                var passwordToModify = dbContext.UserPasswordPairs.FirstOrDefault(userPasswordPair => userPasswordPair.Id == oldUserPasswordPair.Id);
-                var newCategory = dbContext.Categories.FirstOrDefault(category => category.Id == newUserPasswordPair.Category.Id);
+                var passwordToModify = dbContext.UserPasswordPairs
+                    .FirstOrDefault(userPasswordPair => userPasswordPair.Id == oldUserPasswordPair.Id);
+                var newCategory = dbContext.Categories.
+                    FirstOrDefault(category => category.Id == newUserPasswordPair.Category.Id);
                 passwordToModify.Category = newCategory;
                 passwordToModify.Site = newUserPasswordPair.Site;
                 passwordToModify.Notes = newUserPasswordPair.Notes;
@@ -291,11 +307,6 @@ namespace DataManagerDomain
                 dbContext.Entry(newCategory).State = EntityState.Modified;
                 dbContext.SaveChanges();
             }
-        }
-
-        public static bool PasswordsAreEqual(string aPassword, string otherPassword)
-        {
-            return aPassword == otherPassword;
         }
 
         public void RemoveUserPasswordPair(UserPasswordPair aUserPasswordPair)

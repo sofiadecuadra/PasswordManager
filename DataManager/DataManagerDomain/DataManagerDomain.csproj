@@ -55,8 +55,10 @@
     <Compile Include="DataBreach.cs" />
     <Compile Include="DataManagerContext.cs" />
     <Compile Include="Encrypter.cs" />
+    <Compile Include="Exceptions\ExceptionCategory.cs" />
     <Compile Include="Exceptions\ExceptionCategoryAlreadyExists.cs" />
     <Compile Include="Exceptions\ExceptionCategoryNotExists.cs" />
+    <Compile Include="Exceptions\ExceptionCreditCard.cs" />
     <Compile Include="Exceptions\ExceptionCreditCardCodeHasNonNumericCharacters.cs" />
     <Compile Include="Exceptions\ExceptionCreditCardDoesNotContainOnlyDigits.cs" />
     <Compile Include="Exceptions\ExceptionCreditCardDoesNotExist.cs" />
@@ -64,8 +66,12 @@
     <Compile Include="Exceptions\ExceptionExistingUserPasswordPair.cs" />
     <Compile Include="Exceptions\ExceptionIncorrectGenerationPasswordType.cs" />
     <Compile Include="Exceptions\ExceptionIncorrectMasterPassword.cs" />
+    <Compile Include="Exceptions\ExceptionUser.cs" />
+    <Compile Include="Exceptions\ExceptionUserAlreadyHasAccess.cs" />
     <Compile Include="Exceptions\ExceptionUserDoesNotExist.cs" />
+    <Compile Include="Exceptions\ExceptionUserDoesNotHaveAccess.cs" />
     <Compile Include="Exceptions\ExceptionUsernameContainsSpaces.cs" />
+    <Compile Include="Exceptions\ExceptionUserPasswordPair.cs" />
     <Compile Include="Exceptions\ExceptionUserPasswordPairDoesNotExist.cs" />
     <Compile Include="Exceptions\ExceptionIncorrectLength.cs" />
     <Compile Include="Exceptions\ExceptionCreditCardHasExpired.cs" />

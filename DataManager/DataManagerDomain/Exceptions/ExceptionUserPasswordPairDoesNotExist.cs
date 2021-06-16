@@ -2,7 +2,7 @@
 
 namespace DataManagerDomain
 {
-    public class ExceptionUserPasswordPairDoesNotExist : Exception
+    public class ExceptionUserPasswordPairDoesNotExist : ExceptionUserPasswordPair
     {
         public ExceptionUserPasswordPairDoesNotExist(string message) : base(message) { }
     }

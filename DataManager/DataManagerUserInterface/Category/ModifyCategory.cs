@@ -34,11 +34,7 @@ namespace PasswordsManagerUserInterface
             {
                 ModifyCategory_();
             }
-            catch (Exception exception) when (
-                exception is ExceptionCategoryNotExists
-                || exception is ExceptionIncorrectLength
-                || exception is ExceptionCategoryAlreadyExists
-            )
+            catch (Exception exception) when (exception is ExceptionCategory || exception is ExceptionIncorrectLength)
             {
                 ShowMessageBox(exception);
             }

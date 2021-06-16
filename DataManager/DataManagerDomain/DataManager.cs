@@ -36,16 +36,15 @@ namespace DataManagerDomain
         {
             using (var dbContext = new DataManagerContext())
             {
-                return dbContext.Users.ToList().Exists(user => user.Username == name.ToLower());
+                return dbContext.Users
+                    .ToList()
+                    .Exists(user => user.Username == name.ToLower());
             }
         }
 
         public void AddUser(User myUser)
         {
-            if (HasUser(myUser.Username))
-            {
-                throw new ExceptionUserAlreadyExists("The user already exists");
-            }
+            CheckIfUserAlreadyExists(myUser);
             using (var dbContext = new DataManagerContext())
             {
                 dbContext.Users.Add(myUser);
@@ -53,52 +52,80 @@ namespace DataManagerDomain
             }
         }
 
-        public void LogIn(string username, string masterPassword)
+        private void CheckIfUserAlreadyExists(User myUser)
         {
-            username = username.Trim();
-            if (ValidateUser(username, masterPassword))
+            if (HasUser(myUser.Username))
             {
-                CurrentUser = FindUser(username);
-            }
-            else
-            {
-                throw new ExceptionIncorrectMasterPassword("Wrong password");
+                throw new ExceptionUserAlreadyExists("The user already exists");
             }
         }
 
-        public bool ValidateUser(string username, string masterPassword)
+        public void LogIn(string username, string masterPassword)
+        {
+            username = username.Trim();
+            ValidateUser(username, masterPassword);
+            CurrentUser = FindUser(username);
+        }
+
+        public void ValidateUser(string username, string masterPassword)
         {
             if (!HasUser(username))
             {
                 throw new ExceptionUserDoesNotExist($"The user {username} does not exist");
             }
-            return FindUser(username)
-                    .MasterPassword.Equals(masterPassword);
+            if (!MasterPasswordEnteredIsCorrect(username, masterPassword))
+            {
+                throw new ExceptionIncorrectMasterPassword("Wrong password");
+            }
+        }
+
+        private bool MasterPasswordEnteredIsCorrect(string username, string masterPassword)
+        {
+            return FindUser(username).MasterPassword.Equals(masterPassword);
         }
 
         public User FindUser(string name)
         {
             using (var dbContext = new DataManagerContext())
             {
-                return dbContext.Users.Include(user => user.Categories).FirstOrDefault(user => user.Username == name.ToLower());
+                return dbContext.Users
+                    .Include(user => user.Categories)
+                    .FirstOrDefault(user => user.Username == name.ToLower());
             }
         }
 
         public void SharePassword(UserPasswordPair passwordToShare, User userToRecivePassword)
         {
-            if (!HasUser(userToRecivePassword.Username))
-            {
-                throw new ExceptionUserDoesNotExist($"The user {userToRecivePassword} does not exist");
-            }
+            CheckIfUserIsNotNull(userToRecivePassword);
+            CheckIfUserExists(userToRecivePassword);
             passwordToShare.IncludeInUsersWithAccess(userToRecivePassword);
+        }
+
+        private static void CheckIfUserIsNotNull(User aUser)
+        {
+            if (!ValidUser(aUser))
+            {
+                throw new ExceptionUserDoesNotExist($"Please, choose a valid user");
+            }
+        }
+
+        private static bool ValidUser(User aUser)
+        {
+            return aUser != null;
+        }
+
+        private void CheckIfUserExists(User aUser)
+        {
+            if (!HasUser(aUser.Username))
+            {
+                throw new ExceptionUserDoesNotExist($"The user {aUser} does not exist");
+            }
         }
 
         public void UnsharePassword(UserPasswordPair passwordToStopSharing, User userToRevokeSharedPassword)
         {
-            if (!HasUser(userToRevokeSharedPassword.Username))
-            {
-                throw new ExceptionUserDoesNotExist($"The user {userToRevokeSharedPassword} does not exist");
-            }
+            CheckIfUserIsNotNull(userToRevokeSharedPassword);
+            CheckIfUserExists(userToRevokeSharedPassword);
             passwordToStopSharing.RemoveFromUsersWithAccess(userToRevokeSharedPassword);
         }
     }

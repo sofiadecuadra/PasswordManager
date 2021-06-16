@@ -1,5 +1,4 @@
-﻿
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DataManagerDomain;
 using System.Linq;
 
@@ -53,7 +52,6 @@ namespace DataManagerTest
                 Username = "myUsername",
                 Site = "mySite",
             };
-
             aCategory.AddUserPasswordPair(aUserPasswordPair);
 
             UserPasswordPair newUserPasswordPair = new UserPasswordPair()
@@ -64,8 +62,8 @@ namespace DataManagerTest
                 Username = "myUsername",
                 Site = "mySite",
             };
-
             aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
+
             Assert.AreEqual(1, aCategory.GetUserPasswordsPairs().Length);
         }
 
@@ -80,7 +78,6 @@ namespace DataManagerTest
                 Username = "myUsername",
                 Site = "mySite",
             };
-
             aCategory.AddUserPasswordPair(aUserPasswordPair);
 
             Category otherCategory = new Category()
@@ -88,7 +85,6 @@ namespace DataManagerTest
                 User = aUser,
                 Name = "otherCategory"
             };
-
             aUser.AddCategory(otherCategory);
 
             UserPasswordPair newUserPasswordPair = new UserPasswordPair()
@@ -99,8 +95,8 @@ namespace DataManagerTest
                 Username = "myUsername",
                 Site = "mySite",
             };
-
             aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
+
             Assert.AreEqual(0, aCategory.GetUserPasswordsPairs().Length);
             Assert.AreEqual(1, otherCategory.GetUserPasswordsPairs().Length);
 
@@ -134,8 +130,8 @@ namespace DataManagerTest
                 Username = "myUsername",
                 Site = "mySite",
             };
-
             aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
+
             Assert.AreEqual(0, aCategory.GetUserPasswordsPairs().Length);
             Assert.AreEqual(1, anotherCategory.GetUserPasswordsPairs().Length);
         }
@@ -151,7 +147,6 @@ namespace DataManagerTest
                 Username = "myUsername",
                 Site = "mySite",
             };
-
             aCategory.AddUserPasswordPair(aUserPasswordPair);
 
             UserPasswordPair newUserPasswordPair = new UserPasswordPair()
@@ -162,8 +157,8 @@ namespace DataManagerTest
                 Username = "newUsername",
                 Site = "mySite",
             };
-
             aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
+
             using (var dbContext = new DataManagerContext())
             {
                 var userPasswordPairSelected = dbContext.UserPasswordPairs
@@ -184,7 +179,6 @@ namespace DataManagerTest
                 Username = "myUsername",
                 Site = "mySite",
             };
-
             aCategory.AddUserPasswordPair(aUserPasswordPair);
 
             UserPasswordPair newUserPasswordPair = new UserPasswordPair()
@@ -195,7 +189,6 @@ namespace DataManagerTest
                 Username = "no",
                 Site = "mySite",
             };
-
             aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
         }
 
@@ -210,7 +203,6 @@ namespace DataManagerTest
                 Username = "myUsername",
                 Site = "mySite",
             };
-
             aCategory.AddUserPasswordPair(aUserPasswordPair);
 
             UserPasswordPair newUserPasswordPair = new UserPasswordPair()
@@ -221,8 +213,8 @@ namespace DataManagerTest
                 Username = "myUsername",
                 Site = "newSite",
             };
-
             aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
+            
             using (var dbContext = new DataManagerContext())
             {
                 var userPasswordPairSelected = dbContext.UserPasswordPairs
@@ -243,7 +235,6 @@ namespace DataManagerTest
                 Username = "myUsername",
                 Site = "mySite",
             };
-
             aCategory.AddUserPasswordPair(aUserPasswordPair);
 
             UserPasswordPair newUserPasswordPair = new UserPasswordPair()
@@ -254,7 +245,6 @@ namespace DataManagerTest
                 Username = "myUsername",
                 Site = "n",
             };
-
             aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
         }
 
@@ -269,7 +259,6 @@ namespace DataManagerTest
                 Username = "myUsername",
                 Site = "mySite",
             };
-
             aCategory.AddUserPasswordPair(aUserPasswordPair);
 
             UserPasswordPair newUserPasswordPair = new UserPasswordPair()
@@ -280,8 +269,8 @@ namespace DataManagerTest
                 Username = "myUsername",
                 Site = "mySite",
             };
-
             aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
+
             using (var dbContext = new DataManagerContext())
             {
                 var userPasswordPairSelected = dbContext.UserPasswordPairs
@@ -302,7 +291,6 @@ namespace DataManagerTest
                 Username = "myUsername",
                 Site = "mySite",
             };
-
             aCategory.AddUserPasswordPair(aUserPasswordPair);
 
             string aNote = GenerateNoteText();
@@ -315,7 +303,6 @@ namespace DataManagerTest
                 Username = "myUsername",
                 Site = "mySite",
             };
-
             aCategory.ModifyUserPasswordPair(aUserPasswordPair, newUserPasswordPair);
         }
 

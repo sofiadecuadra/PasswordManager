@@ -22,7 +22,7 @@ namespace PasswordsManagerUserInterface
             {
                 UserSignUp();
             }
-            catch (Exception ex) when (ex is ExceptionUserAlreadyExists || ex is ExceptionIncorrectLength)
+            catch (Exception ex) when (ex is ExceptionUser || ex is ExceptionIncorrectLength)
             {
                 MessageBox.Show(ex.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -36,13 +36,9 @@ namespace PasswordsManagerUserInterface
             {
                 UserLogIn();
             }
-            catch (ExceptionUserDoesNotExist)
+            catch (ExceptionUser ex)
             {
-                MessageBox.Show("The user does not exist", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (ExceptionIncorrectMasterPassword)
-            {
-                MessageBox.Show("Wrong password", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

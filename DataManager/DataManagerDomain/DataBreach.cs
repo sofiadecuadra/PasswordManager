@@ -72,30 +72,6 @@ namespace DataManagerDomain
             }
         }
 
-        public void RemoveCreditCard(CreditCard aLeakedCreditCard)
-        {
-            using (var dbContext = new DataManagerContext())
-            {
-                dbContext.CreditCards.Attach(aLeakedCreditCard);
-                var dataBreach = dbContext.DataBreaches
-                    .FirstOrDefault(element => element.Id == Id);
-                dataBreach.LeakedCreditCardsOfUser.Remove(aLeakedCreditCard);
-                dbContext.SaveChanges();
-            }
-        }
-
-        public void RemoveUserPasswordPair(UserPasswordPair aLeakedUserPasswordPair)
-        {
-            using (var dbContext = new DataManagerContext())
-            {
-                dbContext.UserPasswordPairs.Attach(aLeakedUserPasswordPair);
-                var dataBreach = dbContext.DataBreaches
-                    .FirstOrDefault(element => element.Id == Id);
-                dataBreach.LeakedUserPasswordPairsOfUser.Remove(aLeakedUserPasswordPair);
-                dbContext.SaveChanges();
-            }
-        }
-
         public bool PasswordWasModified(UserPasswordPair aLeakedUserPasswordPair)
         {
             return aLeakedUserPasswordPair.LastModifiedDate > DateTime;

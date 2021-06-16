@@ -12,7 +12,6 @@ namespace DataManagerDomain
         public DbSet<LeakedCreditCard> LeakedCreditCards { get; set; }
         public DbSet<LeakedPassword> LeakedPasswords { get; set; }
 
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
@@ -22,6 +21,13 @@ namespace DataManagerDomain
                 .Ignore(userPassPair => userPassPair.Password)
                 .Property(f => f.LastModifiedDate)
                 .HasColumnType("datetime2");
+            modelBuilder.Entity<User>()
+                .HasMany<UserPasswordPair>(user => user.SharedPasswords)
+                .WithMany(userPasswordPair => userPasswordPair.UsersWithAccess)
+                .Map(cs =>
+                {
+                    cs.ToTable("SharedPasswords");
+                });
         }
     }
 }

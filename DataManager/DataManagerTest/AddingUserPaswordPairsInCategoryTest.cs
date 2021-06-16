@@ -41,7 +41,6 @@ namespace DataManagerTest
                 Username = "myUserName",
                 Site = "mySite",
             };
-
             aCategory.AddUserPasswordPair(aUserPasswordPair);
 
             UserPasswordPair anotherUserPasswordPair = new UserPasswordPair()
@@ -52,7 +51,6 @@ namespace DataManagerTest
                 Username = "myUserName",
                 Site = "mySite",
             };
-
             aCategory.AddUserPasswordPair(anotherUserPasswordPair);
         }
 
@@ -67,7 +65,6 @@ namespace DataManagerTest
                 Username = "myUserName1",
                 Site = "mySite1",
             };
-
             aCategory.AddUserPasswordPair(aUserPasswordPair);
 
             UserPasswordPair anotherUserPasswordPair = new UserPasswordPair()
@@ -78,8 +75,8 @@ namespace DataManagerTest
                 Username = "myUserName2",
                 Site = "mySite1",
             };
-
             aCategory.AddUserPasswordPair(anotherUserPasswordPair);
+
             Assert.AreEqual(2, aCategory.GetUserPasswordsPairs().Length);
         }
 
@@ -220,8 +217,8 @@ namespace DataManagerTest
                 Username = "myUserName",
                 Site = "mySite",
             };
-
             aCategory.AddUserPasswordPair(aUserPasswordPair);
+
             Assert.AreEqual(1, aCategory.GetUserPasswordsPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Red).Length);
             Assert.AreEqual(1, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Red));
@@ -238,8 +235,8 @@ namespace DataManagerTest
                 Username = "myUserName",
                 Site = "mySite",
             };
-
             aCategory.AddUserPasswordPair(aUserPasswordPair);
+
             Assert.AreEqual(1, aCategory.GetUserPasswordsPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Orange).Length);
             Assert.AreEqual(1, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Orange));
@@ -256,8 +253,8 @@ namespace DataManagerTest
                 Username = "myUserName",
                 Site = "mySite",
             };
-
             aCategory.AddUserPasswordPair(aUserPasswordPair);
+
             Assert.AreEqual(1, aCategory.GetUserPasswordsPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.Yellow).Length);
             Assert.AreEqual(1, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.Yellow));
@@ -274,8 +271,8 @@ namespace DataManagerTest
                 Username = "myUserName",
                 Site = "mySite",
             };
-
             aCategory.AddUserPasswordPair(aUserPasswordPair);
+
             Assert.AreEqual(1, aCategory.GetUserPasswordsPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.LightGreen).Length);
             Assert.AreEqual(1, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.LightGreen));
@@ -292,8 +289,8 @@ namespace DataManagerTest
                 Username = "myUserName",
                 Site = "mySite",
             };
-
             aCategory.AddUserPasswordPair(aUserPasswordPair);
+
             Assert.AreEqual(1, aCategory.GetUserPasswordsPairs().Length);
             Assert.AreEqual(1, aCategory.User.GetUserPasswordPairsOfASpecificColor(PasswordStrengthType.DarkGreen).Length);
             Assert.AreEqual(1, aCategory.GetUserPasswordPairsOfASpecificColorQuantity(PasswordStrengthType.DarkGreen));
@@ -329,6 +326,7 @@ namespace DataManagerTest
                 Site = "mySite",
             };
             aCategory.AddUserPasswordPair(aUserPasswordPair);
+
             Tuple<bool, bool, bool> suggestionsTakenIntoAccount = aUser.PasswordImprovementSuggestionsAreTakenIntoAccount("MYpassword1234512");
             Assert.IsTrue(suggestionsTakenIntoAccount.Item1);
             Assert.IsFalse(suggestionsTakenIntoAccount.Item2);
@@ -343,6 +341,7 @@ namespace DataManagerTest
                 txtDataBreaches = "MYpassword@#12345"
             };
             aUser.CheckDataBreaches(dataBreaches);
+
             Tuple<bool, bool, bool> suggestionsTakenIntoAccount = aUser.PasswordImprovementSuggestionsAreTakenIntoAccount("MYpassword@#12345");
             Assert.IsTrue(suggestionsTakenIntoAccount.Item1);
             Assert.IsTrue(suggestionsTakenIntoAccount.Item2);

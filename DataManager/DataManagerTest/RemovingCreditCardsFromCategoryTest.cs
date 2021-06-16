@@ -47,6 +47,7 @@ namespace DataManagerTest
         {
             aCategory.AddCreditCard(aCreditCard);
             aCategory.RemoveCreditCard(aCreditCard);
+
             Assert.IsFalse(aUser.CreditCardNumberExists(aCreditCard.Number));
             Assert.AreEqual(0, aCategory.GetCreditCards().Length);
         }

@@ -1,6 +1,6 @@
 ﻿using DataManagerDomain;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace PasswordsManagerUserInterface
@@ -26,6 +26,7 @@ namespace PasswordsManagerUserInterface
             SetDataBreachesDateColumn();
             SetDataBreachesViewColumn();
             dgvDataBreaches.DataSource = dataBreaches;
+            ChangeWidthWhenScrollBarIsVisible(dgvDataBreaches);
         }
         private void SetDataBreachesViewColumn()
         {
@@ -50,6 +51,14 @@ namespace PasswordsManagerUserInterface
         {
             dgvDataBreaches.AutoGenerateColumns = false;
             dgvDataBreaches.ColumnCount = 1;
+        }
+
+        private void ChangeWidthWhenScrollBarIsVisible(DataGridView dgv)
+        {
+            if (dgv.Controls.OfType<ScrollBar>().Last().Visible)
+            {
+                dgv.Width = 302;
+            }
         }
 
         private void dgvDataBreaches_CellContentClick(object sender, DataGridViewCellEventArgs e)

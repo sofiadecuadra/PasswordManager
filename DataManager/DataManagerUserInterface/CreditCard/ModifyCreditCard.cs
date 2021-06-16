@@ -34,13 +34,7 @@ namespace PasswordsManagerUserInterface
             {
                 ModifyCreditCard_();
             }
-            catch (Exception exception) when (
-                exception is ExceptionCreditCardNumberAlreadyExistsInUser
-                || exception is ExceptionCreditCardDoesNotContainOnlyDigits
-                || exception is ExceptionIncorrectLength
-                || exception is ExceptionCreditCardCodeHasNonNumericCharacters
-                || exception is ExceptionCreditCardHasExpired
-            )
+            catch (Exception exception) when (exception is ExceptionCreditCard || exception is ExceptionIncorrectLength)
             {
                 ShowMessageBox(exception);
             }

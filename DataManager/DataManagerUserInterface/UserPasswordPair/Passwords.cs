@@ -259,5 +259,12 @@ namespace PasswordsManagerUserInterface
                 fullView.Visible = true;
             }
         }
+
+        private void btnSharedPasswords_Click(object sender, EventArgs e)
+        {
+            PnlMainWindow.Controls.Clear();
+            UserControl sharedPasswords = new SharedPasswordsList(PasswordManager, PnlMainWindow);
+            PnlMainWindow.Controls.Add(sharedPasswords);
+        }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace DataManagerDomain
 {
-    public class ExceptionUsernameContainsSpaces : Exception
+    public class ExceptionUsernameContainsSpaces : ExceptionUser
     {
         public ExceptionUsernameContainsSpaces(string message) : base(message) { }
     }

@@ -1,6 +1,7 @@
 ﻿using DataManagerDomain;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace PasswordsManagerUserInterface
@@ -56,6 +57,7 @@ namespace PasswordsManagerUserInterface
             SetPasswordsLastModifiedColumn();
             SetPasswordsModifyColumn();
             dgvExposedPasswords.DataSource = exposedPasswords;
+            ChangeWidthWhenScrollBarIsVisible(dgvExposedPasswords);
         }
 
         private void SetPasswordsModifyColumn()
@@ -115,6 +117,7 @@ namespace PasswordsManagerUserInterface
             SetCreditCardTypeColumn();
             SetCreditCardNumberColumn();
             dgvExposedCreditCards.DataSource = exposedCreditCards;
+            ChangeWidthWhenScrollBarIsVisible(dgvExposedCreditCards);
         }
 
         private void SetCreditCardColumnsQuantity()
@@ -153,6 +156,14 @@ namespace PasswordsManagerUserInterface
             dgvExposedCreditCards.Columns[3].HeaderText = "Number";
             dgvExposedCreditCards.Columns[3].DataPropertyName = "NumberFormatted";
             dgvExposedCreditCards.Columns[3].Width = 211;
+        }
+
+        private void ChangeWidthWhenScrollBarIsVisible(DataGridView dgv)
+        {
+            if (dgv.Controls.OfType<ScrollBar>().Last().Visible)
+            {
+                dgv.Width = 717;
+            }
         }
 
         private void btnBack_Click(object sender, EventArgs e)

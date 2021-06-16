@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 using DataManagerDomain;
 
@@ -30,6 +31,7 @@ namespace PasswordsManagerUserInterface
             SetExpirationDateColumn();
             SetFullViewColumn();
             dgvCreditCards.DataSource = GetCreditCards();
+            ChangeWidthWhenScrollBarIsVisible(dgvCreditCards);
         }
 
         private void SetColumnsQuantity()
@@ -87,6 +89,14 @@ namespace PasswordsManagerUserInterface
             fullView.Text = "Full view";
             fullView.Width = 60;
             fullView.UseColumnTextForButtonValue = true;
+        }
+
+        private void ChangeWidthWhenScrollBarIsVisible(DataGridView dgv)
+        {
+            if (dgv.Controls.OfType<ScrollBar>().Last().Visible)
+            {
+                dgv.Width = 737;
+            }
         }
 
         private void btnAdd_Click(object sender, EventArgs e)

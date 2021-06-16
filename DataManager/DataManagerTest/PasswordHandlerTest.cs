@@ -126,6 +126,7 @@ namespace DataManagerTest
                 HasDigits = false,
                 HasSymbols = true,
             };
+
             _ = PasswordHandler.GenerateRandomPassword(conditions);
         }
 
@@ -141,8 +142,8 @@ namespace DataManagerTest
                 HasDigits = true,
                 HasSymbols = false,
             };
-            _ = PasswordHandler.GenerateRandomPassword(conditions);
 
+            _ = PasswordHandler.GenerateRandomPassword(conditions);
         }
 
         [TestMethod]
@@ -157,6 +158,7 @@ namespace DataManagerTest
                 HasDigits = false,
                 HasSymbols = false,
             };
+
             _ = PasswordHandler.GenerateRandomPassword(conditions);
         }
 
@@ -173,6 +175,7 @@ namespace DataManagerTest
             };
 
             string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
+
             Assert.AreEqual(7, randomPassword.Length);
             Assert.AreEqual(PasswordStrengthType.Red, PasswordHandler.PasswordStrength(randomPassword));
         }
@@ -190,6 +193,7 @@ namespace DataManagerTest
             };
 
             string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
+
             Assert.AreEqual(11, randomPassword.Length);
             Assert.AreEqual(PasswordStrengthType.Orange, PasswordHandler.PasswordStrength(randomPassword));
         }
@@ -207,6 +211,7 @@ namespace DataManagerTest
             };
 
             string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
+
             Assert.AreEqual(15, randomPassword.Length);
             Assert.AreEqual(PasswordStrengthType.Yellow, PasswordHandler.PasswordStrength(randomPassword));
         }
@@ -224,6 +229,7 @@ namespace DataManagerTest
             };
 
             string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
+
             Assert.AreEqual(17, randomPassword.Length);
             Assert.AreEqual(PasswordStrengthType.Yellow, PasswordHandler.PasswordStrength(randomPassword));
         }
@@ -241,6 +247,7 @@ namespace DataManagerTest
             };
 
             string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
+
             Assert.AreEqual(18, randomPassword.Length);
             Assert.AreEqual(PasswordStrengthType.Yellow, PasswordHandler.PasswordStrength(randomPassword));
         }
@@ -258,6 +265,7 @@ namespace DataManagerTest
             };
 
             string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
+
             Assert.AreEqual(18, randomPassword.Length);
             Assert.AreEqual(PasswordStrengthType.Yellow, PasswordHandler.PasswordStrength(randomPassword));
         }
@@ -275,6 +283,7 @@ namespace DataManagerTest
             };
 
             string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
+
             Assert.AreEqual(19, randomPassword.Length);
             Assert.AreEqual(PasswordStrengthType.LightGreen, PasswordHandler.PasswordStrength(randomPassword));
         }
@@ -292,6 +301,7 @@ namespace DataManagerTest
             };
 
             string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
+
             Assert.AreEqual(19, randomPassword.Length);
             Assert.AreEqual(PasswordStrengthType.Yellow, PasswordHandler.PasswordStrength(randomPassword));
         }
@@ -309,6 +319,7 @@ namespace DataManagerTest
             };
 
             string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
+
             Assert.AreEqual(20, randomPassword.Length);
             Assert.AreEqual(PasswordStrengthType.Yellow, PasswordHandler.PasswordStrength(randomPassword));
         }
@@ -326,6 +337,7 @@ namespace DataManagerTest
             };
 
             string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
+
             Assert.AreEqual(21, randomPassword.Length);
             Assert.AreEqual(PasswordStrengthType.Yellow, PasswordHandler.PasswordStrength(randomPassword));
         }
@@ -343,6 +355,7 @@ namespace DataManagerTest
             };
 
             string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
+
             Assert.AreEqual(22, randomPassword.Length);
             Assert.AreEqual(PasswordStrengthType.Yellow, PasswordHandler.PasswordStrength(randomPassword));
         }
@@ -360,6 +373,7 @@ namespace DataManagerTest
             };
 
             string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
+
             Assert.AreEqual(23, randomPassword.Length);
             Assert.AreEqual(PasswordStrengthType.Yellow, PasswordHandler.PasswordStrength(randomPassword));
         }
@@ -377,6 +391,7 @@ namespace DataManagerTest
             };
 
             string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
+
             Assert.AreEqual(24, randomPassword.Length);
             Assert.AreEqual(PasswordStrengthType.LightGreen, PasswordHandler.PasswordStrength(randomPassword));
         }
@@ -394,6 +409,7 @@ namespace DataManagerTest
             };
 
             string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
+
             Assert.AreEqual(25, randomPassword.Length);
             Assert.AreEqual(PasswordStrengthType.LightGreen, PasswordHandler.PasswordStrength(randomPassword));
         }
@@ -411,6 +427,7 @@ namespace DataManagerTest
             };
 
             string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
+
             Assert.AreEqual(19, randomPassword.Length);
             Assert.AreEqual(PasswordStrengthType.LightGreen, PasswordHandler.PasswordStrength(randomPassword));
         }
@@ -428,6 +445,7 @@ namespace DataManagerTest
             };
 
             string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
+
             Assert.AreEqual(20, randomPassword.Length);
             Assert.AreEqual(PasswordStrengthType.LightGreen, PasswordHandler.PasswordStrength(randomPassword));
         }
@@ -445,6 +463,7 @@ namespace DataManagerTest
             };
 
             string randomPassword = PasswordHandler.GenerateRandomPassword(conditions);
+
             Assert.AreEqual(23, randomPassword.Length);
             Assert.AreEqual(PasswordStrengthType.DarkGreen, PasswordHandler.PasswordStrength(randomPassword));
         }
