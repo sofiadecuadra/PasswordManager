@@ -40,6 +40,7 @@ namespace PasswordsManagerUserInterface
             this.lblYourPasswords = new System.Windows.Forms.Label();
             this.btnPasswordsReport = new System.Windows.Forms.Button();
             this.dgvSharedPasswords = new System.Windows.Forms.DataGridView();
+            this.btnSharedPasswords = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPasswords)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSharedPasswords)).BeginInit();
             this.SuspendLayout();
@@ -181,10 +182,21 @@ namespace PasswordsManagerUserInterface
             this.dgvSharedPasswords.TabIndex = 16;
             this.dgvSharedPasswords.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSharedPasswords_CellContentClick);
             // 
+            // btnSharedPasswords
+            // 
+            this.btnSharedPasswords.Location = new System.Drawing.Point(363, 15);
+            this.btnSharedPasswords.Name = "btnSharedPasswords";
+            this.btnSharedPasswords.Size = new System.Drawing.Size(132, 23);
+            this.btnSharedPasswords.TabIndex = 17;
+            this.btnSharedPasswords.Text = "Shared Passwords";
+            this.btnSharedPasswords.UseVisualStyleBackColor = true;
+            this.btnSharedPasswords.Click += new System.EventHandler(this.btnSharedPasswords_Click);
+            // 
             // Passwords
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnSharedPasswords);
             this.Controls.Add(this.dgvSharedPasswords);
             this.Controls.Add(this.btnPasswordsReport);
             this.Controls.Add(this.lblYourPasswords);
@@ -218,5 +230,6 @@ namespace PasswordsManagerUserInterface
         private System.Windows.Forms.Label lblYourPasswords;
         private System.Windows.Forms.Button btnPasswordsReport;
         private System.Windows.Forms.DataGridView dgvSharedPasswords;
+        private System.Windows.Forms.Button btnSharedPasswords;
     }
 }

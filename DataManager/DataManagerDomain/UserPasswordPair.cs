@@ -85,6 +85,17 @@ namespace DataManagerDomain
             return Encrypter.Encrypt(aPassword, publicKey);
         }
 
+        public bool IsShared()
+        {
+            using (var dbContext = new DataManagerContext())
+            {
+                var userPasswordPairSelected = dbContext.UserPasswordPairs
+                    .Include(userPasswordPair => userPasswordPair.UsersWithAccess)
+                    .FirstOrDefault(userPasswordPair => userPasswordPair.Id == Id);
+                return userPasswordPairSelected.UsersWithAccess.Count > 0;
+            }
+        }
+
         public bool HasAccess(string name)
         {
             using (var dbContext = new DataManagerContext())

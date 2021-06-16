@@ -22,6 +22,13 @@ namespace DataManagerDomain
                 .Ignore(userPassPair => userPassPair.Password)
                 .Property(f => f.LastModifiedDate)
                 .HasColumnType("datetime2");
+            modelBuilder.Entity<User>()
+                .HasMany<UserPasswordPair>(user => user.SharedPasswords)
+                .WithMany(userPasswordPair => userPasswordPair.UsersWithAccess)
+                .Map(cs =>
+                {
+                    cs.ToTable("SharedPasswords");
+                });
         }
     }
 }

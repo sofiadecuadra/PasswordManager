@@ -23,7 +23,7 @@ namespace PasswordsManagerUserInterface
         private void LoadSharedPasswords()
         {
             var userPasswordPairs = PasswordManager.
-                CurrentUser.GetSharedUserPasswordPairs();
+                CurrentUser.GetUserPasswordPairsSharedWithOtherUsers();
             LoadDataGridSharedPasswords(userPasswordPairs);
         }
 
@@ -36,7 +36,7 @@ namespace PasswordsManagerUserInterface
             SetLastModifiedColumn();
             SetFullViewColumn();
             dgvSharedPasswords.DataSource = userPasswordPairs;
-            ChangeWidthWhenScrollBarIsVisible();
+            ChangeWidthWhenScrollBarIsVisible(dgvSharedPasswords);
         }
 
         private void SetColumnsQuantity()
@@ -88,17 +88,74 @@ namespace PasswordsManagerUserInterface
             fullViewSharedPasswords.UseColumnTextForButtonValue = true;
         }
 
-        private void ChangeWidthWhenScrollBarIsVisible()
+        private void ChangeWidthWhenScrollBarIsVisible(DataGridView dgv)
         {
-            if (dgvSharedPasswords.Controls.OfType<ScrollBar>().Last().Visible)
+            if (dgv.Controls.OfType<ScrollBar>().First().Visible)
             {
-                dgvSharedPasswords.Width = 717;
+                dgv.Width = 740;
             }
         }
 
         private void btnShare_Click(object sender, EventArgs e)
         {
+            try
+            {
+                LoadShareTab();
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                MessageBox.Show("Select the password to Share", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
+        private void LoadShareTab()
+        {
+            UserPasswordPair selected = dgvSharedPasswords.SelectedRows[0].DataBoundItem as UserPasswordPair;
+            UserControl shareUserPasswordPairControl = new ShareUserPasswordPair(PasswordManager, PnlMainWindow, selected);
+            PnlMainWindow.Controls.Clear();
+            PnlMainWindow.Controls.Add(shareUserPasswordPairControl);
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            PnlMainWindow.Controls.Clear();
+            UserControl passwords = new Passwords(PasswordManager, PnlMainWindow);
+            PnlMainWindow.Controls.Add(passwords);
+        }
+
+        private void btnUnshare_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                LoadUnshareTab();
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                MessageBox.Show("Select the password to Unshare", "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (ExceptionUserPasswordPairIsNotSharedWithAnyone exception)
+            {
+                MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadUnshareTab()
+        {
+            var selected = dgvSharedPasswords.SelectedRows[0].DataBoundItem as UserPasswordPair;
+            selected.GetUsersWithAccessArray();
+            PnlMainWindow.Controls.Clear();
+            UserControl unshareUserPasswordPairControl = new UnshareUserPasswordPair(PasswordManager, PnlMainWindow, selected);
+            PnlMainWindow.Controls.Add(unshareUserPasswordPairControl);
+        }
+
+        private void dgvSharedPasswords_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 4)
+            {
+                UserPasswordPair selected = dgvSharedPasswords.Rows[e.RowIndex].DataBoundItem as UserPasswordPair;
+                PopUp30Seconds fullView = new PopUp30Seconds(selected);
+                fullView.Visible = true;
+            }
         }
     }
 }

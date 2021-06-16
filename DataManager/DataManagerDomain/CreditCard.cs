@@ -43,8 +43,7 @@ namespace DataManagerDomain
             get { return expirationDate; }
             set
             {
-                int lastDayOfMonth = DateTime.DaysInMonth(value.Year, value.Month);
-                expirationDate = new DateTime(value.Year, value.Month, lastDayOfMonth);
+                expirationDate = new DateTime(value.Year, value.Month, 28);
             }
         }
         public Category Category { get; set; }

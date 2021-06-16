@@ -96,6 +96,18 @@ namespace DataManagerDomain
             return value.Contains(" ");
         }
 
+        public UserPasswordPair[] GetUserPasswordPairsSharedWithOtherUsers()
+        {
+            using (var dbContext = new DataManagerContext())
+            {
+                var passwords = dbContext.UserPasswordPairs
+                    .Include(userPasswordPair => userPasswordPair.Category)
+                    .Where(userPasswordPair => userPasswordPair.Category.User.Username == Username)
+                    .ToArray();
+                return passwords.Where(userPasswordPair => userPasswordPair.IsShared()).ToArray();
+            }
+        }
+
         public Tuple<PasswordStrengthType, int>[] GetPasswordsStrengthReport()
         {
             List<Tuple<PasswordStrengthType, int>> listWithStrengthReport = new List<Tuple<PasswordStrengthType, int>>();

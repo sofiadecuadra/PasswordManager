@@ -782,6 +782,32 @@ namespace DataManagerTest
             Assert.AreEqual(1, aUser.GetLeakedCreditCards(aDataBreach).Count);
         }
 
+        [TestMethod]
+        public void GetPasswordsSharedWithOtherUsers()
+        {
+            User anotherUser = new User()
+            {
+                Username = "otherUser",
+                MasterPassword = "password01"
+            };
+            DataManager.AddUser(anotherUser);
+
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Category = aCategory,
+                Password = "thisIsAPassword",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+            };
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+
+            DataManager.CurrentUser = aUser;
+            DataManager.SharePassword(aUserPasswordPair, anotherUser);
+
+            Assert.AreEqual(1, aUser.GetUserPasswordPairsSharedWithOtherUsers().Length);
+        }
+
         private UserPasswordPair LoadTestCategoryToMyUserWithAUserPasswordPair()
         {
             var aUserPasswordPair = new UserPasswordPair()

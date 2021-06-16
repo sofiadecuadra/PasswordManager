@@ -330,6 +330,50 @@ namespace DataManagerTest
             DataManager.UnsharePassword(aUserPasswordPair, aUser);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionUserDoesNotExist))]
+        public void SharedAPasswordWithANullUser()
+        {
+            UserPasswordPair aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+            DataManager.CurrentUser = myUser;
+            DataManager.SharePassword(aUserPasswordPair, null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionUserAlreadyHasAccess))]
+        public void SharedAPasswordWithAUserThatAlreadyHasAccess()
+        {
+            DataManager.CurrentUser = myUser;
+            UserPasswordPair aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+
+            User anotherUser = new User()
+            {
+                Username = "otherUser",
+                MasterPassword = "password01"
+            };
+            DataManager.AddUser(anotherUser);
+
+            DataManager.SharePassword(aUserPasswordPair, anotherUser);
+            DataManager.SharePassword(aUserPasswordPair, anotherUser);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionUserDoesNotHaveAccess))]
+        public void UnshareAPasswordWithAUserThatDoesNotHasAccess()
+        {
+            DataManager.CurrentUser = myUser;
+            UserPasswordPair aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+
+            User anotherUser = new User()
+            {
+                Username = "otherUser",
+                MasterPassword = "password01"
+            };
+            DataManager.AddUser(anotherUser);
+
+            DataManager.UnsharePassword(aUserPasswordPair, anotherUser);
+        }
+
         private UserPasswordPair LoadTestCategoryToMyUserWithAUserPasswordPair()
         {
             var aCategory = new Category()

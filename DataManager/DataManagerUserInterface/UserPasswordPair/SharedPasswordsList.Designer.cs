@@ -41,12 +41,19 @@ namespace PasswordsManagerUserInterface
             // 
             this.dgvSharedPasswords.AllowUserToAddRows = false;
             this.dgvSharedPasswords.AllowUserToDeleteRows = false;
+            this.dgvSharedPasswords.AllowUserToResizeColumns = false;
+            this.dgvSharedPasswords.AllowUserToResizeRows = false;
             this.dgvSharedPasswords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSharedPasswords.Location = new System.Drawing.Point(55, 150);
+            this.dgvSharedPasswords.MultiSelect = false;
             this.dgvSharedPasswords.Name = "dgvSharedPasswords";
             this.dgvSharedPasswords.ReadOnly = true;
+            this.dgvSharedPasswords.RowHeadersVisible = false;
+            this.dgvSharedPasswords.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dgvSharedPasswords.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvSharedPasswords.Size = new System.Drawing.Size(700, 177);
             this.dgvSharedPasswords.TabIndex = 0;
+            this.dgvSharedPasswords.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSharedPasswords_CellContentClick);
             // 
             // lblSharedPasswords
             // 
@@ -65,6 +72,7 @@ namespace PasswordsManagerUserInterface
             this.btnBack.TabIndex = 2;
             this.btnBack.Text = "Back";
             this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // btnShare
             // 
@@ -84,6 +92,7 @@ namespace PasswordsManagerUserInterface
             this.btnUnshare.TabIndex = 4;
             this.btnUnshare.Text = "Unshare";
             this.btnUnshare.UseVisualStyleBackColor = true;
+            this.btnUnshare.Click += new System.EventHandler(this.btnUnshare_Click);
             // 
             // SharedPasswordsList
             // 
