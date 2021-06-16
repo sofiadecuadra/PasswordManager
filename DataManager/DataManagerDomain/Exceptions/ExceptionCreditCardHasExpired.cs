@@ -2,7 +2,7 @@
 
 namespace DataManagerDomain
 {
-    public class ExceptionCreditCardHasExpired : Exception
+    public class ExceptionCreditCardHasExpired : ExceptionCreditCard
     {
         public ExceptionCreditCardHasExpired(string message) : base(message) { }
     }

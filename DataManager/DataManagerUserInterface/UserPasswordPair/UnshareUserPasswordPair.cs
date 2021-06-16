@@ -43,7 +43,7 @@ namespace PasswordsManagerUserInterface
             {
                 Unshare();
             }
-            catch (Exception exception) when (exception is ExceptionUserDoesNotExist || exception is ExceptionUserDoesNotHaveAccess)
+            catch (ExceptionUser exception)
             {
                 MessageBox.Show(exception.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

@@ -2,7 +2,7 @@
 
 namespace DataManagerDomain
 {
-    public class ExceptionCategoryNotExists : Exception
+    public class ExceptionCategoryNotExists : ExceptionCategory
     {
         public ExceptionCategoryNotExists(string message) : base(message) { }
     }

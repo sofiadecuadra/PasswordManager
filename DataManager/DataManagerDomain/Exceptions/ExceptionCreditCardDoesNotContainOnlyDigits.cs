@@ -2,7 +2,7 @@
 
 namespace DataManagerDomain
 {
-    public class ExceptionCreditCardDoesNotContainOnlyDigits : Exception
+    public class ExceptionCreditCardDoesNotContainOnlyDigits : ExceptionCreditCard
     {
         public ExceptionCreditCardDoesNotContainOnlyDigits(string message) : base(message) { }
     }

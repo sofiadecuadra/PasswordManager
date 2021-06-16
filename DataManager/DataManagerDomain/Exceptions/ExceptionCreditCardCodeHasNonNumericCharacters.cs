@@ -2,7 +2,7 @@
 
 namespace DataManagerDomain
 {
-    public class ExceptionCreditCardCodeHasNonNumericCharacters : Exception
+    public class ExceptionCreditCardCodeHasNonNumericCharacters : ExceptionCreditCard
     {
         public ExceptionCreditCardCodeHasNonNumericCharacters(string message) : base(message) { }
     }

@@ -2,7 +2,7 @@
 
 namespace DataManagerDomain
 {
-    public class ExceptionCategoryAlreadyExists : Exception
+    public class ExceptionCategoryAlreadyExists : ExceptionCategory
     {
         public ExceptionCategoryAlreadyExists(string message) : base(message) { }
     }

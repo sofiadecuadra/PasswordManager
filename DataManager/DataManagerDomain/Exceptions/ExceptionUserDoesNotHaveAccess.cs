@@ -2,7 +2,7 @@
 
 namespace DataManagerDomain
 {
-    public class ExceptionUserDoesNotHaveAccess : Exception
+    public class ExceptionUserDoesNotHaveAccess : ExceptionUser
     {
         public ExceptionUserDoesNotHaveAccess(string message) : base(message) { }
     }
