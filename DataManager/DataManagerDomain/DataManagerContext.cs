@@ -12,7 +12,6 @@ namespace DataManagerDomain
         public DbSet<LeakedCreditCard> LeakedCreditCards { get; set; }
         public DbSet<LeakedPassword> LeakedPasswords { get; set; }
 
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()

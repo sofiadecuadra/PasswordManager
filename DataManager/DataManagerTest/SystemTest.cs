@@ -30,6 +30,7 @@ namespace DataManagerTest
                 Username = "JuanPa"
             };
             DataManager.AddUser(aUser);
+
             Assert.IsTrue(DataManager.HasUser(aUser.Username));
         }
 
@@ -98,6 +99,7 @@ namespace DataManagerTest
                 Username = "      Juan123456789"
             };
             DataManager.AddUser(aUser);
+
             Assert.IsTrue(DataManager.HasUser("juan123456789"));
         }
 
@@ -110,6 +112,7 @@ namespace DataManagerTest
                 Username = "                                                                   Juan123456789"
             };
             DataManager.AddUser(aUser);
+
             Assert.IsTrue(DataManager.HasUser("juan123456789"));
         }
 
@@ -122,6 +125,7 @@ namespace DataManagerTest
                 Username = "Juan123456789      "
             };
             DataManager.AddUser(aUser);
+
             Assert.IsTrue(DataManager.HasUser("juan123456789"));
         }
 
@@ -155,6 +159,7 @@ namespace DataManagerTest
         public void SetCurrentUserCorrectly()
         {
             DataManager.CurrentUser = myUser;
+
             Assert.AreEqual(myUser.Username, DataManager.CurrentUser.Username);
         }
 
@@ -175,6 +180,7 @@ namespace DataManagerTest
         public void ValidateAndSetCurrentUserCorrectly()
         {
             DataManager.LogIn(myUser.Username, myUser.MasterPassword);
+
             Assert.AreEqual(myUser.Username, DataManager.CurrentUser.Username);
         }
 
@@ -196,6 +202,7 @@ namespace DataManagerTest
         public void ValidateAndSetCurrentUserWithUsernameContainingBlankSpacesAtTheStart()
         {
             DataManager.LogIn("    JuanP", myUser.MasterPassword);
+
             Assert.AreEqual(myUser.Username, DataManager.CurrentUser.Username);
         }
 
@@ -203,6 +210,7 @@ namespace DataManagerTest
         public void ValidateAndSetCurrentUserWithUsernameContainingBlankSpacesAtTheEnd()
         {
             DataManager.LogIn("JuanP     ", myUser.MasterPassword);
+
             Assert.AreEqual(myUser.Username, DataManager.CurrentUser.Username);
         }
 
@@ -226,6 +234,7 @@ namespace DataManagerTest
             UserPasswordPair aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
 
             DataManager.SharePassword(aUserPasswordPair, aUser);
+
             Assert.IsTrue(DataManager.FindUser(aUser.Username).HasSharedPasswordOf(aUserPasswordPair));
             Assert.IsTrue(aUserPasswordPair.HasAccess(aUser.Username));
         }
@@ -257,6 +266,7 @@ namespace DataManagerTest
             UserPasswordPair aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
 
             DataManager.SharePassword(aUserPasswordPair, aUser);
+
             Assert.AreEqual(aUser.Username, aUserPasswordPair.GetUsersWithAccessArray()[0].Username);
         }
 

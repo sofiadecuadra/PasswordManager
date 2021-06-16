@@ -59,5 +59,4 @@ namespace DataManagerDomain
             return Convert.ToInt32(HasLowerCase) + Convert.ToInt32(HasUpperCase) + Convert.ToInt32(HasDigits) + Convert.ToInt32(HasSymbols);
         }
     }
-
 }

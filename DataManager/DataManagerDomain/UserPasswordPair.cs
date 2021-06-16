@@ -19,7 +19,6 @@ namespace DataManagerDomain
                 EncryptedPassword = EncryptPassword(value);
             }
         }
-        public List<User> UsersWithAccess { get; private set; }
         private string username;
         public string Username
         {
@@ -33,9 +32,10 @@ namespace DataManagerDomain
             set { site = value.ToLower(); }
         }
         public string Notes { get; set; }
+        public PasswordStrengthType PasswordStrength { get; private set; }
         public DateTime LastModifiedDate { get; set; }
         public Category Category { get; set; }
-        public PasswordStrengthType PasswordStrength { get; private set; }
+        public List<User> UsersWithAccess { get; private set; }
         public List<DataBreach> DataBreaches { get; set; }
 
         public UserPasswordPair()
