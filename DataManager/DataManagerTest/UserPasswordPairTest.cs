@@ -1,6 +1,7 @@
 ﻿using DataManagerDomain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace DataManagerTest
 {
@@ -59,6 +60,48 @@ namespace DataManagerTest
                 aUserPasswordPair.LastModifiedDate.ToString("yyyyMMddhhmmss"));
         }
 
+        [TestMethod]
+        public void DecryptPasswordTest()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Category = aCategory,
+                Password = "myPassword",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+            using (var dbContext = new DataManagerContext())
+            {
+                var passwordSelected = dbContext.UserPasswordPairs
+                    .FirstOrDefault(userPasswordPair => userPasswordPair.Id == aUserPasswordPair.Id);
+                Assert.AreEqual("myPassword", passwordSelected.Password);
+            }
+        }
+
+        [TestMethod]
+        public void EncryptPasswordTest()
+        {
+            UserPasswordPair aUserPasswordPair = new UserPasswordPair()
+            {
+                Category = aCategory,
+                Password = "myPassword",
+                Notes = "these are my notes",
+                Username = "myUserName",
+                Site = "mySite",
+            };
+
+            aCategory.AddUserPasswordPair(aUserPasswordPair);
+            using (var dbContext = new DataManagerContext())
+            {
+                var passwordSelected = dbContext.UserPasswordPairs
+                    .FirstOrDefault(userPasswordPair => userPasswordPair.Id == aUserPasswordPair.Id);
+                passwordSelected.Password = "aPassword";
+            }
+        }
+
         [TestCleanup]
         public void Cleanup()
         {
@@ -66,7 +109,7 @@ namespace DataManagerTest
             {
                 dbContext.Users.RemoveRange(dbContext.Users);
                 dbContext.Categories.RemoveRange(dbContext.Categories);
-                dbContext.CreditCards.RemoveRange(dbContext.CreditCards);
+                dbContext.UserPasswordPairs.RemoveRange(dbContext.UserPasswordPairs);
                 dbContext.SaveChanges();
             }
         }

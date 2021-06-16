@@ -22,7 +22,7 @@ namespace PasswordsManagerUserInterface
             {
                 UserSignUp();
             }
-            catch (Exception ex) when (ex is ExceptionUserAlreadyExists || ex is ExceptionIncorrectLength)
+            catch (Exception ex) when (ex is ExceptionUserAlreadyExists || ex is ExceptionIncorrectLength || ex is ExceptionUsernameContainsSpaces)
             {
                 MessageBox.Show(ex.Message, "An error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 using DataManagerDomain;
 
@@ -36,6 +37,7 @@ namespace PasswordsManagerUserInterface
             SetLastModifiedColumn();
             SetFullViewColumn();
             dgvPasswordsOfColor.DataSource = PasswordManager.CurrentUser.GetUserPasswordPairsOfASpecificColor(color);
+            ChangeWidthWhenScrollBarIsVisible(dgvPasswordsOfColor);
         }
 
         private void SetColumnsQuantity()
@@ -85,6 +87,14 @@ namespace PasswordsManagerUserInterface
             fullViewPasswords.Text = "Full view";
             fullViewPasswords.Width = 61;
             fullViewPasswords.UseColumnTextForButtonValue = true;
+        }
+
+        private void ChangeWidthWhenScrollBarIsVisible(DataGridView dgv)
+        {
+            if (dgv.Controls.OfType<ScrollBar>().Last().Visible)
+            {
+                dgv.Width = 717;
+            }
         }
 
         private void btnModify_Click(object sender, EventArgs e)

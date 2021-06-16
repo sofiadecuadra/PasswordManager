@@ -128,19 +128,20 @@ namespace DataManagerTest
         [TestMethod]
         public void ValidateUserCorrectly()
         {
-            Assert.IsTrue(DataManager.ValidateUser("juanp", "myMasterPassword123$"));
+            DataManager.ValidateUser("juanp", "myMasterPassword123$");
         }
 
         [TestMethod]
         public void ValidateUserNotInLowerCorrectly()
         {
-            Assert.IsTrue(DataManager.ValidateUser("JuanP", "myMasterPassword123$"));
+            DataManager.ValidateUser("JuanP", "myMasterPassword123$");
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ExceptionIncorrectMasterPassword))]
         public void ValidateUserWithIncorrectPassword()
         {
-            Assert.IsFalse(DataManager.ValidateUser("juanp", "NotThePassword"));
+            DataManager.ValidateUser("juanp", "NotThePassword");
         }
 
         [TestMethod]

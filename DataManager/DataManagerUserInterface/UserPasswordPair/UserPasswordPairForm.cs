@@ -45,10 +45,23 @@ namespace PasswordsManagerUserInterface
         private void SetDefaultValues(UserPasswordPair passwordToModify)
         {
             comboCategory.SelectedItem = passwordToModify.Category;
+            LoadDefaultCategory(passwordToModify);
             txtSite.Text = passwordToModify.Site;
             txtUser.Text = passwordToModify.Username;
             txtPassword.Text = passwordToModify.Password;
             txtNotes.Text = passwordToModify.Notes;
+        }
+
+        private void LoadDefaultCategory(UserPasswordPair passwordToModify)
+        {
+            var categories = comboCategory.Items;
+            foreach (var category in categories)
+            {
+                if (category.ToString() == passwordToModify.Category.Name)
+                {
+                    comboCategory.SelectedItem = category;
+                }
+            }
         }
 
         public Category GetCategory()

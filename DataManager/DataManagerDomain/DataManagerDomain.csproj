@@ -64,7 +64,9 @@
     <Compile Include="Exceptions\ExceptionExistingUserPasswordPair.cs" />
     <Compile Include="Exceptions\ExceptionIncorrectGenerationPasswordType.cs" />
     <Compile Include="Exceptions\ExceptionIncorrectMasterPassword.cs" />
+    <Compile Include="Exceptions\ExceptionUserAlreadyHasAccess.cs" />
     <Compile Include="Exceptions\ExceptionUserDoesNotExist.cs" />
+    <Compile Include="Exceptions\ExceptionUserDoesNotHaveAccess.cs" />
     <Compile Include="Exceptions\ExceptionUsernameContainsSpaces.cs" />
     <Compile Include="Exceptions\ExceptionUserPasswordPairDoesNotExist.cs" />
     <Compile Include="Exceptions\ExceptionIncorrectLength.cs" />

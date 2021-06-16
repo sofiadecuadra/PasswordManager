@@ -98,6 +98,7 @@ namespace DataManagerDomain
 
         internal void IncludeInUsersWithAccess(User aUser)
         {
+            CheckIfUserAlreadyHasAccess(aUser);
             using (var dbContext = new DataManagerContext())
             {
                 var userPasswordPairSelected = dbContext.UserPasswordPairs
@@ -110,8 +111,17 @@ namespace DataManagerDomain
             }
         }
 
+        private void CheckIfUserAlreadyHasAccess(User aUser)
+        {
+            if (HasAccess(aUser.Username))
+            {
+                throw new ExceptionUserAlreadyHasAccess($"The user {aUser} already has access to this password");
+            }
+        }
+
         internal void RemoveFromUsersWithAccess(User aUser)
         {
+            CheckIfUserHasAccess(aUser);
             using (var dbContext = new DataManagerContext())
             {
                 var userPasswordPairSelected = dbContext.UserPasswordPairs
@@ -121,6 +131,14 @@ namespace DataManagerDomain
                     .FirstOrDefault(user => user.Username == aUser.Username);
                 userPasswordPairSelected.UsersWithAccess.Remove(userToUnshare);
                 dbContext.SaveChanges();
+            }
+        }
+
+        private void CheckIfUserHasAccess(User aUser)
+        {
+            if (!HasAccess(aUser.Username))
+            {
+                throw new ExceptionUserDoesNotHaveAccess($"The user {aUser} does not have access to this password");
             }
         }
 

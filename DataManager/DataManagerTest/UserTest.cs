@@ -675,6 +675,25 @@ namespace DataManagerTest
         }
 
         [TestMethod]
+        public void CheckEmptyDataBreachWithSpaces()
+        {
+            IDataBreachesFormatter dataBreaches = new TxtFileDataBreaches()
+            {
+                txtDataBreaches = "     "
+            };
+
+            aUser.CheckDataBreaches(dataBreaches);
+
+            using (var dbContext = new DataManagerContext())
+            {
+                var userSelected = dbContext.Users
+                    .Include(user => user.DataBreaches)
+                    .FirstOrDefault(user => user.Username == aUser.Username);
+                Assert.AreEqual(0, userSelected.DataBreaches.Count);
+            }
+        }
+
+        [TestMethod]
         public void PasswordUsedInMultipleSitesOfUserAppearedInTxtFileDataBreaches()
         {
             var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
@@ -700,30 +719,27 @@ namespace DataManagerTest
             Assert.AreEqual(2, aUser.CheckDataBreaches(dataBreaches).LeakedUserPasswordPairsOfUser.Count);
         }
 
-        //[TestMethod]
-        //public void GetModifiedAndNotModifiedLeakedPasswords()
-        //{
-        //    var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
-        //    var anotherUserPasswordPair = LoadTestCategoryToMyUserWithAnotherUserPasswordPair();
+        [TestMethod]
+        public void GetModifiedAndNotModifiedLeakedPasswords()
+        {
+            var aUserPasswordPair = LoadTestCategoryToMyUserWithAUserPasswordPair();
+            var anotherUserPasswordPair = LoadTestCategoryToMyUserWithAnotherUserPasswordPair();
 
-        //    IDataBreachesFormatter dataBreach = new TextBoxDataBreaches()
-        //    {
-        //        txtDataBreaches = "thisIsAPassword\nthisIsAnotherPassword"
-        //    };
+            IDataBreachesFormatter dataBreach = new TextBoxDataBreaches()
+            {
+                txtDataBreaches = "thisIsAPassword\nthisIsAnotherPassword"
+            };
 
-        //    DataBreach aDataBreach = aUser.CheckDataBreaches(dataBreach);
+            DataBreach aDataBreach = aUser.CheckDataBreaches(dataBreach);
 
-        //    DateTime fakeDateWhichIsBeforeCurrentDate = new DateTime(DateTime.Now.Year - 1, 12, 31, 5, 10, 20);
-        //    aUserPasswordPair.LastModifiedDate = fakeDateWhichIsBeforeCurrentDate;
+            aUserPasswordPair.Password = "password";
 
-        //    DateTime fakeDateWhichIsAfterCurrentDate = new DateTime(DateTime.Now.Year + 1, 12, 31, 5, 10, 20);
-        //    anotherUserPasswordPair.LastModifiedDate = fakeDateWhichIsAfterCurrentDate;
+            var result = aUser.GetModifiedAndNotModifiedLeakedPasswords(aDataBreach);
 
-        //    Assert.AreEqual(aUserPasswordPair.Id, aUser.GetModifiedAndNotModifiedLeakedPasswords(aDataBreach).Item1[0].Id);
-        //    Assert.AreEqual(anotherUserPasswordPair.Id, aUser.GetModifiedAndNotModifiedLeakedPasswords(aDataBreach).Item2[0].Id);
-        //    Assert.AreEqual(1, aUser.GetModifiedAndNotModifiedLeakedPasswords(aDataBreach).Item1.Count);
-        //    Assert.AreEqual(1, aUser.GetModifiedAndNotModifiedLeakedPasswords(aDataBreach).Item2.Count);
-        //}
+            Assert.AreEqual(aUserPasswordPair.Id, result.Item1[0].Id);
+            Assert.AreEqual(anotherUserPasswordPair.Id, result.Item1[1].Id);
+            Assert.AreEqual(2, aUser.GetModifiedAndNotModifiedLeakedPasswords(aDataBreach).Item1.Count);
+        }
 
         [TestMethod]
         public void GetAllPasswordPairsWithOnlyOneInside()
@@ -734,7 +750,36 @@ namespace DataManagerTest
             Assert.AreEqual(aUserPasswordPair.Password, allUserPasswordPairs[0].Password);
             Assert.AreEqual(aUserPasswordPair.Site, allUserPasswordPairs[0].Site);
             Assert.AreEqual(aUserPasswordPair.Username, allUserPasswordPairs[0].Username);
+        }
 
+        [TestMethod]
+        public void GetDataBreaches()
+        {
+            _ = LoadTestCategoryToMyUserWithAUserPasswordPair();
+
+            IDataBreachesFormatter dataBreaches = new TxtFileDataBreaches()
+            {
+                txtDataBreaches = "Sof\t1234 5678 2333 4222\tHello\tthisPassword\t1235 5665 9123 4567\t"
+            };
+
+            _ = aUser.CheckDataBreaches(dataBreaches);
+
+            Assert.AreEqual(1, aUser.GetDataBreaches().Length);
+        }
+
+        [TestMethod]
+        public void GetLeakedCreditCards()
+        {
+            _ = LoadTestCategoryToMyUserWithACreditCard();
+
+            IDataBreachesFormatter dataBreaches = new TxtFileDataBreaches()
+            {
+                txtDataBreaches = "Sof\t1234 5678 9123 4567\tHello\tthisPassword\t1235 5665 9123 4567\t"
+            };
+
+            DataBreach aDataBreach = aUser.CheckDataBreaches(dataBreaches);
+
+            Assert.AreEqual(1, aUser.GetLeakedCreditCards(aDataBreach).Count);
         }
 
         private UserPasswordPair LoadTestCategoryToMyUserWithAUserPasswordPair()

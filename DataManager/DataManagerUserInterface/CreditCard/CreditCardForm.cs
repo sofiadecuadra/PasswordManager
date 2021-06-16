@@ -32,13 +32,26 @@ namespace PasswordsManagerUserInterface
 
         private void LoadDefaultValues(CreditCard aCreditCard)
         {
-            cbCategory.SelectedItem = aCreditCard.Category;
+            cbCategory.SelectedItem = aCreditCard.Category.Name;
+            LoadDefaultCategory(aCreditCard);
             txtName.Text = aCreditCard.Name;
             txtType.Text = aCreditCard.Type;
             txtNumber.Text = FormattedNumber(aCreditCard.Number);
             txtCode.Text = aCreditCard.Code;
             dtpExpirationDate.Value = aCreditCard.ExpirationDate;
             txtNotes.Text = aCreditCard.Notes;
+        }
+
+        private void LoadDefaultCategory(CreditCard aCreditCard)
+        {
+            var categories = cbCategory.Items;
+            foreach (var category in categories)
+            {
+                if (category.ToString() == aCreditCard.Category.Name)
+                {
+                    cbCategory.SelectedItem = category;
+                }
+            }
         }
 
         private void SetMinExpirationDate()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 using DataManagerDomain;
 
@@ -23,6 +24,7 @@ namespace PasswordsManagerUserInterface
             SetColumnsQuantity();
             SetNameColumn();
             dgvCategories.DataSource = GetCategories();
+            ChangeWidthWhenScrollBarIsVisible(dgvCategories);
         }
 
         private void SetColumnsQuantity()
@@ -42,6 +44,14 @@ namespace PasswordsManagerUserInterface
         private Category[] GetCategories()
         {
             return PasswordManager.CurrentUser.GetCategories();
+        }
+
+        private void ChangeWidthWhenScrollBarIsVisible(DataGridView dgv)
+        {
+            if (dgv.Controls.OfType<ScrollBar>().Last().Visible)
+            {
+                dgv.Width = 235;
+            }
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
