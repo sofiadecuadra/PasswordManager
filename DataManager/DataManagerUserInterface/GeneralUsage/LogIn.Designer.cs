@@ -35,6 +35,7 @@ namespace PasswordsManagerUserInterface
             this.lblPassword = new System.Windows.Forms.Label();
             this.btnSignUp = new System.Windows.Forms.Button();
             this.btnLogIn = new System.Windows.Forms.Button();
+            this.lblLogIn = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtUsername
@@ -90,10 +91,21 @@ namespace PasswordsManagerUserInterface
             this.btnLogIn.UseVisualStyleBackColor = true;
             this.btnLogIn.Click += new System.EventHandler(this.btnLogIn_Click);
             // 
+            // lblLogIn
+            // 
+            this.lblLogIn.AutoSize = true;
+            this.lblLogIn.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLogIn.Location = new System.Drawing.Point(333, 39);
+            this.lblLogIn.Name = "lblLogIn";
+            this.lblLogIn.Size = new System.Drawing.Size(78, 25);
+            this.lblLogIn.TabIndex = 6;
+            this.lblLogIn.Text = "LOG IN";
+            // 
             // LogIn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblLogIn);
             this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.lblUsername);
             this.Controls.Add(this.btnSignUp);
@@ -115,5 +127,6 @@ namespace PasswordsManagerUserInterface
         private System.Windows.Forms.Label lblPassword;
         private System.Windows.Forms.Button btnSignUp;
         private System.Windows.Forms.Button btnLogIn;
+        private System.Windows.Forms.Label lblLogIn;
     }
 }
