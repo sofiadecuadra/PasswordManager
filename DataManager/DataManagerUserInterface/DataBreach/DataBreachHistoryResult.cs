@@ -1,6 +1,7 @@
 ﻿using DataManagerDomain;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace PasswordsManagerUserInterface
@@ -21,6 +22,14 @@ namespace PasswordsManagerUserInterface
             LoadExposedPasswordsAndCreditCards();
         }
 
+        private void LoadExposedPasswordsAndCreditCards()
+        {
+            (List<UserPasswordPair>, List<UserPasswordPair>) getModifiedAndNotModifiedPasswords = (PasswordManager.CurrentUser.GetModifiedAndNotModifiedLeakedPasswords(DataBreachToView));
+            LoadModifiedExposedPasswords(getModifiedAndNotModifiedPasswords.Item2);
+            LoadNotModifiedExposedPasswords(getModifiedAndNotModifiedPasswords.Item1);
+            LoadExposedCreditCards(PasswordManager.CurrentUser.GetLeakedCreditCards(DataBreachToView));
+        }
+
         private void LoadNotModifiedExposedPasswords(List<UserPasswordPair> exposedPasswords)
         {
             SetPasswordsColumnQuantity(dgvNotModifiedPasswords, 4);
@@ -30,6 +39,7 @@ namespace PasswordsManagerUserInterface
             SetPasswordsLastModifiedColumn(dgvNotModifiedPasswords, 70);
             SetPasswordsModifyColumn();
             dgvNotModifiedPasswords.DataSource = exposedPasswords;
+            ChangeWidthWhenScrollBarIsVisible(dgvNotModifiedPasswords);
         }
         private void LoadModifiedExposedPasswords(List<UserPasswordPair> exposedPasswords)
         {
@@ -39,6 +49,7 @@ namespace PasswordsManagerUserInterface
             SetPasswordsUsernameColumn(dgvModifiedPasswords);
             SetPasswordsLastModifiedColumn(dgvModifiedPasswords, 131);
             dgvModifiedPasswords.DataSource = exposedPasswords;
+            ChangeWidthWhenScrollBarIsVisible(dgvModifiedPasswords);
         }
 
         private void LoadExposedCreditCards(List<CreditCard> exposedCreditCards)
@@ -49,6 +60,15 @@ namespace PasswordsManagerUserInterface
             SetCreditCardTypeColumn();
             SetCreditCardNumberColumn();
             dgvExposedCreditCards.DataSource = exposedCreditCards;
+            ChangeWidthWhenScrollBarIsVisible(dgvExposedCreditCards);
+        }
+
+        private void ChangeWidthWhenScrollBarIsVisible(DataGridView dgv)
+        {
+            if (dgv.Controls.OfType<ScrollBar>().Last().Visible)
+            {
+                dgv.Width = 717;
+            }
         }
 
         private void SetPasswordsModifyColumn()
@@ -98,14 +118,6 @@ namespace PasswordsManagerUserInterface
         {
             aDataGriedView.AutoGenerateColumns = false;
             aDataGriedView.ColumnCount = quantity;
-        }
-
-        private void LoadExposedPasswordsAndCreditCards()
-        {
-            (List<UserPasswordPair>, List<UserPasswordPair>) getModifiedAndNotModifiedPasswords = (PasswordManager.CurrentUser.GetModifiedAndNotModifiedLeakedPasswords(DataBreachToView));
-            LoadModifiedExposedPasswords(getModifiedAndNotModifiedPasswords.Item2);
-            LoadNotModifiedExposedPasswords(getModifiedAndNotModifiedPasswords.Item1);
-            LoadExposedCreditCards(PasswordManager.CurrentUser.GetLeakedCreditCards(DataBreachToView));
         }
 
         private void SetCreditCardColumnsQuantity()
